@@ -188,58 +188,23 @@ Acceptance:
 
 ---
 
-# Next Task: v0.1.2 Content Expansion
+## v0.1.2 Content Expansion
 
-## Goal
+Status: completed.
 
-Expand the reviewed problem set from 24 to 36 problems without changing the product system.
+Delivered:
 
-## References
+- `src/data/problems.json` — expanded from 24 to 36 problems (+12)
+- `docs/CONTENT_REVIEW_v0.1.2.md` — content review documentation
 
-- `docs/CONTENT_PLAN_v0.1.2.md`
-- `docs/CONTENT_REVIEW_v0.1.1.md`
-- `docs/QUALITY_CHECKLIST.md`
-- `docs/DEVELOPMENT_GUIDE.md`
+New problems:
 
-## Scope
+- `CAP-011` to `CAP-013` (capture, +3)
+- `ESC-006` to `ESC-007` (escape, +2)
+- `CC-007` to `CC-009` (connect_cut, +3)
+- `LD-001` to `LD-004` (life_death, +4)
 
-1. Add exactly 12 new problems to `src/data/problems.json`.
-2. Increase total problem count from 24 to 36.
-3. Keep all new problems:
-   - 9x9 only;
-   - single-move only;
-   - suitable for children who studied Go for about one year;
-   - short, warm, and concrete in copy.
-4. Recommended new problem distribution:
-   - `capture`: +3
-   - `escape`: +2
-   - `connect_cut`: +3
-   - `life_death`: +4
-5. Use recommended IDs unless conflicts exist:
-   - `CAP-011` to `CAP-013`
-   - `ESC-006` to `ESC-007`
-   - `CC-007` to `CC-009`
-   - `LD-001` to `LD-004`
-6. Create `docs/CONTENT_REVIEW_v0.1.2.md` using the template in `docs/CONTENT_PLAN_v0.1.2.md`.
-7. Optionally strengthen lightweight validation helpers only if it directly helps catch content errors.
-
-## Out of Scope
-
-Do not implement in v0.1.2:
-
-- Login
-- Database
-- Supabase
-- AI opponent
-- AI review
-- Payment
-- Teacher/admin backend
-- Multi-step problem engine
-- 13x13 or 19x19 problem sets
-- Large-scale generated problem batch
-- Major UI redesign
-
-## Acceptance
+Acceptance:
 
 - `src/data/problems.json` contains exactly 36 problems.
 - All new problem IDs are unique.
@@ -249,7 +214,6 @@ Do not implement in v0.1.2:
 - `docs/CONTENT_REVIEW_v0.1.2.md` is complete and matches `problems.json`.
 - `npm run build` passes.
 - `npm run test` passes.
-- Docker validation is not required unless Docker/dependency/build-config changed.
 - No v0.2 features are introduced.
 
 ---
