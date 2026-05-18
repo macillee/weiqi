@@ -244,13 +244,23 @@ Acceptance:
 
 ## v0.2 Design Documents
 
-Status: drafted, pending review.
+Status: reviewed with findings.
 
 Delivered:
 
 - `docs/SUPABASE_DESIGN_v0.2.md` — schema, RLS, client data layer, implementation phases
+  - Fixed: added explicit UPDATE policies for wrong_problems and progress_summary
+  - Fixed: added session expiry handling note in client.ts
+  - Fixed: clarified problem_attempts is append-only (no UPDATE needed)
 - `docs/DATA_MIGRATION_v0.2.md` — localStorage import, merge, idempotency, failure handling
 - `docs/QA_CHECKLIST_v0.2.md` — Auth, child profile, RLS, server progress, migration, regression QA
+  - Added: network failure and session edge cases section
+  - Added: concurrent device test case
+- `docs/DESIGN_REVIEW_v0.2.md` — design review findings with severity ratings
+
+Open decisions:
+- First implementation task should be split into v0.2.1a (setup only) + v0.2.1b (auth UI)
+- Consider adding `is_active` column to child_profiles for soft deactivation
 
 ---
 

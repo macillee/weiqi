@@ -246,6 +246,16 @@ Simulate failure during import:
 
 ---
 
+# 16.1 Network and Session Edge Cases
+
+- [ ] If connection drops during practice, attempts are queued locally.
+- [ ] After reconnect, queued attempts are sent to server.
+- [ ] If Supabase session expires during practice, user sees clear message.
+- [ ] After re-auth, server progress is restored without data loss.
+- [ ] Concurrent devices with same child profile: both see consistent progress after sync.
+
+---
+
 # 17. Release Decision Template
 
 ```text

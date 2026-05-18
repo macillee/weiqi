@@ -378,7 +378,47 @@ create policy "problem_attempts_insert_own_child"
   );
 ```
 
-Repeat equivalent policies for `wrong_problems` and `progress_summary`.
+Repeat equivalent SELECT and INSERT policies for `wrong_problems` and `progress_summary`.
+
+## 8.4 wrong_problems UPDATE policy
+
+`wrong_problems` REQUIRES an UPDATE policy for status transitions
+(active → reviewing → mastered) and count increments:
+
+```sql
+create policy "wrong_problems_update_own_child"
+  on public.wrong_problems for update
+  using (
+    exists (
+      select 1 from public.child_profiles cp
+      where cp.id = child_profile_id
+        and cp.parent_user_id = auth.uid()
+    )
+  );
+```
+
+## 8.5 progress_summary UPDATE policy
+
+`progress_summary` REQUIRES an UPDATE policy for stars, streak_days,
+completed_problem_ids, etc.:
+
+```sql
+create policy "progress_summary_update_own_child"
+  on public.progress_summary for update
+  using (
+    exists (
+      select 1 from public.child_profiles cp
+      where cp.id = child_profile_id
+        and cp.parent_user_id = auth.uid()
+    )
+  );
+```
+
+## 8.6 problem_attempts is append-only
+
+`problem_attempts` does NOT need an UPDATE policy. It is an append-only
+audit trail. If a correction is needed, insert a new row rather than
+modifying an existing one.
 
 ---
 
@@ -400,6 +440,9 @@ Responsibilities:
 - Create browser Supabase client.
 - Read env vars.
 - Export a typed client if database types are available.
+- Listen to auth state changes (`onAuthStateChange`).
+- Handle session expiry: if session expires during practice, queue
+  attempts locally and retry on next sign-in. Do not lose user data.
 
 ## `server-progress.ts`
 
