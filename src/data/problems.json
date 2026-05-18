@@ -33,8 +33,8 @@
     "level": 1,
     "tags": ["capture", "atari"],
     "toPlay": "black",
-    "title": "打吃白棋",
-    "description": "黑棋先走，怎样打吃白棋？",
+    "title": "吃掉白棋",
+    "description": "黑棋先走，怎样吃掉白棋？",
     "initialStones": [
       { "x": 4, "y": 4, "color": "white" },
       { "x": 3, "y": 4, "color": "black" },
@@ -49,8 +49,8 @@
       "白棋右边也有黑棋。",
       "白棋只剩下面一口气了。"
     ],
-    "explanation": "黑棋下在白棋下面，白棋就被打吃了。",
-    "successMessage": "太好了！你成功打吃了白棋。",
+    "explanation": "黑棋下在白棋下面，白棋没有气就被提掉了。",
+    "successMessage": "太好了！你成功吃掉了白棋！",
     "failureMessage": "白棋还有几口气呢？再数一数。"
   },
   {
@@ -295,7 +295,7 @@
       "下在断点上，不但能断开白棋，还能打吃。",
       "右上方的白棋被断开后就只剩两口气了。"
     ],
-    "explanation": "黑棋切断白棋的连接，同时打吃右边的白棋。",
+    "explanation": "黑棋切断白棋的连接，同时打吃左边的白棋。",
     "successMessage": "真厉害！你一边切断一边打吃！",
     "failureMessage": "看看白棋的连线上有什么空点？"
   },
@@ -352,7 +352,7 @@
       "白棋上面和下面各有一口气。",
       "堵住其中一口气，白棋就被打吃了。"
     ],
-    "explanation": "白棋两颗连在一起但有外面有两口气，黑棋堵住一口就打吃了。",
+    "explanation": "白棋两颗连在一起，外面有两口气，黑棋堵住一口就打吃了。",
     "successMessage": "太棒了！你成功包围打吃了白棋！",
     "failureMessage": "连在一起的两颗白棋还有几口气？"
   },
@@ -395,7 +395,7 @@
     "level": 2,
     "tags": ["escape", "liberty-counting"],
     "toPlay": "black",
-    "title": "向上逃跑",
+    "title": "向下逃跑",
     "description": "黑棋被包围了，应该往哪里跑？",
     "initialStones": [
       { "x": 2, "y": 3, "color": "black" },
@@ -408,11 +408,11 @@
     ],
     "hints": [
       "黑棋现在只剩一口气了。",
-      "上面有一个空点可以逃跑。",
-      "往上面跑，黑棋的气就变多了。"
+      "下面有一个空点可以逃跑。",
+      "往下面跑，黑棋的气就变多了。"
     ],
-    "explanation": "黑棋往上跑，增加了气，暂时安全了。",
-    "successMessage": "很好！黑棋成功向上逃出来了！",
+    "explanation": "黑棋往下跑，增加了气，暂时安全了。",
+    "successMessage": "很好！黑棋成功向下逃出来了！",
     "failureMessage": "黑棋还有一个方向是空的。"
   },
   {
@@ -436,8 +436,8 @@
     ],
     "hints": [
       "黑棋现在有两口气：上面和下面。",
-      "往上面跑会撞到白棋，又被打吃。",
-      "往下面跑才是安全的。"
+      "往下面跑会撞到白棋，又被打吃。",
+      "往上面跑才是安全的。"
     ],
     "explanation": "往上跑会被白棋再次打吃，往下跑才安全。",
     "successMessage": "真聪明！你选对了逃跑方向！",
@@ -668,7 +668,7 @@
     "level": 1,
     "tags": ["capture", "atari", "edge"],
     "toPlay": "black",
-    "title": "边上打吃",
+    "title": "边上吃子",
     "description": "边上的白棋只剩一口气，黑棋能吃掉它吗？",
     "initialStones": [
       { "x": 4, "y": 8, "color": "white" },
@@ -780,7 +780,7 @@
     "tags": ["escape", "liberty-counting"],
     "toPlay": "black",
     "title": "往下长气",
-    "description": "黑棋被白棋包围了，往哪里跑？",
+    "description": "两颗黑棋连在一起，白棋从三面包围了。往哪里长气？",
     "initialStones": [
       { "x": 3, "y": 5, "color": "black" },
       { "x": 3, "y": 6, "color": "black" },
@@ -793,7 +793,7 @@
     ],
     "hints": [
       "两颗黑棋连在一起，被白棋从三面包围了。",
-      "黑棋现在只剩下面一口气。",
+      "黑棋下面有一个空点可以长气。",
       "往下面跑，黑棋的气就变多了。"
     ],
     "explanation": "黑棋往下跑，增加了气，逃出来了。",
@@ -917,7 +917,7 @@
     "tags": ["life_death", "atari", "edge"],
     "toPlay": "black",
     "title": "边上救黑棋",
-    "description": "边上两颗黑棋快被吃了，怎么救？",
+    "description": "边上两颗黑棋被白棋夹住了，怎么长气？",
     "initialStones": [
       { "x": 4, "y": 0, "color": "black" },
       { "x": 5, "y": 0, "color": "black" },
