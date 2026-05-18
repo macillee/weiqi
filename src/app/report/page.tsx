@@ -2,150 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { loadProgress } from "@/lib/progress";
-import { loadProblems } from "@/lib/problems";
-
-type CategoryStat = {
-  category: string;
-  label: string;
-  completed: number;
-  total: number;
-  firstTryCorrect: number;
-  totalAttempts: number;
-};
-
-type ReportStats = {
-  totalCompleted: number;
-  totalProblems: number;
-  accuracy: number;
-  firstTryAccuracy: number;
-  wrongCount: number;
-  streakDays: number;
-  stars: number;
-  categoryStats: CategoryStat[];
-  strongestCategory: CategoryStat | null;
-  weakestCategory: CategoryStat | null;
-};
-
-const CATEGORY_LABELS: Record<string, string> = {
-  capture: "吃子",
-  escape: "逃跑",
-  connect_cut: "连接与切断",
-  life_death: "死活",
-  opening: "布局",
-  endgame: "官子",
-  mixed: "综合",
-};
-
-function computeStats(): ReportStats {
-  const progress = loadProgress();
-  const problems = loadProblems();
-  const problemMap = new Map(problems.map((p) => [p.id, p]));
-
-  const totalProblems = problems.length;
-  const totalCompleted = progress.completedProblemIds.length;
-  const wrongCount = Object.values(progress.wrongProblems).filter(
-    (wp) => wp.status !== "mastered",
-  ).length;
-
-  const totalAttempts = progress.attempts.length;
-  const correctAttempts = progress.attempts.filter((a) => a.isCorrect).length;
-  const accuracy = totalAttempts > 0 ? correctAttempts / totalAttempts : 0;
-
-  const firstTryProblems = new Set<string>();
-  const firstTryCorrectProblems = new Set<string>();
-  for (const attempt of progress.attempts) {
-    if (!firstTryProblems.has(attempt.problemId)) {
-      firstTryProblems.add(attempt.problemId);
-      if (attempt.isCorrect) {
-        firstTryCorrectProblems.add(attempt.problemId);
-      }
-    }
-  }
-  const firstTryAccuracy =
-    firstTryProblems.size > 0
-      ? firstTryCorrectProblems.size / firstTryProblems.size
-      : 0;
-
-  const categoryMap = new Map<string, CategoryStat>();
-  for (const [cat, label] of Object.entries(CATEGORY_LABELS)) {
-    const catProblems = problems.filter((p) => p.category === cat);
-    categoryMap.set(cat, {
-      category: cat,
-      label,
-      completed: 0,
-      total: catProblems.length,
-      firstTryCorrect: 0,
-      totalAttempts: 0,
-    });
-  }
-
-  for (const attempt of progress.attempts) {
-    const problem = problemMap.get(attempt.problemId);
-    if (!problem) continue;
-    const stat = categoryMap.get(problem.category);
-    if (!stat) continue;
-    stat.totalAttempts += 1;
-    if (attempt.isCorrect) {
-      const isFirst =
-        progress.attempts.filter(
-          (a) => a.problemId === attempt.problemId && a.isCorrect,
-        )[0]?.createdAt === attempt.createdAt;
-      if (isFirst) {
-        stat.firstTryCorrect += 1;
-      }
-    }
-  }
-
-  for (const problemId of progress.completedProblemIds) {
-    const problem = problemMap.get(problemId);
-    if (!problem) continue;
-    const stat = categoryMap.get(problem.category);
-    if (stat) stat.completed += 1;
-  }
-
-  const categoryStats = Array.from(categoryMap.values()).filter(
-    (s) => s.total > 0,
-  );
-
-  let strongestCategory: CategoryStat | null = null;
-  let weakestCategory: CategoryStat | null = null;
-  const completedCategories = categoryStats.filter((s) => s.completed > 0);
-  if (completedCategories.length > 0) {
-    strongestCategory = completedCategories.reduce((a, b) =>
-      a.completed / a.total >= b.completed / b.total ? a : b,
-    );
-    weakestCategory = completedCategories.reduce((a, b) =>
-      a.completed / a.total <= b.completed / b.total ? a : b,
-    );
-  }
-
-  return {
-    totalCompleted,
-    totalProblems,
-    accuracy,
-    firstTryAccuracy,
-    wrongCount,
-    streakDays: progress.streakDays,
-    stars: progress.stars,
-    categoryStats,
-    strongestCategory,
-    weakestCategory,
-  };
-}
+import { computeReportStats, type ReportStats } from "@/lib/report";
 
 export default function ReportPage() {
   const [stats, setStats] = useState<ReportStats | null>(null);
 
   useEffect(() => {
-    setStats(computeStats());
+    setStats(computeReportStats());
   }, []);
 
   if (!stats) return null;
 
-  const hasProgress = stats.totalCompleted > 0 || stats.stars > 0;
-
-  if (!hasProgress) {
+  if (!stats.hasProgress) {
     return (
       <div className="min-h-screen bg-amber-50 flex flex-col items-center py-12 px-4">
         <div className="text-6xl mb-4">🌱</div>
@@ -180,9 +48,9 @@ export default function ReportPage() {
         <div className="grid grid-cols-2 gap-3 mb-6">
           <div className="bg-white rounded-xl p-4 shadow text-center">
             <div className="text-2xl font-bold text-green-600">
-              {stats.totalCompleted}
+              {stats.uniqueAttemptedProblems}
             </div>
-            <div className="text-xs text-gray-500">已完成</div>
+            <div className="text-xs text-gray-500">已做过</div>
           </div>
           <div className="bg-white rounded-xl p-4 shadow text-center">
             <div className="text-2xl font-bold text-yellow-500">
@@ -231,7 +99,7 @@ export default function ReportPage() {
                     {stats.strongestCategory.label}
                   </span>
                   <span className="text-xs text-gray-500">
-                    {stats.strongestCategory.completed}/{stats.strongestCategory.total}
+                    {Math.round(stats.strongestCategory.firstTryAccuracy * 100)}% 一次做对
                   </span>
                 </div>
               </div>
@@ -244,7 +112,7 @@ export default function ReportPage() {
                     {stats.weakestCategory.label}
                   </span>
                   <span className="text-xs text-gray-500">
-                    {stats.weakestCategory.completed}/{stats.weakestCategory.total}
+                    {Math.round(stats.weakestCategory.firstTryAccuracy * 100)}% 一次做对
                   </span>
                 </div>
               </div>
