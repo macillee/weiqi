@@ -976,29 +976,31 @@
     "boardSize": 9,
     "category": "life_death",
     "level": 3,
-    "tags": ["life_death", "atari", "liberty-counting"],
+    "tags": ["life_death", "atari", "capture"],
     "toPlay": "black",
-    "title": "紧气吃白棋",
-    "description": "黑棋和白棋在比气，黑棋先走能吃掉白棋吗？",
+    "title": "吃掉白棋救自己",
+    "description": "三颗白棋只剩一口气，黑棋能吃掉它们吗？",
     "initialStones": [
-      { "x": 3, "y": 3, "color": "black" },
-      { "x": 3, "y": 4, "color": "black" },
-      { "x": 4, "y": 3, "color": "black" },
+      { "x": 2, "y": 2, "color": "white" },
       { "x": 2, "y": 3, "color": "white" },
-      { "x": 2, "y": 4, "color": "white" },
-      { "x": 3, "y": 5, "color": "white" },
-      { "x": 4, "y": 4, "color": "white" }
+      { "x": 3, "y": 2, "color": "white" },
+      { "x": 1, "y": 2, "color": "black" },
+      { "x": 1, "y": 3, "color": "black" },
+      { "x": 2, "y": 1, "color": "black" },
+      { "x": 3, "y": 1, "color": "black" },
+      { "x": 4, "y": 2, "color": "black" },
+      { "x": 2, "y": 4, "color": "black" }
     ],
     "answers": [
-      { "x": 2, "y": 5 }
+      { "x": 3, "y": 3 }
     ],
     "hints": [
-      "白棋三颗子连在一起。",
-      "白棋现在只剩两口气。",
-      "黑棋堵住白棋一口气，白棋就危险了。"
+      "三颗白棋连在一起，被黑棋包围了。",
+      "白棋现在只剩一口气。",
+      "下在白棋最后一口气上，就能提掉它们。"
     ],
-    "explanation": "黑棋紧住白棋的气，白棋气不够就被吃掉了。",
-    "successMessage": "太厉害了！你学会了紧气吃子！",
+    "explanation": "黑棋下在白棋最后一口气上，三颗白棋没有气就被提掉了。",
+    "successMessage": "太厉害了！你吃掉了三颗白棋！",
     "failureMessage": "数一数白棋还有几口气？"
   }
 ]
