@@ -244,23 +244,27 @@ Acceptance:
 
 ## v0.2 Design Documents
 
-Status: reviewed with findings.
+Status: reviewed, fixes applied, pending re-review.
 
 Delivered:
 
 - `docs/SUPABASE_DESIGN_v0.2.md` — schema, RLS, client data layer, implementation phases
-  - Fixed: added explicit UPDATE policies for wrong_problems and progress_summary
-  - Fixed: added session expiry handling note in client.ts
-  - Fixed: clarified problem_attempts is append-only (no UPDATE needed)
+  - Added import columns to problem_attempts: `imported_from`, `imported_source_key`, `imported_source_hash`
+  - Added unique index `problem_attempts_import_hash_unique` for idempotent import
+  - Fixed UPDATE policies: `wrong_problems` and `progress_summary` now include `with check`
+  - Added `updated_at` trigger design (Section 7.6)
+  - Added progress_summary concurrency strategy (Section 9)
+  - Downgraded offline queue to v0.2.x; v0.2 only requires clear error on network failure
 - `docs/DATA_MIGRATION_v0.2.md` — localStorage import, merge, idempotency, failure handling
 - `docs/QA_CHECKLIST_v0.2.md` — Auth, child profile, RLS, server progress, migration, regression QA
-  - Added: network failure and session edge cases section
-  - Added: concurrent device test case
+  - Downgraded offline queue requirement to v0.2.x
+  - Added concurrency edge cases section
 - `docs/DESIGN_REVIEW_v0.2.md` — design review findings with severity ratings
 
 Open decisions:
 - First implementation task should be split into v0.2.1a (setup only) + v0.2.1b (auth UI)
 - Consider adding `is_active` column to child_profiles for soft deactivation
+- Offline queue / retry deferred to v0.2.x
 
 ---
 

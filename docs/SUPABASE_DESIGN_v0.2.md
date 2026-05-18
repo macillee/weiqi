@@ -206,6 +206,9 @@ create table public.problem_attempts (
   used_hint boolean not null default false,
   time_spent_seconds int not null default 0,
   created_at timestamptz not null default now(),
+  imported_from text,
+  imported_source_key text,
+  imported_source_hash text,
   constraint problem_attempts_selected_x_range check (selected_x >= 0 and selected_x <= 8),
   constraint problem_attempts_selected_y_range check (selected_y >= 0 and selected_y <= 8),
   constraint problem_attempts_time_nonnegative check (time_spent_seconds >= 0)
@@ -216,6 +219,10 @@ create index problem_attempts_child_profile_id_created_at_idx
 
 create index problem_attempts_child_profile_id_problem_id_idx
   on public.problem_attempts(child_profile_id, problem_id);
+
+create unique index problem_attempts_import_hash_unique
+  on public.problem_attempts(child_profile_id, imported_source_hash)
+  where imported_source_hash is not null;
 ```
 
 Notes:
@@ -223,6 +230,10 @@ Notes:
 - `problem_id` references local JSON problem IDs, not a database problem table in v0.2.
 - This avoids migrating the content system too early.
 - If later we move problems into database, a separate content migration can be designed.
+- `imported_from`, `imported_source_key`, `imported_source_hash` support
+  idempotent localStorage import (see `docs/DATA_MIGRATION_v0.2.md`).
+- `problem_attempts_import_hash_unique` prevents duplicate import of the
+  same attempt when the import is retried.
 
 ---
 
@@ -288,6 +299,49 @@ Notes:
 - Attempts remain the audit trail.
 - `completed_problem_ids` keeps v0.1 semantics: problems first correctly completed.
 - Daily reward dedupe uses `last_practice_date`.
+
+---
+
+# 7.6 updated_at Strategy
+
+All tables with `updated_at` should keep it current automatically.
+
+Recommended approach: database trigger.
+
+```sql
+create or replace function public.set_updated_at()
+returns trigger as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$ language plpgsql;
+
+create trigger profiles_updated_at
+  before update on public.profiles
+  for each row execute function public.set_updated_at();
+
+create trigger child_profiles_updated_at
+  before update on public.child_profiles
+  for each row execute function public.set_updated_at();
+
+create trigger wrong_problems_updated_at
+  before update on public.wrong_problems
+  for each row execute function public.set_updated_at();
+
+create trigger progress_summary_updated_at
+  before update on public.progress_summary
+  for each row execute function public.set_updated_at();
+```
+
+This ensures `updated_at` is always current regardless of whether the
+application layer writes it. The application layer may still include
+`updated_at` in UPDATE statements for clarity, but the trigger is the
+source of truth.
+
+Alternative: if triggers are not desired, the application layer MUST
+write `updated_at = now()` on every UPDATE. This is more error-prone
+and not recommended.
 
 ---
 
@@ -394,8 +448,19 @@ create policy "wrong_problems_update_own_child"
       where cp.id = child_profile_id
         and cp.parent_user_id = auth.uid()
     )
+  )
+  with check (
+    exists (
+      select 1 from public.child_profiles cp
+      where cp.id = child_profile_id
+        and cp.parent_user_id = auth.uid()
+    )
   );
 ```
+
+The `with check` clause ensures that the updated row's `child_profile_id`
+still belongs to the current parent. This prevents a user from moving a
+wrong problem to another parent's child profile during an update.
 
 ## 8.5 progress_summary UPDATE policy
 
@@ -411,8 +476,19 @@ create policy "progress_summary_update_own_child"
       where cp.id = child_profile_id
         and cp.parent_user_id = auth.uid()
     )
+  )
+  with check (
+    exists (
+      select 1 from public.child_profiles cp
+      where cp.id = child_profile_id
+        and cp.parent_user_id = auth.uid()
+    )
   );
 ```
+
+The `with check` clause ensures that the updated row's `child_profile_id`
+still belongs to the current parent. This prevents a user from reassigning
+a progress summary to another parent's child profile during an update.
 
 ## 8.6 problem_attempts is append-only
 
@@ -441,8 +517,10 @@ Responsibilities:
 - Read env vars.
 - Export a typed client if database types are available.
 - Listen to auth state changes (`onAuthStateChange`).
-- Handle session expiry: if session expires during practice, queue
-  attempts locally and retry on next sign-in. Do not lose user data.
+- Handle session expiry: if session expires during practice, show a
+  clear message. Do not lose the current page state. The user can
+  sign in again and continue. Offline queue / retry is deferred to
+  v0.2.x.
 
 ## `server-progress.ts`
 
@@ -451,6 +529,8 @@ Responsibilities:
 - Update wrong problem state.
 - Update summary stars/completed IDs.
 - Load report data.
+- On network failure: show clear error, do not claim success, do not
+  destroy local page state. Retry is manual (user clicks again).
 
 ## `progress-source.ts`
 
@@ -461,6 +541,21 @@ export type ProgressMode = "local" | "server";
 ```
 
 The app should not directly scatter storage decisions across pages.
+
+## progress_summary concurrency
+
+v0.2 does NOT guarantee strong real-time multi-device merge.
+
+- `problem_attempts` is the audit source of truth.
+- `progress_summary` is a denormalized cache for fast UI display.
+- Summary updates should prefer server-side RPC or transaction to
+  avoid client-side blind overwrites of `text[]` arrays.
+- If two devices update the same child profile simultaneously, the
+  server's last write wins. Inconsistencies can be resolved later by
+  recomputing summary from `problem_attempts`.
+- This is acceptable for v0.2 because multi-device simultaneous use
+  by the same child is unlikely. If it becomes common, a v0.2.x
+  improvement can add optimistic locking or server-side recomputation.
 
 ---
 

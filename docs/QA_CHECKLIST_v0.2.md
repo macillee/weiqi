@@ -248,11 +248,24 @@ Simulate failure during import:
 
 # 16.1 Network and Session Edge Cases
 
-- [ ] If connection drops during practice, attempts are queued locally.
-- [ ] After reconnect, queued attempts are sent to server.
+- [ ] If connection drops during practice, user sees clear error message.
+- [ ] Network failure does not claim sync success.
+- [ ] Network failure does not destroy local page state.
 - [ ] If Supabase session expires during practice, user sees clear message.
 - [ ] After re-auth, server progress is restored without data loss.
-- [ ] Concurrent devices with same child profile: both see consistent progress after sync.
+
+Note: Offline queue (queue attempts locally, flush on reconnect) is
+deferred to v0.2.x. v0.2 only requires clear error display and state
+preservation on network failure.
+
+---
+
+# 16.2 Concurrency Edge Cases
+
+- [ ] Two devices with same child profile: both can write attempts.
+- [ ] After both devices sync, server progress is consistent.
+- [ ] progress_summary conflicts resolved by server last-write-wins.
+- [ ] Inconsistencies can be resolved by recomputing from problem_attempts.
 
 ---
 
