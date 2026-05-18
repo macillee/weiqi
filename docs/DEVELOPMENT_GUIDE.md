@@ -300,6 +300,7 @@ Also run if available:
 npm run lint
 npm run typecheck
 npm run test
+npm run test:watch
 ```
 
 Manual checks for UI changes:

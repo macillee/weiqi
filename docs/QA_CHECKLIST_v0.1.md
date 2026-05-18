@@ -89,6 +89,7 @@
 
 - [ ] `/wrong-book` shows "错题本" page.
 - [ ] New users see "太棒了！你还没有错题，继续保持哦！" message.
+- [ ] Users with all mastered wrong problems see "太厉害了！你的错题都复习完了，全部掌握！" message.
 - [ ] After getting a problem wrong in `/practice`, it appears in the wrong book.
 - [ ] Each wrong problem shows: title, category, difficulty, wrong count, status badge.
 - [ ] Status badge shows "待复习" (active) or "复习中" (reviewing).
@@ -178,7 +179,7 @@
 
 # 15. Known Limitations
 
-- [ ] Only 9 sample problems in `problems.json` (v0.1 target is ~100).
+- [ ] 24 problems in `problems.json` (v0.1 target is ~100, v0.1.2 planned for expansion).
 - [ ] No user login or account system (planned for v0.2).
 - [ ] No database; progress is stored in localStorage only.
 - [ ] No AI opponent or AI review.

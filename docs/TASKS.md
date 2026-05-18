@@ -211,6 +211,31 @@ Do not implement in v0.1.1:
 
 ---
 
+## v0.1.1 Stabilization
+
+Status: completed.
+
+Delivered:
+- `vitest.config.ts` — Vitest configuration with jsdom environment.
+- `src/__tests__/board.test.ts` — Tests for board utility functions (14 tests).
+- `src/__tests__/problems.test.ts` — Tests for problem validation (13 tests).
+- `src/__tests__/progress.test.ts` — Tests for progress tracking, wrong problem transitions, and daily practice (15 tests).
+- `src/__tests__/report.test.ts` — Tests for report statistics computation (6 tests).
+- `src/__tests__/practice.test.ts` — Tests for practice session management (7 tests).
+- `src/lib/progress.ts` — Added `resetProgress()` function.
+- `src/app/settings/page.tsx` — Settings page with progress reset (confirmation dialog).
+- `src/app/page.tsx` — Added subtle "设置" link at bottom of home page.
+- `package.json` — Added `npm run test` and `npm run test:watch` scripts.
+
+Acceptance:
+- `npm run test` passes (55+ tests across 5 test files).
+- `npm run build` passes.
+- `docker compose up --build` passes.
+- Resetting local progress returns home, wrong book, and report to empty states.
+- Existing v0.1.0 user flow remains intact.
+
+---
+
 # Future Roadmap
 
 ## v0.1.2 — Content Expansion

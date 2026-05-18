@@ -227,3 +227,14 @@ export function recordDailyPracticeComplete(
 
   return { progress: newProgress, starsEarned };
 }
+
+export function resetProgress(): StudentProgress {
+  if (typeof window !== "undefined") {
+    try {
+      localStorage.removeItem(PROGRESS_KEY);
+    } catch {
+      // ignore storage errors
+    }
+  }
+  return defaultProgress();
+}

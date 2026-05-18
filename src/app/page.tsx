@@ -96,6 +96,15 @@ export default function Home() {
             浏览所有题目
           </div>
         </Link>
+
+        <div className="text-center pt-4">
+          <Link
+            href="/settings"
+            className="text-xs text-amber-400 hover:text-amber-600"
+          >
+            设置
+          </Link>
+        </div>
       </div>
     </div>
   );
