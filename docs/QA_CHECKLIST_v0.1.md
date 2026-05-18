@@ -7,7 +7,7 @@
 
 # 1. Environment Check
 
-- [ ] Node.js 18+ installed.
+- [ ] Node.js 20.19+ installed (recommended: Node.js 22).
 - [ ] `npm install` completes without errors.
 - [ ] `npm run dev` starts successfully.
 - [ ] `http://localhost:3000` loads in browser.

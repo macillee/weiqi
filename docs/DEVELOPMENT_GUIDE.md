@@ -22,7 +22,15 @@ Do not turn v0.1 into a general Go platform.
 
 ---
 
-# 2. Local Commands
+# 2. Node.js Requirements
+
+- Recommended: Node.js 22
+- Minimum: Node.js 20.19+
+- Docker uses `node:22-alpine`
+
+---
+
+# 3. Local Commands
 
 Use these commands for normal local development:
 
@@ -54,7 +62,7 @@ If scripts differ from this document, update this document and explain why in th
 
 ---
 
-# 3. Branching and PR Rules
+# 4. Branching and PR Rules
 
 Use small task branches:
 
@@ -78,7 +86,7 @@ Rules:
 
 ---
 
-# 4. v0.1 Architecture Rules
+# 5. v0.1 Architecture Rules
 
 Allowed technologies:
 
@@ -105,7 +113,7 @@ Not allowed in v0.1 unless documentation explicitly changes:
 
 ---
 
-# 5. Recommended Project Structure
+# 6. Recommended Project Structure
 
 ```text
 /src
@@ -147,7 +155,7 @@ This structure can evolve, but changes must remain simple and documented.
 
 ---
 
-# 6. TypeScript Rules
+# 7. TypeScript Rules
 
 - Use explicit domain types for Go board, problems, attempts, and progress.
 - Avoid `any` unless there is a documented reason.
@@ -159,7 +167,7 @@ Core domain types should align with `docs/PROJECT_SPEC.md`.
 
 ---
 
-# 7. Go Board Implementation Rules
+# 8. Go Board Implementation Rules
 
 The board is the foundation of the product.
 
@@ -206,7 +214,7 @@ type GoBoardProps = {
 
 ---
 
-# 8. Problem Data Rules
+# 9. Problem Data Rules
 
 v0.1 uses local JSON problem data.
 
@@ -233,7 +241,7 @@ Bad copy:
 
 ---
 
-# 9. localStorage Rules
+# 10. localStorage Rules
 
 v0.1 uses localStorage for progress.
 
@@ -253,7 +261,7 @@ Rules:
 
 ---
 
-# 10. Child UX Rules
+# 11. Child UX Rules
 
 This product is for children around 6–10 years old.
 
@@ -283,7 +291,7 @@ Avoid:
 
 ---
 
-# 11. Testing Rules
+# 12. Testing Rules
 
 Before handing off a PR, run all available checks.
 
@@ -313,7 +321,7 @@ Manual checks for UI changes:
 
 ---
 
-# 12. Documentation Maintenance
+# 13. Documentation Maintenance
 
 Documentation is part of the product.
 

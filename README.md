@@ -30,6 +30,12 @@ v0.1 暂不做：
 - 多步复杂死活
 - 19 路棋盘
 
+## 运行环境
+
+- 推荐：Node.js 22
+- 最低：Node.js 20.19+
+- Docker 使用 `node:22-alpine`
+
 ## 推荐技术栈
 
 - Next.js App Router
