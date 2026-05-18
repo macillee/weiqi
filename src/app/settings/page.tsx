@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { resetProgress, loadProgress } from "@/lib/progress";
+import { resetProgress } from "@/lib/progress";
 
 export default function SettingsPage() {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -26,7 +26,7 @@ export default function SettingsPage() {
           <div className="bg-green-50 border-2 border-green-300 rounded-xl p-4 text-center mb-6">
             <p className="text-green-700 font-bold">重置成功！</p>
             <p className="text-green-600 text-sm mt-1">
-              所有学习数据已清除，可以重新开始练习了。
+              所有学习数据已清除，返回首页后会看到新的空进度。
             </p>
           </div>
         )}
