@@ -71,6 +71,14 @@ export default function FeedbackDialog({
               再试一次
             </button>
           )}
+          {showAnswer && onNext && (
+            <button
+              onClick={onNext}
+              className="mt-3 px-6 py-2 bg-amber-500 text-white rounded-full font-medium hover:bg-amber-600"
+            >
+              下一题
+            </button>
+          )}
         </div>
       )}
     </div>
