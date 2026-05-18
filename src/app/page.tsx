@@ -77,6 +77,17 @@ export default function Home() {
         </Link>
 
         <Link
+          href="/report"
+          className="block w-full bg-purple-500 hover:bg-purple-600 text-white rounded-2xl p-6 shadow-lg text-center transition-colors"
+        >
+          <div className="text-4xl mb-2">📊</div>
+          <div className="text-xl font-bold">学习报告</div>
+          <div className="text-sm text-purple-100 mt-1">
+            看看你的进步
+          </div>
+        </Link>
+
+        <Link
           href="/demo"
           className="block w-full bg-amber-400 hover:bg-amber-500 text-amber-900 rounded-2xl p-4 shadow text-center transition-colors"
         >
