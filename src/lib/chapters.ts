@@ -23,7 +23,9 @@ export const chapters: Chapter[] = [
     levels: [
       { id: "capture-1", title: "第 1 关", problemIds: ["CAP-001", "CAP-002"] },
       { id: "capture-2", title: "第 2 关", problemIds: ["CAP-003", "CAP-004"] },
-      { id: "capture-3", title: "第 3 关", problemIds: ["CAP-005"] },
+      { id: "capture-3", title: "第 3 关", problemIds: ["CAP-005", "CAP-006"] },
+      { id: "capture-4", title: "第 4 关", problemIds: ["CAP-007", "CAP-008", "CAP-009"] },
+      { id: "capture-5", title: "第 5 关", problemIds: ["CAP-010"] },
     ],
   },
   {
@@ -33,6 +35,8 @@ export const chapters: Chapter[] = [
     description: "学会把自己的棋跑出去",
     levels: [
       { id: "escape-1", title: "第 1 关", problemIds: ["ESC-001"] },
+      { id: "escape-2", title: "第 2 关", problemIds: ["ESC-002", "ESC-003"] },
+      { id: "escape-3", title: "第 3 关", problemIds: ["ESC-004", "ESC-005"] },
     ],
   },
   {
@@ -42,6 +46,8 @@ export const chapters: Chapter[] = [
     description: "学会连接和切断",
     levels: [
       { id: "connect-cut-1", title: "第 1 关", problemIds: ["CC-001", "CC-002"] },
+      { id: "connect-cut-2", title: "第 2 关", problemIds: ["CC-003", "CC-004"] },
+      { id: "connect-cut-3", title: "第 3 关", problemIds: ["CC-005", "CC-006"] },
     ],
   },
   {
@@ -51,6 +57,7 @@ export const chapters: Chapter[] = [
     description: "学会开局占角",
     levels: [
       { id: "opening-1", title: "第 1 关", problemIds: ["OP-001"] },
+      { id: "opening-2", title: "第 2 关", problemIds: ["OP-002", "OP-003"] },
     ],
   },
 ];
