@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import GoBoard from "@/components/board/GoBoard";
 import ProblemHeader from "@/components/problem/ProblemHeader";
 import HintPanel from "@/components/problem/HintPanel";
@@ -23,6 +23,13 @@ export default function ProblemPlayer({ problem, onNext }: ProblemPlayerProps) {
     x: number;
     y: number;
   } | null>(null);
+
+  useEffect(() => {
+    setWrongAttempts(0);
+    setHintIndex(0);
+    setResult(null);
+    setLastWrongMove(null);
+  }, [problem.id]);
 
   const showAnswer = wrongAttempts >= MAX_WRONG_ATTEMPTS;
 
@@ -57,10 +64,6 @@ export default function ProblemPlayer({ problem, onNext }: ProblemPlayerProps) {
     setLastWrongMove(null);
   }, []);
 
-  const handleNext = useCallback(() => {
-    onNext?.();
-  }, [onNext]);
-
   const boardStones: BoardStone[] = problem.initialStones;
 
   const highlights: Highlight[] = [];
@@ -79,7 +82,7 @@ export default function ProblemPlayer({ problem, onNext }: ProblemPlayerProps) {
     }
   }
 
-  const isDisabled = result === "correct" || showAnswer;
+  const isDisabled = result !== null;
 
   return (
     <div className="flex flex-col items-center gap-4 px-4 py-6">
@@ -109,7 +112,6 @@ export default function ProblemPlayer({ problem, onNext }: ProblemPlayerProps) {
           failureMessage=""
           explanation={problem.explanation}
           onNext={onNext}
-          onTryAgain={undefined}
           showAnswer={false}
         />
       )}
