@@ -886,10 +886,10 @@
     "boardSize": 9,
     "category": "life_death",
     "level": 2,
-    "tags": ["life_death", "atari", "corner"],
+    "tags": ["life_death", "atari", "extend"],
     "toPlay": "black",
     "title": "角上救黑棋",
-    "description": "角上三颗黑棋只剩一口气，下在哪里可以救活？",
+    "description": "角上三颗黑棋只剩一口气，下在哪里长出去？",
     "initialStones": [
       { "x": 0, "y": 0, "color": "black" },
       { "x": 0, "y": 1, "color": "black" },
@@ -903,10 +903,10 @@
     "hints": [
       "角上三颗黑棋被白棋从两边挡住了。",
       "黑棋现在只剩中间一口气。",
-      "下在中间，黑棋就能长出去。"
+      "下在中间，黑棋就能长出去，气就变多了。"
     ],
     "explanation": "黑棋下在中间长出去，气变多了，就安全了。",
-    "successMessage": "很好！黑棋成功救活了！",
+    "successMessage": "很好！黑棋成功长出去了！",
     "failureMessage": "黑棋需要长气，哪里能让它变安全？"
   },
   {
@@ -944,31 +944,29 @@
     "level": 3,
     "tags": ["life_death", "atari", "extend"],
     "toPlay": "black",
-    "title": "救四颗黑棋",
-    "description": "四颗黑棋被白棋包围了，只剩一口气，往哪里跑？",
+    "title": "救三颗黑棋",
+    "description": "三颗黑棋被白棋挡住了，只剩一口气，往哪里跑？",
     "initialStones": [
+      { "x": 0, "y": 1, "color": "black" },
       { "x": 1, "y": 1, "color": "black" },
       { "x": 2, "y": 1, "color": "black" },
-      { "x": 1, "y": 2, "color": "black" },
-      { "x": 2, "y": 2, "color": "black" },
-      { "x": 0, "y": 1, "color": "white" },
-      { "x": 0, "y": 2, "color": "white" },
+      { "x": 0, "y": 0, "color": "white" },
       { "x": 1, "y": 0, "color": "white" },
       { "x": 2, "y": 0, "color": "white" },
-      { "x": 3, "y": 1, "color": "white" },
-      { "x": 3, "y": 2, "color": "white" },
-      { "x": 1, "y": 3, "color": "white" }
+      { "x": 0, "y": 2, "color": "white" },
+      { "x": 2, "y": 2, "color": "white" },
+      { "x": 3, "y": 1, "color": "white" }
     ],
     "answers": [
-      { "x": 2, "y": 3 }
+      { "x": 1, "y": 2 }
     ],
     "hints": [
-      "四颗黑棋被白棋围住了。",
-      "黑棋现在只剩一口气。",
-      "往右下方长，黑棋就能逃出来。"
+      "三颗黑棋横着连在一起。",
+      "白棋在上面、两边和右边都挡住了。",
+      "往中间下面长，黑棋的气就变多了。"
     ],
-    "explanation": "黑棋往右下方长，增加了气，逃出来了。",
-    "successMessage": "太棒了！四颗黑棋成功救活了！",
+    "explanation": "黑棋往下长，增加了气，逃出来了。",
+    "successMessage": "太棒了！三颗黑棋成功救活了！",
     "failureMessage": "黑棋需要长气，哪里能让它变安全？"
   },
   {

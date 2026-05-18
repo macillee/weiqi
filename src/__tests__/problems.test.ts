@@ -1,5 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { validateProblem, validateAllProblems } from "@/lib/problems";
+import {
+  validateProblem,
+  validateAllProblems,
+  loadProblems,
+} from "@/lib/problems";
 import type { Problem } from "@/lib/problems";
 
 function makeValidProblem(overrides: Partial<Problem> = {}): Problem {
@@ -149,5 +153,76 @@ describe("validateAllProblems", () => {
     ];
     const result = validateAllProblems(problems);
     expect(result.valid).toBe(true);
+  });
+});
+
+describe("problem data quality", () => {
+  const problems = loadProblems();
+
+  it("total problem count is 36", () => {
+    expect(problems).toHaveLength(36);
+  });
+
+  it("v0.1.2 added problem IDs exist", () => {
+    const expectedIds = [
+      "CAP-011",
+      "CAP-012",
+      "CAP-013",
+      "ESC-006",
+      "ESC-007",
+      "CC-007",
+      "CC-008",
+      "CC-009",
+      "LD-001",
+      "LD-002",
+      "LD-003",
+      "LD-004",
+    ];
+    const ids = problems.map((p) => p.id);
+    for (const id of expectedIds) {
+      expect(ids).toContain(id);
+    }
+  });
+
+  it("every problem has at least 2 hints", () => {
+    for (const problem of problems) {
+      expect(problem.hints.length).toBeGreaterThanOrEqual(2);
+    }
+  });
+
+  it("failureMessage avoids blame or harsh wording", () => {
+    const harshPatterns = [
+      /错[误了]/,
+      /笨/,
+      /傻/,
+      /太差/,
+      /不行/,
+      /不对/,
+      /错了/,
+    ];
+    for (const problem of problems) {
+      for (const pattern of harshPatterns) {
+        expect(problem.failureMessage).not.toMatch(pattern);
+      }
+    }
+  });
+
+  it("all problems are 9x9 board", () => {
+    for (const problem of problems) {
+      expect(problem.boardSize).toBe(9);
+    }
+  });
+
+  it("all problems are single-move (exactly one answer point or multiple points for same-move options)", () => {
+    for (const problem of problems) {
+      expect(problem.answers.length).toBeGreaterThanOrEqual(1);
+    }
+  });
+
+  it("all problems have child-friendly successMessage", () => {
+    for (const problem of problems) {
+      expect(problem.successMessage.length).toBeGreaterThan(0);
+      expect(problem.successMessage.length).toBeLessThanOrEqual(30);
+    }
   });
 });
