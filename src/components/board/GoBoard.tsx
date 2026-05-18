@@ -61,10 +61,6 @@ export default function GoBoard({
     return stones.some((s) => s.x === x && s.y === y);
   }
 
-  function getHighlightAt(x: number, y: number): Highlight | undefined {
-    return highlights.find((h) => h.x === x && h.y === y);
-  }
-
   function handlePointClick(x: number, y: number) {
     if (!isPointOnBoard({ x, y }, size)) return;
     if (isOccupied(x, y)) return;
@@ -107,22 +103,15 @@ export default function GoBoard({
     />
   ));
 
-  const pointClickAreas = [];
-  for (let y = 0; y < size; y++) {
-    for (let x = 0; x < size; x++) {
-      pointClickAreas.push(
-        <BoardPoint
-          key={`point-${x}-${y}`}
-          cx={coordToPixel(x)}
-          cy={coordToPixel(y)}
-          cellSize={CELL_SIZE}
-          disabled={disabled}
-          occupied={isOccupied(x, y)}
-          onClick={() => handlePointClick(x, y)}
-        />,
-      );
-    }
-  }
+  const highlightElements = highlights.map((hl: Highlight, i: number) => (
+    <BoardHighlight
+      key={`hl-${i}`}
+      cx={coordToPixel(hl.x)}
+      cy={coordToPixel(hl.y)}
+      radius={stoneRadius}
+      highlightType={hl.type}
+    />
+  ));
 
   const stoneElements = stones.map((stone: Stone, i: number) => (
     <StoneComponent
@@ -134,15 +123,35 @@ export default function GoBoard({
     />
   ));
 
-  const highlightElements = highlights.map((hl: Highlight, i: number) => (
-    <BoardHighlight
-      key={`hl-${i}`}
-      cx={coordToPixel(hl.x)}
-      cy={coordToPixel(hl.y)}
-      radius={stoneRadius}
-      highlightType={hl.type}
-    />
-  ));
+  const lastMoveElement =
+    lastMove && isPointOnBoard(lastMove, size) ? (
+      <BoardHighlight
+        key="lastMove"
+        cx={coordToPixel(lastMove.x)}
+        cy={coordToPixel(lastMove.y)}
+        radius={stoneRadius}
+        highlightType="lastMove"
+      />
+    ) : null;
+
+  const pointClickAreas = [];
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      pointClickAreas.push(
+        <BoardPoint
+          key={`point-${x}-${y}`}
+          boardX={x}
+          boardY={y}
+          cx={coordToPixel(x)}
+          cy={coordToPixel(y)}
+          cellSize={CELL_SIZE}
+          disabled={disabled}
+          occupied={isOccupied(x, y)}
+          onClick={() => handlePointClick(x, y)}
+        />,
+      );
+    }
+  }
 
   return (
     <svg
@@ -165,6 +174,7 @@ export default function GoBoard({
       {starPointElements}
       {highlightElements}
       {stoneElements}
+      {lastMoveElement}
       {pointClickAreas}
     </svg>
   );

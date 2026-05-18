@@ -9,14 +9,15 @@ type StoneProps = {
 
 export default function Stone({ cx, cy, radius, color }: StoneProps) {
   return (
-    <circle
-      cx={cx}
-      cy={cy}
-      r={radius}
-      fill={color === "black" ? "#1a1a1a" : "#f5f5f5"}
-      stroke={color === "black" ? "#000" : "#999"}
-      strokeWidth={1}
-    >
+    <g>
+      <circle
+        cx={cx}
+        cy={cy}
+        r={radius}
+        fill={color === "black" ? "#1a1a1a" : "#f5f5f5"}
+        stroke={color === "black" ? "#000" : "#999"}
+        strokeWidth={1}
+      />
       {color === "white" && (
         <circle
           cx={cx - radius * 0.25}
@@ -26,6 +27,6 @@ export default function Stone({ cx, cy, radius, color }: StoneProps) {
           opacity={0.6}
         />
       )}
-    </circle>
+    </g>
   );
 }

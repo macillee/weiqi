@@ -45,7 +45,7 @@ export default function Home() {
         围棋棋盘演示
       </h1>
       <p className="text-amber-700 mb-6 text-center max-w-md">
-        点击棋盘空交叉点放置黑子。 occupied 点不会触发点击。
+        点击棋盘空交叉点放置黑子。已有棋子的交叉点不会触发点击。
       </p>
 
       <div className="flex flex-col items-center gap-4">

@@ -1,4 +1,6 @@
 type BoardPointProps = {
+  boardX: number;
+  boardY: number;
   cx: number;
   cy: number;
   cellSize: number;
@@ -8,6 +10,8 @@ type BoardPointProps = {
 };
 
 export default function BoardPoint({
+  boardX,
+  boardY,
   cx,
   cy,
   cellSize,
@@ -26,7 +30,7 @@ export default function BoardPoint({
       onClick={onClick}
       style={{ cursor: "pointer" }}
       role="button"
-      aria-label={`Board intersection at ${cx}, ${cy}`}
+      aria-label={`Board intersection at ${boardX}, ${boardY}`}
     />
   );
 }
