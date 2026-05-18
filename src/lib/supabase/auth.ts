@@ -1,35 +1,29 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import type { Session, AuthChangeEvent } from "@supabase/supabase-js";
 import { createSupabaseClient } from "./client";
-
-/**
- * Returns the current Supabase session, or null if not signed in
- * or if Supabase is not configured.
- */
-export function getCurrentSession(): Session | null {
-  const client = createSupabaseClient();
-  if (!client) return null;
-  // getSession is synchronous in the browser client when called
-  // outside an async context; we use the synchronous accessor.
-  // However, Supabase JS v2 requires async getSession. For a
-  // synchronous read, we rely on the auth state listener below.
-  // This helper is best used inside useEffect or async code.
-  return null;
-}
+import { classifySupabaseError, type SupabaseError } from "./supabase-error";
 
 /**
  * React hook that provides the current Supabase session and
  * auth state. Returns null session when Supabase is not
  * configured, keeping local mode functional.
+ *
+ * Cloud-failure tolerance:
+ * - If Supabase is not configured, returns null session immediately.
+ * - If Supabase Cloud is unreachable, catches the error and returns
+ *   null session (local mode continues).
+ * - Network errors are NOT thrown to the UI.
  */
 export function useSupabaseAuth(): {
   session: Session | null;
   isLoading: boolean;
+  error: SupabaseError | null;
 } {
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<SupabaseError | null>(null);
 
   useEffect(() => {
     const client = createSupabaseClient();
@@ -42,12 +36,23 @@ export function useSupabaseAuth(): {
     let cancelled = false;
 
     // Get initial session
-    client.auth.getSession().then(({ data: { session } }) => {
-      if (!cancelled) {
-        setSession(session);
-        setIsLoading(false);
-      }
-    });
+    client.auth
+      .getSession()
+      .then(({ data: { session }, error: authError }) => {
+        if (!cancelled) {
+          if (authError) {
+            setError(classifySupabaseError(authError));
+          }
+          setSession(session);
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setError(classifySupabaseError(err));
+          setIsLoading(false);
+        }
+      });
 
     // Listen for auth state changes
     const {
@@ -56,6 +61,7 @@ export function useSupabaseAuth(): {
       (_event: AuthChangeEvent, session: Session | null) => {
         setSession(session);
         setIsLoading(false);
+        setError(null);
       },
     );
 
@@ -65,5 +71,5 @@ export function useSupabaseAuth(): {
     };
   }, []);
 
-  return { session, isLoading };
+  return { session, isLoading, error };
 }

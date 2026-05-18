@@ -693,6 +693,112 @@ Rules:
 
 ---
 
+# 16. Cloud-Failure Tolerance
+
+v0.2 must remain functional when Supabase Cloud is unavailable.
+
+## 16.1 Docker Startup Without Supabase Env
+
+The app Docker container MUST start successfully even when
+`NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` are
+not set. The app should detect missing configuration and continue
+in local anonymous mode.
+
+Implementation:
+
+```ts
+// src/lib/supabase/client.ts
+export function createSupabaseClient(): SupabaseClient | null {
+  if (!isSupabaseConfigured()) return null;
+  return createClient(supabaseUrl!, supabaseAnonKey!);
+}
+```
+
+All server-progress code MUST check for `null` client before use.
+
+## 16.2 Anonymous Local Mode Without Supabase
+
+When Supabase is not configured or unavailable, the entire v0.1
+learning loop must work identically to before v0.2:
+
+- Home page loads
+- Daily practice works
+- Wrong book works
+- Report works
+- Settings reset works
+- Progress persists in localStorage
+
+No Supabase error should block any of these flows.
+
+## 16.3 Supabase Cloud Outage
+
+If Supabase Cloud is reachable at startup but becomes unavailable
+during use (network partition, 5xx, timeout):
+
+- **Local practice must continue uninterrupted.** The child should
+  be able to complete problems and receive feedback.
+- **Progress is saved to localStorage first.** Server sync is
+  attempted but failure does not block local save.
+- **Clear error message is shown.** The user sees:
+  "网络连接失败，进度已保存在本地，请稍后重试同步。"
+- **Never claim sync success unless server write succeeds.** The
+  UI must not show "已同步" or similar unless the server confirms.
+
+## 16.4 Error Classification
+
+Supabase errors are classified to enable appropriate responses:
+
+| Error Type | Trigger | User Message | Recovery |
+|---|---|---|---|
+| `not_configured` | Missing env vars | Silent fallback to local | N/A |
+| `network_error` | Fetch failed, DNS, timeout | "网络连接失败，进度已保存在本地" | Retry on next action |
+| `server_error` | 5xx, 429 | "服务器暂时不可用，进度已保存在本地" | Retry on next action |
+| `auth_error` | Session expired, 401 | "登录已过期，请重新登录" | Redirect to login |
+| `permission_error` | RLS denied, 403 | "权限不足，请联系管理员" | No automatic retry |
+| `unknown` | Other | "同步失败，进度已保存在本地" | Retry on next action |
+
+See `src/lib/supabase/supabase-error.ts` for implementation.
+
+## 16.5 Server Sync Failure Handling
+
+All server write operations follow this pattern:
+
+```ts
+async function saveAttempt(attempt: Attempt): Promise<void> {
+  // 1. Save to localStorage first (always succeeds)
+  saveLocalAttempt(attempt);
+
+  // 2. Try server sync
+  const client = createSupabaseClient();
+  if (!client) return; // Local mode, no error
+
+  try {
+    await client.from("problem_attempts").insert(attempt);
+    // Only mark synced if server confirms
+    markSynced(attempt);
+  } catch (error) {
+    const classified = classifySupabaseError(error);
+    showSyncError(classified);
+    // Local data is already saved, no data loss
+  }
+}
+```
+
+Key rules:
+- localStorage write happens BEFORE server attempt.
+- Server failure does NOT roll back local save.
+- Sync error is shown but does not block the user flow.
+- The app never claims "已同步" unless the server write succeeds.
+
+## 16.6 Self-Hosting Out of Scope
+
+Full Supabase self-hosting (Docker, self-managed Postgres, auth)
+is explicitly out of scope for v0.2. v0.2 uses Supabase Cloud
+only. Self-hosting may be considered in a future version if
+needed.
+
+---
+
 # 15. Completion Criteria
 
 This design is ready for implementation only when:
