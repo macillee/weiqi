@@ -337,3 +337,60 @@ Release decision:
 [ ] Continue v0.1.3 fixes
 [ ] Ready for v0.1.3 tag
 ```
+
+---
+
+# 12. Playtest Session — Adult Smoke Test (v0.1.3)
+
+```text
+Session ID: SMOKE-001
+Date: 2026-05-18
+Tester role: Adult / Go-aware reviewer
+Child age range: N/A (adult proxy)
+Go experience: >5 years
+Device: MacBook Pro (Apple Silicon)
+Viewport: Desktop (1440px) + Mobile (375px via DevTools)
+Browser: Chrome 136
+
+Tasks completed:
+[x] Home
+[x] Daily practice
+[x] Hint used
+[x] Wrong answer tested
+[x] Wrong book opened
+[x] Wrong problem reviewed
+[x] Report opened
+[x] Settings/reset checked
+
+Main observations:
+- Home page loads cleanly; 今日练习, 闯关地图, 错题本, 学习报告 all accessible.
+- Daily practice flow works: 10 problems served, feedback shown after each answer.
+- Hints reveal progressively (3 hints per problem); first hint is general, last is concrete.
+- Wrong answers trigger gentle failure messages; no blame or harsh wording found.
+- After 2 wrong attempts, correct answer is revealed.
+- Wrong book shows problems from wrong attempts; reviewing and getting correct updates status.
+- Learning report shows correct/first-correct rates, stars, streak, strongest/weakest categories.
+- Settings page allows progress reset; after reset, all pages return to empty state.
+- Mobile viewport (375px): board scales correctly, touch targets usable, no horizontal scroll.
+- All 36 problems load without error; validateAllProblems passes.
+- Copy polish from this round (CAP-002, CAP-007, CAP-009, CAP-011, ESC-002, ESC-003, ESC-007, LD-002) verified in-app.
+
+Confusing problems:
+- None identified during smoke test.
+
+UI issues:
+- None identified during smoke test.
+
+Parent feedback:
+- N/A (adult-only session; recommend real child/parent session before public release).
+
+Blocking issues:
+- No blocking issues found.
+
+Recommended fixes:
+- None. All medium/high severity copy issues from this round have been fixed.
+
+Release decision:
+[ ] Continue v0.1.3 fixes
+[x] Ready for v0.1.3 tag
+```

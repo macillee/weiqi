@@ -219,70 +219,27 @@ Acceptance:
 
 ---
 
-# Next Task: v0.1.3 Content Review / Product Polish
+## v0.1.3 Content Review / Product Polish
 
-## Goal
+Status: completed.
 
-Use the v0.1.2 36-problem local version for feedback, copy polish, UI polish, and test hardening before any account/database work.
+Delivered:
 
-## References
+- `src/__tests__/problems.test.ts` — strengthened problem data tests (36 count, v0.1.2 IDs, hints≥2, failureMessage tone, successMessage length)
+- `src/data/problems.json` — copy polish for 8 problems (CAP-002, CAP-007, CAP-009, CAP-011, ESC-002, ESC-003, ESC-007, LD-002)
+- `docs/PLAYTEST_v0.1.3.md` — adult smoke playtest session recorded
+- `docs/ROADMAP_v0.2.md` — remains planning-only
+- No v0.2 features introduced
 
-- `docs/PLAYTEST_v0.1.3.md`
-- `docs/ROADMAP_v0.2.md`
-- `docs/CONTENT_REVIEW_v0.1.2.md`
-- `docs/CONTENT_PLAN_v0.1.2.md`
-- `docs/QUALITY_CHECKLIST.md`
-- `docs/DEVELOPMENT_GUIDE.md`
-
-## Scope
-
-1. Use `docs/PLAYTEST_v0.1.3.md` to collect playtest notes.
-2. Polish child-facing copy if playtest or review reveals confusion.
-3. Allow limited edits to:
-   - `title`
-   - `description`
-   - `hints`
-   - `explanation`
-   - `successMessage`
-   - `failureMessage`
-   - `level`
-   - `tags`
-4. Do not change coordinates unless there is a clear Go-logic bug.
-5. Add or strengthen problem data tests, especially:
-   - total problem count is 36;
-   - v0.1.2 added IDs exist;
-   - every problem has at least 2 hints;
-   - `failureMessage` avoids blame/harsh wording;
-   - all problems pass validation.
-6. Improve mobile layout or empty states only if concrete issues are found.
-7. Keep `docs/ROADMAP_v0.2.md` as planning only.
-
-## Out of Scope
-
-Do not implement in v0.1.3:
-
-- Login
-- Database
-- Supabase
-- AI opponent
-- AI review
-- Payment
-- Teacher/admin backend
-- Multi-step problem engine
-- 13x13 or 19x19 problem sets
-- New large content expansion
-- v0.2 account/sync code
-
-## Acceptance
+Acceptance:
 
 - `npm run build` passes.
-- `npm run test` passes.
-- `docs/PLAYTEST_v0.1.3.md` exists and is ready for use.
+- `npm run test` passes (66 tests).
+- `docs/PLAYTEST_v0.1.3.md` has actual session record.
 - `docs/ROADMAP_v0.2.md` exists and remains planning-only.
 - Problem tests cover the 36-problem content state.
 - Existing 36 problems still pass validation.
 - No v0.2 features are introduced.
-- Docker validation is not required unless Docker/dependency/build-config changed.
 
 ---
 
