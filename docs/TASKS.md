@@ -7,16 +7,16 @@
 
 # Current Phase
 
-v0.1.2 content expansion after v0.1.1 stabilization.
+v0.1.3 content review and product polish after v0.1.2 content expansion.
 
 Current strategy:
 
 ```text
-1. Preserve the stable v0.1.1 local MVP
-2. Expand content only in small reviewed batches
-3. Keep all new problems 9x9 and single-move
-4. Prioritize life_death basics without introducing complex reading
-5. Keep tests and validation green
+1. Preserve the stable v0.1.2 local MVP
+2. Collect playtest feedback before adding major systems
+3. Polish copy, hints, mobile layout, and child-facing UX
+4. Strengthen problem data tests
+5. Prepare v0.2 design docs only; do not implement v0.2 features yet
 6. Defer login/database/AI/payment to later versions
 ```
 
@@ -196,6 +196,7 @@ Delivered:
 
 - `src/data/problems.json` — expanded from 24 to 36 problems (+12)
 - `docs/CONTENT_REVIEW_v0.1.2.md` — content review documentation
+- `docs/CONTENT_PLAN_v0.1.2.md` — content expansion plan
 
 New problems:
 
@@ -218,13 +219,74 @@ Acceptance:
 
 ---
 
+# Next Task: v0.1.3 Content Review / Product Polish
+
+## Goal
+
+Use the v0.1.2 36-problem local version for feedback, copy polish, UI polish, and test hardening before any account/database work.
+
+## References
+
+- `docs/PLAYTEST_v0.1.3.md`
+- `docs/ROADMAP_v0.2.md`
+- `docs/CONTENT_REVIEW_v0.1.2.md`
+- `docs/CONTENT_PLAN_v0.1.2.md`
+- `docs/QUALITY_CHECKLIST.md`
+- `docs/DEVELOPMENT_GUIDE.md`
+
+## Scope
+
+1. Use `docs/PLAYTEST_v0.1.3.md` to collect playtest notes.
+2. Polish child-facing copy if playtest or review reveals confusion.
+3. Allow limited edits to:
+   - `title`
+   - `description`
+   - `hints`
+   - `explanation`
+   - `successMessage`
+   - `failureMessage`
+   - `level`
+   - `tags`
+4. Do not change coordinates unless there is a clear Go-logic bug.
+5. Add or strengthen problem data tests, especially:
+   - total problem count is 36;
+   - v0.1.2 added IDs exist;
+   - every problem has at least 2 hints;
+   - `failureMessage` avoids blame/harsh wording;
+   - all problems pass validation.
+6. Improve mobile layout or empty states only if concrete issues are found.
+7. Keep `docs/ROADMAP_v0.2.md` as planning only.
+
+## Out of Scope
+
+Do not implement in v0.1.3:
+
+- Login
+- Database
+- Supabase
+- AI opponent
+- AI review
+- Payment
+- Teacher/admin backend
+- Multi-step problem engine
+- 13x13 or 19x19 problem sets
+- New large content expansion
+- v0.2 account/sync code
+
+## Acceptance
+
+- `npm run build` passes.
+- `npm run test` passes.
+- `docs/PLAYTEST_v0.1.3.md` exists and is ready for use.
+- `docs/ROADMAP_v0.2.md` exists and remains planning-only.
+- Problem tests cover the 36-problem content state.
+- Existing 36 problems still pass validation.
+- No v0.2 features are introduced.
+- Docker validation is not required unless Docker/dependency/build-config changed.
+
+---
+
 # Future Roadmap
-
-## v0.1.3 — Content Review / Polish
-
-- Review v0.1.2 content with actual child/parent feedback.
-- Fix ambiguous problems.
-- Improve hints and explanations.
 
 ## v0.2.0 — Accounts and Sync
 
