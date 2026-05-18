@@ -1,5 +1,6 @@
 import problemsData from "@/data/problems.json";
 import type { Stone, StoneColor } from "@/lib/board";
+import { getGroup, countLiberties } from "@/lib/board";
 
 export type Point = {
   x: number;
@@ -109,6 +110,28 @@ export function validateProblem(problem: Problem): ValidationResult {
     if (stoneKeys.has(answerKey)) {
       errors.push(
         `Problem ${problem.id}: answer at (${answer.x}, ${answer.y}) overlaps with an existing stone`,
+      );
+    }
+  }
+
+  const checkedGroups = new Set<string>();
+  for (const stone of problem.initialStones) {
+    const key = `${stone.x},${stone.y}`;
+    if (checkedGroups.has(key)) continue;
+    const group = getGroup(stone, problem.initialStones, boardSize);
+    const groupKey = group
+      .map((s) => `${s.x},${s.y}`)
+      .sort()
+      .join("|");
+    if (checkedGroups.has(groupKey)) continue;
+    group.forEach((s) => checkedGroups.add(`${s.x},${s.y}`));
+    checkedGroups.add(groupKey);
+
+    const liberties = countLiberties(group, problem.initialStones, boardSize);
+    if (liberties === 0) {
+      const stonesStr = group.map((s) => `(${s.x},${s.y})`).join(", ");
+      errors.push(
+        `Problem ${problem.id}: zero-liberty group at ${stonesStr}`,
       );
     }
   }

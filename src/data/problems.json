@@ -68,7 +68,8 @@
       { "x": 2, "y": 3, "color": "black" },
       { "x": 4, "y": 3, "color": "black" },
       { "x": 2, "y": 4, "color": "black" },
-      { "x": 4, "y": 4, "color": "black" }
+      { "x": 4, "y": 4, "color": "black" },
+      { "x": 3, "y": 2, "color": "black" }
     ],
     "answers": [
       { "x": 3, "y": 5 }
@@ -175,7 +176,8 @@
     "initialStones": [
       { "x": 1, "y": 1, "color": "white" },
       { "x": 0, "y": 1, "color": "black" },
-      { "x": 1, "y": 0, "color": "black" }
+      { "x": 1, "y": 0, "color": "black" },
+      { "x": 2, "y": 1, "color": "black" }
     ],
     "answers": [
       { "x": 1, "y": 2 }
@@ -201,16 +203,15 @@
     "initialStones": [
       { "x": 4, "y": 0, "color": "white" },
       { "x": 3, "y": 0, "color": "black" },
-      { "x": 5, "y": 0, "color": "black" },
-      { "x": 4, "y": 1, "color": "black" }
+      { "x": 5, "y": 0, "color": "black" }
     ],
     "answers": [
-      { "x": 4, "y": 2 }
+      { "x": 4, "y": 1 }
     ],
     "hints": [
       "边上的白棋有几口气？",
-      "白棋左边、右边、下面都有黑棋。",
-      "白棋只剩下面一口气了。"
+      "白棋左边和右边都有黑棋。",
+      "白棋下面有一个空点。"
     ],
     "explanation": "黑棋下在白棋最后一口气上，白棋没有气就被提掉了。",
     "successMessage": "太好了！你在边上吃掉了白棋。",
