@@ -11,11 +11,12 @@ import type { Stone as BoardStone, Highlight } from "@/lib/board";
 type ProblemPlayerProps = {
   problem: Problem;
   onNext?: () => void;
+  onResult?: (correct: boolean, wrongAttempts: number, usedHint: boolean) => void;
 };
 
 const MAX_WRONG_ATTEMPTS = 2;
 
-export default function ProblemPlayer({ problem, onNext }: ProblemPlayerProps) {
+export default function ProblemPlayer({ problem, onNext, onResult }: ProblemPlayerProps) {
   const [wrongAttempts, setWrongAttempts] = useState(0);
   const [hintIndex, setHintIndex] = useState(0);
   const [result, setResult] = useState<"correct" | "wrong" | null>(null);
@@ -43,11 +44,15 @@ export default function ProblemPlayer({ problem, onNext }: ProblemPlayerProps) {
 
       if (isCorrect) {
         setResult("correct");
+        onResult?.(true, wrongAttempts, hintIndex > 0);
       } else {
         setLastWrongMove({ x, y });
         const newWrong = wrongAttempts + 1;
         setWrongAttempts(newWrong);
         setResult("wrong");
+        if (newWrong >= MAX_WRONG_ATTEMPTS) {
+          onResult?.(false, newWrong, hintIndex > 0);
+        }
       }
     },
     [problem.answers, result, wrongAttempts],

@@ -23,11 +23,11 @@ Current development strategy:
 
 ---
 
-# Completed or In Progress
+# Completed
 
 ## Milestone 0: Local Dev + Docker Runtime
 
-Status: completed locally by user/opencode if all commands pass.
+Status: completed.
 
 Acceptance:
 
@@ -37,158 +37,73 @@ Acceptance:
 - `docker compose up --build` works.
 - `http://localhost:3000` is reachable.
 
-No further business work should be mixed into this milestone.
+---
+
+## Milestone 1: SVG GoBoard Component
+
+Status: completed.
+
+Delivered:
+
+- `src/components/board/GoBoard.tsx` — SVG 棋盘主组件
+- `src/components/board/Stone.tsx` — 棋子渲染
+- `src/components/board/BoardHighlight.tsx` — 高亮标记
+- `src/components/board/BoardPoint.tsx` — 可点击空交叉点
+- `src/lib/board.ts` — 类型定义 + 工具函数
+- 首页演示：9 路棋盘 + 点击记录 + 重置/禁用按钮
 
 ---
 
-# Next Task: Milestone 1 — SVG GoBoard Component
+## Milestone 2: Problem Schema and Sample Problems
 
-## Goal
+Status: completed.
 
-Implement the reusable Go board foundation for v0.1.
+Delivered:
 
-This task must not implement the problem system yet.
-
-## Scope
-
-1. Add or update `src/components/board/GoBoard.tsx`.
-2. Render a Go board using SVG.
-3. Support `size: 9 | 13 | 19`; primary validation is 9x9.
-4. Render stones on intersections.
-5. Support `onPointClick(x, y)` for empty intersections.
-6. Support `disabled`.
-7. Support `lastMove` marker.
-8. Support `highlights`.
-9. Ignore clicks on occupied points.
-10. Ignore clicks outside the board.
-11. Ensure mobile/touch usability.
-12. Provide a simple demo route or home-page demo for local verification.
-
-## Recommended Types
-
-```ts
-type StoneColor = "black" | "white";
-
-type Stone = {
-  x: number;
-  y: number;
-  color: StoneColor;
-};
-
-type HighlightType = "correct" | "wrong" | "hint" | "lastMove";
-
-type Highlight = {
-  x: number;
-  y: number;
-  type: HighlightType;
-};
-
-type GoBoardProps = {
-  size: 9 | 13 | 19;
-  stones: Stone[];
-  disabled?: boolean;
-  lastMove?: { x: number; y: number };
-  highlights?: Highlight[];
-  onPointClick?: (x: number, y: number) => void;
-};
-```
-
-## Acceptance Criteria
-
-- `npm run build` passes.
-- `docker compose up --build` passes.
-- Browser shows a 9x9 Go board.
-- 9x9 board has exactly 9 horizontal lines and 9 vertical lines.
-- Stones are centered on intersections, not cells.
-- Empty-point clicks return correct 0-based coordinates.
-- Occupied-point clicks do not trigger `onPointClick`.
-- `lastMove` marker appears at the correct coordinate.
-- `highlights` appear at correct coordinates.
-- The board works in a narrow/mobile viewport.
-
-## Out of Scope
-
-Do not implement:
-
-- Problem JSON loading;
-- answer checking;
-- hints;
-- wrong book;
-- daily practice;
-- login;
-- database;
-- AI;
-- online play.
+- `src/lib/problems.ts` — Problem 类型 + 验证 + 加载工具
+- `src/data/problems.json` — 9 道示例题目
 
 ---
 
-# Upcoming Task: Milestone 2 — Problem Schema and Sample Problems
+## Milestone 3: ProblemPlayer Single-Question Flow
 
-## Goal
+Status: completed.
 
-Define the local problem data contract and provide initial sample problems.
+Delivered:
 
-## Scope
-
-- Define `Problem` TypeScript type.
-- Create `src/data/problems.json`.
-- Add 5–20 sample one-move problems.
-- Add validation helpers for coordinates and duplicate stones.
-- Add problem loading helper.
-
-## Acceptance
-
-- Sample problems load without runtime errors.
-- All sample coordinates are valid.
-- TypeScript build passes.
-- Data remains separate from UI components.
+- `src/components/problem/ProblemPlayer.tsx` — 题目播放器
+- `src/components/problem/ProblemHeader.tsx` — 题目标题/分类/难度
+- `src/components/problem/HintPanel.tsx` — 渐进式提示
+- `src/components/problem/FeedbackDialog.tsx` — 答对/答错反馈
+- `src/app/demo/page.tsx` — 题目演示路由
 
 ---
 
-# Upcoming Task: Milestone 3 — ProblemPlayer Single-Question Flow
+## Milestone 4: Levels and Daily Practice
 
-## Goal
+Status: completed.
 
-Allow a child to solve one problem from the local JSON problem set.
+Delivered:
 
-## Scope
+- `src/app/page.tsx` — 首页入口（今日练习、闯关地图、题目演示）
+- `src/app/practice/page.tsx` — 今日练习页（选题 → 连续做题 → 总结）
+- `src/app/levels/page.tsx` — 闯关地图页（章节列表）
+- `src/app/levels/[chapterId]/page.tsx` — 章节关卡页（关卡列表 → 做题）
+- `src/lib/chapters.ts` — 章节/关卡结构数据
+- `src/lib/practice.ts` — 每日练习选题 + 会话管理
+- `src/components/problem/ProblemPlayer.tsx` — 新增 `onResult` 回调
 
-- Implement `ProblemPlayer`.
-- Show problem title and description.
-- Render initial stones on `GoBoard`.
-- Accept a single click answer.
-- Check answer against `answers`.
-- Show child-friendly success/failure message.
-- Show hints progressively.
-- Show correct answer after allowed attempts.
+Acceptance:
 
-## Acceptance
-
-- At least 5 problems are playable.
-- Correct answers are recognized.
-- Wrong answers are handled warmly.
-- Hints display one by one.
-- No progress system yet unless explicitly assigned.
+- 首页可以进入今日练习
+- 首页可以进入闯关地图
+- 今日练习可以连续完成多题
+- 练习完成后显示总结
+- 闯关页至少能进入一个关卡并完成其中题目
 
 ---
 
-# Upcoming Task: Milestone 4 — Levels and Daily Practice
-
-## Goal
-
-Create navigable practice flows.
-
-## Scope
-
-- Home entry points.
-- Daily practice route.
-- Levels route.
-- Chapter/level structure.
-- Practice completion summary.
-
----
-
-# Upcoming Task: Milestone 5 — Progress, Stars, Wrong Book
+# Next Task: Milestone 5 — Progress, Stars, Wrong Book
 
 ## Goal
 
