@@ -113,9 +113,9 @@ Delivered:
 - `src/app/wrong-book/page.tsx` — 错题本页面（列表 + 复习流程）
 - `src/app/page.tsx` — 首页显示星星数和待复习错题数
 - `src/app/practice/page.tsx` — 集成进度记录、星星奖励
-- `src/app/demo/page.tsx` — 集成进度记录
 - `src/app/levels/[chapterId]/page.tsx` — 集成进度记录
-- `src/components/problem/ProblemPlayer.tsx` — onResult 新增 selectedX/Y 参数
+- `src/app/demo/page.tsx` — **不写入**真实学习进度（不传 `onAttempt` / `onResult`）
+- `src/components/problem/ProblemPlayer.tsx` — `onAttempt` 记录每次点击尝试，`onResult` 记录最终结果（答对或答错达上限）
 
 Acceptance:
 
@@ -125,22 +125,52 @@ Acceptance:
 - 星星奖励不重复发放（首次答对 +1，完成每日练习 +5）
 - mastered 错题不再显示在错题本
 - 刷新页面后进度仍存在
+- `/demo` 不污染学习进度
 
 ---
 
-# Next Task: Milestone 6 — Report and Product Polish
+## Milestone 6: Report and Product Polish
+
+Status: completed.
+
+Delivered:
+
+- `src/lib/report.ts` — 学习报告统计（正确率、首次做对率、分类表现、最强/最弱项）
+- `src/app/report/page.tsx` — 学习报告页（数据卡片、分类进度条、最强/最弱项）
+- `src/app/page.tsx` — 首页新增学习报告入口
+- `src/app/globals.css` — 样式调整
+- `src/app/layout.tsx` — 元数据更新
+
+Acceptance:
+
+- 报告数据准确（正确率、首次做对率、星星、连续天数）
+- 最强/最弱分类基于首次做对率计算
+- 各分类进度条显示完成比例
+- 无学习记录时显示引导页面
+- UI 适合儿童使用
+
+---
+
+# Next Task: v0.1 Release QA / Manual Acceptance
 
 ## Goal
 
-Make the app usable for real child/parent testing.
+Perform final quality assurance and manual acceptance testing before v0.1 release.
 
 ## Scope
 
-- Learning report.
-- Accuracy stats.
-- category-level mastery summary.
-- child-friendly UI polish.
-- 100 total problems.
+- Follow `docs/QA_CHECKLIST_v0.1.md` for systematic testing.
+- Verify all routes: `/`, `/practice`, `/levels`, `/levels/[chapterId]`, `/wrong-book`, `/report`, `/demo`.
+- Verify localStorage persistence across page refreshes.
+- Verify `/demo` does not pollute learning progress.
+- Verify mobile narrow screen usability.
+- Document any blocking bugs found during testing.
+
+## Acceptance
+
+- All items in `docs/QA_CHECKLIST_v0.1.md` are checked and pass.
+- No blocking bugs remain.
+- Release conclusion is documented in the checklist.
 
 ---
 
