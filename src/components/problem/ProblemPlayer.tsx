@@ -55,7 +55,7 @@ export default function ProblemPlayer({ problem, onNext, onResult }: ProblemPlay
         }
       }
     },
-    [problem.answers, result, wrongAttempts],
+    [problem.answers, result, wrongAttempts, hintIndex, onResult],
   );
 
   const handleShowHint = useCallback(() => {

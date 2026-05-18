@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
-import { selectDailyProblems, type PracticeSession, createPracticeSession, recordResult, getPracticeSummary } from "@/lib/practice";
+import { selectDailyProblems, type PracticeSession, createPracticeSession, recordResult, advancePracticeSession, getPracticeSummary } from "@/lib/practice";
 import type { Problem } from "@/lib/problems";
 
 type Phase = "idle" | "playing" | "summary";
@@ -30,12 +30,18 @@ export default function PracticePage() {
       };
       const updated = recordResult(session, result);
       setSession(updated);
-      if (updated.completed) {
-        setPhase("summary");
-      }
     },
     [session],
   );
+
+  const handleNext = useCallback(() => {
+    if (!session) return;
+    const updated = advancePracticeSession(session);
+    setSession(updated);
+    if (updated.completed) {
+      setPhase("summary");
+    }
+  }, [session]);
 
   if (phase === "idle") {
     return (
@@ -160,11 +166,7 @@ export default function PracticePage() {
 
           <ProblemPlayer
             problem={problem}
-            onNext={() => {
-              if (session.currentIndex + 1 >= session.problems.length) {
-                setPhase("summary");
-              }
-            }}
+            onNext={handleNext}
             onResult={handleResult}
           />
         </div>

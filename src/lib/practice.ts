@@ -48,12 +48,21 @@ export function recordResult(
   result: PracticeResult,
 ): PracticeSession {
   const newResults = [...session.results, result];
+
+  return {
+    ...session,
+    results: newResults,
+  };
+}
+
+export function advancePracticeSession(
+  session: PracticeSession,
+): PracticeSession {
   const nextIndex = session.currentIndex + 1;
   const completed = nextIndex >= session.problems.length;
 
   return {
     ...session,
-    results: newResults,
     currentIndex: nextIndex,
     completed,
   };
