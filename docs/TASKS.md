@@ -203,8 +203,8 @@ Do not implement in v0.1.1:
 ## Acceptance
 
 - `npm run build` passes.
-- `docker compose up --build` passes.
-- If a test runner is added, `npm run test` passes.
+- `npm run test` passes.
+- `docker compose up --build` is required only when Docker/dependency/build-config changed or before release/tag.
 - Resetting local progress returns home, wrong book, and report to empty states.
 - Existing v0.1.0 user flow remains intact.
 - Documentation reflects the current behavior.
@@ -228,9 +228,9 @@ Delivered:
 - `package.json` — Added `npm run test` and `npm run test:watch` scripts.
 
 Acceptance:
-- `npm run test` passes (55+ tests across 5 test files).
 - `npm run build` passes.
-- `docker compose up --build` passes.
+- `npm run test` passes (59 tests across 5 test files).
+- `docker compose up --build` is required only when Docker/dependency/build-config changed or before release/tag.
 - Resetting local progress returns home, wrong book, and report to empty states.
 - Existing v0.1.0 user flow remains intact.
 

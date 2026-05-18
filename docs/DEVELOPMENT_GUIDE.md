@@ -291,27 +291,40 @@ Avoid:
 
 ---
 
-# 12. Testing Rules
+# 12. Validation Rules
 
-Before handing off a PR, run all available checks.
+Validation is layered. Run only what the change requires.
 
-Minimum required checks:
+## Routine validation (every PR)
 
 ```bash
 npm run build
-docker compose up --build
+npm run test
 ```
 
-Also run if available:
+## Type / refactor validation
 
 ```bash
-npm run lint
 npm run typecheck
+npm run build
 npm run test
-npm run test:watch
 ```
 
-Manual checks for UI changes:
+## Docker validation
+
+`docker compose up --build` is **not** a daily minimum check.
+Run it only when any of the following changed:
+
+- `Dockerfile`
+- `docker-compose*.yml`
+- `package.json`
+- `package-lock.json`
+- `next.config.*`
+- standalone / build output config
+
+Also run before release tagging or v0.1 QA.
+
+## Manual checks for UI changes
 
 - desktop browser;
 - narrow/mobile viewport;

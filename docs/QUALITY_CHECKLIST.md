@@ -29,26 +29,36 @@ Out-of-scope for v0.1 unless explicitly approved:
 
 Run the available commands before handoff.
 
-Required:
+Required (every PR):
 
 ```bash
 npm run build
+npm run test
+```
+
+Required (type / refactor PRs):
+
+```bash
+npm run typecheck
+npm run build
+npm run test
+```
+
+Required (Docker / dependency / build-config / release PRs only):
+
+```bash
 docker compose up --build
 ```
 
-Also run if available:
-
-```bash
-npm run lint
-npm run typecheck
-npm run test
-```
+Run `docker compose up --build` only when any of the following changed:
+`Dockerfile`, `docker-compose*.yml`, `package.json`, `package-lock.json`,
+`next.config.*`, or standalone/build output config, or before release tagging.
 
 Manual validation:
 
 - [ ] `http://localhost:3000` loads.
 - [ ] No blocking browser console errors.
-- [ ] Docker production-like runtime starts.
+- [ ] Docker production-like runtime starts (if Docker validation applies).
 - [ ] Docker dev runtime starts if this task touches infrastructure.
 
 ---
