@@ -1,23 +1,22 @@
 # Project Task Queue
 
 > This file is the task entry point for opencode.  
-> Always read `AGENTS.md`, `docs/PROJECT_SPEC.md`, `docs/DEVELOPMENT_GUIDE.md`, `docs/QUALITY_CHECKLIST.md`, and the relevant release/content notes before implementing any task.
+> Always read `AGENTS.md`, `docs/PROJECT_SPEC.md`, `docs/DEVELOPMENT_GUIDE.md`, `docs/QUALITY_CHECKLIST.md`, and the relevant release/content/design notes before implementing any task.
 
 ---
 
 # Current Phase
 
-v0.1.3 content review and product polish after v0.1.2 content expansion.
+v0.2 design review after v0.1.3 content review and product polish.
 
 Current strategy:
 
 ```text
-1. Preserve the stable v0.1.2 local MVP
-2. Collect playtest feedback before adding major systems
-3. Polish copy, hints, mobile layout, and child-facing UX
-4. Strengthen problem data tests
-5. Prepare v0.2 design docs only; do not implement v0.2 features yet
-6. Defer login/database/AI/payment to later versions
+1. Preserve the stable v0.1.3 local MVP
+2. Review account/sync design before coding
+3. Keep v0.2 focused on parent account, child profile, server progress, and local import
+4. Avoid AI/payment/teacher/leaderboard scope creep
+5. Start implementation only after Supabase, migration, and QA docs are approved
 ```
 
 ---
@@ -243,28 +242,103 @@ Acceptance:
 
 ---
 
+## v0.2 Design Documents
+
+Status: drafted, pending review.
+
+Delivered:
+
+- `docs/SUPABASE_DESIGN_v0.2.md` — schema, RLS, client data layer, implementation phases
+- `docs/DATA_MIGRATION_v0.2.md` — localStorage import, merge, idempotency, failure handling
+- `docs/QA_CHECKLIST_v0.2.md` — Auth, child profile, RLS, server progress, migration, regression QA
+
+---
+
+# Next Task: v0.2 Design Review
+
+## Goal
+
+Review and finalize v0.2 design before implementation.
+
+## References
+
+- `docs/ROADMAP_v0.2.md`
+- `docs/SUPABASE_DESIGN_v0.2.md`
+- `docs/DATA_MIGRATION_v0.2.md`
+- `docs/QA_CHECKLIST_v0.2.md`
+- `docs/DEVELOPMENT_GUIDE.md`
+- `docs/QUALITY_CHECKLIST.md`
+
+## Scope
+
+1. Review database schema and table boundaries.
+2. Review RLS policy approach.
+3. Review localStorage import flow and conflict rules.
+4. Review whether login remains optional during v0.2 transition.
+5. Review whether JSON remains the problem source in v0.2.
+6. Identify any missing QA cases before coding.
+7. Update design docs based on review findings.
+8. Prepare the first narrow implementation task only after design approval.
+
+## Out of Scope
+
+Do not implement during design review:
+
+- Supabase dependency installation
+- Auth UI
+- Database migrations
+- Server progress code
+- Local import code
+- AI
+- Payment
+- Teacher/admin backend
+- Leaderboard
+- 13x13 / 19x19 expansion
+
+## Acceptance
+
+- v0.2 design docs are reviewed.
+- Open decisions are resolved or explicitly deferred.
+- No implementation code is added.
+- First implementation task is clearly scoped.
+
+---
+
 # Future Roadmap
 
-## v0.2.0 — Accounts and Sync
+## v0.2.1 — Auth Foundation
 
-- Login.
-- Student profile.
-- Database-backed progress.
-- localStorage import/sync.
-- Larger reviewed problem set.
+- Supabase dependency setup.
+- Environment variable documentation.
+- Login/logout.
+- Session restore.
+- Local mode still works.
+
+## v0.2.2 — Child Profile
+
+- Create/select child profile.
+- Parent owns child data.
+- RLS verified for child profile access.
+
+## v0.2.3 — Server Progress
+
+- Save attempts to Supabase.
+- Save wrong problem state.
+- Save progress summary.
+- Report reads server mode.
+
+## v0.2.4 — Local Import
+
+- Detect local progress.
+- Explicit import prompt.
+- Idempotent import.
+- Conflict handling.
 
 ## v0.3.0 — Learning Depth
 
 - Multi-step problems.
 - Spaced review scheduling.
 - Parent weekly report.
-
-## v0.4.0 — Teacher Workflow
-
-- Teacher account.
-- Class management.
-- Assignments.
-- Student dashboard.
 
 ---
 
