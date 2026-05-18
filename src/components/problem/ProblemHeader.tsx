@@ -1,17 +1,8 @@
 import type { Problem } from "@/lib/problems";
+import { categoryLabels } from "@/lib/chapters";
 
 type ProblemHeaderProps = {
   problem: Problem;
-};
-
-const categoryLabels: Record<Problem["category"], string> = {
-  capture: "吃子",
-  escape: "逃子",
-  connect_cut: "连接与切断",
-  life_death: "死活",
-  opening: "布局",
-  endgame: "官子",
-  mixed: "综合",
 };
 
 export default function ProblemHeader({ problem }: ProblemHeaderProps) {

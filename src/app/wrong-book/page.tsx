@@ -97,6 +97,7 @@ export default function WrongBookPage() {
   }
 
   if (wrongProblems.length === 0) {
+    const hasEverWrong = progress && Object.keys(progress.wrongProblems).length > 0;
     return (
       <div className="min-h-screen bg-amber-50 flex flex-col items-center py-8 px-4">
         <div className="text-center mb-6">
@@ -107,12 +108,14 @@ export default function WrongBookPage() {
         </div>
 
         <div className="bg-white rounded-2xl p-8 shadow-lg text-center max-w-sm">
-          <div className="text-4xl mb-3">🎉</div>
+          <div className="text-4xl mb-3">{hasEverWrong ? "🏆" : "🎉"}</div>
           <p className="text-lg font-bold text-amber-900 mb-2">
-            太棒了！
+            {hasEverWrong ? "太厉害了！" : "太棒了！"}
           </p>
           <p className="text-amber-700">
-            你还没有错题，继续保持哦！
+            {hasEverWrong
+              ? "你的错题都复习完了，全部掌握！"
+              : "你还没有错题，继续保持哦！"}
           </p>
         </div>
 

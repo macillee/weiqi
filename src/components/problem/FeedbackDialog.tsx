@@ -11,6 +11,14 @@ type FeedbackDialogProps = {
   showAnswer: boolean;
 };
 
+const GO_LABELS = "ABCDEFGHJKLMNOPQRST";
+
+function pointToGoLabel(point: Point): string {
+  const col = GO_LABELS[point.x] || String(point.x + 1);
+  const row = String(point.y + 1);
+  return `${col}${row}`;
+}
+
 export default function FeedbackDialog({
   isCorrect,
   successMessage,
@@ -48,7 +56,7 @@ export default function FeedbackDialog({
           {showAnswer && correctAnswer && (
             <div className="mt-2">
               <p className="text-sm text-red-500">
-                正确答案：({correctAnswer.x}, {correctAnswer.y})
+                正确答案：{pointToGoLabel(correctAnswer)}
               </p>
               {explanation && (
                 <p className="text-sm text-red-500 mt-1">{explanation}</p>

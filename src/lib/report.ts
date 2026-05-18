@@ -30,7 +30,7 @@ export type ReportStats = {
 
 const CATEGORY_LABELS: Record<string, string> = {
   capture: "吃子",
-  escape: "逃跑",
+  escape: "逃子",
   connect_cut: "连接与切断",
   life_death: "死活",
   opening: "布局",
