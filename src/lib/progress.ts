@@ -99,28 +99,32 @@ export function recordAttempt(
 
   if (isFirstCorrect) {
     starsEarned += 1;
-    progress.completedProblemIds = [
-      ...progress.completedProblemIds,
-      problemId,
-    ];
   }
 
+  let newWrongProblems: Record<string, WrongProblemState>;
   if (isCorrect) {
-    progress.wrongProblems = updateWrongProblemOnCorrect(
+    newWrongProblems = updateWrongProblemOnCorrect(
       progress.wrongProblems,
       problemId,
     );
   } else {
-    progress.wrongProblems = updateWrongProblemOnWrong(
+    newWrongProblems = updateWrongProblemOnWrong(
       progress.wrongProblems,
       problemId,
     );
   }
 
-  progress.attempts = [...progress.attempts, attempt];
-  progress.stars += starsEarned;
+  const newProgress: StudentProgress = {
+    ...progress,
+    stars: progress.stars + starsEarned,
+    completedProblemIds: isFirstCorrect
+      ? [...progress.completedProblemIds, problemId]
+      : progress.completedProblemIds,
+    wrongProblems: newWrongProblems,
+    attempts: [...progress.attempts, attempt],
+  };
 
-  return { progress, starsEarned };
+  return { progress: newProgress, starsEarned };
 }
 
 export function updateWrongProblemOnCorrect(
@@ -171,24 +175,13 @@ export function updateWrongProblemOnWrong(
     };
   }
 
-  if (existing.status === "mastered") {
-    return {
-      ...wrongProblems,
-      [problemId]: {
-        ...existing,
-        wrongCount: existing.wrongCount + 1,
-        correctReviewCount: 0,
-        lastWrongAt: now,
-        status: "active",
-      },
-    };
-  }
-
   return {
     ...wrongProblems,
     [problemId]: {
       ...existing,
       wrongCount: existing.wrongCount + 1,
+      correctReviewCount: 0,
+      status: "active",
       lastWrongAt: now,
     },
   };
@@ -206,6 +199,8 @@ export function recordDailyPracticeComplete(
   progress: StudentProgress,
 ): { progress: StudentProgress; starsEarned: number } {
   let starsEarned = 5;
+  let newStreakDays = progress.streakDays;
+  let newLastPracticeDate = progress.lastPracticeDate;
   const today = new Date().toISOString().slice(0, 10);
 
   if (progress.lastPracticeDate === today) {
@@ -216,13 +211,19 @@ export function recordDailyPracticeComplete(
     const yesterdayStr = yesterday.toISOString().slice(0, 10);
 
     if (progress.lastPracticeDate === yesterdayStr) {
-      progress.streakDays += 1;
+      newStreakDays = progress.streakDays + 1;
     } else {
-      progress.streakDays = 1;
+      newStreakDays = 1;
     }
-    progress.lastPracticeDate = today;
+    newLastPracticeDate = today;
   }
 
-  progress.stars += starsEarned;
-  return { progress, starsEarned };
+  const newProgress: StudentProgress = {
+    ...progress,
+    stars: progress.stars + starsEarned,
+    streakDays: newStreakDays,
+    lastPracticeDate: newLastPracticeDate,
+  };
+
+  return { progress: newProgress, starsEarned };
 }

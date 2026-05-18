@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
 import { loadProblems } from "@/lib/problems";
-import type { Problem } from "@/lib/problems";
-import { loadProgress, saveProgress, recordAttempt } from "@/lib/progress";
 
 export default function DemoPage() {
   const problems = loadProblems();
@@ -22,23 +20,6 @@ export default function DemoPage() {
   function handleSelect(index: number) {
     setCurrentIndex(index);
   }
-
-  const handleResult = useCallback(
-    (correct: boolean, wrongAttempts: number, usedHint: boolean, selectedX: number, selectedY: number) => {
-      const currentProgress = loadProgress();
-      const { progress: newProgress } = recordAttempt(
-        currentProgress,
-        problem.id,
-        selectedX,
-        selectedY,
-        correct,
-        usedHint,
-        0,
-      );
-      saveProgress(newProgress);
-    },
-    [problem.id],
-  );
 
   return (
     <div className="min-h-screen bg-amber-50">
@@ -71,7 +52,6 @@ export default function DemoPage() {
         <ProblemPlayer
           problem={problem}
           onNext={handleNext}
-          onResult={handleResult}
         />
       </div>
     </div>

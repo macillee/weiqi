@@ -35,18 +35,18 @@ export default function ChapterPage({
     setViewMode("playing");
   }
 
-  const handleResult = useCallback(
-    (correct: boolean, wrongAttempts: number, usedHint: boolean, selectedX: number, selectedY: number) => {
+  const handleAttempt = useCallback(
+    (x: number, y: number, isCorrect: boolean) => {
       const problem = problems[currentProblemIndex];
       if (!problem) return;
       const currentProgress = loadProgress();
       const { progress: newProgress } = recordAttempt(
         currentProgress,
         problem.id,
-        selectedX,
-        selectedY,
-        correct,
-        usedHint,
+        x,
+        y,
+        isCorrect,
+        false,
         0,
       );
       saveProgress(newProgress);
@@ -88,7 +88,11 @@ export default function ChapterPage({
             />
           </div>
 
-          <ProblemPlayer problem={problem} onNext={handleNext} onResult={handleResult} />
+          <ProblemPlayer
+            problem={problem}
+            onNext={handleNext}
+            onAttempt={handleAttempt}
+          />
         </div>
       </div>
     );

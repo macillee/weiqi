@@ -20,6 +20,7 @@ export default function PracticePage() {
   const [session, setSession] = useState<PracticeSession | null>(null);
   const [progress, setProgress] = useState<StudentProgress | null>(null);
   const [starsEarnedThisSession, setStarsEarnedThisSession] = useState(0);
+  const [hasRecordedFinalCorrect, setHasRecordedFinalCorrect] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     setProgress(loadProgress());
@@ -31,11 +32,32 @@ export default function PracticePage() {
     setSession(newSession);
     setPhase("playing");
     setStarsEarnedThisSession(0);
+    setHasRecordedFinalCorrect(new Set());
     setProgress(loadProgress());
   }
 
+  const handleAttempt = useCallback(
+    (x: number, y: number, isCorrect: boolean) => {
+      if (!session) return;
+      const problem = session.problems[session.currentIndex];
+      const currentProgress = loadProgress();
+      const { progress: newProgress } = recordAttempt(
+        currentProgress,
+        problem.id,
+        x,
+        y,
+        isCorrect,
+        false,
+        0,
+      );
+      saveProgress(newProgress);
+      setProgress(newProgress);
+    },
+    [session],
+  );
+
   const handleResult = useCallback(
-    (correct: boolean, wrongAttempts: number, usedHint: boolean, selectedX: number, selectedY: number) => {
+    (correct: boolean, wrongAttempts: number, usedHint: boolean) => {
       if (!session) return;
       const result = {
         problemId: session.problems[session.currentIndex].id,
@@ -46,22 +68,15 @@ export default function PracticePage() {
       const updated = recordResult(session, result);
       setSession(updated);
 
-      const currentProgress = loadProgress();
-      const problem = session.problems[session.currentIndex];
-      const { progress: newProgress, starsEarned } = recordAttempt(
-        currentProgress,
-        problem.id,
-        selectedX,
-        selectedY,
-        correct,
-        usedHint,
-        0,
-      );
-      saveProgress(newProgress);
-      setProgress(newProgress);
-      setStarsEarnedThisSession((prev) => prev + starsEarned);
+      if (correct) {
+        const problem = session.problems[session.currentIndex];
+        if (!hasRecordedFinalCorrect.has(problem.id)) {
+          setHasRecordedFinalCorrect((prev) => new Set(prev).add(problem.id));
+          setStarsEarnedThisSession((prev) => prev + 1);
+        }
+      }
     },
-    [session],
+    [session, hasRecordedFinalCorrect],
   );
 
   const handleNext = useCallback(() => {
@@ -220,6 +235,7 @@ export default function PracticePage() {
           <ProblemPlayer
             problem={problem}
             onNext={handleNext}
+            onAttempt={handleAttempt}
             onResult={handleResult}
           />
         </div>

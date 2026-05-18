@@ -25,11 +25,15 @@ export default function WrongBookPage() {
   const [wrongProblems, setWrongProblems] = useState<WrongProblemState[]>([]);
   const [reviewProblem, setReviewProblem] = useState<Problem | null>(null);
 
-  useEffect(() => {
+  function refreshProgress() {
     const p = loadProgress();
     setProgress(p);
     const active = getActiveWrongProblems(p.wrongProblems);
     setWrongProblems(active);
+  }
+
+  useEffect(() => {
+    refreshProgress();
   }, []);
 
   function startReview(wp: WrongProblemState) {
@@ -39,23 +43,21 @@ export default function WrongBookPage() {
     setViewMode("reviewing");
   }
 
-  const handleResult = useCallback(
-    (correct: boolean, wrongAttempts: number, usedHint: boolean, selectedX: number, selectedY: number) => {
-      const currentProgress = loadProgress();
+  const handleAttempt = useCallback(
+    (x: number, y: number, isCorrect: boolean) => {
       if (!reviewProblem) return;
-
+      const currentProgress = loadProgress();
       const { progress: newProgress } = recordAttempt(
         currentProgress,
         reviewProblem.id,
-        selectedX,
-        selectedY,
-        correct,
-        usedHint,
+        x,
+        y,
+        isCorrect,
+        false,
         0,
       );
       saveProgress(newProgress);
       setProgress(newProgress);
-
       const active = getActiveWrongProblems(newProgress.wrongProblems);
       setWrongProblems(active);
     },
@@ -68,7 +70,10 @@ export default function WrongBookPage() {
         <div className="max-w-2xl mx-auto">
           <div className="flex items-center justify-between px-4 py-3 bg-amber-100">
             <button
-              onClick={() => setViewMode("list")}
+              onClick={() => {
+                setViewMode("list");
+                refreshProgress();
+              }}
               className="text-sm text-amber-600 hover:text-amber-800"
             >
               ← 返回错题本
@@ -82,8 +87,9 @@ export default function WrongBookPage() {
             problem={reviewProblem}
             onNext={() => {
               setViewMode("list");
+              refreshProgress();
             }}
-            onResult={handleResult}
+            onAttempt={handleAttempt}
           />
         </div>
       </div>
