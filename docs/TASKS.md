@@ -1,24 +1,23 @@
 # Project Task Queue
 
 > This file is the task entry point for opencode.  
-> Always read `AGENTS.md`, `docs/PROJECT_SPEC.md`, and `docs/DEVELOPMENT_GUIDE.md` before implementing any task.
+> Always read `AGENTS.md`, `docs/PROJECT_SPEC.md`, `docs/DEVELOPMENT_GUIDE.md`, `docs/QUALITY_CHECKLIST.md`, and the relevant release notes before implementing any task.
 
 ---
 
 # Current Phase
 
-v0.1 local-first MVP.
+v0.1.1 stabilization after v0.1.0 local MVP acceptance.
 
-Current development strategy:
+Current strategy:
 
 ```text
-1. Stable local Next.js + Docker foundation
-2. SVG GoBoard component
-3. Problem schema and sample data
-4. ProblemPlayer single-question flow
-5. Daily practice and levels
-6. localStorage progress and wrong book
-7. Learning report and polish
+1. Preserve the accepted v0.1.0 local MVP
+2. Add tests for core logic
+3. Add safe local progress reset for testing
+4. Polish UI/copy and mobile usability
+5. Expand problem content only in small reviewed batches
+6. Defer login/database/AI/payment to later versions
 ```
 
 ---
@@ -50,7 +49,6 @@ Delivered:
 - `src/components/board/BoardHighlight.tsx` — 高亮标记
 - `src/components/board/BoardPoint.tsx` — 可点击空交叉点
 - `src/lib/board.ts` — 类型定义 + 工具函数
-- 首页演示：9 路棋盘 + 点击记录 + 重置/禁用按钮
 
 ---
 
@@ -62,6 +60,7 @@ Delivered:
 
 - `src/lib/problems.ts` — Problem 类型 + 验证 + 加载工具
 - `src/data/problems.json` — 9 道示例题目
+- Basic Go-logic validation for invalid initial board states
 
 ---
 
@@ -75,7 +74,7 @@ Delivered:
 - `src/components/problem/ProblemHeader.tsx` — 题目标题/分类/难度
 - `src/components/problem/HintPanel.tsx` — 渐进式提示
 - `src/components/problem/FeedbackDialog.tsx` — 答对/答错反馈
-- `src/app/demo/page.tsx` — 题目演示路由
+- `src/app/demo/page.tsx` — 题目演示路由，does not write learning progress
 
 ---
 
@@ -85,13 +84,12 @@ Status: completed.
 
 Delivered:
 
-- `src/app/page.tsx` — 首页入口（今日练习、闯关地图、题目演示）
-- `src/app/practice/page.tsx` — 今日练习页（选题 → 连续做题 → 总结）
-- `src/app/levels/page.tsx` — 闯关地图页（章节列表）
-- `src/app/levels/[chapterId]/page.tsx` — 章节关卡页（关卡列表 → 做题）
+- `src/app/page.tsx` — 首页入口
+- `src/app/practice/page.tsx` — 今日练习页
+- `src/app/levels/page.tsx` — 闯关地图页
+- `src/app/levels/[chapterId]/page.tsx` — 章节关卡页
 - `src/lib/chapters.ts` — 章节/关卡结构数据
 - `src/lib/practice.ts` — 每日练习选题 + 会话管理
-- `src/components/problem/ProblemPlayer.tsx` — 新增 `onResult` 回调
 
 Acceptance:
 
@@ -109,13 +107,13 @@ Status: completed.
 
 Delivered:
 
-- `src/lib/progress.ts` — localStorage 进度管理（类型、保存、加载、记录尝试、错题本、星星奖励）
-- `src/app/wrong-book/page.tsx` — 错题本页面（列表 + 复习流程）
+- `src/lib/progress.ts` — localStorage 进度管理
+- `src/app/wrong-book/page.tsx` — 错题本页面
 - `src/app/page.tsx` — 首页显示星星数和待复习错题数
 - `src/app/practice/page.tsx` — 集成进度记录、星星奖励
 - `src/app/levels/[chapterId]/page.tsx` — 集成进度记录
-- `src/app/demo/page.tsx` — **不写入**真实学习进度（不传 `onAttempt` / `onResult`）
-- `src/components/problem/ProblemPlayer.tsx` — `onAttempt` 记录每次点击尝试，`onResult` 记录最终结果（答对或答错达上限）
+- `src/app/demo/page.tsx` — **不写入**真实学习进度
+- `src/components/problem/ProblemPlayer.tsx` — `onAttempt` 记录每次点击尝试，`onResult` 记录最终结果
 
 Acceptance:
 
@@ -135,8 +133,8 @@ Status: completed.
 
 Delivered:
 
-- `src/lib/report.ts` — 学习报告统计（正确率、首次做对率、分类表现、最强/最弱项）
-- `src/app/report/page.tsx` — 学习报告页（数据卡片、分类进度条、最强/最弱项）
+- `src/lib/report.ts` — 学习报告统计
+- `src/app/report/page.tsx` — 学习报告页
 - `src/app/page.tsx` — 首页新增学习报告入口
 - `src/app/globals.css` — 样式调整
 - `src/app/layout.tsx` — 元数据更新
@@ -151,26 +149,96 @@ Acceptance:
 
 ---
 
-# Next Task: v0.1 Release QA / Manual Acceptance
+## v0.1 Release QA / Manual Acceptance
+
+Status: completed by user testing with one small bug fixed and no other blocking issues reported.
+
+References:
+
+- `docs/QA_CHECKLIST_v0.1.md`
+- `docs/RELEASE_NOTES_v0.1.md`
+
+Recommended tag after final local confirmation:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+---
+
+# Next Task: v0.1.1 Stabilization
 
 ## Goal
 
-Perform final quality assurance and manual acceptance testing before v0.1 release.
+Stabilize the accepted v0.1.0 local MVP without expanding product scope.
 
 ## Scope
 
-- Follow `docs/QA_CHECKLIST_v0.1.md` for systematic testing.
-- Verify all routes: `/`, `/practice`, `/levels`, `/levels/[chapterId]`, `/wrong-book`, `/report`, `/demo`.
-- Verify localStorage persistence across page refreshes.
-- Verify `/demo` does not pollute learning progress.
-- Verify mobile narrow screen usability.
-- Document any blocking bugs found during testing.
+1. Add automated tests for core library logic:
+   - `src/lib/board.ts`
+   - `src/lib/problems.ts`
+   - `src/lib/progress.ts`
+   - `src/lib/report.ts`
+   - `src/lib/practice.ts`
+2. Add a safe local progress reset entry for development/testing.
+3. Polish mobile layout and child-facing copy where needed.
+4. Keep documentation synchronized.
+5. Optionally add a small, manually reviewed problem batch only if time permits.
+
+## Out of Scope
+
+Do not implement in v0.1.1:
+
+- Login
+- Database
+- Supabase
+- AI opponent
+- AI review
+- Payment
+- Teacher/admin backend
+- Large-scale problem generation
+- Multi-step problem engine
 
 ## Acceptance
 
-- All items in `docs/QA_CHECKLIST_v0.1.md` are checked and pass.
-- No blocking bugs remain.
-- Release conclusion is documented in the checklist.
+- `npm run build` passes.
+- `docker compose up --build` passes.
+- If a test runner is added, `npm run test` passes.
+- Resetting local progress returns home, wrong book, and report to empty states.
+- Existing v0.1.0 user flow remains intact.
+- Documentation reflects the current behavior.
+
+---
+
+# Future Roadmap
+
+## v0.1.2 — Content Expansion
+
+- Expand to around 30–50 reviewed problems.
+- Continue small-batch Go-logic review.
+- Improve category coverage.
+
+## v0.2.0 — Accounts and Sync
+
+- Login.
+- Student profile.
+- Database-backed progress.
+- localStorage import/sync.
+- Larger reviewed problem set.
+
+## v0.3.0 — Learning Depth
+
+- Multi-step problems.
+- Spaced review scheduling.
+- Parent weekly report.
+
+## v0.4.0 — Teacher Workflow
+
+- Teacher account.
+- Class management.
+- Assignments.
+- Student dashboard.
 
 ---
 
