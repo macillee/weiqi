@@ -11,7 +11,7 @@ import type { Stone as BoardStone, Highlight } from "@/lib/board";
 type ProblemPlayerProps = {
   problem: Problem;
   onNext?: () => void;
-  onAttempt?: (x: number, y: number, isCorrect: boolean) => void;
+  onAttempt?: (x: number, y: number, isCorrect: boolean, usedHint: boolean) => void;
   onResult?: (correct: boolean, wrongAttempts: number, usedHint: boolean) => void;
 };
 
@@ -43,7 +43,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
         (a) => a.x === x && a.y === y,
       );
 
-      onAttempt?.(x, y, isCorrect);
+      onAttempt?.(x, y, isCorrect, hintIndex > 0);
 
       if (isCorrect) {
         setResult("correct");

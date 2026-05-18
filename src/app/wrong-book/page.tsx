@@ -44,7 +44,7 @@ export default function WrongBookPage() {
   }
 
   const handleAttempt = useCallback(
-    (x: number, y: number, isCorrect: boolean) => {
+    (x: number, y: number, isCorrect: boolean, usedHint: boolean) => {
       if (!reviewProblem) return;
       const currentProgress = loadProgress();
       const { progress: newProgress } = recordAttempt(
@@ -53,7 +53,7 @@ export default function WrongBookPage() {
         x,
         y,
         isCorrect,
-        false,
+        usedHint,
         0,
       );
       saveProgress(newProgress);

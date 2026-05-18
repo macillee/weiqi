@@ -36,7 +36,7 @@ export default function ChapterPage({
   }
 
   const handleAttempt = useCallback(
-    (x: number, y: number, isCorrect: boolean) => {
+    (x: number, y: number, isCorrect: boolean, usedHint: boolean) => {
       const problem = problems[currentProblemIndex];
       if (!problem) return;
       const currentProgress = loadProgress();
@@ -46,7 +46,7 @@ export default function ChapterPage({
         x,
         y,
         isCorrect,
-        false,
+        usedHint,
         0,
       );
       saveProgress(newProgress);
