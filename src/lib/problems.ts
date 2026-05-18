@@ -1,12 +1,5 @@
 import problemsData from "@/data/problems.json";
-
-export type StoneColor = "black" | "white";
-
-export type Stone = {
-  x: number;
-  y: number;
-  color: StoneColor;
-};
+import type { Stone, StoneColor } from "@/lib/board";
 
 export type Point = {
   x: number;
@@ -176,7 +169,9 @@ export function loadProblems(): Problem[] {
   const problems = problemsData as Problem[];
   const result = validateAllProblems(problems);
   if (!result.valid) {
-    console.error("Problem data validation errors:", result.errors);
+    throw new Error(
+      `Problem data validation failed:\n${result.errors.map((e) => `  - ${e}`).join("\n")}`,
+    );
   }
   return problems;
 }

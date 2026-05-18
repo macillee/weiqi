@@ -87,6 +87,20 @@ Required for problem-data PRs:
 - [ ] `level` values are valid.
 - [ ] Copy is short, warm, and concrete.
 
+## Problem Go Logic Review
+
+Required for problem-data PRs:
+
+- [ ] Each answer point is an empty intersection (not occupied by a stone).
+- [ ] The answer makes sense for the stated title and description.
+- [ ] No self-capture moves as answers.
+- [ ] Capture problems: the target group actually has the stated liberties.
+- [ ] Escape problems: the escaping stone/group is actually in danger.
+- [ ] Connection problems: the answer actually connects the stated groups.
+- [ ] Cut problems: the answer actually separates the stated groups.
+- [ ] Life-and-death problems: the position is simple enough for v0.1 (avoid complex shapes).
+- [ ] Problems are appropriate for children who have studied Go for about 1 year.
+
 ---
 
 # 5. Child UX Checklist

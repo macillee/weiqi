@@ -58,30 +58,29 @@
     "boardSize": 9,
     "category": "capture",
     "level": 2,
-    "tags": ["capture", "double-atari"],
+    "tags": ["capture", "atari", "two-stones"],
     "toPlay": "black",
-    "title": "双打吃",
-    "description": "黑棋先走，能同时打吃两颗白棋吗？",
+    "title": "吃掉两颗白棋",
+    "description": "两颗白棋连在一起，黑棋能吃掉它们吗？",
     "initialStones": [
       { "x": 3, "y": 3, "color": "white" },
-      { "x": 5, "y": 3, "color": "white" },
+      { "x": 3, "y": 4, "color": "white" },
       { "x": 2, "y": 3, "color": "black" },
-      { "x": 3, "y": 2, "color": "black" },
       { "x": 4, "y": 3, "color": "black" },
-      { "x": 5, "y": 2, "color": "black" },
-      { "x": 6, "y": 3, "color": "black" }
+      { "x": 2, "y": 4, "color": "black" },
+      { "x": 4, "y": 4, "color": "black" }
     ],
     "answers": [
-      { "x": 4, "y": 4 }
+      { "x": 3, "y": 5 }
     ],
     "hints": [
-      "看看两颗白棋各剩几口气。",
-      "有没有一个点可以同时威胁两颗白棋？",
-      "中间的空点很关键。"
+      "两颗白棋连在一起，数数它们有几口气。",
+      "白棋左边和右边都有黑棋。",
+      "白棋下面还有一个空点。"
     ],
-    "explanation": "黑棋下在中间，同时打吃左右两颗白棋，白棋只能救一颗。",
-    "successMessage": "厉害！你发现了双打吃！",
-    "failureMessage": "想一想，哪里能同时威胁两颗白棋？"
+    "explanation": "黑棋下在白棋下面最后一口气上，就可以提掉两颗白棋。",
+    "successMessage": "太厉害了！你吃掉了两颗白棋。",
+    "failureMessage": "数一数白棋还有几口气？"
   },
   {
     "id": "ESC-001",
@@ -111,19 +110,17 @@
     "failureMessage": "黑棋需要增加气，哪里能让它跑出去？"
   },
   {
-    "id": "ESC-002",
+    "id": "CC-001",
     "boardSize": 9,
-    "category": "escape",
-    "level": 2,
-    "tags": ["escape", "connect"],
+    "category": "connect_cut",
+    "level": 1,
+    "tags": ["connect", "weak-point"],
     "toPlay": "black",
-    "title": "连回自己的棋",
-    "description": "黑棋被分开了，怎么连起来？",
+    "title": "连上自己的棋",
+    "description": "两颗黑棋分开了，怎么连起来？",
     "initialStones": [
       { "x": 3, "y": 3, "color": "black" },
       { "x": 5, "y": 3, "color": "black" },
-      { "x": 4, "y": 2, "color": "white" },
-      { "x": 4, "y": 4, "color": "white" },
       { "x": 2, "y": 3, "color": "white" },
       { "x": 6, "y": 3, "color": "white" }
     ],
@@ -140,13 +137,13 @@
     "failureMessage": "两颗黑棋中间的位置很重要。"
   },
   {
-    "id": "CC-001",
+    "id": "CC-002",
     "boardSize": 9,
     "category": "connect_cut",
     "level": 1,
     "tags": ["cut", "weak-point"],
     "toPlay": "black",
-    "title": "找到断点",
+    "title": "切断白棋",
     "description": "白棋有一个断点，黑棋应该下在哪里？",
     "initialStones": [
       { "x": 3, "y": 3, "color": "white" },
@@ -167,100 +164,57 @@
     "failureMessage": "看看两颗白棋中间，那里有什么？"
   },
   {
-    "id": "CC-002",
+    "id": "CAP-004",
     "boardSize": 9,
-    "category": "connect_cut",
+    "category": "capture",
     "level": 1,
-    "tags": ["connect", "weak-point"],
+    "tags": ["capture", "atari", "corner"],
     "toPlay": "black",
-    "title": "补上断点",
-    "description": "黑棋有一个断点，应该补在哪里？",
+    "title": "角上吃子",
+    "description": "角上的白棋只剩一口气，黑棋能吃掉它吗？",
     "initialStones": [
-      { "x": 3, "y": 3, "color": "black" },
-      { "x": 5, "y": 3, "color": "black" },
-      { "x": 2, "y": 3, "color": "white" },
-      { "x": 6, "y": 3, "color": "white" }
+      { "x": 1, "y": 1, "color": "white" },
+      { "x": 0, "y": 1, "color": "black" },
+      { "x": 1, "y": 0, "color": "black" }
     ],
     "answers": [
-      { "x": 4, "y": 3 }
+      { "x": 1, "y": 2 }
     ],
     "hints": [
-      "两颗黑棋中间有一个空点。",
-      "如果不补，白棋会下在哪里？",
-      "补上后黑棋就连起来了。"
+      "角上的白棋有几口气？",
+      "白棋下面有一个空点。",
+      "下在那里就可以提掉白棋。"
     ],
-    "explanation": "黑棋下在中间，补上了断点，棋形更安全。",
-    "successMessage": "很好！黑棋连起来更安全了。",
-    "failureMessage": "黑棋中间有一个弱点，需要补上。"
+    "explanation": "黑棋下在白棋最后一口气上，白棋没有气就被提掉了。",
+    "successMessage": "真棒！你在角上吃掉了白棋。",
+    "failureMessage": "角上的白棋还剩几口气？"
   },
   {
-    "id": "LD-001",
+    "id": "CAP-005",
     "boardSize": 9,
-    "category": "life_death",
-    "level": 1,
-    "tags": ["life-and-death", "make-eye"],
-    "toPlay": "black",
-    "title": "做一只眼",
-    "description": "黑棋怎样才能做出一只眼？",
-    "initialStones": [
-      { "x": 2, "y": 2, "color": "black" },
-      { "x": 3, "y": 2, "color": "black" },
-      { "x": 4, "y": 2, "color": "black" },
-      { "x": 2, "y": 3, "color": "black" },
-      { "x": 4, "y": 3, "color": "black" },
-      { "x": 1, "y": 2, "color": "white" },
-      { "x": 5, "y": 2, "color": "white" },
-      { "x": 1, "y": 3, "color": "white" },
-      { "x": 5, "y": 3, "color": "white" }
-    ],
-    "answers": [
-      { "x": 3, "y": 3 }
-    ],
-    "hints": [
-      "黑棋围住了一个空点。",
-      "下在那个空点里，就能做出一只眼。",
-      "有眼的棋更不容易被吃。"
-    ],
-    "explanation": "黑棋下在中间的空点，做出了一只眼。",
-    "successMessage": "真棒！黑棋做出了一只眼。",
-    "failureMessage": "黑棋围住的空点在哪里？"
-  },
-  {
-    "id": "LD-002",
-    "boardSize": 9,
-    "category": "life_death",
+    "category": "capture",
     "level": 2,
-    "tags": ["life-and-death", "kill", "reduce-eye-space"],
+    "tags": ["capture", "atari", "edge"],
     "toPlay": "black",
-    "title": "破掉白棋的眼",
-    "description": "白棋想做两只眼，黑棋应该下在哪里破眼？",
+    "title": "边上吃子",
+    "description": "边上的白棋只剩一口气，黑棋能吃掉它吗？",
     "initialStones": [
-      { "x": 2, "y": 2, "color": "white" },
-      { "x": 3, "y": 2, "color": "white" },
-      { "x": 4, "y": 2, "color": "white" },
-      { "x": 2, "y": 3, "color": "white" },
-      { "x": 4, "y": 3, "color": "white" },
-      { "x": 2, "y": 4, "color": "white" },
-      { "x": 3, "y": 4, "color": "white" },
-      { "x": 4, "y": 4, "color": "white" },
-      { "x": 1, "y": 2, "color": "black" },
-      { "x": 5, "y": 2, "color": "black" },
-      { "x": 1, "y": 3, "color": "black" },
-      { "x": 5, "y": 3, "color": "black" },
-      { "x": 1, "y": 4, "color": "black" },
-      { "x": 5, "y": 4, "color": "black" }
+      { "x": 4, "y": 0, "color": "white" },
+      { "x": 3, "y": 0, "color": "black" },
+      { "x": 5, "y": 0, "color": "black" },
+      { "x": 4, "y": 1, "color": "black" }
     ],
     "answers": [
-      { "x": 3, "y": 3 }
+      { "x": 4, "y": 2 }
     ],
     "hints": [
-      "白棋中间有一个空点。",
-      "黑棋下在那里，白棋就做不出两只眼了。",
-      "这个点是做眼的关键。"
+      "边上的白棋有几口气？",
+      "白棋左边、右边、下面都有黑棋。",
+      "白棋只剩下面一口气了。"
     ],
-    "explanation": "黑棋下在中间，破掉了白棋做眼的关键点。",
-    "successMessage": "太好了！你找到了破眼的关键点。",
-    "failureMessage": "白棋中间的空点很重要。"
+    "explanation": "黑棋下在白棋最后一口气上，白棋没有气就被提掉了。",
+    "successMessage": "太好了！你在边上吃掉了白棋。",
+    "failureMessage": "白棋还有几口气？再数一数。"
   },
   {
     "id": "OP-001",
