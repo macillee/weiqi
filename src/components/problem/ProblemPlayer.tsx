@@ -11,7 +11,7 @@ import type { Stone as BoardStone, Highlight } from "@/lib/board";
 type ProblemPlayerProps = {
   problem: Problem;
   onNext?: () => void;
-  onResult?: (correct: boolean, wrongAttempts: number, usedHint: boolean) => void;
+  onResult?: (correct: boolean, wrongAttempts: number, usedHint: boolean, selectedX: number, selectedY: number) => void;
 };
 
 const MAX_WRONG_ATTEMPTS = 2;
@@ -24,12 +24,17 @@ export default function ProblemPlayer({ problem, onNext, onResult }: ProblemPlay
     x: number;
     y: number;
   } | null>(null);
+  const [lastSelectedPoint, setLastSelectedPoint] = useState<{
+    x: number;
+    y: number;
+  } | null>(null);
 
   useEffect(() => {
     setWrongAttempts(0);
     setHintIndex(0);
     setResult(null);
     setLastWrongMove(null);
+    setLastSelectedPoint(null);
   }, [problem.id]);
 
   const showAnswer = wrongAttempts >= MAX_WRONG_ATTEMPTS;
@@ -43,15 +48,17 @@ export default function ProblemPlayer({ problem, onNext, onResult }: ProblemPlay
       );
 
       if (isCorrect) {
+        setLastSelectedPoint({ x, y });
         setResult("correct");
-        onResult?.(true, wrongAttempts, hintIndex > 0);
+        onResult?.(true, wrongAttempts, hintIndex > 0, x, y);
       } else {
         setLastWrongMove({ x, y });
+        setLastSelectedPoint({ x, y });
         const newWrong = wrongAttempts + 1;
         setWrongAttempts(newWrong);
         setResult("wrong");
         if (newWrong >= MAX_WRONG_ATTEMPTS) {
-          onResult?.(false, newWrong, hintIndex > 0);
+          onResult?.(false, newWrong, hintIndex > 0, x, y);
         }
       }
     },

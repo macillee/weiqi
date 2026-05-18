@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { getChapterById, type LevelNode } from "@/lib/chapters";
 import { loadProblems, type Problem } from "@/lib/problems";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
+import { loadProgress, saveProgress, recordAttempt } from "@/lib/progress";
 
 type ViewMode = "list" | "playing";
 
@@ -33,6 +34,25 @@ export default function ChapterPage({
     setCurrentProblemIndex(0);
     setViewMode("playing");
   }
+
+  const handleResult = useCallback(
+    (correct: boolean, wrongAttempts: number, usedHint: boolean, selectedX: number, selectedY: number) => {
+      const problem = problems[currentProblemIndex];
+      if (!problem) return;
+      const currentProgress = loadProgress();
+      const { progress: newProgress } = recordAttempt(
+        currentProgress,
+        problem.id,
+        selectedX,
+        selectedY,
+        correct,
+        usedHint,
+        0,
+      );
+      saveProgress(newProgress);
+    },
+    [currentProblemIndex, problems],
+  );
 
   const handleNext = useCallback(() => {
     if (currentProblemIndex + 1 < problems.length) {
@@ -68,7 +88,7 @@ export default function ChapterPage({
             />
           </div>
 
-          <ProblemPlayer problem={problem} onNext={handleNext} />
+          <ProblemPlayer problem={problem} onNext={handleNext} onResult={handleResult} />
         </div>
       </div>
     );

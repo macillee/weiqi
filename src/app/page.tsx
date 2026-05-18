@@ -1,6 +1,21 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { loadProgress } from "@/lib/progress";
+import { getActiveWrongProblems } from "@/lib/progress";
 
 export default function Home() {
+  const [stars, setStars] = useState(0);
+  const [wrongCount, setWrongCount] = useState(0);
+
+  useEffect(() => {
+    const progress = loadProgress();
+    setStars(progress.stars);
+    const activeWrong = getActiveWrongProblems(progress.wrongProblems);
+    setWrongCount(activeWrong.length);
+  }, []);
+
   return (
     <div className="min-h-screen bg-amber-50 flex flex-col items-center py-8 px-4">
       <div className="text-center mb-8">
@@ -8,6 +23,23 @@ export default function Home() {
           欢迎回来，小棋手！
         </h1>
         <p className="text-amber-700">今天也要加油哦。</p>
+      </div>
+
+      <div className="flex items-center gap-4 mb-6">
+        <div className="bg-yellow-50 rounded-xl px-4 py-2 shadow">
+          <span className="text-lg font-bold text-yellow-600">
+            ⭐ {stars}
+          </span>
+          <span className="text-sm text-yellow-500 ml-1">星星</span>
+        </div>
+        {wrongCount > 0 && (
+          <div className="bg-red-50 rounded-xl px-4 py-2 shadow">
+            <span className="text-lg font-bold text-red-500">
+              {wrongCount}
+            </span>
+            <span className="text-sm text-red-400 ml-1">待复习</span>
+          </div>
+        )}
       </div>
 
       <div className="w-full max-w-md space-y-4">
@@ -30,6 +62,17 @@ export default function Home() {
           <div className="text-xl font-bold">闯关地图</div>
           <div className="text-sm text-blue-100 mt-1">
             挑战不同的关卡
+          </div>
+        </Link>
+
+        <Link
+          href="/wrong-book"
+          className="block w-full bg-red-400 hover:bg-red-500 text-white rounded-2xl p-6 shadow-lg text-center transition-colors"
+        >
+          <div className="text-4xl mb-2">📖</div>
+          <div className="text-xl font-bold">错题本</div>
+          <div className="text-sm text-red-100 mt-1">
+            {wrongCount > 0 ? `${wrongCount} 道题需要复习` : "暂无错题，真棒！"}
           </div>
         </Link>
 

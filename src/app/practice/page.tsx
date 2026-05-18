@@ -1,26 +1,41 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
 import { selectDailyProblems, type PracticeSession, createPracticeSession, recordResult, advancePracticeSession, getPracticeSummary } from "@/lib/practice";
 import type { Problem } from "@/lib/problems";
+import {
+  loadProgress,
+  saveProgress,
+  recordAttempt,
+  recordDailyPracticeComplete,
+  type StudentProgress,
+} from "@/lib/progress";
 
 type Phase = "idle" | "playing" | "summary";
 
 export default function PracticePage() {
   const [phase, setPhase] = useState<Phase>("idle");
   const [session, setSession] = useState<PracticeSession | null>(null);
+  const [progress, setProgress] = useState<StudentProgress | null>(null);
+  const [starsEarnedThisSession, setStarsEarnedThisSession] = useState(0);
+
+  useEffect(() => {
+    setProgress(loadProgress());
+  }, []);
 
   function handleStart() {
     const problems = selectDailyProblems();
     const newSession = createPracticeSession(problems);
     setSession(newSession);
     setPhase("playing");
+    setStarsEarnedThisSession(0);
+    setProgress(loadProgress());
   }
 
   const handleResult = useCallback(
-    (correct: boolean, wrongAttempts: number, usedHint: boolean) => {
+    (correct: boolean, wrongAttempts: number, usedHint: boolean, selectedX: number, selectedY: number) => {
       if (!session) return;
       const result = {
         problemId: session.problems[session.currentIndex].id,
@@ -30,6 +45,21 @@ export default function PracticePage() {
       };
       const updated = recordResult(session, result);
       setSession(updated);
+
+      const currentProgress = loadProgress();
+      const problem = session.problems[session.currentIndex];
+      const { progress: newProgress, starsEarned } = recordAttempt(
+        currentProgress,
+        problem.id,
+        selectedX,
+        selectedY,
+        correct,
+        usedHint,
+        0,
+      );
+      saveProgress(newProgress);
+      setProgress(newProgress);
+      setStarsEarnedThisSession((prev) => prev + starsEarned);
     },
     [session],
   );
@@ -39,6 +69,11 @@ export default function PracticePage() {
     const updated = advancePracticeSession(session);
     setSession(updated);
     if (updated.completed) {
+      const currentProgress = loadProgress();
+      const { progress: newProgress, starsEarned } = recordDailyPracticeComplete(currentProgress);
+      saveProgress(newProgress);
+      setProgress(newProgress);
+      setStarsEarnedThisSession((prev) => prev + starsEarned);
       setPhase("summary");
     }
   }, [session]);
@@ -66,7 +101,7 @@ export default function PracticePage() {
           href="/"
           className="mt-6 text-amber-600 hover:text-amber-800 text-sm"
         >
-          返回首页
+          ← 返回首页
         </Link>
       </div>
     );
@@ -118,6 +153,19 @@ export default function PracticePage() {
               使用了 {summary.hintsUsed} 次提示
             </div>
           )}
+
+          {starsEarnedThisSession > 0 && (
+            <div className="text-center bg-yellow-50 rounded-xl p-3">
+              <div className="text-2xl font-bold text-yellow-600">
+                +{starsEarnedThisSession} ⭐
+              </div>
+              <div className="text-sm text-yellow-500">获得星星</div>
+            </div>
+          )}
+
+          <div className="text-center text-sm text-gray-500">
+            总星星：{progress?.stars ?? 0} ⭐
+          </div>
         </div>
 
         <div className="flex gap-4 mt-6">
@@ -150,8 +198,13 @@ export default function PracticePage() {
             >
               ← 返回
             </Link>
-            <div className="text-sm font-medium text-amber-800">
-              第 {session.currentIndex + 1} / {session.problems.length} 题
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-yellow-600 font-medium">
+                ⭐ {progress?.stars ?? 0}
+              </span>
+              <span className="text-sm font-medium text-amber-800">
+                第 {session.currentIndex + 1} / {session.problems.length} 题
+              </span>
             </div>
           </div>
 

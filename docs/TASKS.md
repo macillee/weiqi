@@ -103,24 +103,32 @@ Acceptance:
 
 ---
 
-# Next Task: Milestone 5 — Progress, Stars, Wrong Book
+## Milestone 5: Progress, Stars, Wrong Book
 
-## Goal
+Status: completed.
 
-Create the local learning loop.
+Delivered:
 
-## Scope
+- `src/lib/progress.ts` — localStorage 进度管理（类型、保存、加载、记录尝试、错题本、星星奖励）
+- `src/app/wrong-book/page.tsx` — 错题本页面（列表 + 复习流程）
+- `src/app/page.tsx` — 首页显示星星数和待复习错题数
+- `src/app/practice/page.tsx` — 集成进度记录、星星奖励
+- `src/app/demo/page.tsx` — 集成进度记录
+- `src/app/levels/[chapterId]/page.tsx` — 集成进度记录
+- `src/components/problem/ProblemPlayer.tsx` — onResult 新增 selectedX/Y 参数
 
-- localStorage progress.
-- attempts record.
-- wrong problem tracking.
-- star rewards.
-- wrong book route.
-- wrong problem review.
+Acceptance:
+
+- localStorage key: `children-go-app:v0.1:progress`
+- 做错题进入错题本
+- 错题复习做对后状态更新（active → reviewing → mastered）
+- 星星奖励不重复发放（首次答对 +1，完成每日练习 +5）
+- mastered 错题不再显示在错题本
+- 刷新页面后进度仍存在
 
 ---
 
-# Upcoming Task: Milestone 6 — Report and Product Polish
+# Next Task: Milestone 6 — Report and Product Polish
 
 ## Goal
 
