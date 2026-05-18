@@ -1,22 +1,22 @@
 # Project Task Queue
 
 > This file is the task entry point for opencode.  
-> Always read `AGENTS.md`, `docs/PROJECT_SPEC.md`, `docs/DEVELOPMENT_GUIDE.md`, `docs/QUALITY_CHECKLIST.md`, and the relevant release notes before implementing any task.
+> Always read `AGENTS.md`, `docs/PROJECT_SPEC.md`, `docs/DEVELOPMENT_GUIDE.md`, `docs/QUALITY_CHECKLIST.md`, and the relevant release/content notes before implementing any task.
 
 ---
 
 # Current Phase
 
-v0.1.1 stabilization after v0.1.0 local MVP acceptance.
+v0.1.2 content expansion after v0.1.1 stabilization.
 
 Current strategy:
 
 ```text
-1. Preserve the accepted v0.1.0 local MVP
-2. Add tests for core logic
-3. Add safe local progress reset for testing
-4. Polish UI/copy and mobile usability
-5. Expand problem content only in small reviewed batches
+1. Preserve the stable v0.1.1 local MVP
+2. Expand content only in small reviewed batches
+3. Keep all new problems 9x9 and single-move
+4. Prioritize life_death basics without introducing complex reading
+5. Keep tests and validation green
 6. Defer login/database/AI/payment to later versions
 ```
 
@@ -59,7 +59,7 @@ Status: completed.
 Delivered:
 
 - `src/lib/problems.ts` — Problem 类型 + 验证 + 加载工具
-- `src/data/problems.json` — 9 道示例题目
+- `src/data/problems.json` — initial sample problem set
 - Basic Go-logic validation for invalid initial board states
 
 ---
@@ -158,37 +158,74 @@ References:
 - `docs/QA_CHECKLIST_v0.1.md`
 - `docs/RELEASE_NOTES_v0.1.md`
 
-Recommended tag after final local confirmation:
+---
 
-```bash
-git tag v0.1.0
-git push origin v0.1.0
-```
+## v0.1.1 Stabilization
+
+Status: completed.
+
+Delivered:
+
+- `vitest.config.ts` — Vitest configuration with jsdom environment
+- `src/__tests__/board.test.ts` — Tests for board utility functions
+- `src/__tests__/problems.test.ts` — Tests for problem validation
+- `src/__tests__/progress.test.ts` — Tests for progress tracking, wrong problem transitions, and daily practice
+- `src/__tests__/report.test.ts` — Tests for report statistics computation
+- `src/__tests__/practice.test.ts` — Tests for practice session management
+- `src/lib/progress.ts` — Added `resetProgress()` function
+- `src/app/settings/page.tsx` — Settings page with progress reset confirmation
+- `src/app/page.tsx` — Added subtle `设置` link at bottom of home page
+- `package.json` — Added `npm run test` and `npm run test:watch` scripts
+- `docs/CONTENT_REVIEW_v0.1.1.md` — Reviewed 24-problem content state
+
+Acceptance:
+
+- `npm run build` passes.
+- `npm run test` passes.
+- Docker validation is required only when Docker/dependency/build-config changed or before release/tag.
+- Resetting local progress returns home, wrong book, and report to empty states.
+- Existing v0.1.0 user flow remains intact.
 
 ---
 
-# Next Task: v0.1.1 Stabilization
+# Next Task: v0.1.2 Content Expansion
 
 ## Goal
 
-Stabilize the accepted v0.1.0 local MVP without expanding product scope.
+Expand the reviewed problem set from 24 to 36 problems without changing the product system.
+
+## References
+
+- `docs/CONTENT_PLAN_v0.1.2.md`
+- `docs/CONTENT_REVIEW_v0.1.1.md`
+- `docs/QUALITY_CHECKLIST.md`
+- `docs/DEVELOPMENT_GUIDE.md`
 
 ## Scope
 
-1. Add automated tests for core library logic:
-   - `src/lib/board.ts`
-   - `src/lib/problems.ts`
-   - `src/lib/progress.ts`
-   - `src/lib/report.ts`
-   - `src/lib/practice.ts`
-2. Add a safe local progress reset entry for development/testing.
-3. Polish mobile layout and child-facing copy where needed.
-4. Keep documentation synchronized.
-5. Optionally add a small, manually reviewed problem batch only if time permits.
+1. Add exactly 12 new problems to `src/data/problems.json`.
+2. Increase total problem count from 24 to 36.
+3. Keep all new problems:
+   - 9x9 only;
+   - single-move only;
+   - suitable for children who studied Go for about one year;
+   - short, warm, and concrete in copy.
+4. Recommended new problem distribution:
+   - `capture`: +3
+   - `escape`: +2
+   - `connect_cut`: +3
+   - `life_death`: +4
+5. Use recommended IDs unless conflicts exist:
+   - `CAP-011` to `CAP-013`
+   - `ESC-006` to `ESC-007`
+   - `CC-007` to `CC-009`
+   - `LD-001` to `LD-004`
+6. Create `docs/CONTENT_REVIEW_v0.1.2.md` using the template in `docs/CONTENT_PLAN_v0.1.2.md`.
+7. Optionally strengthen lightweight validation helpers only if it directly helps catch content errors.
 
 ## Out of Scope
 
-Do not implement in v0.1.1:
+Do not implement in v0.1.2:
 
 - Login
 - Database
@@ -197,52 +234,33 @@ Do not implement in v0.1.1:
 - AI review
 - Payment
 - Teacher/admin backend
-- Large-scale problem generation
 - Multi-step problem engine
+- 13x13 or 19x19 problem sets
+- Large-scale generated problem batch
+- Major UI redesign
 
 ## Acceptance
 
+- `src/data/problems.json` contains exactly 36 problems.
+- All new problem IDs are unique.
+- All new answer coordinates are empty points and inside the 9x9 board.
+- No initial stone group has zero liberties.
+- `validateAllProblems` passes.
+- `docs/CONTENT_REVIEW_v0.1.2.md` is complete and matches `problems.json`.
 - `npm run build` passes.
 - `npm run test` passes.
-- `docker compose up --build` is required only when Docker/dependency/build-config changed or before release/tag.
-- Resetting local progress returns home, wrong book, and report to empty states.
-- Existing v0.1.0 user flow remains intact.
-- Documentation reflects the current behavior.
-
----
-
-## v0.1.1 Stabilization
-
-Status: completed.
-
-Delivered:
-- `vitest.config.ts` — Vitest configuration with jsdom environment.
-- `src/__tests__/board.test.ts` — Tests for board utility functions (14 tests).
-- `src/__tests__/problems.test.ts` — Tests for problem validation (13 tests).
-- `src/__tests__/progress.test.ts` — Tests for progress tracking, wrong problem transitions, and daily practice (15 tests).
-- `src/__tests__/report.test.ts` — Tests for report statistics computation (6 tests).
-- `src/__tests__/practice.test.ts` — Tests for practice session management (7 tests).
-- `src/lib/progress.ts` — Added `resetProgress()` function.
-- `src/app/settings/page.tsx` — Settings page with progress reset (confirmation dialog).
-- `src/app/page.tsx` — Added subtle "设置" link at bottom of home page.
-- `package.json` — Added `npm run test` and `npm run test:watch` scripts.
-
-Acceptance:
-- `npm run build` passes.
-- `npm run test` passes (59 tests across 5 test files).
-- `docker compose up --build` is required only when Docker/dependency/build-config changed or before release/tag.
-- Resetting local progress returns home, wrong book, and report to empty states.
-- Existing v0.1.0 user flow remains intact.
+- Docker validation is not required unless Docker/dependency/build-config changed.
+- No v0.2 features are introduced.
 
 ---
 
 # Future Roadmap
 
-## v0.1.2 — Content Expansion
+## v0.1.3 — Content Review / Polish
 
-- Expand to around 30–50 reviewed problems.
-- Continue small-batch Go-logic review.
-- Improve category coverage.
+- Review v0.1.2 content with actual child/parent feedback.
+- Fix ambiguous problems.
+- Improve hints and explanations.
 
 ## v0.2.0 — Accounts and Sync
 
