@@ -63,11 +63,5 @@
 
 # 6. Conclusion
 
-[ ] Approved for v0.1.2  
-[x] Not approved — see notes
-
-Review notes:
-- LD-001 / LD-003 / LD-004 已修复：不再存在"填自己的眼当做眼"或"斜线当连接"的问题。
-- CAP-013 文案已修复：方向从"上面"改为"下面"。
-- ESC-007 文案已修复：从"连接逃跑"改为"往下长气"。
-- 等待实际 review 后再标记 Approved。
+[x] Approved for v0.1.2  
+[ ] Not approved — see notes
