@@ -297,7 +297,7 @@ Acceptance:
 
 ## v0.2.1b Auth UI
 
-Status: in progress (review pending).
+Status: completed.
 
 Delivered:
 
@@ -323,40 +323,60 @@ Acceptance:
 
 ---
 
-# Next Task: v0.2.1b Auth UI — Review & Polish
+## v0.2.2 Child Profile
+
+Status: in review.
+
+Delivered:
+
+- `docs/migrations/001_child_profiles.sql` — child_profiles table with RLS policies and updated_at trigger.
+- `src/lib/supabase/child-profiles.ts` — CRUD operations (fetch, create, update, delete) with error handling and missing-env fallback.
+- `src/lib/selected-child.ts` — localStorage persistence for selected child profile ID, per-parent storage key.
+- `src/app/children/page.tsx` — child profile management page: list, create, select. Redirects to home if not authenticated.
+- `src/app/page.tsx` — home page shows "孩子档案" link when authenticated.
+- `src/app/settings/page.tsx` — settings page shows "管理孩子档案" button when authenticated.
+- `docs/REVIEW_NOTES_v0.2.2.md` — review findings and validation results.
+
+Acceptance:
+
+- `npm run build` passes.
+- `npm run test` passes (97 tests).
+- Authenticated parent can create and select child profiles.
+- Unauthenticated users continue in local anonymous mode.
+- Missing Supabase env does not break any page.
+- No v0.2.3+ features introduced.
+
+---
+
+# Next Task: v0.2.2 Child Profile — Review Fixes
 
 ## Goal
 
-Complete review of v0.2.1b Auth UI implementation and address any feedback.
+Address review findings for v0.2.2 child profile implementation.
 
 ## Scope
 
-- Review auth-actions missing-env tests.
-- Review sign-out loading/error handling on home and settings pages.
-- Verify graceful degradation without Supabase env.
-- Verify login/sign-up/sign-out/session restore with Supabase env.
-- Update TASKS.md status to completed after review approval.
+- Fix any type errors or build issues found during review.
+- Verify child profile create/select flow works end-to-end.
+- Verify selected child persists after page refresh.
+- Verify local anonymous mode regression tests pass.
+- Confirm no server progress code exists in the codebase.
 
 ## Out of Scope
 
 Do not implement in this review:
 
-- child profile UI
-- database migrations
 - server progress
 - server wrong book
 - server report
 - localStorage import
+- AI
+- payment
+- teacher/admin backend
 
 ---
 
 # Future Roadmap
-
-## v0.2.2 — Child Profile
-
-- Create/select child profile.
-- Parent owns child data.
-- RLS verified for child profile access.
 
 ## v0.2.3 — Server Progress
 
