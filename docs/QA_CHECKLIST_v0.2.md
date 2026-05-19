@@ -34,7 +34,9 @@ Confirm not included:
 
 # 2. Environment Check
 
-- [ ] Node.js 20.19+ installed; Node.js 22 recommended.
+- [ ] Recommended: Node.js 22
+- [ ] Minimum: Node.js 20.19+
+- [ ] Docker uses `node:22-alpine`
 - [ ] `.env.local` may contain `NEXT_PUBLIC_SUPABASE_URL`.
 - [ ] `.env.local` may contain `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
 - [ ] Missing Supabase env does not crash local anonymous mode.

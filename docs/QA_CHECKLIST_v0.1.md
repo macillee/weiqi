@@ -7,7 +7,9 @@
 
 # 1. Environment Check
 
-- [ ] Node.js 20.19+ installed (recommended: Node.js 22).
+- [ ] Recommended: Node.js 22
+- [ ] Minimum: Node.js 20.19+
+- [ ] Docker uses `node:22-alpine`
 - [ ] `npm install` completes without errors.
 - [ ] `npm run dev` starts successfully.
 - [ ] `http://localhost:3000` loads in browser.
