@@ -28,20 +28,31 @@ Confirm not included:
 - [ ] No leaderboard.
 - [ ] No 13x13 / 19x19 expansion.
 - [ ] No multi-step problem engine.
+- [ ] No Supabase self-hosting stack in v0.2.
 
 ---
 
 # 2. Environment Check
 
 - [ ] Node.js 20.19+ installed; Node.js 22 recommended.
-- [ ] `.env.local` contains `NEXT_PUBLIC_SUPABASE_URL`.
-- [ ] `.env.local` contains `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+- [ ] `.env.local` may contain `NEXT_PUBLIC_SUPABASE_URL`.
+- [ ] `.env.local` may contain `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+- [ ] Missing Supabase env does not crash local anonymous mode.
 - [ ] No service role key is present in client environment.
 - [ ] `npm install` completes.
 - [ ] `npm run build` passes.
 - [ ] `npm run test` passes.
 
-Docker validation is required only if dependency/build/Docker config changed or before release tag.
+Docker validation is required if dependency/build/Docker config changed or before release tag.
+
+v0.2 default deployment model:
+
+```text
+Next.js App: Docker deployment
+Supabase: Supabase Cloud managed backend
+```
+
+Full Supabase self-hosting is out of scope for v0.2.
 
 ---
 
@@ -55,13 +66,16 @@ Confirm tables exist:
 - [ ] `wrong_problems`
 - [ ] `progress_summary`
 
-Confirm constraints:
+Confirm constraints and indexes:
 
 - [ ] attempt coordinates must be 0–8.
 - [ ] `wrong_problems.status` must be `active`, `reviewing`, or `mastered`.
 - [ ] star count cannot be negative.
 - [ ] streak days cannot be negative.
 - [ ] wrong count cannot be negative.
+- [ ] `problem_attempts` includes `imported_source_hash`.
+- [ ] `problem_attempts_import_hash_unique` exists for idempotent import.
+- [ ] `updated_at` trigger exists or equivalent app-layer update rule is documented.
 
 ---
 
@@ -84,6 +98,7 @@ Parent A cannot access Parent B data:
 - [ ] Parent A cannot select Parent B summary.
 - [ ] Parent A cannot insert rows for Parent B child profile.
 - [ ] Parent A cannot update rows for Parent B child profile.
+- [ ] UPDATE policies for `wrong_problems` and `progress_summary` include both `using` and `with check`.
 
 ---
 
@@ -120,7 +135,9 @@ If v0.2 keeps local mode:
 - [ ] Without login, wrong book still works locally.
 - [ ] Without login, report still works locally.
 - [ ] Settings reset still clears local progress.
-- [ ] No Supabase error blocks local mode.
+- [ ] Missing Supabase env does not block local mode.
+- [ ] Supabase Cloud outage does not block local practice.
+- [ ] No Supabase error blocks the v0.1 local learning loop.
 
 If v0.2 requires login, this must be explicitly approved and documented before implementation.
 
@@ -139,6 +156,7 @@ Signed in with active child profile:
 - [ ] Completing daily practice gives +5 once per day.
 - [ ] Repeating daily practice same day does not duplicate +5.
 - [ ] Refresh preserves server progress.
+- [ ] Server write failure never claims sync success.
 
 ---
 
