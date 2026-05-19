@@ -269,3 +269,157 @@ describe("server-progress — data mapping", () => {
     expect(result.data!.streakDays).toBe(0);
   });
 });
+
+describe("server-progress — syncAttemptToServer success path", () => {
+  it("syncs attempt + summary without wrongProblemUpdate", async () => {
+    const mockClient = makeMockClient({
+      insert: { data: null, error: null },
+      upsert: { data: null, error: null },
+    });
+    mockCreateClient.mockReturnValue(mockClient as any);
+
+    const result = await syncAttemptToServer(
+      "test-child-id",
+      {
+        problemId: "CAP-001",
+        selectedX: 3,
+        selectedY: 4,
+        isCorrect: true,
+        usedHint: false,
+        timeSpentSeconds: 10,
+      },
+      {
+        stars: 6,
+        streakDays: 2,
+        lastPracticeDate: "2026-05-19",
+        completedProblemIds: ["CAP-001"],
+        masteredProblemIds: [],
+        achievements: [],
+      },
+      null,
+    );
+
+    expect(result.synced).toBe(true);
+    expect(result.error).toBeNull();
+    expect(result.recoverable).toBe(false);
+  });
+
+  it("syncs attempt + summary + wrongProblemUpdate", async () => {
+    let upsertCallCount = 0;
+    const mockClient = {
+      from: vi.fn().mockReturnThis(),
+      insert: vi.fn().mockResolvedValue({ data: null, error: null }),
+      upsert: vi.fn().mockImplementation(() => {
+        upsertCallCount++;
+        return Promise.resolve({ data: null, error: null });
+      }),
+    };
+    mockCreateClient.mockReturnValue(mockClient as any);
+
+    const result = await syncAttemptToServer(
+      "test-child-id",
+      {
+        problemId: "CAP-003",
+        selectedX: 2,
+        selectedY: 5,
+        isCorrect: false,
+        usedHint: true,
+        timeSpentSeconds: 20,
+      },
+      {
+        stars: 6,
+        streakDays: 2,
+        lastPracticeDate: "2026-05-19",
+        completedProblemIds: ["CAP-001"],
+        masteredProblemIds: [],
+        achievements: [],
+      },
+      {
+        problemId: "CAP-003",
+        wrongCount: 3,
+        correctReviewCount: 0,
+        status: "active",
+        lastWrongAt: "2026-05-19T12:00:00Z",
+        lastReviewAt: null,
+      },
+    );
+
+    expect(result.synced).toBe(true);
+    expect(result.error).toBeNull();
+    expect(upsertCallCount).toBe(2);
+  });
+
+  it("returns synced false when summary upsert fails", async () => {
+    let callCount = 0;
+    const mockClient = {
+      from: vi.fn().mockReturnThis(),
+      insert: vi.fn().mockResolvedValue({ data: null, error: null }),
+      upsert: vi.fn().mockImplementation(() => {
+        callCount++;
+        if (callCount === 1) {
+          return Promise.resolve({ data: null, error: null });
+        }
+        return Promise.resolve({
+          error: { message: "Internal server error", code: "500" },
+        });
+      }),
+    };
+    mockCreateClient.mockReturnValue(mockClient as any);
+
+    const result = await syncAttemptToServer(
+      "test-child-id",
+      {
+        problemId: "CAP-001",
+        selectedX: 3,
+        selectedY: 4,
+        isCorrect: true,
+        usedHint: false,
+        timeSpentSeconds: 10,
+      },
+      {
+        stars: 6,
+        streakDays: 2,
+        lastPracticeDate: "2026-05-19",
+        completedProblemIds: ["CAP-001"],
+        masteredProblemIds: [],
+        achievements: [],
+      },
+      {
+        problemId: "CAP-001",
+        wrongCount: 1,
+        correctReviewCount: 0,
+        status: "active",
+        lastWrongAt: "2026-05-19T12:00:00Z",
+        lastReviewAt: null,
+      },
+    );
+
+    expect(result.synced).toBe(false);
+    expect(result.error).not.toBeNull();
+  });
+});
+
+describe("server-progress — wrong_problems mapping", () => {
+  it("loadServerProgress maps wrong_problems with independent mock data", async () => {
+    const mockClient = makeMockClient({
+      single: {
+        data: {
+          stars: 0,
+          streak_days: 0,
+          last_practice_date: null,
+          completed_problem_ids: [],
+          mastered_problem_ids: [],
+          achievements: [],
+        },
+        error: null,
+      },
+    });
+    mockCreateClient.mockReturnValue(mockClient as any);
+
+    const result = await loadServerProgress("test-child-id");
+
+    expect(result.error).toBeNull();
+    expect(result.data).not.toBeNull();
+    expect(result.data!.wrongProblems).toEqual([]);
+  });
+});

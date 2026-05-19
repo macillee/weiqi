@@ -433,34 +433,29 @@ Acceptance:
 
 ## Goal
 
-Create server progress library functions. Library only — no business page integration.
+Integrate server progress library into practice, wrong-book, and report through progress-source while preserving local fallback.
 
 ## Scope
 
 Allowed:
 
-- `src/lib/supabase/server-progress.ts` — server progress functions:
-  - `loadServerProgress(childProfileId)` — read progress_summary + wrong_problems
-  - `syncAttemptToServer(childProfileId, attempt, progressUpdate, wrongProblemUpdate)` — write problem_attempts, upsert progress_summary, upsert wrong_problems
-  - `loadReportData(childProfileId)` — read problem_attempts + wrong_problems + progress_summary
-- `src/__tests__/server-progress.test.ts` — tests for missing-env behavior and error handling
-- `docs/REVIEW_NOTES_v0.2.3b.md` — review findings and validation results
+- Update `src/lib/progress-source.ts` to detect server mode (authenticated + selected child profile)
+- Update `src/app/practice/page.tsx` to use progress-source for recording attempts and daily practice complete
+- Update `src/app/wrong-book/page.tsx` to sync review updates to server via progress-source
+- Update `src/app/report/page.tsx` to load server report data when server mode is active
+- Keep localStorage fallback: local save always happens first, server sync is non-blocking
+- Clear error messages on sync failure, never claim "已同步" unless server confirms
 
 Out of Scope:
 
 Do not implement in this task:
 
-- Modify practice/page.tsx
-- Modify wrong-book/page.tsx
-- Modify report/page.tsx
-- Modify page.tsx (home)
-- Modify settings/page.tsx
-- Add server mode to src/lib/progress-source.ts
 - localStorage import
-- server wrong book page integration
-- server report page integration
-- AI, payment, teacher/admin backend
-- Supabase self-hosting Docker stack
+- AI
+- payment
+- teacher/admin backend
+- Supabase self-hosting
+- v0.2.4 features
 
 ---
 

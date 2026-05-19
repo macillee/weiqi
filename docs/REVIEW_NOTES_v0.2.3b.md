@@ -3,7 +3,7 @@
 > Project: 小棋童围棋闯关  
 > Date: 2026-05-19  
 > Reviewer: opencode  
-> Status: reviewed
+> Status: reviewed (fixes applied)
 
 ---
 
@@ -23,10 +23,10 @@ Result: **PASS**
 
 ```
 Test Files  9 passed (9)
-Tests       107 passed (107)
+Tests       111 passed (111)
 ```
 
-Result: **PASS** (10 new tests added)
+Result: **PASS** (14 tests total for server-progress, +4 from review fixes)
 
 ---
 
@@ -98,6 +98,8 @@ They exist as standalone library functions ready for v0.2.3c page integration.
 
 ## 7. Test Coverage
 
+### Original tests (10)
+
 | Test | Status |
 |------|--------|
 | loadServerProgress returns error when client is null | ✅ |
@@ -106,10 +108,19 @@ They exist as standalone library functions ready for v0.2.3c page integration.
 | loadServerProgress returns classified error on failure | ✅ |
 | syncAttemptToServer returns error on insert failure | ✅ |
 | loadReportData returns classified error on failure | ✅ |
-| loadServerProgress maps snake_case to camelCase | ✅ |
+| loadServerProgress maps progress_summary snake_case to camelCase | ✅ |
 | loadServerProgress maps wrong_problems snake_case | ✅ |
-| loadReportData maps problem_attempts snake_case | ✅ |
+| loadReportData maps problem_attempts snake_case to camelCase | ✅ |
 | loadServerProgress handles PGRST116 (no row) | ✅ |
+
+### Review fix tests (+4)
+
+| Test | Status |
+|------|--------|
+| syncAttemptToServer success path (no wrongProblemUpdate) | ✅ |
+| syncAttemptToServer success path (with wrongProblemUpdate, 2 upserts) | ✅ |
+| syncAttemptToServer returns synced false on summary upsert failure | ✅ |
+| loadServerProgress maps wrong_problems with independent mock data | ✅ |
 
 Note: Tests use mocked Supabase client. Real Supabase integration
 tests require a live Supabase instance and are deferred to v0.2.3c
@@ -117,21 +128,30 @@ page integration phase.
 
 ---
 
-## 8. Deliverables Checklist
+## 8. TASKS.md Fixes Applied
+
+- v0.2.3c Next Task Goal corrected from "Library only" to "Integrate server progress library into practice, wrong-book, and report through progress-source while preserving local fallback."
+- v0.2.3c Scope updated to allow page modifications (practice, wrong-book, report) and progress-source server mode detection.
+- v0.2.3c Out of Scope updated to prohibit localStorage import, AI, payment, teacher/admin backend, Supabase self-hosting, and v0.2.4 features.
+
+---
+
+## 9. Deliverables Checklist
 
 | File | Status |
 |------|--------|
 | `src/lib/supabase/server-progress.ts` | ✅ Created |
-| `src/__tests__/server-progress.test.ts` | ✅ Created (10 tests) |
-| `docs/REVIEW_NOTES_v0.2.3b.md` | ✅ Created |
-| `docs/TASKS.md` — v0.2.3a completed | ✅ Updated |
-| `docs/TASKS.md` — Next Task: v0.2.3b | ✅ Updated |
+| `src/__tests__/server-progress.test.ts` | ✅ Created (14 tests) |
+| `docs/REVIEW_NOTES_v0.2.3b.md` | ✅ Updated |
+| `docs/TASKS.md` — v0.2.3b completed | ✅ Updated |
+| `docs/TASKS.md` — Next Task: v0.2.3c | ✅ Updated (corrected Goal/Scope) |
 
 ---
 
-## 9. Verdict
+## 10. Verdict
 
-**v0.2.3b Server Progress Library: PASS**
+**v0.2.3b Server Progress Library: PASS (after review fixes)**
 
-All functions implemented, tested, and documented. No business page
-changes. No localStorage import. Ready for review.
+All functions implemented, tested, and documented. TASKS.md v0.2.3c
+Goal and Scope corrected. No business page changes. No localStorage
+import. Ready for v0.2.3c page integration.
