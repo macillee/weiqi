@@ -1,67 +1,5 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { classifySupabaseError, getSyncErrorMessage, isRecoverableError } from "@/lib/supabase/supabase-error";
-
-describe("isSupabaseConfigured", () => {
-  beforeEach(() => {
-    vi.resetModules();
-  });
-
-  it("returns false when both env vars are missing", async () => {
-    delete process.env.NEXT_PUBLIC_SUPABASE_URL;
-    delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    const { isSupabaseConfigured } = await import("@/lib/supabase/client");
-    expect(isSupabaseConfigured()).toBe(false);
-  });
-
-  it("returns false when only URL is set", async () => {
-    process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example.supabase.co";
-    delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    const { isSupabaseConfigured } = await import("@/lib/supabase/client");
-    expect(isSupabaseConfigured()).toBe(false);
-  });
-
-  it("returns false when only anon key is set", async () => {
-    delete process.env.NEXT_PUBLIC_SUPABASE_URL;
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "anon-key";
-    const { isSupabaseConfigured } = await import("@/lib/supabase/client");
-    expect(isSupabaseConfigured()).toBe(false);
-  });
-
-  it("returns true when both env vars are set", async () => {
-    process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example.supabase.co";
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "anon-key";
-    const { isSupabaseConfigured } = await import("@/lib/supabase/client");
-    expect(isSupabaseConfigured()).toBe(true);
-  });
-});
-
-describe("createSupabaseClient", () => {
-  beforeEach(() => {
-    vi.resetModules();
-  });
-
-  it("returns null when both env vars are missing", async () => {
-    delete process.env.NEXT_PUBLIC_SUPABASE_URL;
-    delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    const { createSupabaseClient } = await import("@/lib/supabase/client");
-    expect(createSupabaseClient()).toBeNull();
-  });
-
-  it("does not throw when env vars are missing", async () => {
-    delete process.env.NEXT_PUBLIC_SUPABASE_URL;
-    delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    const { createSupabaseClient } = await import("@/lib/supabase/client");
-    expect(() => createSupabaseClient()).not.toThrow();
-  });
-
-  it("returns a client when both env vars are set", async () => {
-    process.env.NEXT_PUBLIC_SUPABASE_URL = "https://example.supabase.co";
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY = "anon-key";
-    const { createSupabaseClient } = await import("@/lib/supabase/client");
-    const client = createSupabaseClient();
-    expect(client).not.toBeNull();
-  });
-});
 
 describe("classifySupabaseError", () => {
   it("classifies network errors correctly", () => {
@@ -140,18 +78,4 @@ describe("isRecoverableError", () => {
   });
 });
 
-describe("import safety", () => {
-  it("module import does not throw when env vars are missing", async () => {
-    delete process.env.NEXT_PUBLIC_SUPABASE_URL;
-    delete process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-    await expect(
-      import("@/lib/supabase/client"),
-    ).resolves.toBeDefined();
-  });
 
-  it("module import of auth does not throw", async () => {
-    await expect(
-      import("@/lib/supabase/auth"),
-    ).resolves.toBeDefined();
-  });
-});

@@ -1,14 +1,13 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
 /**
  * Returns true if Supabase environment variables are configured.
  * When false, the app should continue in local-only mode.
  */
 export function isSupabaseConfigured(): boolean {
-  return !!(supabaseUrl && supabaseAnonKey);
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  return !!(url && key);
 }
 
 /**
@@ -20,8 +19,10 @@ export function isSupabaseConfigured(): boolean {
  * due to missing Supabase configuration.
  */
 export function createSupabaseClient(): SupabaseClient | null {
-  if (!isSupabaseConfigured()) {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!(url && key)) {
     return null;
   }
-  return createClient(supabaseUrl!, supabaseAnonKey!);
+  return createClient(url, key);
 }
