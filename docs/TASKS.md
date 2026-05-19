@@ -373,12 +373,6 @@ Do not implement in v0.2.1b:
 - Parent owns child data.
 - RLS verified for child profile access.
 
-## v0.2.2 — Child Profile
-
-- Create/select child profile.
-- Parent owns child data.
-- RLS verified for child profile access.
-
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
