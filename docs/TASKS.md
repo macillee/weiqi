@@ -429,7 +429,61 @@ Acceptance:
 
 ---
 
-# Next Task: v0.2.3c Server Progress Page Integration
+## v0.2.3c Server Progress Page Integration
+
+Status: completed.
+
+Delivered:
+
+- `src/lib/progress-source.ts` — progress source abstraction with server mode detection:
+  - `getProgressMode(parentUserId)` — returns "server" only when Supabase configured + authenticated + child selected
+  - `recordAttemptWithSync(parentUserId, ...)` — saves to localStorage first, then syncs to server if server mode
+  - `recordDailyPracticeCompleteWithSync(parentUserId)` — same pattern for daily practice complete
+  - `updateWrongProblemReviewWithSync(parentUserId, problemId, isCorrect)` — syncs wrong problem review to server
+  - `loadReportWithSource(parentUserId)` — loads from server in server mode, falls back to local on failure
+- `src/app/practice/page.tsx` — integrated with progress-source:
+  - Attempt recording uses `recordAttemptWithSync`
+  - Daily practice complete uses `recordDailyPracticeCompleteWithSync`
+  - Shows sync status ("进度已同步 ☁️") on success
+  - Shows gentle error message on sync failure, does not block next problem
+- `src/app/wrong-book/page.tsx` — integrated with progress-source:
+  - Review attempts use `updateWrongProblemReviewWithSync`
+  - Local wrong problem state transitions unchanged (active → reviewing → mastered)
+  - Server failure does not block wrong book usage
+- `src/app/report/page.tsx` — integrated with progress-source:
+  - Server mode: loads from `loadReportData`, falls back to local on failure
+  - Local mode: continues using `computeReportStats` from localStorage
+  - Shows error message when server fails but local data is shown
+- `src/lib/report.ts` — added `computeReportStatsFromProgress(progress, attemptsOverride?)` for computing stats from arbitrary progress data (used by server report)
+- `src/__tests__/progress-source.test.ts` — 15 tests:
+  - getProgressMode: unconfigured, unauthenticated, no child selected, server mode
+  - recordAttemptWithSync: local mode saves, server mode syncs, server failure returns error
+  - recordDailyPracticeCompleteWithSync: local and server mode
+  - updateWrongProblemReviewWithSync: local and server mode
+  - loadReportWithSource: local fallback, server success, server failure fallback
+
+Explicitly NOT delivered in v0.2.3c:
+
+- No localStorage import (v0.2.4).
+- No import prompt, import marker, or conflict merge.
+- No AI, payment, teacher/admin backend.
+
+Acceptance:
+
+- `npm run build` passes.
+- `npm run test` passes (126 tests).
+- Unconfigured Supabase env: all pages fully functional in local mode.
+- Unauthenticated users: full local anonymous mode.
+- Authenticated but no child selected: local mode.
+- Authenticated + child selected: practice attempts sync to server.
+- Wrong-book review state syncs to server.
+- Report reads server data when available, falls back to local on failure.
+- Server failure does not block learning flow.
+- No v0.2.4 localStorage import.
+
+---
+
+# Next Task: v0.2.4 Local Import
 
 ## Goal
 

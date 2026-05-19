@@ -1,4 +1,4 @@
-import { loadProgress } from "@/lib/progress";
+import { loadProgress, type StudentProgress, type AttemptRecord } from "@/lib/progress";
 import { loadProblems } from "@/lib/problems";
 
 export type CategoryStat = {
@@ -40,23 +40,28 @@ const CATEGORY_LABELS: Record<string, string> = {
 
 export function computeReportStats(): ReportStats {
   const progress = loadProgress();
+  return computeReportStatsFromProgress(progress);
+}
+
+export function computeReportStatsFromProgress(
+  progress: StudentProgress,
+  attemptsOverride?: AttemptRecord[],
+): ReportStats {
   const problems = loadProblems();
   const problemMap = new Map(problems.map((p) => [p.id, p]));
 
   const totalProblems = problems.length;
 
-  // Unique attempted problems from attempts
-  const attemptedProblemIds = new Set(progress.attempts.map((a) => a.problemId));
+  const attemptsToUse = attemptsOverride ?? progress.attempts;
+  const attemptedProblemIds = new Set(attemptsToUse.map((a) => a.problemId));
   const uniqueAttemptedProblems = attemptedProblemIds.size;
 
-  // Overall accuracy
-  const totalAttempts = progress.attempts.length;
-  const correctAttempts = progress.attempts.filter((a) => a.isCorrect).length;
+  const totalAttempts = attemptsToUse.length;
+  const correctAttempts = attemptsToUse.filter((a) => a.isCorrect).length;
   const accuracy = totalAttempts > 0 ? correctAttempts / totalAttempts : 0;
 
-  // First-try accuracy: for each problem, look at its FIRST attempt ever
   const firstAttemptMap = new Map<string, boolean>();
-  for (const attempt of progress.attempts) {
+  for (const attempt of attemptsToUse) {
     if (!firstAttemptMap.has(attempt.problemId)) {
       firstAttemptMap.set(attempt.problemId, attempt.isCorrect);
     }
@@ -68,12 +73,10 @@ export function computeReportStats(): ReportStats {
   const firstTryAccuracy =
     firstAttemptedCount > 0 ? firstTryCorrectCount / firstAttemptedCount : 0;
 
-  // Wrong count (active + reviewing, not mastered)
   const wrongCount = Object.values(progress.wrongProblems).filter(
     (wp) => wp.status !== "mastered",
   ).length;
 
-  // Category stats
   const categoryMap = new Map<string, CategoryStat>();
   for (const [cat, label] of Object.entries(CATEGORY_LABELS)) {
     const catProblems = problems.filter((p) => p.category === cat);
@@ -91,7 +94,6 @@ export function computeReportStats(): ReportStats {
     });
   }
 
-  // Count completed per category from attempts (unique problemIds)
   for (const problemId of attemptedProblemIds) {
     const problem = problemMap.get(problemId);
     if (!problem) continue;
@@ -99,8 +101,7 @@ export function computeReportStats(): ReportStats {
     if (stat) stat.completed += 1;
   }
 
-  // Count attempts and correct attempts per category
-  for (const attempt of progress.attempts) {
+  for (const attempt of attemptsToUse) {
     const problem = problemMap.get(attempt.problemId);
     if (!problem) continue;
     const stat = categoryMap.get(problem.category);
@@ -109,7 +110,6 @@ export function computeReportStats(): ReportStats {
     if (attempt.isCorrect) stat.correctAttempts += 1;
   }
 
-  // First-try per category
   for (const [problemId, isFirstCorrect] of firstAttemptMap.entries()) {
     const problem = problemMap.get(problemId);
     if (!problem) continue;
@@ -119,7 +119,6 @@ export function computeReportStats(): ReportStats {
     if (isFirstCorrect) stat.firstTryCorrectProblems += 1;
   }
 
-  // Compute accuracy and firstTryAccuracy per category
   for (const stat of categoryMap.values()) {
     stat.accuracy = stat.attempts > 0 ? stat.correctAttempts / stat.attempts : 0;
     stat.firstTryAccuracy =
@@ -132,7 +131,6 @@ export function computeReportStats(): ReportStats {
     (s) => s.total > 0,
   );
 
-  // Strongest/weakest based on firstTryAccuracy (fallback to accuracy)
   const activeCategories = categoryStats.filter(
     (s) => s.firstAttemptedProblems > 0,
   );
@@ -149,7 +147,6 @@ export function computeReportStats(): ReportStats {
     );
   }
 
-  // Has progress if any attempts, wrong problems, or stars
   const hasProgress =
     totalAttempts > 0 || wrongCount > 0 || progress.stars > 0;
 

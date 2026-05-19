@@ -7,11 +7,14 @@ import { selectDailyProblems, type PracticeSession, createPracticeSession, recor
 import type { Problem } from "@/lib/problems";
 import {
   loadProgress,
-  saveProgress,
-  recordAttempt,
-  recordDailyPracticeComplete,
   type StudentProgress,
 } from "@/lib/progress";
+import {
+  recordAttemptWithSync,
+  recordDailyPracticeCompleteWithSync,
+  type SyncResult,
+} from "@/lib/progress-source";
+import { useSupabaseAuth } from "@/lib/supabase/auth";
 
 type Phase = "idle" | "playing" | "summary";
 
@@ -20,6 +23,9 @@ export default function PracticePage() {
   const [session, setSession] = useState<PracticeSession | null>(null);
   const [progress, setProgress] = useState<StudentProgress | null>(null);
   const [starsEarnedThisSession, setStarsEarnedThisSession] = useState(0);
+  const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
+  const { session: authSession } = useSupabaseAuth();
+  const parentUserId = authSession?.user?.id ?? null;
 
   useEffect(() => {
     setProgress(loadProgress());
@@ -31,16 +37,16 @@ export default function PracticePage() {
     setSession(newSession);
     setPhase("playing");
     setStarsEarnedThisSession(0);
+    setSyncResult(null);
     setProgress(loadProgress());
   }
 
   const handleAttempt = useCallback(
-    (x: number, y: number, isCorrect: boolean, usedHint: boolean) => {
+    async (x: number, y: number, isCorrect: boolean, usedHint: boolean) => {
       if (!session) return;
       const problem = session.problems[session.currentIndex];
-      const currentProgress = loadProgress();
-      const { progress: newProgress, starsEarned } = recordAttempt(
-        currentProgress,
+      const result = await recordAttemptWithSync(
+        parentUserId,
         problem.id,
         x,
         y,
@@ -48,11 +54,13 @@ export default function PracticePage() {
         usedHint,
         0,
       );
-      saveProgress(newProgress);
-      setProgress(newProgress);
-      setStarsEarnedThisSession((prev) => prev + starsEarned);
+      setProgress(result.progress);
+      setStarsEarnedThisSession((prev) => prev + result.starsEarned);
+      if (result.sync.synced || result.sync.error) {
+        setSyncResult(result.sync);
+      }
     },
-    [session],
+    [session, parentUserId],
   );
 
   const handleResult = useCallback(
@@ -70,19 +78,20 @@ export default function PracticePage() {
     [session],
   );
 
-  const handleNext = useCallback(() => {
+  const handleNext = useCallback(async () => {
     if (!session) return;
     const updated = advancePracticeSession(session);
     setSession(updated);
     if (updated.completed) {
-      const currentProgress = loadProgress();
-      const { progress: newProgress, starsEarned } = recordDailyPracticeComplete(currentProgress);
-      saveProgress(newProgress);
-      setProgress(newProgress);
-      setStarsEarnedThisSession((prev) => prev + starsEarned);
+      const result = await recordDailyPracticeCompleteWithSync(parentUserId);
+      setProgress(result.progress);
+      setStarsEarnedThisSession((prev) => prev + result.starsEarned);
+      if (result.sync.synced || result.sync.error) {
+        setSyncResult(result.sync);
+      }
       setPhase("summary");
     }
-  }, [session]);
+  }, [session, parentUserId]);
 
   if (phase === "idle") {
     return (
@@ -169,6 +178,18 @@ export default function PracticePage() {
             </div>
           )}
 
+          {syncResult?.synced && (
+            <div className="text-center text-xs text-green-600">
+              进度已同步 ☁️
+            </div>
+          )}
+
+          {syncResult?.error && (
+            <div className="text-center text-xs text-orange-600">
+              {syncResult.error}
+            </div>
+          )}
+
           <div className="text-center text-sm text-gray-500">
             总星星：{progress?.stars ?? 0} ⭐
           </div>
@@ -222,6 +243,12 @@ export default function PracticePage() {
               }}
             />
           </div>
+
+          {syncResult?.error && (
+            <div className="mx-4 mt-2 bg-orange-50 border border-orange-200 rounded-lg px-3 py-2 text-xs text-orange-700">
+              {syncResult.error}
+            </div>
+          )}
 
           <ProblemPlayer
             problem={problem}

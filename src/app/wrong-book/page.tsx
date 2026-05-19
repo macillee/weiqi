@@ -3,9 +3,11 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
-import { loadProgress, saveProgress, recordAttempt, getActiveWrongProblems, type WrongProblemState, type StudentProgress } from "@/lib/progress";
+import { loadProgress, getActiveWrongProblems, type WrongProblemState, type StudentProgress } from "@/lib/progress";
 import { getProblemById, type Problem } from "@/lib/problems";
 import { categoryLabels } from "@/lib/chapters";
+import { updateWrongProblemReviewWithSync, type SyncResult } from "@/lib/progress-source";
+import { useSupabaseAuth } from "@/lib/supabase/auth";
 
 type ViewMode = "list" | "reviewing";
 
@@ -24,6 +26,9 @@ export default function WrongBookPage() {
   const [progress, setProgress] = useState<StudentProgress | null>(null);
   const [wrongProblems, setWrongProblems] = useState<WrongProblemState[]>([]);
   const [reviewProblem, setReviewProblem] = useState<Problem | null>(null);
+  const [syncResult, setSyncResult] = useState<SyncResult | null>(null);
+  const { session: authSession } = useSupabaseAuth();
+  const parentUserId = authSession?.user?.id ?? null;
 
   function refreshProgress() {
     const p = loadProgress();
@@ -41,27 +46,25 @@ export default function WrongBookPage() {
     if (!problem) return;
     setReviewProblem(problem);
     setViewMode("reviewing");
+    setSyncResult(null);
   }
 
   const handleAttempt = useCallback(
-    (x: number, y: number, isCorrect: boolean, usedHint: boolean) => {
+    async (x: number, y: number, isCorrect: boolean, usedHint: boolean) => {
       if (!reviewProblem) return;
-      const currentProgress = loadProgress();
-      const { progress: newProgress } = recordAttempt(
-        currentProgress,
+      const result = await updateWrongProblemReviewWithSync(
+        parentUserId,
         reviewProblem.id,
-        x,
-        y,
         isCorrect,
-        usedHint,
-        0,
       );
-      saveProgress(newProgress);
-      setProgress(newProgress);
-      const active = getActiveWrongProblems(newProgress.wrongProblems);
+      setProgress(result.progress);
+      const active = getActiveWrongProblems(result.progress.wrongProblems);
       setWrongProblems(active);
+      if (result.sync.synced || result.sync.error) {
+        setSyncResult(result.sync);
+      }
     },
-    [reviewProblem],
+    [reviewProblem, parentUserId],
   );
 
   if (viewMode === "reviewing" && reviewProblem) {
@@ -82,6 +85,12 @@ export default function WrongBookPage() {
               错题复习
             </div>
           </div>
+
+          {syncResult?.error && (
+            <div className="mx-4 mt-2 bg-orange-50 border border-orange-200 rounded-lg px-3 py-2 text-xs text-orange-700">
+              {syncResult.error}
+            </div>
+          )}
 
           <ProblemPlayer
             problem={reviewProblem}

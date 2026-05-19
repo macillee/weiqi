@@ -2,14 +2,77 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { computeReportStats, type ReportStats } from "@/lib/report";
+import { computeReportStats, computeReportStatsFromProgress, type ReportStats } from "@/lib/report";
+import { loadReportWithSource } from "@/lib/progress-source";
+import { useSupabaseAuth } from "@/lib/supabase/auth";
+import { loadProgress } from "@/lib/progress";
 
 export default function ReportPage() {
   const [stats, setStats] = useState<ReportStats | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [serverError, setServerError] = useState<string | null>(null);
+  const { session: authSession } = useSupabaseAuth();
+  const parentUserId = authSession?.user?.id ?? null;
 
   useEffect(() => {
-    setStats(computeReportStats());
-  }, []);
+    async function load() {
+      const result = await loadReportWithSource(parentUserId);
+
+      if (result.fallbackToLocal) {
+        const localStats = computeReportStats();
+        setStats(localStats);
+        if (result.error) {
+          setServerError(result.error);
+        }
+      } else if (result.data) {
+        const progress = loadProgress();
+        const serverAttempts = result.data.attempts.map((a) => ({
+          problemId: a.problemId,
+          selectedX: a.selectedX,
+          selectedY: a.selectedY,
+          isCorrect: a.isCorrect,
+          usedHint: a.usedHint,
+          timeSpentSeconds: a.timeSpentSeconds,
+          createdAt: a.createdAt,
+        }));
+        const serverProgress = {
+          ...progress,
+          stars: result.data.totalStars,
+          streakDays: result.data.streakDays,
+          attempts: serverAttempts,
+          wrongProblems: result.data.wrongProblems.reduce(
+            (acc, wp) => {
+              acc[wp.problemId] = {
+                problemId: wp.problemId,
+                wrongCount: wp.wrongCount,
+                correctReviewCount: wp.correctReviewCount,
+                status: wp.status,
+                lastWrongAt: wp.lastWrongAt ?? "",
+                lastReviewAt: wp.lastReviewAt ?? undefined,
+              };
+              return acc;
+            },
+            {} as Record<string, import("@/lib/progress").WrongProblemState>,
+          ),
+        };
+        setStats(computeReportStatsFromProgress(serverProgress));
+      } else {
+        const localStats = computeReportStats();
+        setStats(localStats);
+      }
+      setLoading(false);
+    }
+
+    load();
+  }, [parentUserId]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-amber-50 flex flex-col items-center py-12 px-4">
+        <div className="text-2xl text-amber-700">加载中...</div>
+      </div>
+    );
+  }
 
   if (!stats) return null;
 
@@ -44,6 +107,12 @@ export default function ReportPage() {
             看看你的进步吧！
           </p>
         </div>
+
+        {serverError && (
+          <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 mb-4 text-xs text-orange-700 text-center">
+            {serverError}，已显示本地数据
+          </div>
+        )}
 
         <div className="grid grid-cols-2 gap-3 mb-6">
           <div className="bg-white rounded-xl p-4 shadow text-center">
