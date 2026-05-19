@@ -3,15 +3,24 @@
 import { useState } from "react";
 import Link from "next/link";
 import { resetProgress } from "@/lib/progress";
+import { useSupabaseAuth } from "@/lib/supabase/auth";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { signOutUser } from "@/lib/supabase/auth-actions";
 
 export default function SettingsPage() {
   const [showConfirm, setShowConfirm] = useState(false);
   const [resetDone, setResetDone] = useState(false);
+  const { session, isLoading } = useSupabaseAuth();
+  const configured = isSupabaseConfigured();
 
   function handleReset() {
     resetProgress();
     setResetDone(true);
     setShowConfirm(false);
+  }
+
+  async function handleSignOut() {
+    await signOutUser();
   }
 
   return (
@@ -28,6 +37,36 @@ export default function SettingsPage() {
             <p className="text-green-600 text-sm mt-1">
               所有学习数据已清除，返回首页后会看到新的空进度。
             </p>
+          </div>
+        )}
+
+        {configured && (
+          <div className="bg-white rounded-xl p-6 shadow-lg mb-6">
+            <h2 className="text-lg font-bold text-amber-900 mb-3">
+              账号
+            </h2>
+            {isLoading ? (
+              <p className="text-sm text-gray-500">加载中...</p>
+            ) : session ? (
+              <div>
+                <p className="text-sm text-green-600 bg-green-50 rounded-lg px-3 py-2 mb-3">
+                  已登录：{session.user.email}
+                </p>
+                <button
+                  onClick={handleSignOut}
+                  className="w-full py-3 bg-red-400 hover:bg-red-500 text-white rounded-xl font-medium transition-colors"
+                >
+                  退出登录
+                </button>
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="block w-full py-3 bg-green-500 hover:bg-green-600 text-white rounded-xl font-medium text-center transition-colors"
+              >
+                登录 / 注册
+              </Link>
+            )}
           </div>
         )}
 

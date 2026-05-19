@@ -295,73 +295,75 @@ Acceptance:
 
 ---
 
-# Next Task: v0.2.1b Auth UI
+## v0.2.1b Auth UI
+
+Status: completed.
+
+Delivered:
+
+- `src/lib/supabase/auth-actions.ts` — `signInWithEmail()`, `signUpWithEmail()`, `signOutUser()` helpers (never throw, return `AuthResult`).
+- `src/app/login/page.tsx` — login/sign-up page with email + password form, input validation, loading state, error display, and mode toggle.
+- `src/app/page.tsx` — home page shows session email + sign-out button when authenticated, "登录 / 注册" link when not, nothing when Supabase not configured.
+- `src/app/settings/page.tsx` — settings page shows account section with session status and sign-out/login buttons.
+- Graceful degradation: when Supabase env is missing, `/login` shows a clear "云端功能尚未配置" message and local mode remains fully functional.
+
+Acceptance:
+
+- `npm run build` passes.
+- `npm run test` passes (91 tests).
+- User can sign up with email + password.
+- User can sign in with email + password.
+- User can sign out.
+- Session persists after refresh (via `useSupabaseAuth` hook).
+- Unauthenticated local mode still works fully.
+- Missing Supabase env hides auth UI gracefully.
+- No v0.2.2+ features introduced.
+
+---
+
+# Next Task: v0.2.2 Child Profile
 
 ## Goal
 
-Add login, logout, and session restore UI while keeping local anonymous mode working.
+Add child profile creation and selection for authenticated users.
 
 ## References
 
 - `docs/ROADMAP_v0.2.md`
 - `docs/SUPABASE_DESIGN_v0.2.md`
-- `docs/DEPLOYMENT_STRATEGY_v0.2.md`
 - `docs/QA_CHECKLIST_v0.2.md`
 - `docs/DEVELOPMENT_GUIDE.md`
-- `docs/QUALITY_CHECKLIST.md`
 
 ## Scope
 
-1. Add login page (`/login`):
-   - Email + password form.
-   - Input validation and error display.
-   - Loading state during authentication.
-   - Redirect to home after successful login.
-2. Add sign-up support to the login page:
-   - Toggle between sign-in and sign-up mode.
-   - Confirm password field.
-   - Basic validation (email format, password length).
-3. Add logout UI:
-   - Sign out button visible when authenticated.
-   - Clears Supabase session.
-   - Returns to home / local mode.
-4. Session restore:
-   - `useSupabaseAuth` already provides session state.
-   - Show authenticated state in UI (e.g. email display).
-   - Persist session across page refresh.
-5. Keep local anonymous mode unchanged:
-   - Unauthenticated users see the full v0.1 local flow.
-   - Login is optional; no forced redirect.
-   - Account-related UI is subtle (e.g., settings page link).
+1. Add child profile table/migration to Supabase.
+2. Add create child profile UI.
+3. Add select active child profile UI.
+4. Store selected child profile ID locally.
+5. Keep one-child UI first, schema supports multiple.
 
 ## Out of Scope
 
-Do not implement in v0.2.1b:
+Do not implement in v0.2.2:
 
-- child profile UI
-- database migrations
 - server progress
 - server wrong book
 - server report
 - localStorage import
-- Supabase self-hosting Docker stack
 - AI
 - payment
 - teacher/admin backend
-- leaderboard
-- 13x13 / 19x19 expansion
 
 ## Acceptance
 
 - `npm run build` passes.
 - `npm run test` passes.
-- User can sign up with email + password.
-- User can sign in with email + password.
-- User can sign out.
-- Session persists after refresh.
-- Unauthenticated local mode still works fully.
-- Missing Supabase env hides or disables auth UI gracefully.
-- No v0.2.2+ features are introduced.
+- Signed-in parent can create a child profile.
+- Child profile uses nickname (no real name required).
+- Parent can select active child profile.
+- Refresh preserves selected child.
+- Unauthenticated users still use local mode.
+- No v0.2.3+ features are introduced.
 
 ---
 

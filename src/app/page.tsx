@@ -4,10 +4,15 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { loadProgress } from "@/lib/progress";
 import { getActiveWrongProblems } from "@/lib/progress";
+import { useSupabaseAuth } from "@/lib/supabase/auth";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { signOutUser } from "@/lib/supabase/auth-actions";
 
 export default function Home() {
   const [stars, setStars] = useState(0);
   const [wrongCount, setWrongCount] = useState(0);
+  const { session } = useSupabaseAuth();
+  const configured = isSupabaseConfigured();
 
   useEffect(() => {
     const progress = loadProgress();
@@ -15,6 +20,10 @@ export default function Home() {
     const activeWrong = getActiveWrongProblems(progress.wrongProblems);
     setWrongCount(activeWrong.length);
   }, []);
+
+  async function handleSignOut() {
+    await signOutUser();
+  }
 
   return (
     <div className="min-h-screen bg-amber-50 flex flex-col items-center py-8 px-4">
@@ -24,6 +33,31 @@ export default function Home() {
         </h1>
         <p className="text-amber-700">今天也要加油哦。</p>
       </div>
+
+      {configured && (
+        <div className="flex items-center gap-3 mb-4">
+          {session ? (
+            <>
+              <span className="text-sm text-green-600 bg-green-50 rounded-lg px-3 py-1">
+                {session.user.email}
+              </span>
+              <button
+                onClick={handleSignOut}
+                className="text-sm text-red-500 hover:text-red-700"
+              >
+                退出
+              </button>
+            </>
+          ) : (
+            <Link
+              href="/login"
+              className="text-sm text-amber-600 hover:text-amber-800"
+            >
+              登录 / 注册
+            </Link>
+          )}
+        </div>
+      )}
 
       <div className="flex items-center gap-4 mb-6">
         <div className="bg-yellow-50 rounded-xl px-4 py-2 shadow">
