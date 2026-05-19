@@ -49,6 +49,12 @@ export default function Home() {
               <span className="text-sm text-green-600 bg-green-50 rounded-lg px-3 py-1">
                 {session.user.email}
               </span>
+              <Link
+                href="/children"
+                className="text-sm text-blue-500 hover:text-blue-700"
+              >
+                孩子档案
+              </Link>
               <button
                 onClick={handleSignOut}
                 disabled={signingOut}

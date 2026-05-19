@@ -60,6 +60,12 @@ export default function SettingsPage() {
                 <p className="text-sm text-green-600 bg-green-50 rounded-lg px-3 py-2 mb-3">
                   已登录：{session.user.email}
                 </p>
+                <Link
+                  href="/children"
+                  className="block w-full py-3 bg-blue-400 hover:bg-blue-500 text-white rounded-xl font-medium text-center transition-colors mb-3"
+                >
+                  管理孩子档案
+                </Link>
                 <button
                   onClick={handleSignOut}
                   disabled={signingOut}
