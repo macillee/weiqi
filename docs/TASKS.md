@@ -325,17 +325,28 @@ Acceptance:
 
 ## v0.2.2 Child Profile
 
-Status: in review.
+Status: completed.
 
 Delivered:
 
 - `docs/migrations/001_child_profiles.sql` — child_profiles table with RLS policies and updated_at trigger.
-- `src/lib/supabase/child-profiles.ts` — CRUD operations (fetch, create, update, delete) with error handling and missing-env fallback.
+- `src/lib/supabase/child-profiles.ts` — CRUD operations (fetch, create, update, delete) with error handling and missing-env fallback. createChildProfile explicitly sets parent_user_id from session.
 - `src/lib/selected-child.ts` — localStorage persistence for selected child profile ID, per-parent storage key.
 - `src/app/children/page.tsx` — child profile management page: list, create, select. Redirects to home if not authenticated.
 - `src/app/page.tsx` — home page shows "孩子档案" link when authenticated.
 - `src/app/settings/page.tsx` — settings page shows "管理孩子档案" button when authenticated.
 - `docs/REVIEW_NOTES_v0.2.2.md` — review findings and validation results.
+
+Review fixes applied:
+
+- createChildProfile now calls `client.auth.getSession()` and writes `parent_user_id: session.user.id` to satisfy NOT NULL constraint and RLS `with check` policy.
+- progress-source.ts cleaned to local-only stub; zero server progress code.
+
+Explicitly NOT delivered in v0.2.2:
+
+- No server progress / server wrong book / server report.
+- No localStorage import.
+- No AI, payment, teacher/admin backend.
 
 Acceptance:
 
@@ -348,31 +359,45 @@ Acceptance:
 
 ---
 
-# Next Task: v0.2.2 Child Profile — Review Fixes
+# Next Task: v0.2.3a Server Progress Schema
 
 ## Goal
 
-Address review findings for v0.2.2 child profile implementation.
+Create the SQL migration for server progress tables. Schema only — no business page integration.
 
 ## Scope
 
-- Fix any type errors or build issues found during review.
-- Verify child profile create/select flow works end-to-end.
-- Verify selected child persists after page refresh.
-- Verify local anonymous mode regression tests pass.
-- Confirm no server progress code exists in the codebase.
+Allowed:
 
-## Out of Scope
+- `docs/migrations/002_server_progress.sql` — SQL migration with:
+  - `profiles` table
+  - `problem_attempts` table (with import idempotency fields)
+  - `wrong_problems` table
+  - `progress_summary` table
+  - All required indexes
+  - RLS policies (SELECT, INSERT, UPDATE with `using` + `with check`)
+  - `updated_at` triggers
+  - `problem_attempts` is append-only (no UPDATE policy)
+  - `problem_attempts_import_hash_unique` partial unique index
+- `docs/REVIEW_NOTES_v0.2.3a.md` — schema review, RLS review, build/test results
 
-Do not implement in this review:
+Out of Scope:
 
-- server progress
+Do not implement in this task:
+
+- Modify practice/page.tsx
+- Modify wrong-book/page.tsx
+- Modify report/page.tsx
+- Create src/lib/supabase/server-progress.ts
+- Add server mode to src/lib/progress-source.ts
+- Implement syncAttemptToServer
+- Implement loadServerProgress
+- Implement loadReportData
+- localStorage import
 - server wrong book
 - server report
-- localStorage import
-- AI
-- payment
-- teacher/admin backend
+- AI, payment, teacher/admin backend
+- Supabase self-hosting Docker stack
 
 ---
 
