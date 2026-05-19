@@ -269,47 +269,75 @@ Key decisions:
 
 ---
 
-# Next Task: v0.2.1a Supabase Foundation Setup
+## v0.2.1a Supabase Foundation Setup
+
+Status: completed.
+
+Delivered:
+
+- `@supabase/supabase-js` ^2.106.0 installed.
+- `.env.example` with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+- `src/lib/supabase/client.ts` — `isSupabaseConfigured()`, `createSupabaseClient()` (reads env at call time for testability; returns `null` when env missing; never throws on import).
+- `src/lib/supabase/auth.ts` — `useSupabaseAuth()` hook (reads session, listens to auth state changes, safe no-op when Supabase not configured).
+- `src/lib/supabase/supabase-error.ts` — error classification (`network_error`, `server_error`, `auth_error`, `permission_error`, `unknown`).
+- `src/__tests__/supabase-client.test.ts` — 11 tests covering missing-env behavior (isSupabaseConfigured, createSupabaseClient, import safety).
+- `src/__tests__/supabase.test.ts` — 13 tests for error classification, sync messages, and recoverable error detection.
+- `docs/REVIEW_NOTES_v0.2.1a.md` — review findings and Docker validation record.
+
+Acceptance:
+
+- `npm run build` passes.
+- `npm run test` passes (91 tests).
+- `docker compose up --build` passes.
+- App works without Supabase env: home, daily practice, wrong book, report, settings remain usable.
+- Supabase helper returns `null` or safe no-op when env is missing.
+- No v0.2.1b+ features introduced.
+
+---
+
+# Next Task: v0.2.1b Auth UI
 
 ## Goal
 
-Add the minimum Supabase client foundation while preserving the existing local MVP behavior.
+Add login, logout, and session restore UI while keeping local anonymous mode working.
 
 ## References
 
-- `docs/DEPLOYMENT_STRATEGY_v0.2.md`
 - `docs/ROADMAP_v0.2.md`
 - `docs/SUPABASE_DESIGN_v0.2.md`
-- `docs/DATA_MIGRATION_v0.2.md`
+- `docs/DEPLOYMENT_STRATEGY_v0.2.md`
 - `docs/QA_CHECKLIST_v0.2.md`
 - `docs/DEVELOPMENT_GUIDE.md`
 - `docs/QUALITY_CHECKLIST.md`
 
 ## Scope
 
-1. Install the Supabase JS client dependency.
-2. Add `.env.example` with:
-   - `NEXT_PUBLIC_SUPABASE_URL=`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY=`
-3. Add `src/lib/supabase/client.ts`:
-   - expose `isSupabaseConfigured()`;
-   - expose `createSupabaseClient()`;
-   - return `null` when env is missing;
-   - never throw during module import because of missing env.
-4. Add a small auth/session helper or hook:
-   - can read current session when Supabase is configured;
-   - can listen to auth state changes;
-   - behaves safely when Supabase is not configured.
-5. Add focused tests for missing-env behavior if practical.
-6. Keep local anonymous mode unchanged.
+1. Add login page (`/login`):
+   - Email + password form.
+   - Input validation and error display.
+   - Loading state during authentication.
+   - Redirect to home after successful login.
+2. Add sign-up support to the login page:
+   - Toggle between sign-in and sign-up mode.
+   - Confirm password field.
+   - Basic validation (email format, password length).
+3. Add logout UI:
+   - Sign out button visible when authenticated.
+   - Clears Supabase session.
+   - Returns to home / local mode.
+4. Session restore:
+   - `useSupabaseAuth` already provides session state.
+   - Show authenticated state in UI (e.g. email display).
+   - Persist session across page refresh.
+5. Keep local anonymous mode unchanged:
+   - Unauthenticated users see the full v0.1 local flow.
+   - Login is optional; no forced redirect.
+   - Account-related UI is subtle (e.g., settings page link).
 
 ## Out of Scope
 
-Do not implement in v0.2.1a:
+Do not implement in v0.2.1b:
 
-- login page
-- sign-up page
-- logout UI
 - child profile UI
 - database migrations
 - server progress
@@ -327,21 +355,23 @@ Do not implement in v0.2.1a:
 
 - `npm run build` passes.
 - `npm run test` passes.
-- App works without Supabase env.
-- Home, daily practice, wrong book, report, and settings remain usable in local anonymous mode.
-- Supabase client helper returns `null` or safe no-op behavior when env is missing.
-- No v0.2.1b+ features are introduced.
-- Docker validation is required only if package/dependency/build/Docker config changed or before release/tag.
+- User can sign up with email + password.
+- User can sign in with email + password.
+- User can sign out.
+- Session persists after refresh.
+- Unauthenticated local mode still works fully.
+- Missing Supabase env hides or disables auth UI gracefully.
+- No v0.2.2+ features are introduced.
 
 ---
 
 # Future Roadmap
 
-## v0.2.1b — Auth UI
+## v0.2.2 — Child Profile
 
-- Login/logout UI.
-- Session restore display.
-- Local mode still optional.
+- Create/select child profile.
+- Parent owns child data.
+- RLS verified for child profile access.
 
 ## v0.2.2 — Child Profile
 
