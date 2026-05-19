@@ -7,16 +7,17 @@
 
 # Current Phase
 
-v0.2 design review after v0.1.3 content review and product polish.
+v0.2.1a Supabase foundation setup after v0.2 design approval.
 
 Current strategy:
 
 ```text
 1. Preserve the stable v0.1.3 local MVP
-2. Review account/sync design before coding
-3. Keep v0.2 focused on parent account, child profile, server progress, and local import
-4. Avoid AI/payment/teacher/leaderboard scope creep
-5. Start implementation only after Supabase, migration, and QA docs are approved
+2. Keep the app Docker-deployable
+3. Use Supabase Cloud as external managed backend in v0.2
+4. Keep missing Supabase env from breaking local anonymous mode
+5. Add foundation only before Auth UI / child profile / server progress
+6. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -244,38 +245,39 @@ Acceptance:
 
 ## v0.2 Design Documents
 
-Status: reviewed, fixes applied, pending re-review.
+Status: approved.
 
 Delivered:
 
-- `docs/SUPABASE_DESIGN_v0.2.md` — schema, RLS, client data layer, implementation phases
-  - Added import columns to problem_attempts: `imported_from`, `imported_source_key`, `imported_source_hash`
-  - Added unique index `problem_attempts_import_hash_unique` for idempotent import
-  - Fixed UPDATE policies: `wrong_problems` and `progress_summary` now include `with check`
-  - Added `updated_at` trigger design (Section 7.6)
-  - Added progress_summary concurrency strategy (Section 9)
-  - Downgraded offline queue to v0.2.x; v0.2 only requires clear error on network failure
+- `docs/ROADMAP_v0.2.md` — v0.2 roadmap and account/sync direction
+- `docs/SUPABASE_DESIGN_v0.2.md` — schema, RLS, client data layer, implementation phases, cloud-failure tolerance
 - `docs/DATA_MIGRATION_v0.2.md` — localStorage import, merge, idempotency, failure handling
 - `docs/QA_CHECKLIST_v0.2.md` — Auth, child profile, RLS, server progress, migration, regression QA
-  - Downgraded offline queue requirement to v0.2.x
-  - Added concurrency edge cases section
+- `docs/DEPLOYMENT_STRATEGY_v0.2.md` — Docker app deployment with Supabase Cloud as external backend
 - `docs/DESIGN_REVIEW_v0.2.md` — design review findings with severity ratings
 
-Open decisions:
-- First implementation task should be split into v0.2.1a (setup only) + v0.2.1b (auth UI)
-- Consider adding `is_active` column to child_profiles for soft deactivation
-- Offline queue / retry deferred to v0.2.x
+Key decisions:
+
+- App remains Docker-deployable.
+- Supabase Cloud is external managed backend for v0.2.
+- Full Supabase self-hosting is out of scope for v0.2.
+- Missing Supabase env must not break local anonymous mode.
+- Login remains optional during v0.2 transition.
+- JSON remains the problem source in v0.2.
+- Offline queue / retry is deferred to v0.2.x.
+- First implementation task is split into v0.2.1a setup only and v0.2.1b Auth UI.
 
 ---
 
-# Next Task: v0.2 Design Review
+# Next Task: v0.2.1a Supabase Foundation Setup
 
 ## Goal
 
-Review and finalize v0.2 design before implementation.
+Add the minimum Supabase client foundation while preserving the existing local MVP behavior.
 
 ## References
 
+- `docs/DEPLOYMENT_STRATEGY_v0.2.md`
 - `docs/ROADMAP_v0.2.md`
 - `docs/SUPABASE_DESIGN_v0.2.md`
 - `docs/DATA_MIGRATION_v0.2.md`
@@ -285,48 +287,61 @@ Review and finalize v0.2 design before implementation.
 
 ## Scope
 
-1. Review database schema and table boundaries.
-2. Review RLS policy approach.
-3. Review localStorage import flow and conflict rules.
-4. Review whether login remains optional during v0.2 transition.
-5. Review whether JSON remains the problem source in v0.2.
-6. Identify any missing QA cases before coding.
-7. Update design docs based on review findings.
-8. Prepare the first narrow implementation task only after design approval.
+1. Install the Supabase JS client dependency.
+2. Add `.env.example` with:
+   - `NEXT_PUBLIC_SUPABASE_URL=`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY=`
+3. Add `src/lib/supabase/client.ts`:
+   - expose `isSupabaseConfigured()`;
+   - expose `createSupabaseClient()`;
+   - return `null` when env is missing;
+   - never throw during module import because of missing env.
+4. Add a small auth/session helper or hook:
+   - can read current session when Supabase is configured;
+   - can listen to auth state changes;
+   - behaves safely when Supabase is not configured.
+5. Add focused tests for missing-env behavior if practical.
+6. Keep local anonymous mode unchanged.
 
 ## Out of Scope
 
-Do not implement during design review:
+Do not implement in v0.2.1a:
 
-- Supabase dependency installation
-- Auth UI
-- Database migrations
-- Server progress code
-- Local import code
+- login page
+- sign-up page
+- logout UI
+- child profile UI
+- database migrations
+- server progress
+- server wrong book
+- server report
+- localStorage import
+- Supabase self-hosting Docker stack
 - AI
-- Payment
-- Teacher/admin backend
-- Leaderboard
+- payment
+- teacher/admin backend
+- leaderboard
 - 13x13 / 19x19 expansion
 
 ## Acceptance
 
-- v0.2 design docs are reviewed.
-- Open decisions are resolved or explicitly deferred.
-- No implementation code is added.
-- First implementation task is clearly scoped.
+- `npm run build` passes.
+- `npm run test` passes.
+- App works without Supabase env.
+- Home, daily practice, wrong book, report, and settings remain usable in local anonymous mode.
+- Supabase client helper returns `null` or safe no-op behavior when env is missing.
+- No v0.2.1b+ features are introduced.
+- Docker validation is required only if package/dependency/build/Docker config changed or before release/tag.
 
 ---
 
 # Future Roadmap
 
-## v0.2.1 — Auth Foundation
+## v0.2.1b — Auth UI
 
-- Supabase dependency setup.
-- Environment variable documentation.
-- Login/logout.
-- Session restore.
-- Local mode still works.
+- Login/logout UI.
+- Session restore display.
+- Local mode still optional.
 
 ## v0.2.2 — Child Profile
 
