@@ -54,6 +54,10 @@ export async function fetchChildProfiles(): Promise<ChildProfileResult> {
 
 /**
  * Creates a new child profile for the current authenticated parent.
+ *
+ * Requires an active Supabase session. Returns auth_error if not logged in.
+ * Writes parent_user_id explicitly to satisfy the NOT NULL constraint and
+ * RLS policy (with check auth.uid() = parent_user_id).
  */
 export async function createChildProfile(input: {
   display_name: string;
@@ -73,9 +77,34 @@ export async function createChildProfile(input: {
   }
 
   try {
+    const {
+      data: { session },
+      error: authError,
+    } = await client.auth.getSession();
+
+    if (authError) {
+      return {
+        success: false,
+        data: null,
+        error: classifySupabaseError(authError),
+      };
+    }
+
+    if (!session) {
+      return {
+        success: false,
+        data: null,
+        error: {
+          type: "auth_error",
+          message: "请先登录。",
+        },
+      };
+    }
+
     const { data, error } = await client
       .from("child_profiles")
       .insert({
+        parent_user_id: session.user.id,
         display_name: input.display_name,
         age_range: input.age_range || null,
         go_experience: input.go_experience || null,

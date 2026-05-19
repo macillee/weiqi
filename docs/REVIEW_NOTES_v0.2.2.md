@@ -3,7 +3,7 @@
 > Project: 小棋童围棋闯关  
 > Date: 2026-05-19  
 > Reviewer: opencode  
-> Status: reviewed
+> Status: reviewed (fixes applied)
 
 ---
 
@@ -84,44 +84,100 @@ Result: **PASS** — no regression in local anonymous mode.
 
 ---
 
-## 6. No Server Progress Implemented
+## 6. createChildProfile parent_user_id Fix
 
-Codebase audit confirms:
+### Problem
 
-- No `server-progress.ts` file exists
-- No `loadServerProgress`, `syncAttemptToServer`, or `loadReportData` references
-- `progress-source.ts` is v0.2.1a baseline (always returns "local" mode)
-- `practice/page.tsx` uses `progress.ts` directly (localStorage only)
-- `wrong-book/page.tsx` uses `progress.ts` directly (localStorage only)
-- `report/page.tsx` uses `report.ts` which reads from localStorage only
-- No SQL migration `002_server_progress.sql` exists
+The original `createChildProfile` in `src/lib/supabase/child-profiles.ts` did not
+set `parent_user_id` on insert. The migration `001_child_profiles.sql` defines
+`parent_user_id uuid not null` with no default, and the RLS insert policy requires
+`with check (auth.uid() = parent_user_id)`. Without an explicit `parent_user_id`,
+the insert would fail the NOT NULL constraint.
+
+### Fix
+
+`createChildProfile` now:
+
+1. Calls `client.auth.getSession()` to get the current authenticated user.
+2. Returns `auth_error` ("请先登录") if no session exists — does not throw.
+3. Includes `parent_user_id: session.user.id` in the insert payload.
+4. Satisfies both the NOT NULL constraint and the RLS `with check` policy.
+
+```ts
+const { data: { session } } = await client.auth.getSession();
+if (!session) return { success: false, error: { type: "auth_error", ... } };
+
+await client.from("child_profiles").insert({
+  parent_user_id: session.user.id,
+  display_name: input.display_name,
+  // ...
+});
+```
+
+Result: **PASS** — parent_user_id is correctly set on insert.
+
+---
+
+## 7. progress-source Cleaned to Local-Only
+
+### Problem
+
+The previous `src/lib/progress-source.ts` contained v0.2.3 server progress code:
+- `client.from("problem_attempts").insert(...)` — server write
+- Sync attempt logic that would write to Supabase tables
+
+This is out of scope for v0.2.2.
+
+### Fix
+
+`progress-source.ts` has been rewritten as a local-only stub:
+
+- `ProgressMode` is `"local"` only (no `"server"` variant).
+- `recordAttempt()` saves to localStorage via `progress.ts` and returns a
+  `SyncResult` with `synced: false, error: null` — no server write.
+- `loadProgressFromSource()` returns localStorage progress.
+- Zero references to `problem_attempts`, `client.from()`, or any Supabase write.
+
+### Audit
+
+```
+grep -rn "problem_attempts|client\.from|loadServerProgress|syncAttemptToServer" src/lib/progress-source.ts
+→ CLEAN: no server progress refs
+```
+
+No page imports `progress-source` in v0.2.2. Practice, wrong-book, and report
+all use `progress.ts` directly (localStorage only).
 
 Result: **PASS** — zero server progress code in the codebase.
 
 ---
 
-## 7. Deliverables Checklist
+## 8. Deliverables Checklist
 
 | File | Status |
 |------|--------|
 | `docs/migrations/001_child_profiles.sql` | ✅ Present |
-| `src/lib/supabase/child-profiles.ts` | ✅ Present |
+| `src/lib/supabase/child-profiles.ts` | ✅ Fixed (parent_user_id on insert) |
 | `src/lib/selected-child.ts` | ✅ Present |
 | `src/app/children/page.tsx` | ✅ Present |
 | `src/app/page.tsx` (孩子档案 link) | ✅ Updated |
 | `src/app/settings/page.tsx` (管理孩子档案 button) | ✅ Updated |
+| `src/lib/progress-source.ts` | ✅ Cleaned to local-only |
 | `docs/TASKS.md` (status markers) | ✅ Updated |
 
 ---
 
-## 8. Issues Found
+## 9. Issues Found
 
-None.
+| # | Severity | Issue | Status |
+|---|----------|-------|--------|
+| 1 | 🔴 Critical | `createChildProfile` missing `parent_user_id` on insert | ✅ Fixed |
+| 2 | 🔴 Critical | `progress-source.ts` contained v0.2.3 server write code | ✅ Fixed |
 
 ---
 
-## 9. Verdict
+## 10. Verdict
 
-**v0.2.2 Child Profile: PASS**
+**v0.2.2 Child Profile: PASS (after fixes)**
 
-All acceptance criteria met. Ready for merge.
+All acceptance criteria met. Ready for review.
