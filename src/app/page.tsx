@@ -13,6 +13,8 @@ export default function Home() {
   const [wrongCount, setWrongCount] = useState(0);
   const { session } = useSupabaseAuth();
   const configured = isSupabaseConfigured();
+  const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState<string | null>(null);
 
   useEffect(() => {
     const progress = loadProgress();
@@ -22,7 +24,13 @@ export default function Home() {
   }, []);
 
   async function handleSignOut() {
-    await signOutUser();
+    setSigningOut(true);
+    setSignOutError(null);
+    const result = await signOutUser();
+    setSigningOut(false);
+    if (result.error) {
+      setSignOutError(result.error.message);
+    }
   }
 
   return (
@@ -43,9 +51,10 @@ export default function Home() {
               </span>
               <button
                 onClick={handleSignOut}
-                className="text-sm text-red-500 hover:text-red-700"
+                disabled={signingOut}
+                className="text-sm text-red-500 hover:text-red-700 disabled:text-red-300"
               >
-                退出
+                {signingOut ? "退出中..." : "退出"}
               </button>
             </>
           ) : (
@@ -56,6 +65,12 @@ export default function Home() {
               登录 / 注册
             </Link>
           )}
+        </div>
+      )}
+
+      {signOutError && (
+        <div className="bg-red-50 border border-red-200 rounded-lg px-4 py-2 mb-4">
+          <p className="text-sm text-red-600">{signOutError}</p>
         </div>
       )}
 

@@ -297,20 +297,22 @@ Acceptance:
 
 ## v0.2.1b Auth UI
 
-Status: completed.
+Status: in progress (review pending).
 
 Delivered:
 
 - `src/lib/supabase/auth-actions.ts` — `signInWithEmail()`, `signUpWithEmail()`, `signOutUser()` helpers (never throw, return `AuthResult`).
 - `src/app/login/page.tsx` — login/sign-up page with email + password form, input validation, loading state, error display, and mode toggle.
-- `src/app/page.tsx` — home page shows session email + sign-out button when authenticated, "登录 / 注册" link when not, nothing when Supabase not configured.
-- `src/app/settings/page.tsx` — settings page shows account section with session status and sign-out/login buttons.
+- `src/app/page.tsx` — home page shows session email + sign-out button when authenticated, "登录 / 注册" link when not, nothing when Supabase not configured. Sign-out has loading state and error display.
+- `src/app/settings/page.tsx` — settings page shows account section with session status and sign-out/login buttons. Sign-out has loading state and error display.
+- `src/__tests__/auth-actions.test.ts` — 6 tests for missing-env behavior.
+- `docs/REVIEW_NOTES_v0.2.1b.md` — review findings and validation results.
 - Graceful degradation: when Supabase env is missing, `/login` shows a clear "云端功能尚未配置" message and local mode remains fully functional.
 
 Acceptance:
 
 - `npm run build` passes.
-- `npm run test` passes (91 tests).
+- `npm run test` passes (97 tests).
 - User can sign up with email + password.
 - User can sign in with email + password.
 - User can sign out.
@@ -321,49 +323,30 @@ Acceptance:
 
 ---
 
-# Next Task: v0.2.2 Child Profile
+# Next Task: v0.2.1b Auth UI — Review & Polish
 
 ## Goal
 
-Add child profile creation and selection for authenticated users.
-
-## References
-
-- `docs/ROADMAP_v0.2.md`
-- `docs/SUPABASE_DESIGN_v0.2.md`
-- `docs/QA_CHECKLIST_v0.2.md`
-- `docs/DEVELOPMENT_GUIDE.md`
+Complete review of v0.2.1b Auth UI implementation and address any feedback.
 
 ## Scope
 
-1. Add child profile table/migration to Supabase.
-2. Add create child profile UI.
-3. Add select active child profile UI.
-4. Store selected child profile ID locally.
-5. Keep one-child UI first, schema supports multiple.
+- Review auth-actions missing-env tests.
+- Review sign-out loading/error handling on home and settings pages.
+- Verify graceful degradation without Supabase env.
+- Verify login/sign-up/sign-out/session restore with Supabase env.
+- Update TASKS.md status to completed after review approval.
 
 ## Out of Scope
 
-Do not implement in v0.2.2:
+Do not implement in this review:
 
+- child profile UI
+- database migrations
 - server progress
 - server wrong book
 - server report
 - localStorage import
-- AI
-- payment
-- teacher/admin backend
-
-## Acceptance
-
-- `npm run build` passes.
-- `npm run test` passes.
-- Signed-in parent can create a child profile.
-- Child profile uses nickname (no real name required).
-- Parent can select active child profile.
-- Refresh preserves selected child.
-- Unauthenticated users still use local mode.
-- No v0.2.3+ features are introduced.
 
 ---
 

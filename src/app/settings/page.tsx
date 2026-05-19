@@ -12,6 +12,8 @@ export default function SettingsPage() {
   const [resetDone, setResetDone] = useState(false);
   const { session, isLoading } = useSupabaseAuth();
   const configured = isSupabaseConfigured();
+  const [signingOut, setSigningOut] = useState(false);
+  const [signOutError, setSignOutError] = useState<string | null>(null);
 
   function handleReset() {
     resetProgress();
@@ -20,7 +22,13 @@ export default function SettingsPage() {
   }
 
   async function handleSignOut() {
-    await signOutUser();
+    setSigningOut(true);
+    setSignOutError(null);
+    const result = await signOutUser();
+    setSigningOut(false);
+    if (result.error) {
+      setSignOutError(result.error.message);
+    }
   }
 
   return (
@@ -54,9 +62,10 @@ export default function SettingsPage() {
                 </p>
                 <button
                   onClick={handleSignOut}
-                  className="w-full py-3 bg-red-400 hover:bg-red-500 text-white rounded-xl font-medium transition-colors"
+                  disabled={signingOut}
+                  className="w-full py-3 bg-red-400 hover:bg-red-500 disabled:bg-red-200 text-white rounded-xl font-medium transition-colors"
                 >
-                  退出登录
+                  {signingOut ? "退出中..." : "退出登录"}
                 </button>
               </div>
             ) : (
@@ -67,6 +76,12 @@ export default function SettingsPage() {
                 登录 / 注册
               </Link>
             )}
+          </div>
+        )}
+
+        {signOutError && (
+          <div className="bg-red-50 border-2 border-red-200 rounded-xl p-4 mb-6">
+            <p className="text-red-600 text-sm">{signOutError}</p>
           </div>
         )}
 
