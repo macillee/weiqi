@@ -359,27 +359,92 @@ Acceptance:
 
 ---
 
-# Next Task: v0.2.3a Server Progress Schema
+## v0.2.3a Server Progress Schema
+
+Status: completed.
+
+Delivered:
+
+- `docs/migrations/002_server_progress.sql` — full SQL migration:
+  - `profiles` table with RLS (select/insert/update)
+  - `problem_attempts` table with import idempotency fields (`imported_from`, `imported_source_key`, `imported_source_hash`) and `problem_attempts_import_hash_unique` partial unique index
+  - `wrong_problems` table with composite PK and status check constraint
+  - `progress_summary` table with `text[]` arrays
+  - All required indexes
+  - RLS policies for all tables (child ownership via `exists` subquery)
+  - UPDATE policies with both `using` + `with check` for `wrong_problems` and `progress_summary`
+  - `updated_at` triggers for `profiles`, `wrong_problems`, `progress_summary`
+  - `problem_attempts` is append-only (no UPDATE policy)
+- `docs/REVIEW_NOTES_v0.2.3a.md` — schema review, RLS review, build/test results
+
+Explicitly NOT delivered in v0.2.3a:
+
+- No business page integration.
+- No server-progress.ts library.
+- No server mode in progress-source.ts.
+
+Acceptance:
+
+- `npm run build` passes.
+- `npm run test` passes (97 tests).
+- SQL schema matches `SUPABASE_DESIGN_v0.2.md`.
+- RLS policies complete and correct.
+- No business page changes.
+
+---
+
+## v0.2.3b Server Progress Library
+
+Status: completed.
+
+Delivered:
+
+- `src/lib/supabase/server-progress.ts` — server progress library:
+  - `loadServerProgress(childProfileId)` — reads progress_summary + wrong_problems, maps snake_case to camelCase
+  - `syncAttemptToServer(childProfileId, attempt, progressUpdate, wrongProblemUpdate)` — writes problem_attempts (append-only), upserts progress_summary, upserts wrong_problems
+  - `loadReportData(childProfileId)` — reads problem_attempts + wrong_problems + progress_summary, maps snake_case to camelCase
+  - All functions safely handle missing Supabase env (return error, never throw)
+  - All functions use existing `classifySupabaseError` for error classification
+  - child_profile_id must be passed explicitly by caller; no guessing or localStorage reads
+- `src/__tests__/server-progress.test.ts` — 10 tests:
+  - Missing Supabase env: all three functions return safe error
+  - Error handling: classified errors on Supabase failure
+  - Data mapping: snake_case to camelCase for all three tables
+  - PGRST116 (no row) handled gracefully
+- `docs/REVIEW_NOTES_v0.2.3b.md` — review findings and validation results
+
+Explicitly NOT delivered in v0.2.3b:
+
+- No business page integration (practice, wrong-book, report unchanged).
+- No server mode in progress-source.ts.
+- No localStorage import.
+
+Acceptance:
+
+- `npm run build` passes.
+- `npm run test` passes (107 tests).
+- server-progress.ts exists with loadServerProgress, syncAttemptToServer, loadReportData.
+- No business page changes.
+- No v0.2.3c+ features introduced.
+
+---
+
+# Next Task: v0.2.3c Server Progress Page Integration
 
 ## Goal
 
-Create the SQL migration for server progress tables. Schema only — no business page integration.
+Create server progress library functions. Library only — no business page integration.
 
 ## Scope
 
 Allowed:
 
-- `docs/migrations/002_server_progress.sql` — SQL migration with:
-  - `profiles` table
-  - `problem_attempts` table (with import idempotency fields)
-  - `wrong_problems` table
-  - `progress_summary` table
-  - All required indexes
-  - RLS policies (SELECT, INSERT, UPDATE with `using` + `with check`)
-  - `updated_at` triggers
-  - `problem_attempts` is append-only (no UPDATE policy)
-  - `problem_attempts_import_hash_unique` partial unique index
-- `docs/REVIEW_NOTES_v0.2.3a.md` — schema review, RLS review, build/test results
+- `src/lib/supabase/server-progress.ts` — server progress functions:
+  - `loadServerProgress(childProfileId)` — read progress_summary + wrong_problems
+  - `syncAttemptToServer(childProfileId, attempt, progressUpdate, wrongProblemUpdate)` — write problem_attempts, upsert progress_summary, upsert wrong_problems
+  - `loadReportData(childProfileId)` — read problem_attempts + wrong_problems + progress_summary
+- `src/__tests__/server-progress.test.ts` — tests for missing-env behavior and error handling
+- `docs/REVIEW_NOTES_v0.2.3b.md` — review findings and validation results
 
 Out of Scope:
 
@@ -388,14 +453,12 @@ Do not implement in this task:
 - Modify practice/page.tsx
 - Modify wrong-book/page.tsx
 - Modify report/page.tsx
-- Create src/lib/supabase/server-progress.ts
+- Modify page.tsx (home)
+- Modify settings/page.tsx
 - Add server mode to src/lib/progress-source.ts
-- Implement syncAttemptToServer
-- Implement loadServerProgress
-- Implement loadReportData
 - localStorage import
-- server wrong book
-- server report
+- server wrong book page integration
+- server report page integration
 - AI, payment, teacher/admin backend
 - Supabase self-hosting Docker stack
 
