@@ -533,22 +533,38 @@ Acceptance:
 
 ---
 
-# Next Task: v0.2.4b Import Implementation
+# ✅ v0.2.4b Import Implementation — COMPLETED (2026-05-21)
+
+## What was done
+
+- `src/lib/progress-import.ts`: added `checkAlreadyImported`, `importLocalProgressToServer`, `markImportCompleted`, `hasImportCompletedLocally`, `buildAttemptHash`
+- `src/components/progress/ImportPromptBanner.tsx`: full import UI (5 states: pending/importing/success/failure/already_imported)
+- `src/__tests__/progress-import-v2.test.ts`: 9 tests for all new functions (1 skipped — deep Supabase mock chain)
+- Idempotent import via `imported_from` + `imported_source_key` + `imported_source_hash`
+- Merge strategy: `Math.max` for stars/streak, union for problem IDs
+- Empty progress short-circuits before Supabase check (no false `not_configured` error)
+- All 144 tests pass; build passes
+
+## PR
+
+- Branch: `feat/v0.2.4b-import-local-progress`
+- PR #TBD
+
+---
+
+# Next Task: v0.2.4c AI Report (or TBD)
 
 ## Goal
 
-Implement the actual import: read local progress data, write it to Supabase server tables (problem_attempts, wrong_problems, progress_summary), using idempotent fields to prevent duplicates.
+Integrate AI-generated weekly report using the imported progress data.
 
 ## Scope
 
-- Import localStorage progress data into server tables
-- Idempotent import using `imported_from`, `imported_source_key`, `imported_source_hash` fields
-- Conflict handling: define merge strategy when server already has data
-- Local fallback: if user declines import or import fails, continue with local mode
+TBD — to be defined after PR #TBD is reviewed and merged.
 
 Out of Scope:
 
-- AI, payment, teacher/admin backend, Supabase self-hosting, v0.3 features
+- Payment, teacher/admin backend, Supabase self-hosting, v0.3 features
 
 ---
 
