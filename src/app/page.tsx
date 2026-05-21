@@ -7,6 +7,7 @@ import { getActiveWrongProblems } from "@/lib/progress";
 import { useSupabaseAuth } from "@/lib/supabase/auth";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { signOutUser } from "@/lib/supabase/auth-actions";
+import ImportPromptBanner from "@/components/progress/ImportPromptBanner";
 
 export default function Home() {
   const [stars, setStars] = useState(0);
@@ -96,6 +97,8 @@ export default function Home() {
           </div>
         )}
       </div>
+
+      <ImportPromptBanner />
 
       <div className="w-full max-w-md space-y-4">
         <Link

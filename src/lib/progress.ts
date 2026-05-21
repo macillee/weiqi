@@ -1,4 +1,4 @@
-const PROGRESS_KEY = "children-go-app:v0.1:progress";
+export const PROGRESS_KEY = "children-go-app:v0.1:progress";
 
 export type WrongProblemStatus = "active" | "reviewing" | "mastered";
 
