@@ -483,40 +483,72 @@ Acceptance:
 
 ---
 
-# Next Task: v0.2.4 Local Import
+## v0.2.4a Import Detection + Prompt UI
+
+Status: delivered.
+
+Delivered:
+
+- `src/lib/progress-import.ts` — import detection module:
+  - `detectImportEligibility()` — checks localStorage for existing v0.1.x progress, returns typed status (`no_local_progress`, `eligible_for_import`, `already_imported`)
+  - `markImportOffered()` — records that the import prompt was shown so it won't reappear
+  - Safe without `window`, `localStorage`, or with malformed data; never throws
+  - `PROGRESS_KEY` exported from `progress.ts` for shared reference
+- `src/components/progress/ImportPromptBanner.tsx` — minimal UI prompt component:
+  - Shows only when: Supabase configured + authenticated + child selected + local progress eligible for import
+  - Displays attempt count and stars from local progress
+  - Explains that local progress can be imported later (does not claim import has happened)
+  - "知道了" dismiss button marks import as offered
+- `src/app/page.tsx` — home page integrates `ImportPromptBanner` between stats and navigation cards
+- `src/__tests__/progress-import.test.ts` — 9 tests:
+  - no local progress (empty localStorage)
+  - no local progress (zero attempts + zero stars)
+  - eligible for import (attempts present)
+  - eligible for import (stars > 0 but no attempts)
+  - already imported (offered key set)
+  - malformed localStorage data
+  - localStorage access failure
+  - markImportOffered writes timestamp
+  - markImportOffered handles localStorage failure
+- `docs/TASKS.md` — updated to mark v0.2.4a as delivered
+
+Explicitly NOT delivered in v0.2.4a:
+
+- No local progress write to Supabase.
+- No server progress SQL schema modification.
+- No conflict merge logic.
+- No deletion, clearing, or mutation of localStorage progress.
+- No change to progress recording semantics in practice, wrong-book, or report.
+- No AI, payment, teacher/admin backend.
+
+Acceptance:
+
+- `npm run build` passes.
+- `npm run test` passes (135 tests).
+- Detection helper exists in `src/lib/progress-import.ts`.
+- UI prompt shows only in authenticated + selected-child flow on home page.
+- Prompt explains local progress can be imported later; does not claim import has happened.
+- All existing local anonymous mode and server mode behavior unchanged.
+- No v0.2.4b+ features introduced.
+
+---
+
+# Next Task: v0.2.4b Import Implementation
 
 ## Goal
 
-Detect existing local progress (from v0.1.x anonymous mode) and import it into the selected server child profile.
+Implement the actual import: read local progress data, write it to Supabase server tables (problem_attempts, wrong_problems, progress_summary), using idempotent fields to prevent duplicates.
 
 ## Scope
 
-Allowed:
-
-- Implement import prompt when authenticated user with selected child profile has local progress but no server progress
-- Import localStorage progress data into server tables (problem_attempts, wrong_problems, progress_summary)
-- Idempotent import: use `imported_from`, `imported_source_key`, `imported_source_hash` fields to prevent duplicates
-- Conflict handling: define merge strategy when server already has data (e.g., prefer server, prefer local, or merge)
+- Import localStorage progress data into server tables
+- Idempotent import using `imported_from`, `imported_source_key`, `imported_source_hash` fields
+- Conflict handling: define merge strategy when server already has data
 - Local fallback: if user declines import or import fails, continue with local mode
-- Add import status indicator in UI
 
 Out of Scope:
 
-Do not implement in this task:
-
-- AI
-- payment
-- teacher/admin backend
-- Supabase self-hosting
-- v0.3 features (multi-step problems, spaced review, parent weekly report)
-
-## Planning Note
-
-This task may split into:
-
-- v0.2.4a: Import detection + prompt UI
-- v0.2.4b: Import implementation (idempotent, conflict handling)
-- v0.2.4c: Import validation + error recovery
+- AI, payment, teacher/admin backend, Supabase self-hosting, v0.3 features
 
 ---
 
