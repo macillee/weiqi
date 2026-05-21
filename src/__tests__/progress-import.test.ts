@@ -84,7 +84,7 @@ describe("detectImportEligibility", () => {
     expect(result.localStars).toBe(5);
   });
 
-  it("returns already_imported when import has been previously offered", () => {
+  it("returns import_already_offered when import has been previously offered", () => {
     const progress = {
       stars: 10,
       streakDays: 2,
@@ -108,7 +108,7 @@ describe("detectImportEligibility", () => {
     localStorage.setItem(IMPORT_OFFERED_KEY, "2026-05-20T00:00:00Z");
 
     const result = detectImportEligibility();
-    expect(result.status).toBe("already_imported");
+    expect(result.status).toBe("import_already_offered");
     expect(result.localAttemptCount).toBe(1);
     expect(result.localStars).toBe(10);
   });

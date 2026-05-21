@@ -552,24 +552,6 @@ Out of Scope:
 
 ---
 
-# Next Task: v0.2.4a
-
-## Goal
-
-Detect existing local progress (from v0.1.x anonymous mode) and show a gentle import prompt.
-
-## Acceptance
-
-- Add a small import-detection helper in `src/lib/progress-import.ts`.
-- Detection is safe without window, localStorage, or malformed data.
-- Add tests for detection behavior.
-- Add a minimal UI prompt in authenticated + selected-child flow.
-- Prompt explains local progress can be imported later.
-- Keep existing behavior working.
-- `npm run test` and `npm run build` pass.
-
----
-
 # Future Roadmap
 
 ## v0.2.3 — Server Progress

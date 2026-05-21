@@ -16,7 +16,7 @@ import { type StudentProgress, PROGRESS_KEY } from "./progress";
 export type ImportEligibilityStatus =
   | "no_local_progress"
   | "eligible_for_import"
-  | "already_imported";
+  | "import_already_offered";
 
 export type ImportDetectionResult = {
   status: ImportEligibilityStatus;
@@ -35,7 +35,7 @@ const IMPORT_OFFERED_KEY = "children-go-app:v0.2:import-offered";
  * Returns:
  * - "no_local_progress" — no meaningful local data
  * - "eligible_for_import" — local data exists and import has not been offered yet
- * - "already_imported" — import was previously offered (user accepted or declined)
+ * - "import_already_offered" — import prompt was previously offered (user accepted or declined)
  *
  * Safe when running without window, without localStorage, or with
  * malformed localStorage data. Never throws.
@@ -93,7 +93,7 @@ export function detectImportEligibility(): ImportDetectionResult {
       const offered = localStorage.getItem(IMPORT_OFFERED_KEY);
       if (offered) {
         return {
-          status: "already_imported",
+          status: "import_already_offered",
           localProgress: parsed,
           localAttemptCount: attemptCount,
           localStars: stars,
