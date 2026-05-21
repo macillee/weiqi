@@ -487,29 +487,36 @@ Acceptance:
 
 ## Goal
 
-Integrate server progress library into practice, wrong-book, and report through progress-source while preserving local fallback.
+Detect existing local progress (from v0.1.x anonymous mode) and import it into the selected server child profile.
 
 ## Scope
 
 Allowed:
 
-- Update `src/lib/progress-source.ts` to detect server mode (authenticated + selected child profile)
-- Update `src/app/practice/page.tsx` to use progress-source for recording attempts and daily practice complete
-- Update `src/app/wrong-book/page.tsx` to sync review updates to server via progress-source
-- Update `src/app/report/page.tsx` to load server report data when server mode is active
-- Keep localStorage fallback: local save always happens first, server sync is non-blocking
-- Clear error messages on sync failure, never claim "已同步" unless server confirms
+- Implement import prompt when authenticated user with selected child profile has local progress but no server progress
+- Import localStorage progress data into server tables (problem_attempts, wrong_problems, progress_summary)
+- Idempotent import: use `imported_from`, `imported_source_key`, `imported_source_hash` fields to prevent duplicates
+- Conflict handling: define merge strategy when server already has data (e.g., prefer server, prefer local, or merge)
+- Local fallback: if user declines import or import fails, continue with local mode
+- Add import status indicator in UI
 
 Out of Scope:
 
 Do not implement in this task:
 
-- localStorage import
 - AI
 - payment
 - teacher/admin backend
 - Supabase self-hosting
-- v0.2.4 features
+- v0.3 features (multi-step problems, spaced review, parent weekly report)
+
+## Planning Note
+
+This task may split into:
+
+- v0.2.4a: Import detection + prompt UI
+- v0.2.4b: Import implementation (idempotent, conflict handling)
+- v0.2.4c: Import validation + error recovery
 
 ---
 
