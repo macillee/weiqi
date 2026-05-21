@@ -136,3 +136,15 @@ All agent work must still follow:
 - `docs/QUALITY_CHECKLIST.md`
 
 For this project, small PRs are preferred over broad automation. Human merge remains the final gate.
+
+## Workflow Smoke Test
+
+This section verifies the automated agent workflow from issue pickup to PR creation.
+
+A narrow documentation-only issue (like adding this section) can be used to verify:
+
+1. **Issue Pickup**: opencode detects the `todo` label and picks up the issue.
+2. **PR Creation**: opencode creates a branch, implements the change, and opens a PR.
+3. **ChatGPT Acceptance**: ChatGPT reviews the PR against the issue acceptance criteria.
+
+This smoke test confirms the workflow is functional without modifying application code or dependencies.
