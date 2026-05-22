@@ -1,4 +1,4 @@
-# Project Task Queue
+﻿# Project Task Queue
 
 > This file is the task entry point for opencode.  
 > Always read `AGENTS.md`, `docs/PROJECT_SPEC.md`, `docs/DEVELOPMENT_GUIDE.md`, `docs/QUALITY_CHECKLIST.md`, and the relevant release/content/design notes before implementing any task.
@@ -44,11 +44,11 @@ Status: completed.
 
 Delivered:
 
-- `src/components/board/GoBoard.tsx` �?SVG 棋盘主组�?
-- `src/components/board/Stone.tsx` �?棋子渲染
-- `src/components/board/BoardHighlight.tsx` �?高亮标记
-- `src/components/board/BoardPoint.tsx` �?可点击空交叉�?
-- `src/lib/board.ts` �?类型定义 + 工具函数
+- `src/components/board/GoBoard.tsx` — SVG 棋盘主组件
+- `src/components/board/Stone.tsx` — 棋子渲染
+- `src/components/board/BoardHighlight.tsx` — 高亮标记
+- `src/components/board/BoardPoint.tsx` — 可点击空交叉点
+- `src/lib/board.ts` — 类型定义 + 工具函数
 
 ---
 
@@ -58,8 +58,8 @@ Status: completed.
 
 Delivered:
 
-- `src/lib/problems.ts` �?Problem 类型 + 验证 + 加载工具
-- `src/data/problems.json` �?initial sample problem set
+- `src/lib/problems.ts` — Problem 类型 + 验证 + 加载工具
+- `src/data/problems.json` — initial sample problem set
 - Basic Go-logic validation for invalid initial board states
 
 ---
@@ -70,11 +70,11 @@ Status: completed.
 
 Delivered:
 
-- `src/components/problem/ProblemPlayer.tsx` �?题目播放�?
-- `src/components/problem/ProblemHeader.tsx` �?题目标题/分类/难度
-- `src/components/problem/HintPanel.tsx` �?渐进式提�?
-- `src/components/problem/FeedbackDialog.tsx` �?答对/答错反馈
-- `src/app/demo/page.tsx` �?题目演示路由，does not write learning progress
+- `src/components/problem/ProblemPlayer.tsx` — 题目播放器
+- `src/components/problem/ProblemHeader.tsx` — 题目标题/分类/难度
+- `src/components/problem/HintPanel.tsx` — 渐进式提示
+- `src/components/problem/FeedbackDialog.tsx` — 答对/答错反馈
+- `src/app/demo/page.tsx` — 题目演示路由，does not write learning progress
 
 ---
 
@@ -84,12 +84,12 @@ Status: completed.
 
 Delivered:
 
-- `src/app/page.tsx` �?首页入口
-- `src/app/practice/page.tsx` �?今日练习�?
-- `src/app/levels/page.tsx` �?闯关地图�?
-- `src/app/levels/[chapterId]/page.tsx` �?章节关卡�?
-- `src/lib/chapters.ts` �?章节/关卡结构数据
-- `src/lib/practice.ts` �?每日练习选题 + 会话管理
+- `src/app/page.tsx` — 首页入口
+- `src/app/practice/page.tsx` — 今日练习页
+- `src/app/levels/page.tsx` — 闯关地图页
+- `src/app/levels/[chapterId]/page.tsx` — 章节关卡页
+- `src/lib/chapters.ts` — 章节/关卡结构数据
+- `src/lib/practice.ts` — 每日练习选题 + 会话管理
 
 Acceptance:
 
@@ -107,23 +107,23 @@ Status: completed.
 
 Delivered:
 
-- `src/lib/progress.ts` �?localStorage 进度管理
-- `src/app/wrong-book/page.tsx` �?错题本页�?
-- `src/app/page.tsx` �?首页显示星星数和待复习错题数
-- `src/app/practice/page.tsx` �?集成进度记录、星星奖�?
-- `src/app/levels/[chapterId]/page.tsx` �?集成进度记录
-- `src/app/demo/page.tsx` �?**不写�?*真实学习进度
-- `src/components/problem/ProblemPlayer.tsx` �?`onAttempt` 记录每次点击尝试，`onResult` 记录最终结�?
+- `src/lib/progress.ts` — localStorage 进度管理
+- `src/app/wrong-book/page.tsx` — 错题本页面
+- `src/app/page.tsx` — 首页显示星星数和待复习错题数
+- `src/app/practice/page.tsx` — 集成进度记录、星星奖励
+- `src/app/levels/[chapterId]/page.tsx` — 集成进度记录
+- `src/app/demo/page.tsx` — **不写入**真实学习进度
+- `src/components/problem/ProblemPlayer.tsx` — `onAttempt` 记录每次点击尝试，`onResult` 记录最终结果
 
 Acceptance:
 
 - localStorage key: `children-go-app:v0.1:progress`
 - 做错题进入错题本
-- 错题复习做对后状态更新（active �?reviewing �?mastered�?
-- 星星奖励不重复发放（首次答对 +1，完成每日练�?+5�?
+- 错题复习做对后状态更新（active → reviewing → mastered）
+- 星星奖励不重复发放（首次答对 +1，完成每日练习 +5）
 - mastered 错题不再显示在错题本
 - 刷新页面后进度仍存在
-- `/demo` 不污染学习进�?
+- `/demo` 不污染学习进度
 
 ---
 
@@ -133,16 +133,16 @@ Status: completed.
 
 Delivered:
 
-- `src/lib/report.ts` �?学习报告统计
-- `src/app/report/page.tsx` �?学习报告�?
-- `src/app/page.tsx` �?首页新增学习报告入口
-- `src/app/globals.css` �?样式调整
-- `src/app/layout.tsx` �?元数据更�?
+- `src/lib/report.ts` — 学习报告统计
+- `src/app/report/page.tsx` — 学习报告页
+- `src/app/page.tsx` — 首页新增学习报告入口
+- `src/app/globals.css` — 样式调整
+- `src/app/layout.tsx` — 元数据更新
 
 Acceptance:
 
 - 报告数据准确（正确率、首次做对率、星星、连续天数）
-- 最�?最弱分类基于首次做对率计算
+- 最强/最弱分类基于首次做对率计算
 - 各分类进度条显示完成比例
 - 无学习记录时显示引导页面
 - UI 适合儿童使用
@@ -166,17 +166,17 @@ Status: completed.
 
 Delivered:
 
-- `vitest.config.ts` �?Vitest configuration with jsdom environment
-- `src/__tests__/board.test.ts` �?Tests for board utility functions
-- `src/__tests__/problems.test.ts` �?Tests for problem validation
-- `src/__tests__/progress.test.ts` �?Tests for progress tracking, wrong problem transitions, and daily practice
-- `src/__tests__/report.test.ts` �?Tests for report statistics computation
-- `src/__tests__/practice.test.ts` �?Tests for practice session management
-- `src/lib/progress.ts` �?Added `resetProgress()` function
-- `src/app/settings/page.tsx` �?Settings page with progress reset confirmation
-- `src/app/page.tsx` �?Added subtle `设置` link at bottom of home page
-- `package.json` �?Added `npm run test` and `npm run test:watch` scripts
-- `docs/CONTENT_REVIEW_v0.1.1.md` �?Reviewed 24-problem content state
+- `vitest.config.ts` — Vitest configuration with jsdom environment
+- `src/__tests__/board.test.ts` — Tests for board utility functions
+- `src/__tests__/problems.test.ts` — Tests for problem validation
+- `src/__tests__/progress.test.ts` — Tests for progress tracking, wrong problem transitions, and daily practice
+- `src/__tests__/report.test.ts` — Tests for report statistics computation
+- `src/__tests__/practice.test.ts` — Tests for practice session management
+- `src/lib/progress.ts` — Added `resetProgress()` function
+- `src/app/settings/page.tsx` — Settings page with progress reset confirmation
+- `src/app/page.tsx` — Added subtle `设置` link at bottom of home page
+- `package.json` — Added `npm run test` and `npm run test:watch` scripts
+- `docs/CONTENT_REVIEW_v0.1.1.md` — Reviewed 24-problem content state
 
 Acceptance:
 
@@ -194,9 +194,9 @@ Status: completed.
 
 Delivered:
 
-- `src/data/problems.json` �?expanded from 24 to 36 problems (+12)
-- `docs/CONTENT_REVIEW_v0.1.2.md` �?content review documentation
-- `docs/CONTENT_PLAN_v0.1.2.md` �?content expansion plan
+- `src/data/problems.json` — expanded from 24 to 36 problems (+12)
+- `docs/CONTENT_REVIEW_v0.1.2.md` — content review documentation
+- `docs/CONTENT_PLAN_v0.1.2.md` — content expansion plan
 
 New problems:
 
@@ -225,10 +225,10 @@ Status: completed.
 
 Delivered:
 
-- `src/__tests__/problems.test.ts` �?strengthened problem data tests (36 count, v0.1.2 IDs, hints�?, failureMessage tone, successMessage length)
-- `src/data/problems.json` �?copy polish for 8 problems (CAP-002, CAP-007, CAP-009, CAP-011, ESC-002, ESC-003, ESC-007, LD-002)
-- `docs/PLAYTEST_v0.1.3.md` �?adult smoke playtest session recorded
-- `docs/ROADMAP_v0.2.md` �?remains planning-only
+- `src/__tests__/problems.test.ts` — strengthened problem data tests (36 count, v0.1.2 IDs, hints≥2, failureMessage tone, successMessage length)
+- `src/data/problems.json` — copy polish for 8 problems (CAP-002, CAP-007, CAP-009, CAP-011, ESC-002, ESC-003, ESC-007, LD-002)
+- `docs/PLAYTEST_v0.1.3.md` — adult smoke playtest session recorded
+- `docs/ROADMAP_v0.2.md` — remains planning-only
 - No v0.2 features introduced
 
 Acceptance:
@@ -249,12 +249,12 @@ Status: approved.
 
 Delivered:
 
-- `docs/ROADMAP_v0.2.md` �?v0.2 roadmap and account/sync direction
-- `docs/SUPABASE_DESIGN_v0.2.md` �?schema, RLS, client data layer, implementation phases, cloud-failure tolerance
-- `docs/DATA_MIGRATION_v0.2.md` �?localStorage import, merge, idempotency, failure handling
-- `docs/QA_CHECKLIST_v0.2.md` �?Auth, child profile, RLS, server progress, migration, regression QA
-- `docs/DEPLOYMENT_STRATEGY_v0.2.md` �?Docker app deployment with Supabase Cloud as external backend
-- `docs/DESIGN_REVIEW_v0.2.md` �?design review findings with severity ratings
+- `docs/ROADMAP_v0.2.md` — v0.2 roadmap and account/sync direction
+- `docs/SUPABASE_DESIGN_v0.2.md` — schema, RLS, client data layer, implementation phases, cloud-failure tolerance
+- `docs/DATA_MIGRATION_v0.2.md` — localStorage import, merge, idempotency, failure handling
+- `docs/QA_CHECKLIST_v0.2.md` — Auth, child profile, RLS, server progress, migration, regression QA
+- `docs/DEPLOYMENT_STRATEGY_v0.2.md` — Docker app deployment with Supabase Cloud as external backend
+- `docs/DESIGN_REVIEW_v0.2.md` — design review findings with severity ratings
 
 Key decisions:
 
@@ -277,12 +277,12 @@ Delivered:
 
 - `@supabase/supabase-js` ^2.106.0 installed.
 - `.env.example` with `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-- `src/lib/supabase/client.ts` �?`isSupabaseConfigured()`, `createSupabaseClient()` (reads env at call time for testability; returns `null` when env missing; never throws on import).
-- `src/lib/supabase/auth.ts` �?`useSupabaseAuth()` hook (reads session, listens to auth state changes, safe no-op when Supabase not configured).
-- `src/lib/supabase/supabase-error.ts` �?error classification (`network_error`, `server_error`, `auth_error`, `permission_error`, `unknown`).
-- `src/__tests__/supabase-client.test.ts` �?11 tests covering missing-env behavior (isSupabaseConfigured, createSupabaseClient, import safety).
-- `src/__tests__/supabase.test.ts` �?13 tests for error classification, sync messages, and recoverable error detection.
-- `docs/REVIEW_NOTES_v0.2.1a.md` �?review findings and Docker validation record.
+- `src/lib/supabase/client.ts` — `isSupabaseConfigured()`, `createSupabaseClient()` (reads env at call time for testability; returns `null` when env missing; never throws on import).
+- `src/lib/supabase/auth.ts` — `useSupabaseAuth()` hook (reads session, listens to auth state changes, safe no-op when Supabase not configured).
+- `src/lib/supabase/supabase-error.ts` — error classification (`network_error`, `server_error`, `auth_error`, `permission_error`, `unknown`).
+- `src/__tests__/supabase-client.test.ts` — 11 tests covering missing-env behavior (isSupabaseConfigured, createSupabaseClient, import safety).
+- `src/__tests__/supabase.test.ts` — 13 tests for error classification, sync messages, and recoverable error detection.
+- `docs/REVIEW_NOTES_v0.2.1a.md` — review findings and Docker validation record.
 
 Acceptance:
 
@@ -301,12 +301,12 @@ Status: completed.
 
 Delivered:
 
-- `src/lib/supabase/auth-actions.ts` �?`signInWithEmail()`, `signUpWithEmail()`, `signOutUser()` helpers (never throw, return `AuthResult`).
-- `src/app/login/page.tsx` �?login/sign-up page with email + password form, input validation, loading state, error display, and mode toggle.
-- `src/app/page.tsx` �?home page shows session email + sign-out button when authenticated, "登录 / 注册" link when not, nothing when Supabase not configured. Sign-out has loading state and error display.
-- `src/app/settings/page.tsx` �?settings page shows account section with session status and sign-out/login buttons. Sign-out has loading state and error display.
-- `src/__tests__/auth-actions.test.ts` �?6 tests for missing-env behavior.
-- `docs/REVIEW_NOTES_v0.2.1b.md` �?review findings and validation results.
+- `src/lib/supabase/auth-actions.ts` — `signInWithEmail()`, `signUpWithEmail()`, `signOutUser()` helpers (never throw, return `AuthResult`).
+- `src/app/login/page.tsx` — login/sign-up page with email + password form, input validation, loading state, error display, and mode toggle.
+- `src/app/page.tsx` — home page shows session email + sign-out button when authenticated, "登录 / 注册" link when not, nothing when Supabase not configured. Sign-out has loading state and error display.
+- `src/app/settings/page.tsx` — settings page shows account section with session status and sign-out/login buttons. Sign-out has loading state and error display.
+- `src/__tests__/auth-actions.test.ts` — 6 tests for missing-env behavior.
+- `docs/REVIEW_NOTES_v0.2.1b.md` — review findings and validation results.
 - Graceful degradation: when Supabase env is missing, `/login` shows a clear "云端功能尚未配置" message and local mode remains fully functional.
 
 Acceptance:
@@ -329,13 +329,13 @@ Status: completed.
 
 Delivered:
 
-- `docs/migrations/001_child_profiles.sql` �?child_profiles table with RLS policies and updated_at trigger.
-- `src/lib/supabase/child-profiles.ts` �?CRUD operations (fetch, create, update, delete) with error handling and missing-env fallback. createChildProfile explicitly sets parent_user_id from session.
-- `src/lib/selected-child.ts` �?localStorage persistence for selected child profile ID, per-parent storage key.
-- `src/app/children/page.tsx` �?child profile management page: list, create, select. Redirects to home if not authenticated.
-- `src/app/page.tsx` �?home page shows "孩子档案" link when authenticated.
-- `src/app/settings/page.tsx` �?settings page shows "管理孩子档案" button when authenticated.
-- `docs/REVIEW_NOTES_v0.2.2.md` �?review findings and validation results.
+- `docs/migrations/001_child_profiles.sql` — child_profiles table with RLS policies and updated_at trigger.
+- `src/lib/supabase/child-profiles.ts` — CRUD operations (fetch, create, update, delete) with error handling and missing-env fallback. createChildProfile explicitly sets parent_user_id from session.
+- `src/lib/selected-child.ts` — localStorage persistence for selected child profile ID, per-parent storage key.
+- `src/app/children/page.tsx` — child profile management page: list, create, select. Redirects to home if not authenticated.
+- `src/app/page.tsx` — home page shows "孩子档案" link when authenticated.
+- `src/app/settings/page.tsx` — settings page shows "管理孩子档案" button when authenticated.
+- `docs/REVIEW_NOTES_v0.2.2.md` — review findings and validation results.
 
 Review fixes applied:
 
@@ -365,7 +365,7 @@ Status: completed.
 
 Delivered:
 
-- `docs/migrations/002_server_progress.sql` �?full SQL migration:
+- `docs/migrations/002_server_progress.sql` — full SQL migration:
   - `profiles` table with RLS (select/insert/update)
   - `problem_attempts` table with import idempotency fields (`imported_from`, `imported_source_key`, `imported_source_hash`) and `problem_attempts_import_hash_unique` partial unique index
   - `wrong_problems` table with composite PK and status check constraint
@@ -375,7 +375,7 @@ Delivered:
   - UPDATE policies with both `using` + `with check` for `wrong_problems` and `progress_summary`
   - `updated_at` triggers for `profiles`, `wrong_problems`, `progress_summary`
   - `problem_attempts` is append-only (no UPDATE policy)
-- `docs/REVIEW_NOTES_v0.2.3a.md` �?schema review, RLS review, build/test results
+- `docs/REVIEW_NOTES_v0.2.3a.md` — schema review, RLS review, build/test results
 
 Explicitly NOT delivered in v0.2.3a:
 
@@ -399,19 +399,19 @@ Status: completed.
 
 Delivered:
 
-- `src/lib/supabase/server-progress.ts` �?server progress library:
-  - `loadServerProgress(childProfileId)` �?reads progress_summary + wrong_problems, maps snake_case to camelCase
-  - `syncAttemptToServer(childProfileId, attempt, progressUpdate, wrongProblemUpdate)` �?writes problem_attempts (append-only), upserts progress_summary, upserts wrong_problems
-  - `loadReportData(childProfileId)` �?reads problem_attempts + wrong_problems + progress_summary, maps snake_case to camelCase
+- `src/lib/supabase/server-progress.ts` — server progress library:
+  - `loadServerProgress(childProfileId)` — reads progress_summary + wrong_problems, maps snake_case to camelCase
+  - `syncAttemptToServer(childProfileId, attempt, progressUpdate, wrongProblemUpdate)` — writes problem_attempts (append-only), upserts progress_summary, upserts wrong_problems
+  - `loadReportData(childProfileId)` — reads problem_attempts + wrong_problems + progress_summary, maps snake_case to camelCase
   - All functions safely handle missing Supabase env (return error, never throw)
   - All functions use existing `classifySupabaseError` for error classification
   - child_profile_id must be passed explicitly by caller; no guessing or localStorage reads
-- `src/__tests__/server-progress.test.ts` �?10 tests:
+- `src/__tests__/server-progress.test.ts` — 10 tests:
   - Missing Supabase env: all three functions return safe error
   - Error handling: classified errors on Supabase failure
   - Data mapping: snake_case to camelCase for all three tables
   - PGRST116 (no row) handled gracefully
-- `docs/REVIEW_NOTES_v0.2.3b.md` �?review findings and validation results
+- `docs/REVIEW_NOTES_v0.2.3b.md` — review findings and validation results
 
 Explicitly NOT delivered in v0.2.3b:
 
@@ -435,27 +435,27 @@ Status: completed.
 
 Delivered:
 
-- `src/lib/progress-source.ts` �?progress source abstraction with server mode detection:
-  - `getProgressMode(parentUserId)` �?returns "server" only when Supabase configured + authenticated + child selected
-  - `recordAttemptWithSync(parentUserId, ...)` �?saves to localStorage first, then syncs to server if server mode
-  - `recordDailyPracticeCompleteWithSync(parentUserId)` �?same pattern for daily practice complete
-  - `updateWrongProblemReviewWithSync(parentUserId, problemId, isCorrect)` �?syncs wrong problem review to server
-  - `loadReportWithSource(parentUserId)` �?loads from server in server mode, falls back to local on failure
-- `src/app/practice/page.tsx` �?integrated with progress-source:
+- `src/lib/progress-source.ts` — progress source abstraction with server mode detection:
+  - `getProgressMode(parentUserId)` — returns "server" only when Supabase configured + authenticated + child selected
+  - `recordAttemptWithSync(parentUserId, ...)` — saves to localStorage first, then syncs to server if server mode
+  - `recordDailyPracticeCompleteWithSync(parentUserId)` — same pattern for daily practice complete
+  - `updateWrongProblemReviewWithSync(parentUserId, problemId, isCorrect)` — syncs wrong problem review to server
+  - `loadReportWithSource(parentUserId)` — loads from server in server mode, falls back to local on failure
+- `src/app/practice/page.tsx` — integrated with progress-source:
   - Attempt recording uses `recordAttemptWithSync`
   - Daily practice complete uses `recordDailyPracticeCompleteWithSync`
-  - Shows sync status ("进度已同�?☁️") on success
+  - Shows sync status ("进度已同步 ☁️") on success
   - Shows gentle error message on sync failure, does not block next problem
-- `src/app/wrong-book/page.tsx` �?integrated with progress-source:
+- `src/app/wrong-book/page.tsx` — integrated with progress-source:
   - Review attempts use `updateWrongProblemReviewWithSync`
-  - Local wrong problem state transitions unchanged (active �?reviewing �?mastered)
+  - Local wrong problem state transitions unchanged (active → reviewing → mastered)
   - Server failure does not block wrong book usage
-- `src/app/report/page.tsx` �?integrated with progress-source:
+- `src/app/report/page.tsx` — integrated with progress-source:
   - Server mode: loads from `loadReportData`, falls back to local on failure
   - Local mode: continues using `computeReportStats` from localStorage
   - Shows error message when server fails but local data is shown
-- `src/lib/report.ts` �?added `computeReportStatsFromProgress(progress, attemptsOverride?)` for computing stats from arbitrary progress data (used by server report)
-- `src/__tests__/progress-source.test.ts` �?15 tests:
+- `src/lib/report.ts` — added `computeReportStatsFromProgress(progress, attemptsOverride?)` for computing stats from arbitrary progress data (used by server report)
+- `src/__tests__/progress-source.test.ts` — 15 tests:
   - getProgressMode: unconfigured, unauthenticated, no child selected, server mode
   - recordAttemptWithSync: local mode saves, server mode syncs, server failure returns error
   - recordDailyPracticeCompleteWithSync: local and server mode
@@ -489,18 +489,18 @@ Status: delivered.
 
 Delivered:
 
-- `src/lib/progress-import.ts` �?import detection module:
-  - `detectImportEligibility()` �?checks localStorage for existing v0.1.x progress, returns typed status (`no_local_progress`, `eligible_for_import`, `already_imported`)
-  - `markImportOffered()` �?records that the import prompt was shown so it won't reappear
+- `src/lib/progress-import.ts` — import detection module:
+  - `detectImportEligibility()` — checks localStorage for existing v0.1.x progress, returns typed status (`no_local_progress`, `eligible_for_import`, `already_imported`)
+  - `markImportOffered()` — records that the import prompt was shown so it won't reappear
   - Safe without `window`, `localStorage`, or with malformed data; never throws
   - `PROGRESS_KEY` exported from `progress.ts` for shared reference
-- `src/components/progress/ImportPromptBanner.tsx` �?minimal UI prompt component:
+- `src/components/progress/ImportPromptBanner.tsx` — minimal UI prompt component:
   - Shows only when: Supabase configured + authenticated + child selected + local progress eligible for import
   - Displays attempt count and stars from local progress
   - Explains that local progress can be imported later (does not claim import has happened)
-  - "知道�? dismiss button marks import as offered
-- `src/app/page.tsx` �?home page integrates `ImportPromptBanner` between stats and navigation cards
-- `src/__tests__/progress-import.test.ts` �?9 tests:
+  - "知道了" dismiss button marks import as offered
+- `src/app/page.tsx` — home page integrates `ImportPromptBanner` between stats and navigation cards
+- `src/__tests__/progress-import.test.ts` — 9 tests:
   - no local progress (empty localStorage)
   - no local progress (zero attempts + zero stars)
   - eligible for import (attempts present)
@@ -510,7 +510,7 @@ Delivered:
   - localStorage access failure
   - markImportOffered writes timestamp
   - markImportOffered handles localStorage failure
-- `docs/TASKS.md` �?updated to mark v0.2.4a as delivered
+- `docs/TASKS.md` — updated to mark v0.2.4a as delivered
 
 Explicitly NOT delivered in v0.2.4a:
 
@@ -533,13 +533,13 @@ Acceptance:
 
 ---
 
-# �?v0.2.4b Import Implementation �?COMPLETED (2026-05-21)
+# ✅ v0.2.4b Import Implementation — COMPLETED (2026-05-21)
 
 ## What was done
 
 - `src/lib/progress-import.ts`: added `checkAlreadyImported`, `importLocalProgressToServer`, `markImportCompleted`, `hasImportCompletedLocally`, `buildAttemptHash`
 - `src/components/progress/ImportPromptBanner.tsx`: full import UI (5 states: pending/importing/success/failure/already_imported)
-- `src/__tests__/progress-import-v2.test.ts`: 9 tests for all new functions (1 skipped �?deep Supabase mock chain)
+- `src/__tests__/progress-import-v2.test.ts`: 9 tests for all new functions (1 skipped — deep Supabase mock chain)
 - Idempotent import via `imported_from` + `imported_source_key` + `imported_source_hash`
 - Merge strategy: `Math.max` for stars/streak, union for problem IDs
 - Empty progress short-circuits before Supabase check (no false `not_configured` error)
@@ -552,7 +552,7 @@ Acceptance:
 
 ---
 
-# �?v0.2.4c Import Validation / Error Recovery / Hardening �?COMPLETED (2026-05-22)
+# ✅ v0.2.4c Import Validation / Error Recovery / Hardening — COMPLETED (2026-05-22)
 
 ## What was done
 
@@ -571,17 +571,17 @@ Acceptance:
   - Different hashes for different timestamps
   - Hash format validation
   - Edge cases (empty problemId, special characters)
-- `docs/TASKS.md` �?updated to mark v0.2.4c as delivered
+- `docs/TASKS.md` — updated to mark v0.2.4c as delivered
 
 ## Validation path
 
 Manual validation (requires Supabase env):
 
-1. **Happy path**: Local progress exists �?click "导入到云�? �?success state shown with attempt/wrongProblem counts
-2. **Idempotency**: Repeat import �?"进度已导�? state (already_imported)
-3. **Error recovery**: Disconnect network �?click import �?failure state with retry button �?reconnect �?click retry �?success
+1. **Happy path**: Local progress exists → click "导入到云端" → success state shown with attempt/wrongProblem counts
+2. **Idempotency**: Repeat import → "进度已导入" state (already_imported)
+3. **Error recovery**: Disconnect network → click import → failure state with retry button → reconnect → click retry → success
 4. **Partial failure safety**: If some batches succeed and later batch fails, retry imports only unimported attempts (due to `imported_source_hash` unique index)
-5. **Local storage intact**: After import, check localStorage �?progress unchanged
+5. **Local storage intact**: After import, check localStorage — progress unchanged
 6. **Tests**: `npm run test` passes (159 tests)
 7. **Build**: `npm run build` passes
 
@@ -605,21 +605,21 @@ Multi-step problems, spaced review scheduling, parent weekly report.
 
 ---
 
-## v0.2.3 �?Server Progress
+## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
 - Save wrong problem state.
 - Save progress summary.
 - Report reads server mode.
 
-## v0.2.4 �?Local Import
+## v0.2.4 — Local Import
 
 - Detect local progress.
 - Explicit import prompt.
 - Idempotent import.
 - Conflict handling.
 
-## v0.3.0 �?Learning Depth
+## v0.3.0 — Learning Depth
 
 - Multi-step problems.
 - Spaced review scheduling.
