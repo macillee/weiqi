@@ -552,18 +552,24 @@ Acceptance:
 
 ---
 
-# Next Task: v0.2.4c AI Report (or TBD)
+# Next Task: v0.2.4c Local Import Validation / Error Recovery / Hardening
 
 ## Goal
 
-Integrate AI-generated weekly report using the imported progress data.
+Validate the v0.2.4b import flow end-to-end, add error recovery, and harden the local import track before any AI report work.
 
 ## Scope
 
-TBD — to be defined after PR #TBD is reviewed and merged.
+- Verify import works with real Supabase (manual or integration test)
+- Add retry logic for transient Supabase failures during import
+- Add user-facing error recovery UI (retry button on failure state)
+- Handle edge cases: partial import (some batches succeed, later batch fails)
+- Verify idempotency: re-importing same progress after partial failure is safe
+- Add missing test coverage for `buildAttemptHash` determinism
 
 Out of Scope:
 
+- AI Report (remains out of scope until local import is validated)
 - Payment, teacher/admin backend, Supabase self-hosting, v0.3 features
 
 ---
