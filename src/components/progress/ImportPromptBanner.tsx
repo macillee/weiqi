@@ -27,6 +27,7 @@ export default function ImportPromptBanner() {
   const [uiState, setUiState] = useState<ImportUiState>("pending");
   const [dismissed, setDismissed] = useState(false);
   const [importResult, setImportResult] = useState<{ attempts: number; wrongProblems: number } | null>(null);
+  const [importError, setImportError] = useState<string | null>(null);
   const { session } = useSupabaseAuth();
 
   useEffect(() => {
@@ -48,21 +49,6 @@ export default function ImportPromptBanner() {
   if (dismissed) return null;
   if (hasImportCompletedLocally()) return null;
 
-  // If already imported (server-side), show a different message
-  if (uiState === "already_imported") {
-    return (
-      <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-4 flex items-start gap-3">
-        <span className="text-2xl">✅</span>
-        <div className="flex-1">
-          <p className="text-sm text-green-800 font-medium">进度已导入</p>
-          <p className="text-xs text-green-600 mt-1">
-            本地学习记录已成功导入云端档案。
-          </p>
-        </div>
-      </div>
-    );
-  }
-
   const handleImport = async () => {
     setUiState("importing");
     const childId = getSelectedChildProfileId(session!.user!.id!);
@@ -81,6 +67,8 @@ export default function ImportPromptBanner() {
       markImportCompleted();
     } else {
       setUiState("failure");
+      // Store error message for display
+      setImportError(result.error?.message ?? "网络连接不稳定，请稍后重试。");
     }
   };
 
@@ -113,6 +101,20 @@ export default function ImportPromptBanner() {
     );
   }
 
+  if (uiState === "already_imported") {
+    return (
+      <div className="bg-green-50 border border-green-200 rounded-xl px-4 py-3 mb-4 flex items-start gap-3">
+        <span className="text-2xl">✅</span>
+        <div className="flex-1">
+          <p className="text-sm text-green-800 font-medium">进度已导入</p>
+          <p className="text-xs text-green-600 mt-1">
+            本地学习记录已成功导入云端档案。
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (uiState === "failure") {
     return (
       <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 mb-4 flex items-start gap-3">
@@ -120,12 +122,15 @@ export default function ImportPromptBanner() {
         <div className="flex-1">
           <p className="text-sm text-red-800 font-medium">导入失败</p>
           <p className="text-xs text-red-600 mt-1">
-            网络连接不稳定，请稍后重试。
+            {importError ?? "网络连接不稳定，请稍后重试。"}
+          </p>
+          <p className="text-xs text-red-500 mt-1">
+            💡 重试不会重复导入已成功的数据。
           </p>
         </div>
         <div className="flex gap-2">
           <button
-            onClick={handleImport}
+            onClick={() => { setImportError(null); handleImport(); }}
             className="text-red-600 hover:text-red-800 text-sm font-medium"
           >
             重试
