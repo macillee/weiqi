@@ -246,17 +246,45 @@ export async function importLocalProgressToServer(
       });
 
       const batchSize = 50;
+      // Retry config for transient failures
+      const MAX_RETRIES = 3;
+      const RETRY_DELAY_MS = 1000; // 1s base delay
+
       for (let i = 0; i < attemptRows.length; i += batchSize) {
         const batch = attemptRows.slice(i, i + batchSize);
-        const { error: attemptError } = await client
-          .from("problem_attempts")
-          .insert(batch);
-        if (attemptError) {
-          if ((attemptError as { code?: string }).code === "23505") {
-            // duplicate hash — skip and continue
-          } else {
-            throw attemptError;
+        
+        let lastError: unknown = null;
+        for (let retry = 0; retry <= MAX_RETRIES; retry++) {
+          const { error: attemptError } = await client
+            .from("problem_attempts")
+            .insert(batch);
+          
+          if (!attemptError) {
+            lastError = null;
+            break; // success
           }
+          
+          // 23505 = duplicate hash — skip and continue (idempotent)
+          if ((attemptError as { code?: string }).code === "23505") {
+            lastError = null;
+            break;
+          }
+          
+          lastError = attemptError;
+          
+          // Check if error is retryable (network/timeout)
+          const errorType = classifySupabaseError(attemptError);
+          if (errorType.type !== "network_error" && errorType.type !== "server_error") {
+            throw attemptError; // non-retryable
+          }
+          
+          if (retry < MAX_RETRIES) {
+            await new Promise(resolve => setTimeout(resolve, RETRY_DELAY_MS * Math.pow(2, retry)));
+          }
+        }
+        
+        if (lastError) {
+          throw lastError; // all retries failed
         }
       }
       importedAttempts = attemptRows.length;
@@ -360,8 +388,10 @@ export function hasImportCompletedLocally(): boolean {
 /**
  * Builds a stable hash for a single attempt, used for idempotent import.
  * Uses substring of a simple hash to avoid crypto dependency in Node.js.
+ *
+ * Exported for testing (v0.2.4c).
  */
-function buildAttemptHash(problemId: string, createdAt: string): string {
+export function buildAttemptHash(problemId: string, createdAt: string): string {
   // Simple deterministic hash — stable across runs
   const input = `${problemId}:${createdAt}`;
   let hash = 0;
