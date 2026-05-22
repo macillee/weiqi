@@ -1,4 +1,4 @@
-﻿# Project Task Queue
+# Project Task Queue
 
 > This file is the task entry point for opencode.  
 > Always read `AGENTS.md`, `docs/PROJECT_SPEC.md`, `docs/DEVELOPMENT_GUIDE.md`, `docs/QUALITY_CHECKLIST.md`, and the relevant release/content/design notes before implementing any task.
@@ -581,7 +581,7 @@ Manual validation (requires Supabase env):
 2. **Idempotency**: Repeat import → "进度已导入" state (already_imported)
 3. **Error recovery**: Disconnect network → click import → failure state with retry button → reconnect → click retry → success
 4. **Partial failure safety**: If some batches succeed and later batch fails, retry imports only unimported attempts (due to `imported_source_hash` unique index)
-5. **Local storage intact**: After import, check localStorage — progress unchanged
+5. **Local storage intact**: After import, check localStorage → progress unchanged
 6. **Tests**: `npm run test` passes (159 tests)
 7. **Build**: `npm run build` passes
 
@@ -604,6 +604,8 @@ Multi-step problems, spaced review scheduling, parent weekly report.
 - Features not listed in v0.3.0 roadmap
 
 ---
+
+# Future Roadmap
 
 ## v0.2.3 — Server Progress
 
