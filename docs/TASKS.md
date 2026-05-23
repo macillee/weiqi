@@ -7,16 +7,16 @@
 
 # Current Phase
 
-v0.2.1a Supabase foundation setup after v0.2 design approval.
+Post-v0.3 Stabilization / QA — regression testing and documentation cleanup after completing v0.3.0 Learning Depth (multi-step problems, spaced review, weekly report).
 
 Current strategy:
 
 ```text
 1. Preserve the stable v0.1.3 local MVP
-2. Keep the app Docker-deployable
-3. Use Supabase Cloud as external managed backend in v0.2
-4. Keep missing Supabase env from breaking local anonymous mode
-5. Add foundation only before Auth UI / child profile / server progress
+2. Keep the app Docker-deployable with Supabase Cloud as external backend
+3. Missing Supabase env must not break local anonymous mode
+4. Run focused regression review over v0.3.0 behavior
+5. Fix documentation accuracy issues only
 6. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -548,7 +548,7 @@ Acceptance:
 ## PR
 
 - Branch: `feat/v0.2.4b-import-local-progress`
-- PR #TBD
+- PR: #13
 
 ---
 
@@ -588,7 +588,7 @@ Manual validation (requires Supabase env):
 ## PR
 
 - Branch: `feat/v0.2.4c-import-validation-error-recovery`
-- PR #TBD
+- PR: #17
 
 ---
 
@@ -609,23 +609,7 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.3.0b Multi-Step Problem Schema / Data Model
 
-## Goal
-
-Extend the Problem type to support multi-step (sequence) problems with backward compatibility.
-
-See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries.
-
-## Out of Scope for v0.3.0b
-
-- Multi-step problem UI (v0.3.0c)
-- Spaced review scheduling (v0.3.0d)
-- Parent weekly report (v0.3.0e)
-- AI-generated content
-- Payment, teacher/admin backend, leaderboard
-
----
 
 # ✅ v0.3.0b Multi-Step Problem Schema / Data Model — COMPLETED (2026-05-23)
 
@@ -653,7 +637,7 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
 ## PR
 
 - Branch: `feat/v0.3.0b-multi-step-problem-schema`
-- PR #TBD
+- PR: #26
 
 ---
 
@@ -720,7 +704,7 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
 ## PR
 
 - Branch: `feat/v0.3.0d-spaced-review-scheduling`
-- PR: #38
+- PR: #40
 
 ## Out of Scope for v0.3.0d
 
@@ -743,7 +727,7 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
 ## PR
 
 - Branch: `feat/v0.3.0e-parent-weekly-report`
-- PR: #TBD
+- PR: #42
 
 ---
 
