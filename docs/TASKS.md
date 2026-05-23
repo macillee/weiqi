@@ -743,15 +743,13 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
 ## PR
 
 - Branch: `feat/v0.3.0e-parent-weekly-report`
-- PR: #41
+- PR: #TBD
 
 ---
 
-# Next Task: v0.3.0f Spaced Review Analytics
+# Next Task: Post-v0.3 Stabilization / QA
 
 ## Goal
-
-TBD
 
 ---
 
