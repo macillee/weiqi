@@ -364,5 +364,146 @@ describe("problem data quality", () => {
       expect(result.valid).toBe(false);
       expect(result.errors.some((e) => e.includes("invalid x coordinate"))).toBe(true);
     });
+
+    it("fails when addedStones overlaps with existing stones on board", () => {
+      const problem: Problem = {
+        id: "TEST-MULTI-004",
+        boardSize: 9,
+        category: "capture",
+        level: 2,
+        tags: ["multi-step", "test"],
+        toPlay: "black",
+        title: "Test AddedStone Overlap",
+        description: "Test addedStones overlapping with existing stones",
+        initialStones: [{ x: 3, y: 3, color: "white" }],
+        answers: [{ x: 4, y: 3 }],
+        hints: ["Hint"],
+        explanation: "Explanation",
+        successMessage: "Good",
+        failureMessage: "Try again",
+        totalSteps: 2,
+        steps: [
+          {
+            step: 1,
+            addedStones: [{ x: 3, y: 3, color: "black" }], // Overlaps with initial stone at (3,3)
+            removedStones: [],
+            answers: [{ x: 4, y: 3 }],
+            hints: ["Hint"],
+            explanation: "Explanation",
+            successMessage: "Good",
+            failureMessage: "Try again",
+          },
+          {
+            step: 2,
+            addedStones: [],
+            removedStones: [],
+            answers: [{ x: 1, y: 1 }],
+            hints: ["Hint"],
+            explanation: "Explanation",
+            successMessage: "Good",
+            failureMessage: "Try again",
+          },
+        ],
+      };
+      const result = validateProblem(problem);
+      expect(result.valid).toBe(false);
+      expect(result.errors.some((e) => e.includes("overlaps with existing stone"))).toBe(true);
+    });
+
+    it("fails when removedStones does not exist on board", () => {
+      const problem: Problem = {
+        id: "TEST-MULTI-005",
+        boardSize: 9,
+        category: "capture",
+        level: 2,
+        tags: ["multi-step", "test"],
+        toPlay: "black",
+        title: "Test RemovedStone Not Exist",
+        description: "Test removedStones removing non-existent stone",
+        initialStones: [{ x: 3, y: 3, color: "white" }],
+        answers: [{ x: 4, y: 3 }],
+        hints: ["Hint"],
+        explanation: "Explanation",
+        successMessage: "Good",
+        failureMessage: "Try again",
+        totalSteps: 2,
+        steps: [
+          {
+            step: 1,
+            addedStones: [],
+            removedStones: [{ x: 5, y: 5, color: "black" }], // Does not exist on board
+            answers: [{ x: 4, y: 3 }],
+            hints: ["Hint"],
+            explanation: "Explanation",
+            successMessage: "Good",
+            failureMessage: "Try again",
+          },
+          {
+            step: 2,
+            addedStones: [],
+            removedStones: [],
+            answers: [{ x: 1, y: 1 }],
+            hints: ["Hint"],
+            explanation: "Explanation",
+            successMessage: "Good",
+            failureMessage: "Try again",
+        },
+        ],
+      };
+      const result = validateProblem(problem);
+      expect(result.valid).toBe(false);
+      expect(result.errors.some((e) => e.includes("does not exist on board"))).toBe(true);
+    });
+
+    it("fails when board delta creates zero-liberty group", () => {
+      const problem: Problem = {
+        id: "TEST-MULTI-006",
+        boardSize: 9,
+        category: "capture",
+        level: 2,
+        tags: ["multi-step", "test"],
+        toPlay: "black",
+        title: "Test Zero Liberty After Delta",
+        description: "Test board delta creating zero-liberty group",
+        initialStones: [
+          { x: 3, y: 3, color: "black" },
+          { x: 2, y: 3, color: "white" },
+          { x: 4, y: 3, color: "white" },
+          { x: 3, y: 2, color: "white" },
+          // (3,4) is empty - gives the black stone at (3,3) one liberty
+        ],
+        answers: [{ x: 3, y: 4 }],
+        hints: ["Hint"],
+        explanation: "Explanation",
+        successMessage: "Good",
+        failureMessage: "Try again",
+        totalSteps: 2,
+        steps: [
+          {
+            step: 1,
+            addedStones: [{ x: 3, y: 4, color: "white" }], // This surrounds the black stone completely
+            removedStones: [],
+            answers: [{ x: 1, y: 1 }],
+            hints: ["Hint"],
+            explanation: "Explanation",
+            successMessage: "Good",
+            failureMessage: "Try again",
+          },
+          {
+            step: 2,
+            addedStones: [],
+            removedStones: [],
+            answers: [{ x: 1, y: 1 }],
+            hints: ["Hint"],
+            explanation: "Explanation",
+            successMessage: "Good",
+            failureMessage: "Try again",
+          },
+        ],
+      };
+      const result = validateProblem(problem);
+      expect(result.valid).toBe(false);
+      expect(result.errors.some((e) => e.includes("zero-liberty group"))).toBe(true);
+    });
   });
 });

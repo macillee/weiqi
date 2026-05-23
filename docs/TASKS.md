@@ -659,8 +659,6 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
 
 # 🔄 v0.3.0c Multi-Step Problem Player UI — IN PROGRESS
 
-# 🔄 v0.3.0c Multi-Step Problem Player UI — IN PROGRESS
-
 ## What needs to be done
 
 - ProblemPlayer renders step-by-step progression
