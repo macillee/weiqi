@@ -3,6 +3,7 @@
  *
  * v0.2.4a: detect import eligibility and show local progress import prompt
  * v0.2.4b: actual import logic (append-only, idempotent)
+ * v0.2.4c: validate import flow and harden error recovery
  *
  * Safe when running without window, localStorage, or with malformed data.
  * Never throws.
