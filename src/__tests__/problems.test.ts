@@ -505,5 +505,53 @@ describe("problem data quality", () => {
       expect(result.valid).toBe(false);
       expect(result.errors.some((e) => e.includes("zero-liberty group"))).toBe(true);
     });
+
+    it("fails when step answer targets an occupied point on the simulated board", () => {
+      const problem: Problem = {
+        id: "TEST-MULTI-007",
+        boardSize: 9,
+        category: "capture",
+        level: 2,
+        tags: ["multi-step", "test"],
+        toPlay: "black",
+        title: "Test Occupied Answer Point",
+        description: "Test step answer landing on an occupied point",
+        initialStones: [
+          { x: 3, y: 3, color: "white" },
+          { x: 2, y: 3, color: "black" },
+        ],
+        answers: [{ x: 4, y: 3 }],
+        hints: ["Hint"],
+        explanation: "Explanation",
+        successMessage: "Good",
+        failureMessage: "Try again",
+        totalSteps: 2,
+        steps: [
+          {
+            step: 1,
+            addedStones: [],
+            removedStones: [],
+            answers: [{ x: 3, y: 3 }], // Already occupied by white stone
+            hints: ["Hint"],
+            explanation: "Explanation",
+            successMessage: "Good",
+            failureMessage: "Try again",
+          },
+          {
+            step: 2,
+            addedStones: [],
+            removedStones: [],
+            answers: [{ x: 4, y: 3 }],
+            hints: ["Hint"],
+            explanation: "Explanation",
+            successMessage: "Good",
+            failureMessage: "Try again",
+          },
+        ],
+      };
+      const result = validateProblem(problem);
+      expect(result.valid).toBe(false);
+      expect(result.errors.some((e) => e.includes("already occupied"))).toBe(true);
+    });
   });
 });
