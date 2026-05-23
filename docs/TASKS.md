@@ -703,7 +703,7 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
 - `src/app/practice/page.tsx`: Updates review schedule on problem completion
 - `src/app/levels/[chapterId]/page.tsx`: Adds `onResult` handler for review schedule updates
 - `src/app/wrong-book/page.tsx`: Updates review schedule on wrong-problem review completion
-- `src/__tests__/spaced-review.test.ts`: 24 tests covering:
+- `src/__tests__/spaced-review.test.ts`: 25 tests covering:
   - Failed problem due soon
   - Correct with wrong attempts schedules sooner than clean success
   - Correct with hint schedules sooner than clean success
@@ -713,7 +713,8 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
   - Interval capped at 30 days
   - Backward compatibility with old progress data
   - Schedule priority ordering (failed < wrong < clean)
-- `npm run test` passes (194 tests, excluding pre-existing localStorage issues)
+  - Multi-step completion schedules by problem id, not step id
+- `npm run test` passes (228 tests)
 - `npm run build` passes
 
 ## PR

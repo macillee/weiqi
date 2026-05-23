@@ -288,3 +288,17 @@ describe("backward compatibility", () => {
     expect(typeof (p as Record<string, unknown>).reviewSchedule).toBe("object");
   });
 });
+
+describe("multi-step scheduling", () => {
+  it("schedules by problem id, not step id", () => {
+    const fixedDate = new Date("2026-05-23T12:00:00Z");
+    const schedule = updateReviewSchedule({}, "MULTI-001", true, 0, false, fixedDate);
+
+    expect(schedule["MULTI-001"]).toBeDefined();
+    expect(schedule["MULTI-001"].problemId).toBe("MULTI-001");
+
+    const keys = Object.keys(schedule);
+    expect(keys).toEqual(["MULTI-001"]);
+    expect(keys.filter((k) => k.startsWith("MULTI-001-step"))).toEqual([]);
+  });
+});
