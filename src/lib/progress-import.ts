@@ -179,8 +179,16 @@ export async function checkAlreadyImported(
  * - completedProblemIds = union(local, server)
  * - masteredProblemIds = union(local, server)
  *
- * Idempotent: problem_attempts inserts use imported_source_hash with a
- * unique partial index; duplicate hashes are skipped (23505).
+ * Idempotency guarantees:
+ * 1. problem_attempts inserts use imported_source_hash with a unique partial index
+ * 2. Duplicate hashes are skipped (Postgres error code 23505)
+ * 3. Partial import failure is safe: already-imported batches will be skipped on retry
+ * 4. No localStorage mutation at any point
+ *
+ * Error recovery:
+ * - Transient network/server errors trigger exponential backoff retry (max 3 attempts)
+ * - Non-retryable errors (schema violations, auth errors) fail immediately
+ * - UI layer offers retry button on failure, safe to call multiple times
  *
  * Never throws. Never mutates localStorage.
  */

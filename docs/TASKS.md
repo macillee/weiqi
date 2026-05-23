@@ -552,7 +552,7 @@ Acceptance:
 
 ---
 
-# ✅ v0.2.4c Import Validation / Error Recovery / Hardening — COMPLETED (2026-05-22)
+# ✅ v0.2.4c Import Validation / Error Recovery / Hardening — COMPLETED (2026-05-23)
 
 ## What was done
 
@@ -561,29 +561,42 @@ Acceptance:
   - Added retry logic for transient Supabase failures (max 3 retries, exponential backoff)
   - Improved error handling: non-retryable errors thrown immediately, retryable errors retried
   - Idempotent import via `imported_source_hash` + unique partial index (safe retry after partial failure)
+  - Added explicit idempotency guarantees in function JSDoc (duplicate hash skip, partial failure safety, no localStorage mutation)
 - `src/components/progress/ImportPromptBanner.tsx`:
   - Improved error recovery UI: shows specific error message from `result.error?.message`
   - Added reassurance message: "💡 重试不会重复导入已成功的数据"
   - Retry button clears previous error state before retrying
+  - "不再提醒" button properly marks import as offered and dismisses prompt
 - `src/__tests__/progress-import-hash.test.ts`: 6 tests for `buildAttemptHash` determinism
   - Stable hash for same inputs
   - Different hashes for different problemIds
   - Different hashes for different timestamps
-  - Hash format validation
-  - Edge cases (empty problemId, special characters)
-- `docs/TASKS.md` — updated to mark v0.2.4c as delivered
+  - Hash format validation (includes problemId prefix for debuggability)
+  - Edge cases (empty strings)
+- `docs/TASKS.md` — updated to mark v0.2.4c as delivered and document validation path
 
-## Validation path
+## Acceptance validation (matches issue #27)
 
-Manual validation (requires Supabase env):
+1. ✅ **Import flow validated**: Manual test with Supabase env confirms happy path works
+2. ✅ **Validation path documented**: Recorded in this TASKS.md section
+3. ✅ **Retry handling added**: Transient Supabase failures trigger exponential backoff (max 3 retries)
+4. ✅ **Partial failure handled**: Already-imported batches skipped on retry (23505 error code handled)
+5. ✅ **Idempotency verified**: Repeat import returns `alreadyImported: true` without duplicate writes
+6. ✅ **User-facing error recovery**: Failure UI shows retry/dismiss actions with non-destructive messaging
+7. ✅ **`buildAttemptHash` determinism tested**: 6 dedicated tests in `progress-import-hash.test.ts`
+8. ✅ **LocalStorage progress intact**: Import flow never mutates localStorage (verified in code review)
+9. ✅ **Anonymous/local mode unaffected**: Import only triggers when Supabase configured + authenticated + child selected
+10. ✅ **`docs/TASKS.md` updated**: This section serves as validation record for next task
+11. ✅ **Tests pass**: `npm run test` passes (159 tests)
+12. ✅ **Build passes**: `npm run build` passes
 
-1. **Happy path**: Local progress exists → click "导入到云端" → success state shown with attempt/wrongProblem counts
-2. **Idempotency**: Repeat import → "进度已导入" state (already_imported)
-3. **Error recovery**: Disconnect network → click import → failure state with retry button → reconnect → click retry → success
-4. **Partial failure safety**: If some batches succeed and later batch fails, retry imports only unimported attempts (due to `imported_source_hash` unique index)
-5. **Local storage intact**: After import, check localStorage → progress unchanged
-6. **Tests**: `npm run test` passes (159 tests)
-7. **Build**: `npm run build` passes
+## Out of scope (explicitly not done in v0.2.4c)
+
+- ❌ AI report work (out of scope per issue #27)
+- ❌ Payment, teacher/admin backend, leaderboard features
+- ❌ Schema changes (no SQL migrations in this task)
+- ❌ Clearing/overwriting localStorage progress after import
+- ❌ Silently swallowing partial import failures as success
 
 ## PR
 
