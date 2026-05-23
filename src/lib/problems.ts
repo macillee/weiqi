@@ -16,6 +16,27 @@ export type ProblemCategory =
   | "endgame"
   | "mixed";
 
+export type ProblemStep = {
+  /** Step number, 1-indexed */
+  step: number;
+  /** Stones to add relative to previous step (or initial position for step 1) */
+  addedStones?: Stone[];
+  /** Stones to remove relative to previous step */
+  removedStones?: Stone[];
+  /** Answers for this step */
+  answers: Point[];
+  /** Hints for this step */
+  hints: string[];
+  /** Explanation after this step */
+  explanation: string;
+  /** Success message for this step */
+  successMessage: string;
+  /** Failure message for this step */
+  failureMessage: string;
+  /** Wrong moves for this step (optional) */
+  wrongMoves?: Array<{ x: number; y: number; message: string }>;
+};
+
 export type Problem = {
   id: string;
   boardSize: 9 | 13 | 19;
@@ -26,6 +47,7 @@ export type Problem = {
   title: string;
   description: string;
   initialStones: Stone[];
+  // v0.1 single-step fields (backward compatible)
   answers: Point[];
   hints: string[];
   explanation: string;
@@ -36,6 +58,10 @@ export type Problem = {
     y: number;
     message: string;
   }>;
+  // v0.3 multi-step extension (optional)
+  steps?: ProblemStep[];
+  /** Total number of steps (1 = single-move, default) */
+  totalSteps?: number;
 };
 
 export type ValidationResult = {
@@ -58,12 +84,106 @@ export function validateProblem(problem: Problem): ValidationResult {
     errors.push(`Problem ${problem.id || "unknown"} must have a description`);
   }
 
-  if (!problem.answers || problem.answers.length === 0) {
-    errors.push(`Problem ${problem.id} must have at least one answer`);
-  }
+  // Check if this is a multi-step problem
+  const isMultiStep = problem.steps && problem.totalSteps && problem.totalSteps > 1;
 
-  if (!problem.hints || problem.hints.length === 0) {
-    errors.push(`Problem ${problem.id} must have at least one hint`);
+  if (!isMultiStep) {
+    // Single-step validation (backward compatible)
+    if (!problem.answers || problem.answers.length === 0) {
+      errors.push(`Problem ${problem.id} must have at least one answer`);
+    }
+
+    if (!problem.hints || problem.hints.length === 0) {
+      errors.push(`Problem ${problem.id} must have at least one hint`);
+    }
+  } else {
+    // Multi-step validation
+    if (!problem.steps || problem.steps.length === 0) {
+      errors.push(`Problem ${problem.id}: multi-step problem must have steps array`);
+    } else {
+      // Validate step ordering
+      const stepNumbers = problem.steps.map((s) => s.step).sort((a, b) => a - b);
+      for (let i = 0; i < stepNumbers.length; i++) {
+        if (stepNumbers[i] !== i + 1) {
+          errors.push(`Problem ${problem.id}: steps must be sequentially numbered starting from 1`);
+          break;
+        }
+      }
+
+      // Validate each step
+      for (const step of problem.steps) {
+        if (!step.answers || step.answers.length === 0) {
+          errors.push(`Problem ${problem.id}: step ${step.step} must have at least one answer`);
+        }
+
+        if (!step.hints || step.hints.length === 0) {
+          errors.push(`Problem ${problem.id}: step ${step.step} must have at least one hint`);
+        }
+
+        // Validate step answers are on-board
+        if (step.answers) {
+          for (const answer of step.answers) {
+            if (answer.x < 0 || answer.x >= problem.boardSize) {
+              errors.push(
+                `Problem ${problem.id}: step ${step.step} answer at (${answer.x}, ${answer.y}) has invalid x coordinate`,
+              );
+            }
+            if (answer.y < 0 || answer.y >= problem.boardSize) {
+              errors.push(
+                `Problem ${problem.id}: step ${step.step} answer at (${answer.x}, ${answer.y}) has invalid y coordinate`,
+              );
+            }
+          }
+        }
+
+        // Validate addedStones and removedStones
+        if (step.addedStones) {
+          for (const stone of step.addedStones) {
+            if (stone.x < 0 || stone.x >= problem.boardSize) {
+              errors.push(
+                `Problem ${problem.id}: step ${step.step} addedStone at (${stone.x}, ${stone.y}) has invalid x coordinate`,
+              );
+            }
+            if (stone.y < 0 || stone.y >= problem.boardSize) {
+              errors.push(
+                `Problem ${problem.id}: step ${step.step} addedStone at (${stone.x}, ${stone.y}) has invalid y coordinate`,
+              );
+            }
+          }
+        }
+
+        if (step.removedStones) {
+          for (const stone of step.removedStones) {
+            if (stone.x < 0 || stone.x >= problem.boardSize) {
+              errors.push(
+                `Problem ${problem.id}: step ${step.step} removedStone at (${stone.x}, ${stone.y}) has invalid x coordinate`,
+              );
+            }
+            if (stone.y < 0 || stone.y >= problem.boardSize) {
+              errors.push(
+                `Problem ${problem.id}: step ${step.step} removedStone at (${stone.x}, ${stone.y}) has invalid y coordinate`,
+              );
+            }
+          }
+        }
+
+        // Validate wrongMoves if present
+        if (step.wrongMoves) {
+          for (const wm of step.wrongMoves) {
+            if (wm.x < 0 || wm.x >= problem.boardSize) {
+              errors.push(
+                `Problem ${problem.id}: step ${step.step} wrongMove at (${wm.x}, ${wm.y}) has invalid x coordinate`,
+              );
+            }
+            if (wm.y < 0 || wm.y >= problem.boardSize) {
+              errors.push(
+                `Problem ${problem.id}: step ${step.step} wrongMove at (${wm.x}, ${wm.y}) has invalid y coordinate`,
+              );
+            }
+          }
+        }
+      }
+    }
   }
 
   const boardSize = problem.boardSize;
