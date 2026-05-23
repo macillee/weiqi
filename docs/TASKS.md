@@ -627,6 +627,60 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
 
 ---
 
+# ✅ v0.3.0b Multi-Step Problem Schema / Data Model — COMPLETED (2026-05-23)
+
+## What was done
+
+- Extended `Problem` type in `src/lib/problems.ts` with `ProblemStep` type:
+  - `ProblemStep` includes: `step`, `addedStones`, `removedStones`, `answers`, `hints`, `explanation`, `successMessage`, `failureMessage`, `wrongMoves`
+  - `Problem` now includes optional `steps` array and `totalSteps` field
+- Updated `validateProblem` function to support multi-step validation:
+  - Backward compatible: single-step problems validate as before
+  - Multi-step validation: step ordering, per-step answers/hints/coordinates
+  - Validates `addedStones` and `removedStones` coordinates
+- Added 3 sample multi-step problems to `src/data/problems.json`:
+  - `MULTI-001`: two-step capture problem
+  - `MULTI-002`: two-step life-and-death problem  
+  - `MULTI-003`: two-step connect problem
+- Added tests in `src/__tests__/problems.test.ts`:
+  - `validates a valid multi-step problem`
+  - `fails when step ordering is invalid`
+  - `fails when step answer coordinates are out of range`
+- Updated test count from 36 to 39 problems
+- `npm run test` passes (159 tests)
+- `npm run build` passes
+
+## PR
+
+- Branch: `feat/v0.3.0b-multi-step-problem-schema`
+- PR #TBD
+
+---
+
+# 🔄 v0.3.0c Multi-Step Problem Player UI — IN PROGRESS
+
+## What needs to be done
+
+- ProblemPlayer renders step-by-step progression
+- After correct answer at step N, board updates to show step N+1 initial position
+- Step indicator shows current step / total steps
+- Wrong answer at any step records the attempt and adds to wrong book (at problem level, not step level)
+- Hints reset per step
+- Single-move problems continue to work identically
+- `npm run test` and `npm run build` pass
+
+## Acceptance
+
+- Multi-step problems play step-by-step with board state updates
+- Step indicator displays current/total steps
+- Wrong answers recorded at problem level
+- Hints reset per step
+- Single-step problems unchanged
+- All tests pass
+- Build passes
+
+---
+
 # Future Roadmap
 
 ## v0.2.3 — Server Progress

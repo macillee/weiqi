@@ -1000,5 +1000,145 @@
     "explanation": "黑棋下在白棋最后一口气上，三颗白棋没有气就被提掉了。",
     "successMessage": "太厉害了！你吃掉了三颗白棋！",
     "failureMessage": "数一数白棋还有几口气？"
+  },
+  {
+    "id": "MULTI-001",
+    "boardSize": 9,
+    "category": "capture",
+    "level": 2,
+    "tags": ["multi-step", "capture", "sequence"],
+    "toPlay": "black",
+    "title": "多步吃子（两步走法）",
+    "description": "黑棋需要两步才能吃掉白棋，找到正确的顺序。",
+    "initialStones": [
+      { "x": 3, "y": 3, "color": "white" },
+      { "x": 3, "y": 4, "color": "white" },
+      { "x": 2, "y": 3, "color": "black" },
+      { "x": 2, "y": 4, "color": "black" },
+      { "x": 3, "y": 5, "color": "black" },
+      { "x": 4, "y": 4, "color": "black" }
+    ],
+    "answers": [{ "x": 4, "y": 3 }],
+    "hints": ["第一步：打吃白棋", "第二步：白棋逃不掉"],
+    "explanation": "第一步打吃，第二步提子。",
+    "successMessage": "正确！",
+    "failureMessage": "想想两步的顺序。",
+    "totalSteps": 2,
+    "steps": [
+      {
+        "step": 1,
+        "addedStones": [],
+        "removedStones": [],
+        "answers": [{ "x": 4, "y": 3 }],
+        "hints": ["第一步：黑棋下在这里打吃白棋"],
+        "explanation": "黑棋打吃，白棋只剩一口气。",
+        "successMessage": "好！白棋被叫吃了。",
+        "failureMessage": "这不是第一步的最佳走法。"
+      },
+      {
+        "step": 2,
+        "addedStones": [{ "x": 4, "y": 3, "color": "black" }, { "x": 4, "y": 2, "color": "white" }],
+        "removedStones": [],
+        "answers": [{ "x": 4, "y": 3 }],
+        "hints": ["第二步：白棋逃，黑棋提掉"],
+        "explanation": "白棋逃跑，但黑棋可以提掉。",
+        "successMessage": "太棒了！你完成了多步吃子！",
+        "failureMessage": "第二步应该提掉白棋。"
+      }
+    ]
+  },
+  {
+    "id": "MULTI-002",
+    "boardSize": 9,
+    "category": "life_death",
+    "level": 3,
+    "tags": ["multi-step", "life-death", "two-eyes"],
+    "toPlay": "black",
+    "title": "做眼活棋（多步）",
+    "description": "黑棋需要做两个眼才能活棋，分步学习。",
+    "initialStones": [
+      { "x": 3, "y": 3, "color": "black" },
+      { "x": 3, "y": 4, "color": "black" },
+      { "x": 3, "y": 5, "color": "black" },
+      { "x": 4, "y": 3, "color": "black" },
+      { "x": 4, "y": 5, "color": "black" },
+      { "x": 5, "y": 3, "color": "black" },
+      { "x": 5, "y": 4, "color": "black" },
+      { "x": 5, "y": 5, "color": "black" }
+    ],
+    "answers": [{ "x": 4, "y": 4 }],
+    "hints": ["第一步：下在中间", "第二步：确保有两个眼"],
+    "explanation": "黑棋做活需要两个眼。",
+    "successMessage": "正确！",
+    "failureMessage": "需要两个眼才能活。",
+    "totalSteps": 2,
+    "steps": [
+      {
+        "step": 1,
+        "addedStones": [],
+        "removedStones": [],
+        "answers": [{ "x": 4, "y": 4 }],
+        "hints": ["第一步：黑棋下在中间空格"],
+        "explanation": "黑棋下在 (4,4)，做了一个眼。",
+        "successMessage": "好！做了第一个眼。",
+        "failureMessage": "第一步应该下在中间。"
+      },
+      {
+        "step": 2,
+        "addedStones": [{ "x": 4, "y": 4, "color": "black" }],
+        "removedStones": [],
+        "answers": [{ "x": 4, "y": 4 }],
+        "hints": ["第二步：巩固形状，确保有两个眼"],
+        "explanation": "现在黑棋有两个眼，活棋了。",
+        "successMessage": "完美！黑棋活了！",
+        "failureMessage": "检查是否真的有两个眼。"
+      }
+    ]
+  },
+  {
+    "id": "MULTI-003",
+    "boardSize": 9,
+    "category": "connect_cut",
+    "level": 2,
+    "tags": ["multi-step", "connect", "extension"],
+    "toPlay": "black",
+    "title": "连接棋子（多步）",
+    "description": "黑棋需要两步才能连接两块棋。",
+    "initialStones": [
+      { "x": 2, "y": 4, "color": "black" },
+      { "x": 2, "y": 5, "color": "black" },
+      { "x": 6, "y": 4, "color": "black" },
+      { "x": 6, "y": 5, "color": "black" },
+      { "x": 4, "y": 3, "color": "white" },
+      { "x": 4, "y": 6, "color": "white" }
+    ],
+    "answers": [{ "x": 4, "y": 4 }],
+    "hints": ["第一步：下在中间", "第二步：连接两边"],
+    "explanation": "黑棋通过多步连接两块棋。",
+    "successMessage": "正确！",
+    "failureMessage": "需要两步才能连接。",
+    "totalSteps": 2,
+    "steps": [
+      {
+        "step": 1,
+        "addedStones": [],
+        "removedStones": [],
+        "answers": [{ "x": 4, "y": 4 }],
+        "hints": ["第一步：黑棋下在中间 (4,4)"],
+        "explanation": "黑棋下在中间，准备连接。",
+        "successMessage": "好！位置正确。",
+        "failureMessage": "第一步应该下在中间。"
+      },
+      {
+        "step": 2,
+        "addedStones": [{ "x": 4, "y": 4, "color": "black" }, { "x": 4, "y": 5, "color": "black" }],
+        "removedStones": [],
+        "answers": [{ "x": 4, "y": 5 }],
+        "hints": ["第二步：继续连接"],
+        "explanation": "黑棋成功连接了两块棋。",
+        "successMessage": "太棒了！连接成功！",
+        "failureMessage": "第二步应该继续连接。"
+      }
+    ]
   }
 ]
