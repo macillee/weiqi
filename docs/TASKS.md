@@ -592,16 +592,38 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.3.0 Learning Depth (AI Report remaining out of scope)
+## v0.3.0a Learning Depth Planning — COMPLETED (2026-05-23)
+
+## What was done
+
+- `docs/LEARNING_DEPTH_PLAN_v0.3.md`: planning document defining five feature slices (v0.3.0a–e), data model changes, spaced review algorithm, local/server compatibility, and explicit AI Report out-of-scope boundary.
+- `docs/TASKS.md`: updated to mark v0.3.0a as delivered and set next task to v0.3.0b.
+
+## Slices defined
+
+- v0.3.0a: planning and boundaries (this task, docs-only)
+- v0.3.0b: multi-step problem schema/data model
+- v0.3.0c: multi-step problem player UI
+- v0.3.0d: spaced review scheduling
+- v0.3.0e: parent weekly report
+
+---
+
+# Next Task: v0.3.0b Multi-Step Problem Schema / Data Model
 
 ## Goal
 
-Multi-step problems, spaced review scheduling, parent weekly report.
+Extend the Problem type to support multi-step (sequence) problems with backward compatibility.
 
-## Out of Scope for v0.3.0
+See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries.
 
-- Payment, teacher/admin backend, Supabase self-hosting
-- Features not listed in v0.3.0 roadmap
+## Out of Scope for v0.3.0b
+
+- Multi-step problem UI (v0.3.0c)
+- Spaced review scheduling (v0.3.0d)
+- Parent weekly report (v0.3.0e)
+- AI-generated content
+- Payment, teacher/admin backend, leaderboard
 
 ---
 
