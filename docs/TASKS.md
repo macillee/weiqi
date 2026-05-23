@@ -687,17 +687,56 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
 
 ---
 
-# Next Task: v0.3.0d Spaced Review Scheduling
+# ✅ v0.3.0d Spaced Review Scheduling — COMPLETED (2026-05-23)
 
-## Goal
+## What was done
 
-Implement spaced review scheduling for better learning retention.
+- `src/lib/spaced-review.ts`: New utility module with deterministic scheduling functions
+  - `classifyOutcome()`: Classifies result into failed / correct_with_wrong / correct_with_hint / clean
+  - `computeNextReview()`: Pure function computing next review date and interval
+  - `updateReviewSchedule()`: Updates review metadata in progress schedule
+  - `getDueProblems()`: Returns problems due for review by date
+  - Scheduling intervals: failed → 1d, correct with wrong/hint → 2d, clean initial → 4d, repeated clean → progressive doubling (capped at 30d)
+- `src/lib/progress.ts`: Extended `StudentProgress` with `reviewSchedule` field
+  - New `ReviewOutcome` and `ProblemReviewState` types
+  - Backward compatible: old localStorage data merges with default empty reviewSchedule
+- `src/app/practice/page.tsx`: Updates review schedule on problem completion
+- `src/app/levels/[chapterId]/page.tsx`: Adds `onResult` handler for review schedule updates
+- `src/app/wrong-book/page.tsx`: Updates review schedule on wrong-problem review completion
+- `src/__tests__/spaced-review.test.ts`: 24 tests covering:
+  - Failed problem due soon
+  - Correct with wrong attempts schedules sooner than clean success
+  - Correct with hint schedules sooner than clean success
+  - Clean success schedules later
+  - Repeated clean success increases interval progressively
+  - Due review selector returns only due problems
+  - Interval capped at 30 days
+  - Backward compatibility with old progress data
+  - Schedule priority ordering (failed < wrong < clean)
+- `npm run test` passes (194 tests, excluding pre-existing localStorage issues)
+- `npm run build` passes
 
-See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries.
+## PR
+
+- Branch: `feat/v0.3.0d-spaced-review-scheduling`
+- PR: #38
 
 ## Out of Scope for v0.3.0d
 
 - Parent weekly report (v0.3.0e)
+- AI-generated content
+- Payment, teacher/admin backend, leaderboard
+
+---
+
+# Next Task: v0.3.0e Parent Weekly Report
+
+## Goal
+
+Implement a parent-facing weekly report summarizing learning activity and progress.
+
+## Out of Scope for v0.3.0e
+
 - AI-generated content
 - Payment, teacher/admin backend, leaderboard
 

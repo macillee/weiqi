@@ -2,6 +2,16 @@ export const PROGRESS_KEY = "children-go-app:v0.1:progress";
 
 export type WrongProblemStatus = "active" | "reviewing" | "mastered";
 
+export type ReviewOutcome = "failed" | "correct_with_wrong" | "correct_with_hint" | "clean";
+
+export type ProblemReviewState = {
+  problemId: string;
+  nextReviewAt: string;
+  intervalDays: number;
+  lastResult: ReviewOutcome;
+  lastReviewAt: string;
+};
+
 export type WrongProblemState = {
   problemId: string;
   wrongCount: number;
@@ -30,6 +40,7 @@ export type StudentProgress = {
   wrongProblems: Record<string, WrongProblemState>;
   attempts: AttemptRecord[];
   achievements: string[];
+  reviewSchedule: Record<string, ProblemReviewState>;
 };
 
 function defaultProgress(): StudentProgress {
@@ -42,6 +53,7 @@ function defaultProgress(): StudentProgress {
     wrongProblems: {},
     attempts: [],
     achievements: [],
+    reviewSchedule: {},
   };
 }
 
@@ -59,6 +71,7 @@ export function loadProgress(): StudentProgress {
       masteredProblemIds: parsed.masteredProblemIds || [],
       attempts: parsed.attempts || [],
       achievements: parsed.achievements || [],
+      reviewSchedule: parsed.reviewSchedule || {},
     };
   } catch {
     return defaultProgress();

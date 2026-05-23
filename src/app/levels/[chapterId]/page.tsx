@@ -7,6 +7,7 @@ import { getChapterById, type LevelNode } from "@/lib/chapters";
 import { loadProblems, type Problem } from "@/lib/problems";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
 import { loadProgress, saveProgress, recordAttempt } from "@/lib/progress";
+import { updateReviewSchedule } from "@/lib/spaced-review";
 
 type ViewMode = "list" | "playing";
 
@@ -54,6 +55,23 @@ export default function ChapterPage({
     [currentProblemIndex, problems],
   );
 
+  const handleResult = useCallback(
+    (correct: boolean, wrongAttempts: number, usedHint: boolean) => {
+      const problem = problems[currentProblemIndex];
+      if (!problem) return;
+      const currentProgress = loadProgress();
+      const newSchedule = updateReviewSchedule(
+        currentProgress.reviewSchedule,
+        problem.id,
+        correct,
+        wrongAttempts,
+        usedHint,
+      );
+      saveProgress({ ...currentProgress, reviewSchedule: newSchedule });
+    },
+    [currentProblemIndex, problems],
+  );
+
   const handleNext = useCallback(() => {
     if (currentProblemIndex + 1 < problems.length) {
       setCurrentProblemIndex((prev) => prev + 1);
@@ -92,6 +110,7 @@ export default function ChapterPage({
             problem={problem}
             onNext={handleNext}
             onAttempt={handleAttempt}
+            onResult={handleResult}
           />
         </div>
       </div>

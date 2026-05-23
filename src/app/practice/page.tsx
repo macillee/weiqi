@@ -7,8 +7,10 @@ import { selectDailyProblems, type PracticeSession, createPracticeSession, recor
 import type { Problem } from "@/lib/problems";
 import {
   loadProgress,
+  saveProgress,
   type StudentProgress,
 } from "@/lib/progress";
+import { updateReviewSchedule } from "@/lib/spaced-review";
 import {
   recordAttemptWithSync,
   recordDailyPracticeCompleteWithSync,
@@ -66,14 +68,25 @@ export default function PracticePage() {
   const handleResult = useCallback(
     (correct: boolean, wrongAttempts: number, usedHint: boolean) => {
       if (!session) return;
+      const problemId = session.problems[session.currentIndex].id;
       const result = {
-        problemId: session.problems[session.currentIndex].id,
+        problemId,
         correct,
         wrongAttempts,
         usedHint,
       };
       const updated = recordResult(session, result);
       setSession(updated);
+
+      const currentProgress = loadProgress();
+      const newSchedule = updateReviewSchedule(
+        currentProgress.reviewSchedule,
+        problemId,
+        correct,
+        wrongAttempts,
+        usedHint,
+      );
+      saveProgress({ ...currentProgress, reviewSchedule: newSchedule });
     },
     [session],
   );

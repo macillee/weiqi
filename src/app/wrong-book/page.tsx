@@ -3,7 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
-import { loadProgress, getActiveWrongProblems, type WrongProblemState, type StudentProgress } from "@/lib/progress";
+import { loadProgress, saveProgress, getActiveWrongProblems, type WrongProblemState, type StudentProgress } from "@/lib/progress";
+import { updateReviewSchedule } from "@/lib/spaced-review";
 import { getProblemById, type Problem } from "@/lib/problems";
 import { categoryLabels } from "@/lib/chapters";
 import { updateWrongProblemReviewWithSync, type SyncResult } from "@/lib/progress-source";
@@ -99,6 +100,17 @@ export default function WrongBookPage() {
               refreshProgress();
             }}
             onAttempt={handleAttempt}
+            onResult={(correct, wrongAttempts, usedHint) => {
+              const currentProgress = loadProgress();
+              const newSchedule = updateReviewSchedule(
+                currentProgress.reviewSchedule,
+                reviewProblem.id,
+                correct,
+                wrongAttempts,
+                usedHint,
+              );
+              saveProgress({ ...currentProgress, reviewSchedule: newSchedule });
+            }}
           />
         </div>
       </div>
