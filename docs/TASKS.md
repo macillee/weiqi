@@ -657,31 +657,49 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
 
 ---
 
-# 🔄 v0.3.0c Multi-Step Problem Player UI — IN PROGRESS
+# ✅ v0.3.0c Multi-Step Problem Player UI — COMPLETED (2026-05-23)
 
-## What needs to be done
+## What was done
 
-- ProblemPlayer renders step-by-step progression
-- After correct answer at step N, board updates to show step N+1 initial position
-- Step indicator shows current step / total steps
-- Wrong answer at any step records the attempt and adds to wrong book (at problem level, not step level)
-- Hints reset per step
-- Single-move problems continue to work identically
-- `npm run test` and `npm run build` pass
+- `src/components/problem/ProblemPlayer.tsx`: Extended to support multi-step problems
+  - Detects multi-step problems via `steps` and `totalSteps` fields
+  - Step-by-step progression with board state updates between steps
+  - Step indicator shows current step / total steps
+  - Hints reset per step (each step has its own hints)
+  - Wrong answers recorded at problem level (not step level)
+  - Single-step problems remain backward compatible
+- `src/lib/multi-step-problem.ts`: New utility module with helper functions
+  - `isMultiStepProblem()`: Detect multi-step problems
+  - `computeBoardStonesForStep()`: Calculate board state for each step
+  - `getCurrentStepData()`: Get step-specific data
+- `src/__tests__/multi-step-problem.test.ts`: 15 tests covering multi-step behavior
+  - Multi-step detection tests
+  - Board state computation tests
+  - Step data retrieval tests
+  - Integration tests for multi-step flow
+- `npm run test` passes (181 tests)
+- `npm run build` passes
 
-## Acceptance
+## PR
 
-- Multi-step problems play step-by-step with board state updates
-- Step indicator displays current/total steps
-- Wrong answers recorded at problem level
-- Hints reset per step
-- Single-step problems unchanged
-- All tests pass
-- Build passes
+- Branch: `feat/v0.3.0c-multi-step-problem-player`
+- PR: #34
 
 ---
 
-# Future Roadmap
+# Next Task: v0.3.0d Spaced Review Scheduling
+
+## Goal
+
+Implement spaced review scheduling for better learning retention.
+
+See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries.
+
+## Out of Scope for v0.3.0d
+
+- Parent weekly report (v0.3.0e)
+- AI-generated content
+- Payment, teacher/admin backend, leaderboard
 
 ## v0.2.3 — Server Progress
 
