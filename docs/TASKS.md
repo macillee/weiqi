@@ -724,22 +724,34 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
 
 ## Out of Scope for v0.3.0d
 
-- Parent weekly report (v0.3.0e)
+- Parent weekly report (v0.3.0e) – completed
 - AI-generated content
 - Payment, teacher/admin backend, leaderboard
 
 ---
 
-# Next Task: v0.3.0e Parent Weekly Report
+# ✅ v0.3.0e Parent Weekly Report — COMPLETED (2026-05-23)
+
+## What was done
+
+- `src/lib/weekly-report.ts`: New aggregation helper with `getWeekRange` (Mon–Sun boundary) and `computeWeeklyReport` (attempts, accuracy, hints, completions, wrong-book counts, due-review count).
+- `src/app/report/page.tsx`: Weekly overview card displayed at top of report page when the current week has activity.
+- `src/__tests__/weekly-report.test.ts`: 13 tests covering week window, accuracy, hints, wrong counts, due count, and no-activity edge cases.
+- `npm run test` passes (241 tests)
+- `npm run build` passes
+
+## PR
+
+- Branch: `feat/v0.3.0e-parent-weekly-report`
+- PR: #41
+
+---
+
+# Next Task: v0.3.0f Spaced Review Analytics
 
 ## Goal
 
-Implement a parent-facing weekly report summarizing learning activity and progress.
-
-## Out of Scope for v0.3.0e
-
-- AI-generated content
-- Payment, teacher/admin backend, leaderboard
+TBD
 
 ---
 

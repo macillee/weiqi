@@ -6,9 +6,11 @@ import { computeReportStats, computeReportStatsFromProgress, type ReportStats } 
 import { loadReportWithSource } from "@/lib/progress-source";
 import { useSupabaseAuth } from "@/lib/supabase/auth";
 import { loadProgress } from "@/lib/progress";
+import { computeWeeklyReport, type WeeklyReport } from "@/lib/weekly-report";
 
 export default function ReportPage() {
   const [stats, setStats] = useState<ReportStats | null>(null);
+  const [weeklyReport, setWeeklyReport] = useState<WeeklyReport | null>(null);
   const [loading, setLoading] = useState(true);
   const [serverError, setServerError] = useState<string | null>(null);
   const { session: authSession } = useSupabaseAuth();
@@ -21,6 +23,7 @@ export default function ReportPage() {
       if (result.fallbackToLocal) {
         const localStats = computeReportStats();
         setStats(localStats);
+        setWeeklyReport(computeWeeklyReport(loadProgress()));
         if (result.error) {
           setServerError(result.error);
         }
@@ -56,9 +59,11 @@ export default function ReportPage() {
           ),
         };
         setStats(computeReportStatsFromProgress(serverProgress));
+        setWeeklyReport(computeWeeklyReport(serverProgress));
       } else {
         const localStats = computeReportStats();
         setStats(localStats);
+        setWeeklyReport(computeWeeklyReport(loadProgress()));
       }
       setLoading(false);
     }
@@ -107,6 +112,55 @@ export default function ReportPage() {
             看看你的进步吧！
           </p>
         </div>
+
+        {weeklyReport && weeklyReport.hasActivity && (
+          <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl p-4 shadow mb-6 border border-indigo-100">
+            <h2 className="text-lg font-bold text-indigo-800 mb-3">
+              本周概况
+            </h2>
+            <p className="text-xs text-indigo-500 mb-3">
+              {weeklyReport.weekStart} ~ {weeklyReport.weekEnd}
+            </p>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="text-center">
+                <div className="text-xl font-bold text-indigo-700">
+                  {weeklyReport.totalAttempts}
+                </div>
+                <div className="text-xs text-indigo-500">答题次数</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl font-bold text-green-600">
+                  {Math.round(weeklyReport.accuracy * 100)}%
+                </div>
+                <div className="text-xs text-indigo-500">正确率</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl font-bold text-yellow-600">
+                  {weeklyReport.completionCount}
+                </div>
+                <div className="text-xs text-indigo-500">完成题数</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl font-bold text-orange-500">
+                  {weeklyReport.hintsUsed}
+                </div>
+                <div className="text-xs text-indigo-500">使用提示</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl font-bold text-red-500">
+                  {weeklyReport.activeWrongCount}
+                </div>
+                <div className="text-xs text-indigo-500">待复习</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl font-bold text-purple-600">
+                  {weeklyReport.dueReviewCount}
+                </div>
+                <div className="text-xs text-indigo-500">待回顾</div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {serverError && (
           <div className="bg-orange-50 border border-orange-200 rounded-xl p-3 mb-4 text-xs text-orange-700 text-center">
