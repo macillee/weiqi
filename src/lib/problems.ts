@@ -147,6 +147,12 @@ export function validateProblem(problem: Problem): ValidationResult {
                 `Problem ${problem.id}: step ${step.step} answer at (${answer.x}, ${answer.y}) has invalid y coordinate`,
               );
             }
+            // Check that answer point is not already occupied on the simulated board
+            if (hasStone(currentStones, answer.x, answer.y)) {
+              errors.push(
+                `Problem ${problem.id}: step ${step.step} answer at (${answer.x}, ${answer.y}) is already occupied on the board`,
+              );
+            }
           }
         }
 
