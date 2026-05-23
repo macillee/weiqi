@@ -751,7 +751,7 @@ See `docs/LEARNING_DEPTH_PLAN_v0.3.md` for full v0.3.0 plan and slice boundaries
 
 ## Goal
 
----
+Run focused stabilization, regression testing, and documentation cleanup after completing v0.3.0 Learning Depth.
 
 # Future Roadmap
 
