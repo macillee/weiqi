@@ -112,8 +112,8 @@ type Problem = {
 - Accuracy percentage
 - Hints used count
 - Problems completed
-- Wrong problems added this week
-- Wrong problems reviewed this week
+- Active wrong problems count
+- Mastered wrong problems count
 - Due reviews count
 
 ---
@@ -209,7 +209,7 @@ type Problem = {
 
 # 6. Known Limitations
 
-- Multi-step problems limited to 2 steps (schema supports more but not product-tested).
+- Current sample multi-step problems use 2 steps; broader step counts are schema-supported but not product-tested.
 - Only 3 sample multi-step problems included (MULTI-001, MULTI-002, MULTI-003).
 - Time spent tracking remains `0` for all attempts (inherited from v0.1).
 - No AI review or feedback for wrong answers beyond hint system.

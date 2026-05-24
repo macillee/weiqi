@@ -737,12 +737,24 @@ Manual validation (requires Supabase env):
 
 - Regression review over all v0.3.0 behavior verified via 241 existing tests (17 files).
 - Documentation cleanup in `docs/TASKS.md` (stale PR references fixed, current phase updated).
-- `docs/RELEASE_NOTES_v0.3.0.md` — release notes and manual QA checklist.
 
 ## PR
 
 - Branch: `chore/post-v0.3-stabilization-qa`
 - PR: #45
+
+---
+
+# ✅ v0.3.0 Release Notes and Manual QA Checklist — COMPLETED (2026-05-24)
+
+## What was done
+
+- `docs/RELEASE_NOTES_v0.3.0.md` — release notes and manual QA checklist for v0.3.0 Learning Depth milestone.
+
+## PR
+
+- Branch: `docs/v0.3.0-release-notes-qa-checklist`
+- PR: #48
 
 ---
 
