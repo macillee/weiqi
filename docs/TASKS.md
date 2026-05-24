@@ -837,7 +837,7 @@ Manual validation (requires Supabase env):
 ## PR
 
 - Branch: `chore/v0.4.0d-tag-category-metadata`
-- PR: #55
+- PR: #56
 
 ---
 
