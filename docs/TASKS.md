@@ -7,7 +7,7 @@
 
 # Current Phase
 
-Post-v0.3 Release Prep — v0.3.0 release notes and manual QA checklist completed. Awaiting next task assignment.
+v0.4.0b First Multi-Step Content Pack — add ~12 new problems to `src/data/problems.json` (≈6 multi-step, ≈6 single-step), prioritizing capture and life_death categories.
 
 Current strategy:
 
@@ -15,8 +15,8 @@ Current strategy:
 1. Preserve the stable v0.1.3 local MVP
 2. Keep the app Docker-deployable with Supabase Cloud as external backend
 3. Missing Supabase env must not break local anonymous mode
-4. All v0.3.0 features verified via regression review
-5. Release notes and QA checklist documented
+4. v0.4.0a expansion plan completed and approved
+5. Execute v0.4.0b content pack: add new problems, validate, review
 6. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -758,7 +758,23 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: (pending)
+# ✅ v0.4.0a Content Expansion Plan — COMPLETED (2026-05-24)
+
+## What was done
+
+- `docs/CONTENT_EXPANSION_PLAN_v0.4.md` — expansion plan with slice boundaries, target counts, category distribution, quality rules, ID conventions, and tag recommendations.
+## PR
+
+- Branch: `docs/v0.4.0a-content-expansion-plan`
+- PR: #50
+
+---
+
+# Next Task: v0.4.0b — First Multi-Step Content Pack
+
+## Goal
+
+Add ~12 new problems to `src/data/problems.json` (≈6 multi-step, ≈6 single-step), prioritizing capture and life_death categories. All problems must pass 9x9 coordinate validation, Go-logic checks, and child-friendly copy review.
 
 ---
 
@@ -783,6 +799,13 @@ Manual validation (requires Supabase env):
 - Multi-step problems.
 - Spaced review scheduling.
 - Parent weekly report.
+
+## v0.4.0 — Content Expansion
+
+- Expand problem library from 39 to ~50–60 problems.
+- Add multi-step content packs (capture, life_death, connect_cut, escape).
+- Fill category gaps (life_death, opening).
+- Refine tags and metadata.
 
 ---
 
