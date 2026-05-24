@@ -802,8 +802,9 @@ Manual validation (requires Supabase env):
   - explicit `validateAllProblems` pass test for full dataset
   - v0.4.0b added problem IDs existence check
   - no old-ID-number-reuse check
+  - negative test: step 2 answer on addedStones-occupied point
 - `docs/CONTENT_REVIEW_v0.4.0c.md` — validation and regression review.
-- `npm run test` — 241 tests passed.
+- `npm run test` — 244 tests passed.
 - `npm run build` — compiled successfully.
 
 ## PR

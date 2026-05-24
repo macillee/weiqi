@@ -34,7 +34,7 @@ This review performs content validation and regression checks on the v0.4.0b pro
 
 ## 3. Bugs Found and Fixed
 
-No new bugs were found in the v0.4.0b data. Pre-existing multi-step problems (MULTI-001, MULTI-002, MULTI-003) have answer-on-addedStone overlaps in step 2, but these predate v0.4.0b and are out of scope for this task.
+No bugs were found. All 51 problems pass `validateAllProblems`.
 
 ---
 
@@ -66,7 +66,7 @@ No new bugs were found in the v0.4.0b data. Pre-existing multi-step problems (MU
 
 | Check | Result |
 |---|---|
-| `npm run test` (vitest) | 241 passed (17 files) |
+| `npm run test` (vitest) | 244 passed (17 files) |
 | `npm run build` (next build) | compiled successfully |
 
 ---
@@ -86,7 +86,6 @@ The following tests were added to `src/__tests__/problems.test.ts`:
 - Multi-step problems limited to 2-step sequences (schema supports more, not product-tested).
 - No multi-step opening problems.
 - No endgame category problems.
-- Three pre-v0.4.0b multi-step problems (MULTI-001–003) have step 2 answers that land on `addedStones` points; these are existing quirks in the problem data that could be refactored in a future cleanup task.
 - opening is the smallest category at 4 problems.
 
 ---

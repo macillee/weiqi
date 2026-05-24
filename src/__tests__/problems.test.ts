@@ -597,5 +597,53 @@ describe("problem data quality", () => {
       expect(result.valid).toBe(false);
       expect(result.errors.some((e) => e.includes("already occupied"))).toBe(true);
     });
+
+    it("fails when step 2 answer targets a point occupied by prior step's addedStones", () => {
+      const problem: Problem = {
+        id: "TEST-MULTI-008",
+        boardSize: 9,
+        category: "capture",
+        level: 2,
+        tags: ["multi-step", "test"],
+        toPlay: "black",
+        title: "Test Step 2 Answer on AddedStone",
+        description: "Test step 2 answer landing on a point occupied by step 1 addedStones",
+        initialStones: [
+          { x: 3, y: 3, color: "white" },
+          { x: 2, y: 3, color: "black" },
+        ],
+        answers: [{ x: 4, y: 3 }],
+        hints: ["Hint"],
+        explanation: "Explanation",
+        successMessage: "Good",
+        failureMessage: "Try again",
+        totalSteps: 2,
+        steps: [
+          {
+            step: 1,
+            addedStones: [{ x: 4, y: 3, color: "white" }],
+            removedStones: [],
+            answers: [{ x: 4, y: 3 }], // Player answers here, then addedStone placed
+            hints: ["Hint"],
+            explanation: "Explanation",
+            successMessage: "Good",
+            failureMessage: "Try again",
+          },
+          {
+            step: 2,
+            addedStones: [],
+            removedStones: [],
+            answers: [{ x: 4, y: 3 }], // Now occupied by step 1's addedStone
+            hints: ["Hint"],
+            explanation: "Explanation",
+            successMessage: "Good",
+            failureMessage: "Try again",
+          },
+        ],
+      };
+      const result = validateProblem(problem);
+      expect(result.valid).toBe(false);
+      expect(result.errors.some((e) => e.includes("already occupied"))).toBe(true);
+    });
   });
 });
