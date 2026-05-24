@@ -226,6 +226,50 @@ describe("problem data quality", () => {
     }
   });
 
+  it("all problems pass validateAllProblems", () => {
+    const result = validateAllProblems(problems);
+    expect(result.valid).toBe(true);
+    expect(result.errors).toHaveLength(0);
+  });
+
+  it("v0.4.0b added problem IDs exist", () => {
+    const expectedIds = [
+      "CAP-014",
+      "ESC-008",
+      "CC-011",
+      "LD-006",
+      "LD-007",
+      "OP-004",
+    ];
+    const multiStepIds = [
+      "MULTI-004",
+      "MULTI-005",
+      "MULTI-006",
+      "MULTI-007",
+      "MULTI-008",
+      "MULTI-009",
+    ];
+    const ids = problems.map((p) => p.id);
+    for (const id of [...expectedIds, ...multiStepIds]) {
+      expect(ids).toContain(id);
+    }
+  });
+
+  it("v0.4.0b single-step IDs use numbers beyond old ranges (no accidental reuse)", () => {
+    const problems = loadProblems();
+    const oldMax: Record<string, number> = {
+      CAP: 13, ESC: 7, CC: 9, LD: 4, OP: 3,
+    };
+    const newSingleStepIds = ["CAP-014", "ESC-008", "CC-011", "LD-006", "LD-007", "OP-004"];
+    for (const id of newSingleStepIds) {
+      const match = id.match(/^([A-Z]+)-0*(\d+)$/);
+      if (!match) continue;
+      const prefix = match[1];
+      const num = parseInt(match[2], 10);
+      expect(num).toBeGreaterThan(oldMax[prefix]);
+    }
+  });
+
   describe("multi-step problem validation", () => {
     it("validates a valid multi-step problem", () => {
       const multiStepProblem: Problem = {
