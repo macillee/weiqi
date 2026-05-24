@@ -809,7 +809,7 @@ Manual validation (requires Supabase env):
 ## PR
 
 - Branch: `test/v0.4.0c-content-validation-regression`
-- PR: #53
+- PR: #54
 
 ---
 
