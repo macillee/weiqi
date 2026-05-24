@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.4.0c delivered — content validation and regression checks complete (51 problems verified). Next: v0.4.0d Tag / Category Metadata Refinement.
+v0.4.0d delivered — tag/category metadata refinement complete (51 problems, canonical tags). Next: post-v0.4 stabilization / release notes.
 
 Current strategy:
 
@@ -17,8 +17,9 @@ Current strategy:
 3. Missing Supabase env must not break local anonymous mode
 4. v0.4.0b content pack completed (12 new problems, 51 total)
 5. v0.4.0c content validation and regression checks completed
-6. v0.4.0d tag/category metadata refinement (next)
-7. Avoid AI/payment/teacher/leaderboard scope creep
+6. v0.4.0d tag/category metadata refinement completed
+7. Post-v0.4 stabilization / release notes (next)
+8. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -814,11 +815,37 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.4.0d — Tag / Category Metadata Refinement
+# ✅ v0.4.0d Tag / Category Metadata Refinement — COMPLETED (2026-05-24)
+
+## What was done
+
+- Reviewed tags for all 51 problems.
+- Normalized `life-death` → `life_death` in MULTI-002, MULTI-006, MULTI-007 (3 problems).
+- Confirmed: all problems have category-aligned tag, all multi-step problems include `multi-step`, no duplicate/empty tags.
+- Canonical tag list documented (22 tags, lowercase kebab-case/snake_case).
+- Category/tag mapping rules documented.
+- Added 5 metadata tests:
+  - category-aligned tag check
+  - multi-step tag presence check
+  - non-empty tag check
+  - no duplicate tags check
+  - canonical `life_death` check (no `life-death` variant)
+- `docs/METADATA_REVIEW_v0.4.0d.md` — metadata review documenting canonical tags, mapping rules, changes, and validation.
+- `npm run test` — 250 tests passed.
+- `npm run build` — compiled successfully.
+
+## PR
+
+- Branch: `chore/v0.4.0d-tag-category-metadata`
+- PR: #56
+
+---
+
+# Next Task: Post-v0.4 Stabilization / Release Notes
 
 ## Goal
 
-Review and refine problem tags and category metadata across the 51-problem library. Ensure consistent tag usage, fill gaps, and prepare for better filtering and grouping.
+Finalize the v0.4 content series. Compile release notes, verify end-to-end behavior, and prepare for the next development phase.
 
 ---
 
