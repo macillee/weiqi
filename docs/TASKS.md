@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.4.0a Content Expansion Planning — defining expansion goals, slice boundaries, and quality rules for the next phase of problem library growth.
+v0.4.0b First Multi-Step Content Pack — add ~12 new problems to `src/data/problems.json` (≈6 multi-step, ≈6 single-step), prioritizing capture and life_death categories.
 
 Current strategy:
 
@@ -15,8 +15,8 @@ Current strategy:
 1. Preserve the stable v0.1.3 local MVP
 2. Keep the app Docker-deployable with Supabase Cloud as external backend
 3. Missing Supabase env must not break local anonymous mode
-4. v0.3 Learning Depth features fully delivered and documented
-5. Plan v0.4 content expansion with small, reviewable slices
+4. v0.4.0a expansion plan completed and approved
+5. Execute v0.4.0b content pack: add new problems, validate, review
 6. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -763,11 +763,10 @@ Manual validation (requires Supabase env):
 ## What was done
 
 - `docs/CONTENT_EXPANSION_PLAN_v0.4.md` — expansion plan with slice boundaries, target counts, category distribution, quality rules, ID conventions, and tag recommendations.
--
 ## PR
 
 - Branch: `docs/v0.4.0a-content-expansion-plan`
-- PR: #49
+- PR: #50
 
 ---
 
