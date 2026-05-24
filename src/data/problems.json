@@ -2033,7 +2033,7 @@
     "level": 3,
     "tags": [
       "multi-step",
-      "life-death",
+      "life_death",
       "two-eyes"
     ],
     "toPlay": "black",
@@ -2651,7 +2651,7 @@
     "level": 3,
     "tags": [
       "multi-step",
-      "life-death",
+      "life_death",
       "two-eyes"
     ],
     "toPlay": "black",
@@ -2757,7 +2757,7 @@
     "level": 3,
     "tags": [
       "multi-step",
-      "life-death",
+      "life_death",
       "two-eyes"
     ],
     "toPlay": "black",

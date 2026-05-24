@@ -270,6 +270,52 @@ describe("problem data quality", () => {
     }
   });
 
+  describe("metadata consistency", () => {
+    it("every problem has at least one category-aligned tag", () => {
+      const catTagMap: Record<string, string[]> = {
+        capture: ["capture"],
+        escape: ["escape"],
+        connect_cut: ["connect", "cut"],
+        life_death: ["life_death"],
+        opening: ["opening"],
+      };
+      for (const problem of problems) {
+        const expected = catTagMap[problem.category] || [];
+        const hasMatch = expected.some((t) => problem.tags.includes(t));
+        expect(hasMatch).toBe(true);
+      }
+    });
+
+    it("every multi-step problem includes 'multi-step' tag", () => {
+      for (const problem of problems) {
+        if (problem.steps && problem.totalSteps && problem.totalSteps > 1) {
+          expect(problem.tags).toContain("multi-step");
+        }
+      }
+    });
+
+    it("no empty or whitespace-only tags", () => {
+      for (const problem of problems) {
+        for (const tag of problem.tags) {
+          expect(tag.trim().length).toBeGreaterThan(0);
+        }
+      }
+    });
+
+    it("no duplicate tags within a single problem", () => {
+      for (const problem of problems) {
+        const unique = new Set(problem.tags);
+        expect(unique.size).toBe(problem.tags.length);
+      }
+    });
+
+    it("life_death tag is canonical (no life-death variant)", () => {
+      for (const problem of problems) {
+        expect(problem.tags).not.toContain("life-death");
+      }
+    });
+  });
+
   describe("multi-step problem validation", () => {
     it("validates a valid multi-step problem", () => {
       const multiStepProblem: Problem = {
