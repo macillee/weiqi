@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.4.0b delivered — 12 new problems added (51 total). Next: v0.4.0c Content Validation and Regression Checks.
+v0.4.0c delivered — content validation and regression checks complete (51 problems verified). Next: v0.4.0d Tag / Category Metadata Refinement.
 
 Current strategy:
 
@@ -16,8 +16,9 @@ Current strategy:
 2. Keep the app Docker-deployable with Supabase Cloud as external backend
 3. Missing Supabase env must not break local anonymous mode
 4. v0.4.0b content pack completed (12 new problems, 51 total)
-5. Run content validation and regression checks for v0.4.0b
-6. Avoid AI/payment/teacher/leaderboard scope creep
+5. v0.4.0c content validation and regression checks completed
+6. v0.4.0d tag/category metadata refinement (next)
+7. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -788,11 +789,36 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.4.0c — Content Validation and Regression Checks
+# ✅ v0.4.0c Content Validation and Regression Checks — COMPLETED (2026-05-24)
+
+## What was done
+
+- Reviewed all 51 problems for data and Go-logic correctness.
+- Confirmed: no duplicate IDs, all coordinates valid, no zero-liberty groups, all answer points empty on relevant board state.
+- Confirmed: all multi-step checks pass (sequential ordering, addedStones, removedStones, per-step hints/answers, board transitions).
+- Verified no new v0.4.0b ID reuses an old non-MULTI ID prefix.
+- Verified all 12 expected v0.4.0b IDs exist.
+- Strengthened tests in `src/__tests__/problems.test.ts`:
+  - explicit `validateAllProblems` pass test for full dataset
+  - v0.4.0b added problem IDs existence check
+  - no old-ID-number-reuse check
+  - negative test: step 2 answer on addedStones-occupied point
+- `docs/CONTENT_REVIEW_v0.4.0c.md` — validation and regression review.
+- `npm run test` — 245 tests passed.
+- `npm run build` — compiled successfully.
+
+## PR
+
+- Branch: `test/v0.4.0c-content-validation-regression`
+- PR: #54
+
+---
+
+# Next Task: v0.4.0d — Tag / Category Metadata Refinement
 
 ## Goal
 
-Review all new problems for Go-logic correctness and child suitability. Add or strengthen validation tests if gaps are found. Verify 9x9 coordinate validity, zero-liberty detection, answer-point emptiness, and multi-step board transitions.
+Review and refine problem tags and category metadata across the 51-problem library. Ensure consistent tag usage, fill gaps, and prepare for better filtering and grouping.
 
 ---
 
