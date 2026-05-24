@@ -4,18 +4,40 @@
     "boardSize": 9,
     "category": "capture",
     "level": 1,
-    "tags": ["capture", "liberty-counting"],
+    "tags": [
+      "capture",
+      "liberty-counting"
+    ],
     "toPlay": "black",
     "title": "找到最后一口气",
     "description": "白棋只剩一口气，黑棋应该下在哪里？",
     "initialStones": [
-      { "x": 3, "y": 3, "color": "white" },
-      { "x": 2, "y": 3, "color": "black" },
-      { "x": 3, "y": 2, "color": "black" },
-      { "x": 4, "y": 3, "color": "black" }
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 3, "y": 4 }
+      {
+        "x": 3,
+        "y": 4
+      }
     ],
     "hints": [
       "先数一数白棋周围还有几个空点。",
@@ -31,18 +53,40 @@
     "boardSize": 9,
     "category": "capture",
     "level": 1,
-    "tags": ["capture", "atari"],
+    "tags": [
+      "capture",
+      "atari"
+    ],
     "toPlay": "black",
     "title": "吃掉白棋",
     "description": "黑棋先走，怎样吃掉白棋？",
     "initialStones": [
-      { "x": 4, "y": 4, "color": "white" },
-      { "x": 3, "y": 4, "color": "black" },
-      { "x": 4, "y": 3, "color": "black" },
-      { "x": 5, "y": 4, "color": "black" }
+      {
+        "x": 4,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 4, "y": 5 }
+      {
+        "x": 4,
+        "y": 5
+      }
     ],
     "hints": [
       "白棋上面和左边都有黑棋。",
@@ -58,21 +102,56 @@
     "boardSize": 9,
     "category": "capture",
     "level": 2,
-    "tags": ["capture", "atari", "two-stones"],
+    "tags": [
+      "capture",
+      "atari",
+      "two-stones"
+    ],
     "toPlay": "black",
     "title": "吃掉两颗白棋",
     "description": "两颗白棋连在一起，黑棋能吃掉它们吗？",
     "initialStones": [
-      { "x": 3, "y": 3, "color": "white" },
-      { "x": 3, "y": 4, "color": "white" },
-      { "x": 2, "y": 3, "color": "black" },
-      { "x": 4, "y": 3, "color": "black" },
-      { "x": 2, "y": 4, "color": "black" },
-      { "x": 4, "y": 4, "color": "black" },
-      { "x": 3, "y": 2, "color": "black" }
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 3, "y": 5 }
+      {
+        "x": 3,
+        "y": 5
+      }
     ],
     "hints": [
       "两颗白棋连在一起，数数它们有几口气。",
@@ -88,18 +167,40 @@
     "boardSize": 9,
     "category": "escape",
     "level": 1,
-    "tags": ["escape", "liberty-counting"],
+    "tags": [
+      "escape",
+      "liberty-counting"
+    ],
     "toPlay": "black",
     "title": "黑棋快被吃了",
     "description": "黑棋快被吃了，应该往哪里跑？",
     "initialStones": [
-      { "x": 3, "y": 3, "color": "black" },
-      { "x": 2, "y": 3, "color": "white" },
-      { "x": 3, "y": 2, "color": "white" },
-      { "x": 4, "y": 3, "color": "white" }
+      {
+        "x": 3,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 3, "y": 4 }
+      {
+        "x": 3,
+        "y": 4
+      }
     ],
     "hints": [
       "黑棋现在只剩一口气。",
@@ -115,18 +216,40 @@
     "boardSize": 9,
     "category": "connect_cut",
     "level": 1,
-    "tags": ["connect", "weak-point"],
+    "tags": [
+      "connect",
+      "weak-point"
+    ],
     "toPlay": "black",
     "title": "连上自己的棋",
     "description": "两颗黑棋分开了，怎么连起来？",
     "initialStones": [
-      { "x": 3, "y": 3, "color": "black" },
-      { "x": 5, "y": 3, "color": "black" },
-      { "x": 2, "y": 3, "color": "white" },
-      { "x": 6, "y": 3, "color": "white" }
+      {
+        "x": 3,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 3,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 4, "y": 3 }
+      {
+        "x": 4,
+        "y": 3
+      }
     ],
     "hints": [
       "两颗黑棋中间有一个空点。",
@@ -142,18 +265,40 @@
     "boardSize": 9,
     "category": "connect_cut",
     "level": 1,
-    "tags": ["cut", "weak-point"],
+    "tags": [
+      "cut",
+      "weak-point"
+    ],
     "toPlay": "black",
     "title": "切断白棋",
     "description": "白棋有一个断点，黑棋应该下在哪里？",
     "initialStones": [
-      { "x": 3, "y": 3, "color": "white" },
-      { "x": 5, "y": 3, "color": "white" },
-      { "x": 2, "y": 3, "color": "black" },
-      { "x": 6, "y": 3, "color": "black" }
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 3,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 4, "y": 3 }
+      {
+        "x": 4,
+        "y": 3
+      }
     ],
     "hints": [
       "两颗白棋中间有一个空点。",
@@ -169,18 +314,41 @@
     "boardSize": 9,
     "category": "capture",
     "level": 1,
-    "tags": ["capture", "atari", "corner"],
+    "tags": [
+      "capture",
+      "atari",
+      "corner"
+    ],
     "toPlay": "black",
     "title": "角上吃子",
     "description": "角上的白棋只剩一口气，黑棋能吃掉它吗？",
     "initialStones": [
-      { "x": 1, "y": 1, "color": "white" },
-      { "x": 0, "y": 1, "color": "black" },
-      { "x": 1, "y": 0, "color": "black" },
-      { "x": 2, "y": 1, "color": "black" }
+      {
+        "x": 1,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 1, "y": 2 }
+      {
+        "x": 1,
+        "y": 2
+      }
     ],
     "hints": [
       "角上的白棋有几口气？",
@@ -196,17 +364,36 @@
     "boardSize": 9,
     "category": "capture",
     "level": 2,
-    "tags": ["capture", "atari", "edge"],
+    "tags": [
+      "capture",
+      "atari",
+      "edge"
+    ],
     "toPlay": "black",
     "title": "边上吃子",
     "description": "边上的白棋只剩一口气，黑棋能吃掉它吗？",
     "initialStones": [
-      { "x": 4, "y": 0, "color": "white" },
-      { "x": 3, "y": 0, "color": "black" },
-      { "x": 5, "y": 0, "color": "black" }
+      {
+        "x": 4,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 0,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 4, "y": 1 }
+      {
+        "x": 4,
+        "y": 1
+      }
     ],
     "hints": [
       "边上的白棋有几口气？",
@@ -222,17 +409,33 @@
     "boardSize": 9,
     "category": "opening",
     "level": 1,
-    "tags": ["opening", "corner"],
+    "tags": [
+      "opening",
+      "corner"
+    ],
     "toPlay": "black",
     "title": "开局占角",
     "description": "开局的时候，哪里比较大？",
     "initialStones": [
-      { "x": 6, "y": 6, "color": "white" }
+      {
+        "x": 6,
+        "y": 6,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 2, "y": 2 },
-      { "x": 2, "y": 6 },
-      { "x": 6, "y": 2 }
+      {
+        "x": 2,
+        "y": 2
+      },
+      {
+        "x": 2,
+        "y": 6
+      },
+      {
+        "x": 6,
+        "y": 2
+      }
     ],
     "hints": [
       "角上的位置很重要。",
@@ -248,20 +451,50 @@
     "boardSize": 9,
     "category": "capture",
     "level": 2,
-    "tags": ["capture", "double-atari"],
+    "tags": [
+      "capture",
+      "double-atari"
+    ],
     "toPlay": "black",
     "title": "双打吃",
     "description": "两颗白棋被分开，黑棋下一步能让它们都危险吗？",
     "initialStones": [
-      { "x": 2, "y": 2, "color": "black" },
-      { "x": 4, "y": 2, "color": "black" },
-      { "x": 2, "y": 4, "color": "black" },
-      { "x": 4, "y": 4, "color": "black" },
-      { "x": 3, "y": 2, "color": "white" },
-      { "x": 3, "y": 4, "color": "white" }
+      {
+        "x": 2,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 3, "y": 3 }
+      {
+        "x": 3,
+        "y": 3
+      }
     ],
     "hints": [
       "两颗白棋没有被连起来。",
@@ -277,18 +510,41 @@
     "boardSize": 9,
     "category": "capture",
     "level": 2,
-    "tags": ["capture", "cut", "atari"],
+    "tags": [
+      "capture",
+      "cut",
+      "atari"
+    ],
     "toPlay": "black",
     "title": "断开打吃",
     "description": "黑棋下一步，既能断开白棋又能打吃。",
     "initialStones": [
-      { "x": 1, "y": 3, "color": "black" },
-      { "x": 2, "y": 4, "color": "black" },
-      { "x": 2, "y": 3, "color": "white" },
-      { "x": 3, "y": 4, "color": "white" }
+      {
+        "x": 1,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 3, "y": 3 }
+      {
+        "x": 3,
+        "y": 3
+      }
     ],
     "hints": [
       "白棋中间有一个断点。",
@@ -304,18 +560,40 @@
     "boardSize": 9,
     "category": "capture",
     "level": 2,
-    "tags": ["capture", "atari", "liberty-counting"],
+    "tags": [
+      "capture",
+      "atari",
+      "liberty-counting"
+    ],
     "toPlay": "black",
     "title": "找到打吃的位置",
     "description": "白棋有两口气，黑棋下在哪里能打吃它？",
     "initialStones": [
-      { "x": 2, "y": 5, "color": "black" },
-      { "x": 1, "y": 6, "color": "black" },
-      { "x": 2, "y": 6, "color": "white" }
+      {
+        "x": 2,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 6,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 3, "y": 6 },
-      { "x": 2, "y": 7 }
+      {
+        "x": 3,
+        "y": 6
+      },
+      {
+        "x": 2,
+        "y": 7
+      }
     ],
     "hints": [
       "先数数白棋周围还有几个空点。",
@@ -331,21 +609,55 @@
     "boardSize": 9,
     "category": "capture",
     "level": 2,
-    "tags": ["capture", "atari", "two-stones"],
+    "tags": [
+      "capture",
+      "atari",
+      "two-stones"
+    ],
     "toPlay": "black",
     "title": "包围打吃",
     "description": "两颗白棋连在一起，黑棋怎么打吃它们？",
     "initialStones": [
-      { "x": 1, "y": 3, "color": "black" },
-      { "x": 3, "y": 3, "color": "black" },
-      { "x": 1, "y": 4, "color": "black" },
-      { "x": 3, "y": 4, "color": "black" },
-      { "x": 2, "y": 3, "color": "white" },
-      { "x": 2, "y": 4, "color": "white" }
+      {
+        "x": 1,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 2, "y": 2 },
-      { "x": 2, "y": 5 }
+      {
+        "x": 2,
+        "y": 2
+      },
+      {
+        "x": 2,
+        "y": 5
+      }
     ],
     "hints": [
       "两颗白棋连在一起，数数它们有几口气。",
@@ -361,23 +673,65 @@
     "boardSize": 9,
     "category": "capture",
     "level": 3,
-    "tags": ["capture", "atari", "three-stones"],
+    "tags": [
+      "capture",
+      "atari",
+      "three-stones"
+    ],
     "toPlay": "black",
     "title": "三颗白棋的弱点",
     "description": "三颗白棋虽然连在一起，但有一个弱点。",
     "initialStones": [
-      { "x": 1, "y": 3, "color": "black" },
-      { "x": 3, "y": 3, "color": "black" },
-      { "x": 1, "y": 4, "color": "black" },
-      { "x": 3, "y": 5, "color": "black" },
-      { "x": 4, "y": 4, "color": "black" },
-      { "x": 2, "y": 3, "color": "white" },
-      { "x": 2, "y": 4, "color": "white" },
-      { "x": 3, "y": 4, "color": "white" }
+      {
+        "x": 1,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 2, "y": 2 },
-      { "x": 2, "y": 5 }
+      {
+        "x": 2,
+        "y": 2
+      },
+      {
+        "x": 2,
+        "y": 5
+      }
     ],
     "hints": [
       "三颗白棋虽然连在一起，但气已经不多了。",
@@ -393,18 +747,40 @@
     "boardSize": 9,
     "category": "escape",
     "level": 2,
-    "tags": ["escape", "liberty-counting"],
+    "tags": [
+      "escape",
+      "liberty-counting"
+    ],
     "toPlay": "black",
     "title": "向下逃跑",
     "description": "黑棋被包围了，应该往哪里跑？",
     "initialStones": [
-      { "x": 2, "y": 3, "color": "black" },
-      { "x": 1, "y": 3, "color": "white" },
-      { "x": 3, "y": 3, "color": "white" },
-      { "x": 2, "y": 2, "color": "white" }
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 2, "y": 4 }
+      {
+        "x": 2,
+        "y": 4
+      }
     ],
     "hints": [
       "黑棋现在只剩一口气了。",
@@ -420,19 +796,45 @@
     "boardSize": 9,
     "category": "escape",
     "level": 2,
-    "tags": ["escape", "choice"],
+    "tags": [
+      "escape",
+      "choice"
+    ],
     "toPlay": "black",
     "title": "选对方向逃跑",
     "description": "黑棋有两个方向可以跑，但只有一个安全。",
     "initialStones": [
-      { "x": 2, "y": 3, "color": "black" },
-      { "x": 1, "y": 3, "color": "white" },
-      { "x": 3, "y": 3, "color": "white" },
-      { "x": 1, "y": 4, "color": "white" },
-      { "x": 3, "y": 4, "color": "white" }
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 2, "y": 2 }
+      {
+        "x": 2,
+        "y": 2
+      }
     ],
     "hints": [
       "黑棋现在有两口气：上面和下面。",
@@ -448,19 +850,45 @@
     "boardSize": 9,
     "category": "escape",
     "level": 3,
-    "tags": ["escape", "connect"],
+    "tags": [
+      "escape",
+      "connect"
+    ],
     "toPlay": "black",
     "title": "逃跑的同时连接",
     "description": "黑棋被包围了，但是旁边有自己的棋子。",
     "initialStones": [
-      { "x": 2, "y": 3, "color": "black" },
-      { "x": 3, "y": 4, "color": "black" },
-      { "x": 1, "y": 3, "color": "white" },
-      { "x": 3, "y": 3, "color": "white" },
-      { "x": 2, "y": 2, "color": "white" }
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 2, "y": 4 }
+      {
+        "x": 2,
+        "y": 4
+      }
     ],
     "hints": [
       "黑棋现在只剩一口气，要赶快逃跑。",
@@ -476,18 +904,40 @@
     "boardSize": 9,
     "category": "escape",
     "level": 3,
-    "tags": ["escape", "corner"],
+    "tags": [
+      "escape",
+      "corner"
+    ],
     "toPlay": "black",
     "title": "角上逃跑",
     "description": "黑棋在角上被包围了，往哪里跑？",
     "initialStones": [
-      { "x": 1, "y": 1, "color": "black" },
-      { "x": 0, "y": 1, "color": "white" },
-      { "x": 2, "y": 1, "color": "white" },
-      { "x": 1, "y": 0, "color": "white" }
+      {
+        "x": 1,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 1, "y": 2 }
+      {
+        "x": 1,
+        "y": 2
+      }
     ],
     "hints": [
       "角上的黑棋被包围了。",
@@ -503,19 +953,45 @@
     "boardSize": 9,
     "category": "connect_cut",
     "level": 2,
-    "tags": ["cut", "weak-point"],
+    "tags": [
+      "cut",
+      "weak-point"
+    ],
     "toPlay": "black",
     "title": "找到断点（二）",
     "description": "白棋之间有一个断点，黑棋应该下在哪里？",
     "initialStones": [
-      { "x": 2, "y": 4, "color": "white" },
-      { "x": 4, "y": 4, "color": "white" },
-      { "x": 2, "y": 5, "color": "white" },
-      { "x": 1, "y": 4, "color": "black" },
-      { "x": 5, "y": 4, "color": "black" }
+      {
+        "x": 2,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 3, "y": 4 }
+      {
+        "x": 3,
+        "y": 4
+      }
     ],
     "hints": [
       "三颗白棋中间有一个断点。",
@@ -531,18 +1007,40 @@
     "boardSize": 9,
     "category": "connect_cut",
     "level": 2,
-    "tags": ["connect", "weak-point"],
+    "tags": [
+      "connect",
+      "weak-point"
+    ],
     "toPlay": "black",
     "title": "连上自己的棋（二）",
     "description": "两颗黑棋被白棋分开了，怎么连起来？",
     "initialStones": [
-      { "x": 2, "y": 4, "color": "black" },
-      { "x": 4, "y": 4, "color": "black" },
-      { "x": 1, "y": 4, "color": "white" },
-      { "x": 5, "y": 4, "color": "white" }
+      {
+        "x": 2,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 3, "y": 4 }
+      {
+        "x": 3,
+        "y": 4
+      }
     ],
     "hints": [
       "两颗黑棋中间有一个空点。",
@@ -558,19 +1056,45 @@
     "boardSize": 9,
     "category": "connect_cut",
     "level": 3,
-    "tags": ["cut", "atari"],
+    "tags": [
+      "cut",
+      "atari"
+    ],
     "toPlay": "black",
     "title": "切断同时打吃",
     "description": "黑棋下一步能既切断又打吃白棋吗？",
     "initialStones": [
-      { "x": 1, "y": 3, "color": "black" },
-      { "x": 2, "y": 4, "color": "black" },
-      { "x": 4, "y": 4, "color": "black" },
-      { "x": 2, "y": 3, "color": "white" },
-      { "x": 4, "y": 3, "color": "white" }
+      {
+        "x": 1,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 3, "y": 3 }
+      {
+        "x": 3,
+        "y": 3
+      }
     ],
     "hints": [
       "两颗白棋中间有一个断点。",
@@ -586,18 +1110,40 @@
     "boardSize": 9,
     "category": "connect_cut",
     "level": 3,
-    "tags": ["cut", "weak-point"],
+    "tags": [
+      "cut",
+      "weak-point"
+    ],
     "toPlay": "black",
     "title": "纵向切断",
     "description": "白棋上下排列，黑棋能从中间切断它们吗？",
     "initialStones": [
-      { "x": 4, "y": 2, "color": "white" },
-      { "x": 4, "y": 4, "color": "white" },
-      { "x": 4, "y": 1, "color": "black" },
-      { "x": 4, "y": 5, "color": "black" }
+      {
+        "x": 4,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 4, "y": 3 }
+      {
+        "x": 4,
+        "y": 3
+      }
     ],
     "hints": [
       "两颗白棋上下排列，中间有一个空点。",
@@ -613,17 +1159,33 @@
     "boardSize": 9,
     "category": "opening",
     "level": 2,
-    "tags": ["opening", "corner"],
+    "tags": [
+      "opening",
+      "corner"
+    ],
     "toPlay": "black",
     "title": "抢占空角",
     "description": "白棋占了一个角，黑棋应该下在哪里？",
     "initialStones": [
-      { "x": 6, "y": 6, "color": "white" }
+      {
+        "x": 6,
+        "y": 6,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 2, "y": 2 },
-      { "x": 2, "y": 6 },
-      { "x": 6, "y": 2 }
+      {
+        "x": 2,
+        "y": 2
+      },
+      {
+        "x": 2,
+        "y": 6
+      },
+      {
+        "x": 6,
+        "y": 2
+      }
     ],
     "hints": [
       "白棋占了一个角，还有三个角是空的。",
@@ -639,18 +1201,40 @@
     "boardSize": 9,
     "category": "opening",
     "level": 2,
-    "tags": ["opening", "big-point"],
+    "tags": [
+      "opening",
+      "big-point"
+    ],
     "toPlay": "black",
     "title": "占大场",
     "description": "四个角都被占了，下一步哪里最大？",
     "initialStones": [
-      { "x": 2, "y": 2, "color": "black" },
-      { "x": 6, "y": 6, "color": "black" },
-      { "x": 2, "y": 6, "color": "white" },
-      { "x": 6, "y": 2, "color": "white" }
+      {
+        "x": 2,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 4, "y": 4 }
+      {
+        "x": 4,
+        "y": 4
+      }
     ],
     "hints": [
       "四个角都已经有人占了。",
@@ -666,17 +1250,36 @@
     "boardSize": 9,
     "category": "capture",
     "level": 1,
-    "tags": ["capture", "atari", "edge"],
+    "tags": [
+      "capture",
+      "atari",
+      "edge"
+    ],
     "toPlay": "black",
     "title": "边上吃子",
     "description": "边上的白棋只剩一口气，黑棋能吃掉它吗？",
     "initialStones": [
-      { "x": 4, "y": 8, "color": "white" },
-      { "x": 3, "y": 8, "color": "black" },
-      { "x": 5, "y": 8, "color": "black" }
+      {
+        "x": 4,
+        "y": 8,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 8,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 8,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 4, "y": 7 }
+      {
+        "x": 4,
+        "y": 7
+      }
     ],
     "hints": [
       "边上的白棋有几口气？",
@@ -692,21 +1295,56 @@
     "boardSize": 9,
     "category": "capture",
     "level": 2,
-    "tags": ["capture", "atari", "two-stones"],
+    "tags": [
+      "capture",
+      "atari",
+      "two-stones"
+    ],
     "toPlay": "black",
     "title": "吃掉两颗子",
     "description": "两颗白棋连在一起，黑棋能吃掉它们吗？",
     "initialStones": [
-      { "x": 6, "y": 3, "color": "white" },
-      { "x": 6, "y": 4, "color": "white" },
-      { "x": 5, "y": 3, "color": "black" },
-      { "x": 7, "y": 3, "color": "black" },
-      { "x": 5, "y": 4, "color": "black" },
-      { "x": 7, "y": 4, "color": "black" },
-      { "x": 6, "y": 2, "color": "black" }
+      {
+        "x": 6,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 7,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 7,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 6, "y": 5 }
+      {
+        "x": 6,
+        "y": 5
+      }
     ],
     "hints": [
       "两颗白棋上下连在一起。",
@@ -722,19 +1360,46 @@
     "boardSize": 9,
     "category": "capture",
     "level": 2,
-    "tags": ["capture", "atari", "corner"],
+    "tags": [
+      "capture",
+      "atari",
+      "corner"
+    ],
     "toPlay": "black",
     "title": "角上两颗白棋",
     "description": "角上两颗白棋快被吃了，黑棋能吃掉它们吗？",
     "initialStones": [
-      { "x": 0, "y": 0, "color": "white" },
-      { "x": 0, "y": 1, "color": "white" },
-      { "x": 1, "y": 0, "color": "black" },
-      { "x": 1, "y": 1, "color": "black" },
-      { "x": 0, "y": 3, "color": "black" }
+      {
+        "x": 0,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 0,
+        "y": 3,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 0, "y": 2 }
+      {
+        "x": 0,
+        "y": 2
+      }
     ],
     "hints": [
       "角上两颗白棋竖着连在一起。",
@@ -750,18 +1415,40 @@
     "boardSize": 9,
     "category": "escape",
     "level": 2,
-    "tags": ["escape", "liberty-counting"],
+    "tags": [
+      "escape",
+      "liberty-counting"
+    ],
     "toPlay": "black",
     "title": "往中间逃跑",
     "description": "黑棋在边上被包围了，往哪里跑？",
     "initialStones": [
-      { "x": 4, "y": 1, "color": "black" },
-      { "x": 3, "y": 1, "color": "white" },
-      { "x": 5, "y": 1, "color": "white" },
-      { "x": 4, "y": 0, "color": "white" }
+      {
+        "x": 4,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 4, "y": 2 }
+      {
+        "x": 4,
+        "y": 2
+      }
     ],
     "hints": [
       "黑棋在边上被白棋包围了。",
@@ -777,19 +1464,45 @@
     "boardSize": 9,
     "category": "escape",
     "level": 2,
-    "tags": ["escape", "liberty-counting"],
+    "tags": [
+      "escape",
+      "liberty-counting"
+    ],
     "toPlay": "black",
     "title": "往下长气",
     "description": "两颗黑棋连在一起，白棋从三面包围了。往哪里长气？",
     "initialStones": [
-      { "x": 3, "y": 5, "color": "black" },
-      { "x": 3, "y": 6, "color": "black" },
-      { "x": 2, "y": 5, "color": "white" },
-      { "x": 4, "y": 5, "color": "white" },
-      { "x": 3, "y": 4, "color": "white" }
+      {
+        "x": 3,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 3, "y": 7 }
+      {
+        "x": 3,
+        "y": 7
+      }
     ],
     "hints": [
       "两颗黑棋连在一起，被白棋从三面包围了。",
@@ -805,18 +1518,40 @@
     "boardSize": 9,
     "category": "connect_cut",
     "level": 2,
-    "tags": ["connect", "weak-point"],
+    "tags": [
+      "connect",
+      "weak-point"
+    ],
     "toPlay": "black",
     "title": "连上断点",
     "description": "两颗黑棋中间有一个断点，怎么连起来？",
     "initialStones": [
-      { "x": 4, "y": 4, "color": "black" },
-      { "x": 6, "y": 4, "color": "black" },
-      { "x": 3, "y": 4, "color": "white" },
-      { "x": 7, "y": 4, "color": "white" }
+      {
+        "x": 4,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 7,
+        "y": 4,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 5, "y": 4 }
+      {
+        "x": 5,
+        "y": 4
+      }
     ],
     "hints": [
       "两颗黑棋中间有一个空点。",
@@ -832,18 +1567,40 @@
     "boardSize": 9,
     "category": "connect_cut",
     "level": 2,
-    "tags": ["cut", "weak-point"],
+    "tags": [
+      "cut",
+      "weak-point"
+    ],
     "toPlay": "black",
     "title": "切断两颗白棋",
     "description": "两颗白棋中间有断点，黑棋能切断吗？",
     "initialStones": [
-      { "x": 3, "y": 6, "color": "white" },
-      { "x": 5, "y": 6, "color": "white" },
-      { "x": 2, "y": 6, "color": "black" },
-      { "x": 6, "y": 6, "color": "black" }
+      {
+        "x": 3,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 4, "y": 6 }
+      {
+        "x": 4,
+        "y": 6
+      }
     ],
     "hints": [
       "两颗白棋中间有一个空点。",
@@ -859,18 +1616,40 @@
     "boardSize": 9,
     "category": "connect_cut",
     "level": 3,
-    "tags": ["connect", "choice"],
+    "tags": [
+      "connect",
+      "choice"
+    ],
     "toPlay": "black",
     "title": "连上还是切断？",
     "description": "黑棋有一个断点要补，下在哪里？",
     "initialStones": [
-      { "x": 5, "y": 5, "color": "black" },
-      { "x": 5, "y": 7, "color": "black" },
-      { "x": 4, "y": 6, "color": "white" },
-      { "x": 6, "y": 6, "color": "white" }
+      {
+        "x": 5,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 7,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 5, "y": 6 }
+      {
+        "x": 5,
+        "y": 6
+      }
     ],
     "hints": [
       "两颗黑棋上下排列，中间有一个空点。",
@@ -886,19 +1665,46 @@
     "boardSize": 9,
     "category": "life_death",
     "level": 2,
-    "tags": ["life_death", "atari", "extend"],
+    "tags": [
+      "life_death",
+      "atari",
+      "extend"
+    ],
     "toPlay": "black",
     "title": "角上救黑棋",
     "description": "角上三颗黑棋只剩一口气，下在哪里长出去？",
     "initialStones": [
-      { "x": 0, "y": 0, "color": "black" },
-      { "x": 0, "y": 1, "color": "black" },
-      { "x": 1, "y": 0, "color": "black" },
-      { "x": 0, "y": 2, "color": "white" },
-      { "x": 2, "y": 0, "color": "white" }
+      {
+        "x": 0,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 0,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 0,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 1, "y": 1 }
+      {
+        "x": 1,
+        "y": 1
+      }
     ],
     "hints": [
       "角上三颗黑棋被白棋从两边挡住了。",
@@ -914,19 +1720,45 @@
     "boardSize": 9,
     "category": "life_death",
     "level": 2,
-    "tags": ["life_death", "atari", "edge"],
+    "tags": [
+      "life_death",
+      "atari",
+      "edge"
+    ],
     "toPlay": "black",
     "title": "边上救黑棋",
     "description": "边上两颗黑棋被白棋夹住了，怎么长气？",
     "initialStones": [
-      { "x": 4, "y": 0, "color": "black" },
-      { "x": 5, "y": 0, "color": "black" },
-      { "x": 3, "y": 0, "color": "white" },
-      { "x": 6, "y": 0, "color": "white" }
+      {
+        "x": 4,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 0,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 4, "y": 1 },
-      { "x": 5, "y": 1 }
+      {
+        "x": 4,
+        "y": 1
+      },
+      {
+        "x": 5,
+        "y": 1
+      }
     ],
     "hints": [
       "边上两颗黑棋被白棋从两边夹住了。",
@@ -942,23 +1774,66 @@
     "boardSize": 9,
     "category": "life_death",
     "level": 3,
-    "tags": ["life_death", "atari", "extend"],
+    "tags": [
+      "life_death",
+      "atari",
+      "extend"
+    ],
     "toPlay": "black",
     "title": "救三颗黑棋",
     "description": "三颗黑棋被白棋挡住了，只剩一口气，往哪里跑？",
     "initialStones": [
-      { "x": 0, "y": 1, "color": "black" },
-      { "x": 1, "y": 1, "color": "black" },
-      { "x": 2, "y": 1, "color": "black" },
-      { "x": 0, "y": 0, "color": "white" },
-      { "x": 1, "y": 0, "color": "white" },
-      { "x": 2, "y": 0, "color": "white" },
-      { "x": 0, "y": 2, "color": "white" },
-      { "x": 2, "y": 2, "color": "white" },
-      { "x": 3, "y": 1, "color": "white" }
+      {
+        "x": 0,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 0,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "color": "white"
+      }
     ],
     "answers": [
-      { "x": 1, "y": 2 }
+      {
+        "x": 1,
+        "y": 2
+      }
     ],
     "hints": [
       "三颗黑棋横着连在一起。",
@@ -974,23 +1849,66 @@
     "boardSize": 9,
     "category": "life_death",
     "level": 3,
-    "tags": ["life_death", "atari", "capture"],
+    "tags": [
+      "life_death",
+      "atari",
+      "capture"
+    ],
     "toPlay": "black",
     "title": "吃掉白棋救自己",
     "description": "三颗白棋只剩一口气，黑棋能吃掉它们吗？",
     "initialStones": [
-      { "x": 2, "y": 2, "color": "white" },
-      { "x": 2, "y": 3, "color": "white" },
-      { "x": 3, "y": 2, "color": "white" },
-      { "x": 1, "y": 2, "color": "black" },
-      { "x": 1, "y": 3, "color": "black" },
-      { "x": 2, "y": 1, "color": "black" },
-      { "x": 3, "y": 1, "color": "black" },
-      { "x": 4, "y": 2, "color": "black" },
-      { "x": 2, "y": 4, "color": "black" }
+      {
+        "x": 2,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "black"
+      }
     ],
     "answers": [
-      { "x": 3, "y": 3 }
+      {
+        "x": 3,
+        "y": 3
+      }
     ],
     "hints": [
       "三颗白棋连在一起，被黑棋包围了。",
@@ -1006,20 +1924,56 @@
     "boardSize": 9,
     "category": "capture",
     "level": 2,
-    "tags": ["multi-step", "capture", "sequence"],
+    "tags": [
+      "multi-step",
+      "capture",
+      "sequence"
+    ],
     "toPlay": "black",
     "title": "多步吃子（两步走法）",
     "description": "黑棋需要两步才能吃掉白棋，找到正确的顺序。",
     "initialStones": [
-      { "x": 3, "y": 3, "color": "white" },
-      { "x": 3, "y": 4, "color": "white" },
-      { "x": 2, "y": 3, "color": "black" },
-      { "x": 2, "y": 4, "color": "black" },
-      { "x": 3, "y": 5, "color": "black" },
-      { "x": 4, "y": 4, "color": "black" }
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "black"
+      }
     ],
-    "answers": [{ "x": 4, "y": 3 }],
-    "hints": ["第一步：打吃白棋", "第二步：白棋逃不掉"],
+    "answers": [
+      {
+        "x": 4,
+        "y": 3
+      }
+    ],
+    "hints": [
+      "第一步：打吃白棋",
+      "第二步：白棋逃不掉"
+    ],
     "explanation": "第一步打吃，第二步提子。",
     "successMessage": "正确！",
     "failureMessage": "想想两步的顺序。",
@@ -1029,18 +1983,43 @@
         "step": 1,
         "addedStones": [],
         "removedStones": [],
-        "answers": [{ "x": 4, "y": 3 }],
-        "hints": ["第一步：黑棋下在这里打吃白棋"],
+        "answers": [
+          {
+            "x": 4,
+            "y": 3
+          }
+        ],
+        "hints": [
+          "第一步：黑棋下在这里打吃白棋"
+        ],
         "explanation": "黑棋打吃，白棋只剩一口气。",
         "successMessage": "好！白棋被叫吃了。",
         "failureMessage": "这不是第一步的最佳走法。"
       },
       {
         "step": 2,
-        "addedStones": [{ "x": 4, "y": 3, "color": "black" }, { "x": 4, "y": 2, "color": "white" }],
+        "addedStones": [
+          {
+            "x": 4,
+            "y": 3,
+            "color": "black"
+          },
+          {
+            "x": 4,
+            "y": 2,
+            "color": "white"
+          }
+        ],
         "removedStones": [],
-        "answers": [{ "x": 4, "y": 3 }],
-        "hints": ["第二步：白棋逃，黑棋提掉"],
+        "answers": [
+          {
+            "x": 4,
+            "y": 3
+          }
+        ],
+        "hints": [
+          "第二步：白棋逃，黑棋提掉"
+        ],
         "explanation": "白棋逃跑，但黑棋可以提掉。",
         "successMessage": "太棒了！你完成了多步吃子！",
         "failureMessage": "第二步应该提掉白棋。"
@@ -1052,22 +2031,66 @@
     "boardSize": 9,
     "category": "life_death",
     "level": 3,
-    "tags": ["multi-step", "life-death", "two-eyes"],
+    "tags": [
+      "multi-step",
+      "life-death",
+      "two-eyes"
+    ],
     "toPlay": "black",
     "title": "做眼活棋（多步）",
     "description": "黑棋需要做两个眼才能活棋，分步学习。",
     "initialStones": [
-      { "x": 3, "y": 3, "color": "black" },
-      { "x": 3, "y": 4, "color": "black" },
-      { "x": 3, "y": 5, "color": "black" },
-      { "x": 4, "y": 3, "color": "black" },
-      { "x": 4, "y": 5, "color": "black" },
-      { "x": 5, "y": 3, "color": "black" },
-      { "x": 5, "y": 4, "color": "black" },
-      { "x": 5, "y": 5, "color": "black" }
+      {
+        "x": 3,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "color": "black"
+      }
     ],
-    "answers": [{ "x": 4, "y": 4 }],
-    "hints": ["第一步：下在中间", "第二步：确保有两个眼"],
+    "answers": [
+      {
+        "x": 4,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "第一步：下在中间",
+      "第二步：确保有两个眼"
+    ],
     "explanation": "黑棋做活需要两个眼。",
     "successMessage": "正确！",
     "failureMessage": "需要两个眼才能活。",
@@ -1077,18 +2100,38 @@
         "step": 1,
         "addedStones": [],
         "removedStones": [],
-        "answers": [{ "x": 4, "y": 4 }],
-        "hints": ["第一步：黑棋下在中间空格"],
+        "answers": [
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "hints": [
+          "第一步：黑棋下在中间空格"
+        ],
         "explanation": "黑棋下在 (4,4)，做了一个眼。",
         "successMessage": "好！做了第一个眼。",
         "failureMessage": "第一步应该下在中间。"
       },
       {
         "step": 2,
-        "addedStones": [{ "x": 4, "y": 4, "color": "black" }],
+        "addedStones": [
+          {
+            "x": 4,
+            "y": 4,
+            "color": "black"
+          }
+        ],
         "removedStones": [],
-        "answers": [{ "x": 4, "y": 4 }],
-        "hints": ["第二步：巩固形状，确保有两个眼"],
+        "answers": [
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "hints": [
+          "第二步：巩固形状，确保有两个眼"
+        ],
         "explanation": "现在黑棋有两个眼，活棋了。",
         "successMessage": "完美！黑棋活了！",
         "failureMessage": "检查是否真的有两个眼。"
@@ -1100,20 +2143,56 @@
     "boardSize": 9,
     "category": "connect_cut",
     "level": 2,
-    "tags": ["multi-step", "connect", "extension"],
+    "tags": [
+      "multi-step",
+      "connect",
+      "extension"
+    ],
     "toPlay": "black",
     "title": "连接棋子（多步）",
     "description": "黑棋需要两步才能连接两块棋。",
     "initialStones": [
-      { "x": 2, "y": 4, "color": "black" },
-      { "x": 2, "y": 5, "color": "black" },
-      { "x": 6, "y": 4, "color": "black" },
-      { "x": 6, "y": 5, "color": "black" },
-      { "x": 4, "y": 3, "color": "white" },
-      { "x": 4, "y": 6, "color": "white" }
+      {
+        "x": 2,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 6,
+        "color": "white"
+      }
     ],
-    "answers": [{ "x": 4, "y": 4 }],
-    "hints": ["第一步：下在中间", "第二步：连接两边"],
+    "answers": [
+      {
+        "x": 4,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "第一步：下在中间",
+      "第二步：连接两边"
+    ],
     "explanation": "黑棋通过多步连接两块棋。",
     "successMessage": "正确！",
     "failureMessage": "需要两步才能连接。",
@@ -1123,22 +2202,1014 @@
         "step": 1,
         "addedStones": [],
         "removedStones": [],
-        "answers": [{ "x": 4, "y": 4 }],
-        "hints": ["第一步：黑棋下在中间 (4,4)"],
+        "answers": [
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "hints": [
+          "第一步：黑棋下在中间 (4,4)"
+        ],
         "explanation": "黑棋下在中间，准备连接。",
         "successMessage": "好！位置正确。",
         "failureMessage": "第一步应该下在中间。"
       },
       {
         "step": 2,
-        "addedStones": [{ "x": 4, "y": 4, "color": "black" }, { "x": 4, "y": 5, "color": "black" }],
+        "addedStones": [
+          {
+            "x": 4,
+            "y": 4,
+            "color": "black"
+          },
+          {
+            "x": 4,
+            "y": 5,
+            "color": "black"
+          }
+        ],
         "removedStones": [],
-        "answers": [{ "x": 4, "y": 5 }],
-        "hints": ["第二步：继续连接"],
+        "answers": [
+          {
+            "x": 4,
+            "y": 5
+          }
+        ],
+        "hints": [
+          "第二步：继续连接"
+        ],
         "explanation": "黑棋成功连接了两块棋。",
         "successMessage": "太棒了！连接成功！",
         "failureMessage": "第二步应该继续连接。"
       }
     ]
+  },
+  {
+    "id": "CAP-014",
+    "boardSize": 9,
+    "category": "capture",
+    "level": 2,
+    "tags": [
+      "capture",
+      "atari",
+      "center"
+    ],
+    "toPlay": "black",
+    "title": "吃掉中间的白棋",
+    "description": "中间这颗白棋快被打吃了，黑棋下一步怎么吃掉它？",
+    "initialStones": [
+      {
+        "x": 4,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 5
+      }
+    ],
+    "hints": [
+      "白棋上面、左边、下面都有黑棋。",
+      "白棋只剩右边一口气了。",
+      "下在白棋右边，就能吃掉它。"
+    ],
+    "explanation": "黑棋下在白棋最后一口气上，白棋没有气就被提掉了。",
+    "successMessage": "真棒！你吃掉了白棋！",
+    "failureMessage": "白棋还剩几口气？"
+  },
+  {
+    "id": "MULTI-004",
+    "boardSize": 9,
+    "category": "capture",
+    "level": 2,
+    "tags": [
+      "multi-step",
+      "capture",
+      "sequence"
+    ],
+    "toPlay": "black",
+    "title": "两步吃掉白棋",
+    "description": "两颗白棋连在一起，黑棋需要两步才能吃掉它们。",
+    "initialStones": [
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 7,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "第一步：打吃白棋",
+      "第二步：白棋逃不掉"
+    ],
+    "explanation": "第一步打吃，第二步提子。",
+    "successMessage": "正确！",
+    "failureMessage": "想想两步的顺序。",
+    "totalSteps": 2,
+    "steps": [
+      {
+        "step": 1,
+        "addedStones": [],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 4,
+            "y": 4
+          }
+        ],
+        "hints": [
+          "第一步：黑棋下在这里打吃白棋"
+        ],
+        "explanation": "黑棋打吃，白棋只剩一口气。",
+        "successMessage": "好！白棋被叫吃了。",
+        "failureMessage": "这不是第一步的最佳走法。"
+      },
+      {
+        "step": 2,
+        "addedStones": [
+          {
+            "x": 4,
+            "y": 4,
+            "color": "black"
+          },
+          {
+            "x": 3,
+            "y": 5,
+            "color": "white"
+          }
+        ],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 4,
+            "y": 5
+          }
+        ],
+        "hints": [
+          "第二步：白棋逃跑，黑棋提掉"
+        ],
+        "explanation": "白棋逃跑，但黑棋追上去提掉。",
+        "successMessage": "太棒了！你完成了多步吃子！",
+        "failureMessage": "第二步应该提掉白棋。"
+      }
+    ]
+  },
+  {
+    "id": "MULTI-005",
+    "boardSize": 9,
+    "category": "capture",
+    "level": 2,
+    "tags": [
+      "multi-step",
+      "capture",
+      "sequence"
+    ],
+    "toPlay": "black",
+    "title": "追着吃白棋",
+    "description": "白棋想逃跑，黑棋能追上去吃掉它们吗？",
+    "initialStones": [
+      {
+        "x": 5,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 5
+      }
+    ],
+    "hints": [
+      "第一步：从左边打吃白棋",
+      "第二步：白棋逃，黑棋追"
+    ],
+    "explanation": "黑棋从左边打吃，白棋逃跑后继续追。",
+    "successMessage": "正确！",
+    "failureMessage": "想想追的方向。",
+    "totalSteps": 2,
+    "steps": [
+      {
+        "step": 1,
+        "addedStones": [],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 4,
+            "y": 5
+          }
+        ],
+        "hints": [
+          "第一步：从左边打吃白棋"
+        ],
+        "explanation": "黑棋打吃，白棋只剩一口气。",
+        "successMessage": "好！白棋被叫吃了。",
+        "failureMessage": "试试从左边打吃。"
+      },
+      {
+        "step": 2,
+        "addedStones": [
+          {
+            "x": 4,
+            "y": 5,
+            "color": "black"
+          },
+          {
+            "x": 6,
+            "y": 5,
+            "color": "white"
+          }
+        ],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 5,
+            "y": 7
+          }
+        ],
+        "hints": [
+          "第二步：白棋往上逃，黑棋追上去"
+        ],
+        "explanation": "白棋往上逃，黑棋追上去提掉。",
+        "successMessage": "太棒了！追吃成功！",
+        "failureMessage": "继续追白棋逃跑的方向。"
+      }
+    ]
+  },
+  {
+    "id": "LD-005",
+    "boardSize": 9,
+    "category": "life_death",
+    "level": 2,
+    "tags": [
+      "life_death",
+      "atari",
+      "extend"
+    ],
+    "toPlay": "black",
+    "title": "边上一颗黑棋",
+    "description": "边上的黑棋只剩一口气了，怎么救它？",
+    "initialStones": [
+      {
+        "x": 4,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 0,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 2
+      }
+    ],
+    "hints": [
+      "边上的黑棋被白棋从三面包围了。",
+      "黑棋现在只剩一口气。",
+      "往中间跑，黑棋的气就变多了。"
+    ],
+    "explanation": "黑棋往中间跑，增加了气，从边上逃出来了。",
+    "successMessage": "很好！黑棋得救了！",
+    "failureMessage": "黑棋还有一个方向可以走。"
+  },
+  {
+    "id": "LD-006",
+    "boardSize": 9,
+    "category": "life_death",
+    "level": 3,
+    "tags": [
+      "life_death",
+      "atari",
+      "extend"
+    ],
+    "toPlay": "black",
+    "title": "被包围的三角",
+    "description": "三颗黑棋被白棋包围了，只剩一口气，往哪里跑？",
+    "initialStones": [
+      {
+        "x": 1,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 0,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 3,
+        "y": 1
+      }
+    ],
+    "hints": [
+      "三颗黑棋形成一个三角形。",
+      "白棋在上面、左边和右边都挡住了。",
+      "往右边跑，黑棋的气就变多了。"
+    ],
+    "explanation": "黑棋往右边跑，增加了气，逃出来了。",
+    "successMessage": "太棒了！黑棋成功逃出来了！",
+    "failureMessage": "黑棋需要长气，哪里有路？"
+  },
+  {
+    "id": "MULTI-006",
+    "boardSize": 9,
+    "category": "life_death",
+    "level": 3,
+    "tags": [
+      "multi-step",
+      "life-death",
+      "two-eyes"
+    ],
+    "toPlay": "black",
+    "title": "做眼活棋（左上）",
+    "description": "黑棋需要做两个眼才能活棋，先下在哪里？",
+    "initialStones": [
+      {
+        "x": 1,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 2,
+        "y": 2
+      }
+    ],
+    "hints": [
+      "第一步：下在中间",
+      "第二步：确保有两个眼"
+    ],
+    "explanation": "黑棋做活需要两个眼。",
+    "successMessage": "正确！",
+    "failureMessage": "需要两个眼才能活。",
+    "totalSteps": 2,
+    "steps": [
+      {
+        "step": 1,
+        "addedStones": [],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "hints": [
+          "第一步：黑棋下在中间空格"
+        ],
+        "explanation": "黑棋下在 (2,2)，做了一个眼。",
+        "successMessage": "好！做了第一个眼。",
+        "failureMessage": "第一步应该下在中间。"
+      },
+      {
+        "step": 2,
+        "addedStones": [
+          {
+            "x": 2,
+            "y": 2,
+            "color": "black"
+          }
+        ],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 2,
+            "y": 2
+          }
+        ],
+        "hints": [
+          "第二步：巩固形状，确保有两个眼"
+        ],
+        "explanation": "现在黑棋有两个眼，活棋了。",
+        "successMessage": "完美！黑棋活了！",
+        "failureMessage": "检查是否真的有两个眼。"
+      }
+    ]
+  },
+  {
+    "id": "MULTI-007",
+    "boardSize": 9,
+    "category": "life_death",
+    "level": 3,
+    "tags": [
+      "multi-step",
+      "life-death",
+      "two-eyes"
+    ],
+    "toPlay": "black",
+    "title": "做眼活棋（右下）",
+    "description": "黑棋在右下角需要做两个眼，先下在哪里？",
+    "initialStones": [
+      {
+        "x": 5,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 7,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 7,
+        "color": "black"
+      },
+      {
+        "x": 7,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 7,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 7,
+        "y": 7,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 6,
+        "y": 6
+      }
+    ],
+    "hints": [
+      "第一步：下在中间",
+      "第二步：两个眼就做好了"
+    ],
+    "explanation": "黑棋做活需要两个眼。",
+    "successMessage": "正确！",
+    "failureMessage": "需要两个眼才能活。",
+    "totalSteps": 2,
+    "steps": [
+      {
+        "step": 1,
+        "addedStones": [],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 6,
+            "y": 6
+          }
+        ],
+        "hints": [
+          "第一步：黑棋下在中间空格"
+        ],
+        "explanation": "黑棋下在 (6,6)，做了一个眼。",
+        "successMessage": "好！做了第一个眼。",
+        "failureMessage": "第一步应该下在中间。"
+      },
+      {
+        "step": 2,
+        "addedStones": [
+          {
+            "x": 6,
+            "y": 6,
+            "color": "black"
+          }
+        ],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 6,
+            "y": 6
+          }
+        ],
+        "hints": [
+          "第二步：巩固形状，确保有两个眼"
+        ],
+        "explanation": "现在黑棋有两个眼，活棋了。",
+        "successMessage": "完美！黑棋又活了！",
+        "failureMessage": "检查是否真的有两个眼。"
+      }
+    ]
+  },
+  {
+    "id": "CC-010",
+    "boardSize": 9,
+    "category": "connect_cut",
+    "level": 2,
+    "tags": [
+      "cut",
+      "weak-point"
+    ],
+    "toPlay": "black",
+    "title": "切断白棋（三）",
+    "description": "两颗白棋中间有空隙，黑棋能切断它们吗？",
+    "initialStones": [
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 3,
+        "y": 3
+      }
+    ],
+    "hints": [
+      "两颗白棋之间有一个空点。",
+      "黑棋下在那里，白棋就被分开了。",
+      "断开的白棋都很弱。"
+    ],
+    "explanation": "黑棋下在中间，把两颗白棋切断了。",
+    "successMessage": "真厉害！你找到了白棋的断点！",
+    "failureMessage": "看看两颗白棋中间，那里有什么？"
+  },
+  {
+    "id": "MULTI-008",
+    "boardSize": 9,
+    "category": "connect_cut",
+    "level": 2,
+    "tags": [
+      "multi-step",
+      "connect",
+      "extension"
+    ],
+    "toPlay": "black",
+    "title": "连接棋子（多步）",
+    "description": "黑棋需要两步才能连接两块棋。",
+    "initialStones": [
+      {
+        "x": 1,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 3,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "第一步：下在中间",
+      "第二步：连接两边"
+    ],
+    "explanation": "黑棋通过多步连接两块棋。",
+    "successMessage": "正确！",
+    "failureMessage": "需要两步才能连接。",
+    "totalSteps": 2,
+    "steps": [
+      {
+        "step": 1,
+        "addedStones": [],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 3,
+            "y": 4
+          }
+        ],
+        "hints": [
+          "第一步：黑棋下在中间 (3,4)"
+        ],
+        "explanation": "黑棋下在中间，准备连接。",
+        "successMessage": "好！位置正确。",
+        "failureMessage": "第一步应该下在中间。"
+      },
+      {
+        "step": 2,
+        "addedStones": [
+          {
+            "x": 3,
+            "y": 4,
+            "color": "black"
+          },
+          {
+            "x": 3,
+            "y": 5,
+            "color": "black"
+          }
+        ],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "hints": [
+          "第二步：继续连接"
+        ],
+        "explanation": "黑棋成功连接了两块棋。",
+        "successMessage": "太棒了！连接成功！",
+        "failureMessage": "第二步应该继续连接。"
+      }
+    ]
+  },
+  {
+    "id": "ESC-008",
+    "boardSize": 9,
+    "category": "escape",
+    "level": 2,
+    "tags": [
+      "escape",
+      "liberty-counting"
+    ],
+    "toPlay": "black",
+    "title": "中间逃跑",
+    "description": "黑棋被白棋三面包围，往哪里跑？",
+    "initialStones": [
+      {
+        "x": 4,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 5
+      }
+    ],
+    "hints": [
+      "黑棋现在被白棋三面包围。",
+      "黑棋现在只剩下面一口气。",
+      "往下面跑，黑棋就安全了。"
+    ],
+    "explanation": "黑棋往下面跑，增加了气，从包围中逃出来了。",
+    "successMessage": "很好！黑棋成功逃出来了！",
+    "failureMessage": "黑棋还有一个方向是空的。"
+  },
+  {
+    "id": "MULTI-009",
+    "boardSize": 9,
+    "category": "escape",
+    "level": 2,
+    "tags": [
+      "multi-step",
+      "escape",
+      "sequence"
+    ],
+    "toPlay": "black",
+    "title": "分步逃跑",
+    "description": "黑棋被包围了，需要两步才能安全逃跑。",
+    "initialStones": [
+      {
+        "x": 4,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 5
+      }
+    ],
+    "hints": [
+      "第一步：先往下面跑",
+      "第二步：再往左拐"
+    ],
+    "explanation": "黑棋先往下面逃，再往左拐就安全了。",
+    "successMessage": "正确！",
+    "failureMessage": "想想逃跑的顺序。",
+    "totalSteps": 2,
+    "steps": [
+      {
+        "step": 1,
+        "addedStones": [],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 4,
+            "y": 5
+          }
+        ],
+        "hints": [
+          "第一步：黑棋先往下面跑"
+        ],
+        "explanation": "黑棋往下面逃，增加气。",
+        "successMessage": "好！黑棋往下面逃出来了！",
+        "failureMessage": "第一步应该往下面跑。"
+      },
+      {
+        "step": 2,
+        "addedStones": [
+          {
+            "x": 4,
+            "y": 5,
+            "color": "black"
+          },
+          {
+            "x": 4,
+            "y": 6,
+            "color": "white"
+          }
+        ],
+        "removedStones": [],
+        "answers": [
+          {
+            "x": 3,
+            "y": 5
+          }
+        ],
+        "hints": [
+          "第二步：白棋追上来，黑棋往左拐"
+        ],
+        "explanation": "黑棋往左跑，成功逃出包围。",
+        "successMessage": "太棒了！分步逃跑成功！",
+        "failureMessage": "试试往旁边的空位跑。"
+      }
+    ]
+  },
+  {
+    "id": "OP-004",
+    "boardSize": 9,
+    "category": "opening",
+    "level": 1,
+    "tags": [
+      "opening",
+      "corner"
+    ],
+    "toPlay": "black",
+    "title": "抢占空角",
+    "description": "白棋占了一个角，黑棋应该下在哪里？",
+    "initialStones": [
+      {
+        "x": 2,
+        "y": 6,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 2,
+        "y": 2
+      },
+      {
+        "x": 6,
+        "y": 2
+      },
+      {
+        "x": 6,
+        "y": 6
+      }
+    ],
+    "hints": [
+      "白棋占了一个角，还有三个角是空的。",
+      "开局要抢占空着的角。",
+      "左下角、右下角、右上角都可以选。"
+    ],
+    "explanation": "白棋占了一个角，黑棋应该抢占另一个空角。",
+    "successMessage": "很好！你知道开局要抢空角！",
+    "failureMessage": "还有哪几个角是空的？"
   }
 ]

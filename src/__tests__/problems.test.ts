@@ -160,7 +160,7 @@ describe("problem data quality", () => {
   const problems = loadProblems();
 
   it("total problem count is 39", () => {
-    expect(problems).toHaveLength(39);
+    expect(problems).toHaveLength(51);
   });
 
   it("v0.1.2 added problem IDs exist", () => {

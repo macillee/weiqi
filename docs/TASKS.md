@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.4.0b First Multi-Step Content Pack — add ~12 new problems to `src/data/problems.json` (≈6 multi-step, ≈6 single-step), prioritizing capture and life_death categories.
+v0.4.0b delivered — 12 new problems added (51 total). Next: v0.4.0c Content Validation and Regression Checks.
 
 Current strategy:
 
@@ -15,8 +15,8 @@ Current strategy:
 1. Preserve the stable v0.1.3 local MVP
 2. Keep the app Docker-deployable with Supabase Cloud as external backend
 3. Missing Supabase env must not break local anonymous mode
-4. v0.4.0a expansion plan completed and approved
-5. Execute v0.4.0b content pack: add new problems, validate, review
+4. v0.4.0b content pack completed (12 new problems, 51 total)
+5. Run content validation and regression checks for v0.4.0b
 6. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -770,11 +770,29 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.4.0b — First Multi-Step Content Pack
+# ✅ v0.4.0b First Multi-Step Content Pack — COMPLETED (2026-05-24)
+
+## What was done
+
+- Added 12 new problems to `src/data/problems.json` (6 single-step + 6 multi-step).
+- Category distribution: capture +3, life_death +4, connect_cut +2, escape +2, opening +1.
+- `docs/CONTENT_REVIEW_v0.4.0b.md` — content review documenting every new problem.
+- Updated problem count test from 39 to 51.
+- `npm run test` — 241 tests passed.
+- `npm run build` — compiled successfully.
+
+## PR
+
+- Branch: `feat/v0.4.0b-first-content-pack`
+- PR: #51
+
+---
+
+# Next Task: v0.4.0c — Content Validation and Regression Checks
 
 ## Goal
 
-Add ~12 new problems to `src/data/problems.json` (≈6 multi-step, ≈6 single-step), prioritizing capture and life_death categories. All problems must pass 9x9 coordinate validation, Go-logic checks, and child-friendly copy review.
+Review all new problems for Go-logic correctness and child suitability. Add or strengthen validation tests if gaps are found. Verify 9x9 coordinate validity, zero-liberty detection, answer-point emptiness, and multi-step board transitions.
 
 ---
 
