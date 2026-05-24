@@ -804,7 +804,7 @@ Manual validation (requires Supabase env):
   - no old-ID-number-reuse check
   - negative test: step 2 answer on addedStones-occupied point
 - `docs/CONTENT_REVIEW_v0.4.0c.md` — validation and regression review.
-- `npm run test` — 244 tests passed.
+- `npm run test` — 245 tests passed.
 - `npm run build` — compiled successfully.
 
 ## PR
