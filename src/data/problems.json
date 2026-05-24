@@ -2520,7 +2520,7 @@
     ]
   },
   {
-    "id": "LD-005",
+    "id": "LD-007",
     "boardSize": 9,
     "category": "life_death",
     "level": 2,
@@ -2659,57 +2659,37 @@
     "description": "黑棋需要做两个眼才能活棋，先下在哪里？",
     "initialStones": [
       {
-        "x": 1,
-        "y": 1,
-        "color": "black"
-      },
-      {
-        "x": 1,
-        "y": 2,
-        "color": "black"
-      },
-      {
-        "x": 1,
+        "x": 3,
         "y": 3,
         "color": "black"
       },
       {
         "x": 2,
-        "y": 1,
-        "color": "black"
-      },
-      {
-        "x": 2,
         "y": 3,
-        "color": "black"
+        "color": "white"
       },
       {
-        "x": 3,
-        "y": 1,
-        "color": "black"
+        "x": 4,
+        "y": 3,
+        "color": "white"
       },
       {
         "x": 3,
         "y": 2,
-        "color": "black"
-      },
-      {
-        "x": 3,
-        "y": 3,
-        "color": "black"
+        "color": "white"
       }
     ],
     "answers": [
       {
-        "x": 2,
-        "y": 2
+        "x": 3,
+        "y": 4
       }
     ],
     "hints": [
-      "第一步：下在中间",
-      "第二步：确保有两个眼"
+      "第一步：往下面跑",
+      "第二步：继续跑"
     ],
-    "explanation": "黑棋做活需要两个眼。",
+    "explanation": "黑棋分两步跑出包围。",
     "successMessage": "正确！",
     "failureMessage": "需要两个眼才能活。",
     "totalSteps": 2,
@@ -2720,39 +2700,44 @@
         "removedStones": [],
         "answers": [
           {
-            "x": 2,
-            "y": 2
+            "x": 3,
+            "y": 4
           }
         ],
         "hints": [
-          "第一步：黑棋下在中间空格"
+          "第一步：黑棋往下面跑"
         ],
-        "explanation": "黑棋下在 (2,2)，做了一个眼。",
-        "successMessage": "好！做了第一个眼。",
-        "failureMessage": "第一步应该下在中间。"
+        "explanation": "黑棋往下跑，增加气。",
+        "successMessage": "好！黑棋跑了一步。",
+        "failureMessage": "第一步应该往下面跑。"
       },
       {
         "step": 2,
         "addedStones": [
           {
-            "x": 2,
-            "y": 2,
+            "x": 3,
+            "y": 4,
             "color": "black"
+          },
+          {
+            "x": 3,
+            "y": 5,
+            "color": "white"
           }
         ],
         "removedStones": [],
         "answers": [
           {
-            "x": 2,
-            "y": 2
+            "x": 3,
+            "y": 6
           }
         ],
         "hints": [
-          "第二步：巩固形状，确保有两个眼"
+          "第二步：白棋追上来，黑棋继续跑"
         ],
-        "explanation": "现在黑棋有两个眼，活棋了。",
-        "successMessage": "完美！黑棋活了！",
-        "failureMessage": "检查是否真的有两个眼。"
+        "explanation": "黑棋继续跑，成功逃出包围。",
+        "successMessage": "太棒了！分步逃跑成功！",
+        "failureMessage": "继续往下面跑。"
       }
     ]
   },
@@ -2776,52 +2761,32 @@
         "color": "black"
       },
       {
-        "x": 5,
-        "y": 6,
-        "color": "black"
-      },
-      {
-        "x": 5,
-        "y": 7,
-        "color": "black"
+        "x": 4,
+        "y": 5,
+        "color": "white"
       },
       {
         "x": 6,
         "y": 5,
-        "color": "black"
+        "color": "white"
       },
       {
-        "x": 6,
-        "y": 7,
-        "color": "black"
-      },
-      {
-        "x": 7,
-        "y": 5,
-        "color": "black"
-      },
-      {
-        "x": 7,
-        "y": 6,
-        "color": "black"
-      },
-      {
-        "x": 7,
-        "y": 7,
-        "color": "black"
+        "x": 5,
+        "y": 4,
+        "color": "white"
       }
     ],
     "answers": [
       {
-        "x": 6,
+        "x": 5,
         "y": 6
       }
     ],
     "hints": [
-      "第一步：下在中间",
-      "第二步：两个眼就做好了"
+      "第一步：往下面跑",
+      "第二步：继续跑"
     ],
-    "explanation": "黑棋做活需要两个眼。",
+    "explanation": "黑棋分两步跑出包围。",
     "successMessage": "正确！",
     "failureMessage": "需要两个眼才能活。",
     "totalSteps": 2,
@@ -2832,44 +2797,49 @@
         "removedStones": [],
         "answers": [
           {
-            "x": 6,
+            "x": 5,
             "y": 6
           }
         ],
         "hints": [
-          "第一步：黑棋下在中间空格"
+          "第一步：黑棋往下面跑"
         ],
-        "explanation": "黑棋下在 (6,6)，做了一个眼。",
-        "successMessage": "好！做了第一个眼。",
-        "failureMessage": "第一步应该下在中间。"
+        "explanation": "黑棋往下跑，增加气。",
+        "successMessage": "好！黑棋跑了一步！",
+        "failureMessage": "第一步应该往下面跑。"
       },
       {
         "step": 2,
         "addedStones": [
           {
-            "x": 6,
+            "x": 5,
             "y": 6,
             "color": "black"
+          },
+          {
+            "x": 5,
+            "y": 7,
+            "color": "white"
           }
         ],
         "removedStones": [],
         "answers": [
           {
-            "x": 6,
-            "y": 6
+            "x": 5,
+            "y": 8
           }
         ],
         "hints": [
-          "第二步：巩固形状，确保有两个眼"
+          "第二步：白棋追上来，黑棋继续跑"
         ],
-        "explanation": "现在黑棋有两个眼，活棋了。",
-        "successMessage": "完美！黑棋又活了！",
-        "failureMessage": "检查是否真的有两个眼。"
+        "explanation": "黑棋继续跑，成功逃出包围。",
+        "successMessage": "太棒了！分步逃跑成功！",
+        "failureMessage": "继续往下面跑。"
       }
     ]
   },
   {
-    "id": "CC-010",
+    "id": "CC-011",
     "boardSize": 9,
     "category": "connect_cut",
     "level": 2,
@@ -2933,17 +2903,7 @@
     "initialStones": [
       {
         "x": 1,
-        "y": 4,
-        "color": "black"
-      },
-      {
-        "x": 1,
         "y": 5,
-        "color": "black"
-      },
-      {
-        "x": 5,
-        "y": 4,
         "color": "black"
       },
       {
@@ -2952,27 +2912,27 @@
         "color": "black"
       },
       {
-        "x": 3,
-        "y": 3,
+        "x": 2,
+        "y": 5,
         "color": "white"
       },
       {
-        "x": 3,
-        "y": 6,
+        "x": 4,
+        "y": 5,
         "color": "white"
       }
     ],
     "answers": [
       {
         "x": 3,
-        "y": 4
+        "y": 5
       }
     ],
     "hints": [
-      "第一步：下在中间",
-      "第二步：连接两边"
+      "第一步：在黑棋中间切断打吃",
+      "第二步：继续追另一块白棋"
     ],
-    "explanation": "黑棋通过多步连接两块棋。",
+    "explanation": "黑棋切断白棋，两边白棋都被打吃。",
     "successMessage": "正确！",
     "failureMessage": "需要两步才能连接。",
     "totalSteps": 2,
@@ -2984,43 +2944,43 @@
         "answers": [
           {
             "x": 3,
-            "y": 4
+            "y": 5
           }
         ],
         "hints": [
-          "第一步：黑棋下在中间 (3,4)"
+          "第一步：黑棋下在中间，切断白棋"
         ],
-        "explanation": "黑棋下在中间，准备连接。",
-        "successMessage": "好！位置正确。",
-        "failureMessage": "第一步应该下在中间。"
+        "explanation": "黑棋切断白棋，同时打吃两块白棋。",
+        "successMessage": "好！白棋被切断打吃！",
+        "failureMessage": "第一步应该下在白棋中间。"
       },
       {
         "step": 2,
         "addedStones": [
           {
             "x": 3,
-            "y": 4,
+            "y": 5,
             "color": "black"
           },
           {
-            "x": 3,
-            "y": 5,
-            "color": "black"
+            "x": 2,
+            "y": 6,
+            "color": "white"
           }
         ],
         "removedStones": [],
         "answers": [
           {
-            "x": 3,
-            "y": 5
+            "x": 4,
+            "y": 6
           }
         ],
         "hints": [
-          "第二步：继续连接"
+          "第二步：白棋逃跑，黑棋追另一边"
         ],
-        "explanation": "黑棋成功连接了两块棋。",
-        "successMessage": "太棒了！连接成功！",
-        "failureMessage": "第二步应该继续连接。"
+        "explanation": "白棋一边逃跑，黑棋打吃另一边。",
+        "successMessage": "太棒了！两边白棋都被打吃！",
+        "failureMessage": "第二步应该追另一边白棋。"
       }
     ]
   },
