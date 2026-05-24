@@ -2520,7 +2520,7 @@
     ]
   },
   {
-    "id": "LD-005",
+    "id": "LD-007",
     "boardSize": 9,
     "category": "life_death",
     "level": 2,
@@ -2707,11 +2707,11 @@
     ],
     "hints": [
       "第一步：下在中间",
-      "第二步：确保有两个眼"
+      "第二步：向右扩展"
     ],
-    "explanation": "黑棋做活需要两个眼。",
+    "explanation": "黑棋先填中间做眼，再扩展形状。",
     "successMessage": "正确！",
-    "failureMessage": "需要两个眼才能活。",
+    "failureMessage": "需要两步才能做眼。",
     "totalSteps": 2,
     "steps": [
       {
@@ -2733,26 +2733,20 @@
       },
       {
         "step": 2,
-        "addedStones": [
-          {
-            "x": 2,
-            "y": 2,
-            "color": "black"
-          }
-        ],
+        "addedStones": [],
         "removedStones": [],
         "answers": [
           {
-            "x": 2,
-            "y": 2
+            "x": 4,
+            "y": 1
           }
         ],
         "hints": [
-          "第二步：巩固形状，确保有两个眼"
+          "第二步：向右扩展，确保有两个眼"
         ],
-        "explanation": "现在黑棋有两个眼，活棋了。",
+        "explanation": "黑棋向右扩展，两个眼都保住了。",
         "successMessage": "完美！黑棋活了！",
-        "failureMessage": "检查是否真的有两个眼。"
+        "failureMessage": "需要向右扩展来巩固眼位。"
       }
     ]
   },
@@ -2819,11 +2813,11 @@
     ],
     "hints": [
       "第一步：下在中间",
-      "第二步：两个眼就做好了"
+      "第二步：向左扩展"
     ],
-    "explanation": "黑棋做活需要两个眼。",
+    "explanation": "黑棋先填中间做眼，再扩展形状。",
     "successMessage": "正确！",
-    "failureMessage": "需要两个眼才能活。",
+    "failureMessage": "需要两步才能做眼。",
     "totalSteps": 2,
     "steps": [
       {
@@ -2845,31 +2839,25 @@
       },
       {
         "step": 2,
-        "addedStones": [
-          {
-            "x": 6,
-            "y": 6,
-            "color": "black"
-          }
-        ],
+        "addedStones": [],
         "removedStones": [],
         "answers": [
           {
-            "x": 6,
-            "y": 6
+            "x": 4,
+            "y": 7
           }
         ],
         "hints": [
-          "第二步：巩固形状，确保有两个眼"
+          "第二步：向左扩展，确保有两个眼"
         ],
-        "explanation": "现在黑棋有两个眼，活棋了。",
+        "explanation": "黑棋向左扩展，两个眼都保住了。",
         "successMessage": "完美！黑棋又活了！",
-        "failureMessage": "检查是否真的有两个眼。"
+        "failureMessage": "需要向左扩展来巩固眼位。"
       }
     ]
   },
   {
-    "id": "CC-010",
+    "id": "CC-011",
     "boardSize": 9,
     "category": "connect_cut",
     "level": 2,
@@ -2996,18 +2984,7 @@
       },
       {
         "step": 2,
-        "addedStones": [
-          {
-            "x": 3,
-            "y": 4,
-            "color": "black"
-          },
-          {
-            "x": 3,
-            "y": 5,
-            "color": "black"
-          }
-        ],
+        "addedStones": [],
         "removedStones": [],
         "answers": [
           {

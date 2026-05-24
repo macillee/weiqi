@@ -784,7 +784,7 @@ Manual validation (requires Supabase env):
 ## PR
 
 - Branch: `feat/v0.4.0b-first-content-pack`
-- PR: #51
+- PR: #52
 
 ---
 

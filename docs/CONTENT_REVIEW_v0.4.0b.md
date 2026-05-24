@@ -20,12 +20,12 @@
 
 | Category | Single-step | Multi-step | Total |
 |---|---:|---:|---:|
-| capture | 14 | 2 | 16 |
+| capture | 14 | 3 | 17 |
 | escape | 8 | 1 | 9 |
-| connect_cut | 10 | 1 | 11 |
-| life_death | 6 | 2 | 8 |
+| connect_cut | 10 | 2 | 12 |
+| life_death | 6 | 3 | 9 |
 | opening | 4 | 0 | 4 |
-| **Total** | **42** | **6** | **51** |
+| **Total** | **42** | **9** | **51** |
 
 ---
 
@@ -52,7 +52,7 @@
 - Step 2 answer: (5,7) — follow-up capture
 - Validation: step order valid, per-step answers valid, board transitions deterministic
 
-## LD-005 (single-step life_death, level 2)
+## LD-007 (single-step life_death, level 2)
 
 - Target: Save a single black stone from atari on the edge
 - Answer: (4,2) — extend toward center
@@ -70,17 +70,17 @@
 
 - Target: Two-step eye-making in the upper-left corner
 - Step 1 answer: (2,2) — fill center of 3x3 block
-- Step 2 answer: (2,2) — solidify shape into two eyes
+- Step 2 answer: (4,1) — extend right to secure eyes
 - Validation: same pattern as MULTI-002, shifted to upper-left
 
 ## MULTI-007 (multi-step life_death, level 3)
 
 - Target: Two-step eye-making in the lower-right corner
 - Step 1 answer: (6,6) — fill center of 3x3 block
-- Step 2 answer: (6,6) — solidify shape into two eyes
+- Step 2 answer: (4,7) — extend left to secure eyes
 - Validation: same pattern as MULTI-002, shifted to lower-right
 
-## CC-010 (single-step connect_cut, level 2)
+## CC-011 (single-step connect_cut, level 2)
 
 - Target: Cut between two white stones
 - Answer: (3,3)
@@ -123,8 +123,8 @@
 |---|---|
 | CAP | CAP-014 |
 | ESC | ESC-008 |
-| CC | CC-010 |
-| LD | LD-005, LD-006 |
+| CC | CC-011 |
+| LD | LD-006, LD-007 |
 | OP | OP-004 |
 | MULTI | MULTI-004 through MULTI-009 |
 
@@ -153,10 +153,10 @@
 
 | Category | Before | After | Delta |
 |---|---:|---:|---:|
-| capture | 14 | 16 | +2 |
+| capture | 14 | 17 | +3 |
 | escape | 7 | 9 | +2 |
-| connect_cut | 10 | 11 | +1 |
-| life_death | 5 | 8 | +3 |
+| connect_cut | 10 | 12 | +2 |
+| life_death | 5 | 9 | +4 |
 | opening | 3 | 4 | +1 |
 | **Total** | **39** | **51** | **+12** |
 
@@ -167,7 +167,7 @@
 - Multi-step problems limited to 2-step sequences (schema supports more, not product-tested).
 - No multi-step opening problems (opening multi-step content deferred to future slice).
 - No endgame category problems.
-- life_death remains the smallest core category at 8 problems.
+- opening is the smallest category at 4 problems; life_death and escape both have 9.
 
 ---
 
