@@ -7,7 +7,7 @@
 
 # Current Phase
 
-Post-v0.3 Stabilization / QA — regression testing and documentation cleanup after completing v0.3.0 Learning Depth (multi-step problems, spaced review, weekly report).
+Post-v0.3 Release Prep — v0.3.0 release notes and manual QA checklist completed. Awaiting next task assignment.
 
 Current strategy:
 
@@ -15,8 +15,8 @@ Current strategy:
 1. Preserve the stable v0.1.3 local MVP
 2. Keep the app Docker-deployable with Supabase Cloud as external backend
 3. Missing Supabase env must not break local anonymous mode
-4. Run focused regression review over v0.3.0 behavior
-5. Fix documentation accuracy issues only
+4. All v0.3.0 features verified via regression review
+5. Release notes and QA checklist documented
 6. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -731,11 +731,34 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: Post-v0.3 Stabilization / QA
+# ✅ Post-v0.3 Stabilization / QA — COMPLETED (2026-05-24)
 
-## Goal
+## What was done
 
-Run focused stabilization, regression testing, and documentation cleanup after completing v0.3.0 Learning Depth.
+- Regression review over all v0.3.0 behavior verified via 241 existing tests (17 files).
+- Documentation cleanup in `docs/TASKS.md` (stale PR references fixed, current phase updated).
+
+## PR
+
+- Branch: `chore/post-v0.3-stabilization-qa`
+- PR: #45
+
+---
+
+# ✅ v0.3.0 Release Notes and Manual QA Checklist — COMPLETED (2026-05-24)
+
+## What was done
+
+- `docs/RELEASE_NOTES_v0.3.0.md` — release notes and manual QA checklist for v0.3.0 Learning Depth milestone.
+
+## PR
+
+- Branch: `docs/v0.3.0-release-notes-qa-checklist`
+- PR: #48
+
+---
+
+# Next Task: (pending)
 
 ---
 
