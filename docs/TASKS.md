@@ -822,7 +822,7 @@ Manual validation (requires Supabase env):
 - Reviewed tags for all 51 problems.
 - Normalized `life-death` → `life_death` in MULTI-002, MULTI-006, MULTI-007 (3 problems).
 - Confirmed: all problems have category-aligned tag, all multi-step problems include `multi-step`, no duplicate/empty tags.
-- Canonical tag list documented (23 tags, lowercase underscore-separated).
+- Canonical tag list documented (22 tags, lowercase kebab-case/snake_case).
 - Category/tag mapping rules documented.
 - Added 5 metadata tests:
   - category-aligned tag check

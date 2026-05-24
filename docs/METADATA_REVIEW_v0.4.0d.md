@@ -8,7 +8,7 @@
 
 ## 1. Canonical Tags
 
-All tags use lowercase, underscore-separated words (no hyphens, no spaces).
+Tags use lowercase kebab-case or snake_case according to the existing canonical vocabulary. `life_death` is the canonical snake_case tag for the life/death category. The deprecated `life-death` variant is not used.
 
 | Canonical Tag | Usage Count | Description |
 |---|---|---|
@@ -85,7 +85,7 @@ No other fields changed.
 |---|---|
 | `npm run test` | 250 passed (17 files) |
 | `npm run build` | compiled successfully |
-| Tag consistency | All tags canonical, no hyphens |
+| Tag consistency | All tags canonical; deprecated `life-death` variant removed |
 | Category/tag alignment | All 51 problems have category-aligned tag |
 | Multi-step tag | All 9 multi-step problems include `multi-step` |
 | No duplicate tags | All problems have unique tag sets |
