@@ -850,7 +850,7 @@ Manual validation (requires Supabase env):
 ## PR
 
 - Branch: `docs/post-v0.4-stabilization-release-notes`
-- PR: #57
+- PR: #58
 
 ---
 

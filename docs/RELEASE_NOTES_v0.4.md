@@ -159,7 +159,7 @@ All problems: 9x9 board, Chinese child-friendly copy, 2–3 hints per problem/st
 - Multi-step problems limited to 2-step sequences (schema supports more, not product-tested).
 - No multi-step opening problems.
 - No endgame category problems.
-- life_death (9) and opening (4) remain the smallest categories.
+- opening is the smallest category at 4 problems; escape and life_death are mid-sized at 9 problems each.
 - All problems use 9x9 board; 13×19 supported by types but not populated.
 - Time spent tracking remains `0` for all attempts (inherited from v0.1).
 - No AI review or feedback beyond hint system.
