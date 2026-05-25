@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.4.0d delivered — tag/category metadata refinement complete (51 problems, canonical tags). Next: post-v0.4 stabilization / release notes.
+v0.4.0 complete — post-v0.4 stabilization and release notes delivered. 51 problems, 250 tests. Next: v0.5.0a planning.
 
 Current strategy:
 
@@ -15,11 +15,9 @@ Current strategy:
 1. Preserve the stable v0.1.3 local MVP
 2. Keep the app Docker-deployable with Supabase Cloud as external backend
 3. Missing Supabase env must not break local anonymous mode
-4. v0.4.0b content pack completed (12 new problems, 51 total)
-5. v0.4.0c content validation and regression checks completed
-6. v0.4.0d tag/category metadata refinement completed
-7. Post-v0.4 stabilization / release notes (next)
-8. Avoid AI/payment/teacher/leaderboard scope creep
+4. v0.4 content expansion fully delivered and documented
+5. Plan next phase (v0.5.0a)
+6. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -841,11 +839,26 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: Post-v0.4 Stabilization / Release Notes
+# ✅ Post-v0.4 Stabilization / Release Notes — COMPLETED (2026-05-24)
+
+## What was done
+
+- `docs/RELEASE_NOTES_v0.4.md` — v0.4.0 release notes and manual QA checklist.
+- Content inventory documented (51 problems, category breakdown).
+- All v0.4 slices summarized with delivery details and validation status.
+
+## PR
+
+- Branch: `docs/post-v0.4-stabilization-release-notes`
+- PR: #58
+
+---
+
+# Next Task: v0.5.0a — Planning
 
 ## Goal
 
-Finalize the v0.4 content series. Compile release notes, verify end-to-end behavior, and prepare for the next development phase.
+Define the next development phase. This is a planning-only slice. Potential directions: content expansion to ~60+ problems, multi-step content beyond 2 steps, product polish, or infrastructure improvements.
 
 ---
 
@@ -877,6 +890,11 @@ Finalize the v0.4 content series. Compile release notes, verify end-to-end behav
 - Add multi-step content packs (capture, life_death, connect_cut, escape).
 - Fill category gaps (life_death, opening).
 - Refine tags and metadata.
+
+## v0.5.0 — TBD
+
+- Planning-only next phase (v0.5.0a).
+- Potential directions: content expansion, multi-step depth, product polish, infrastructure.
 
 ---
 
