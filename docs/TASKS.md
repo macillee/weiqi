@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.4.0 complete — post-v0.4 stabilization and release notes delivered. 51 problems, 250 tests. Next: v0.5.0a planning.
+v0.5.0a delivered — next phase plan defined. Selected direction: content expansion to ~60+ problems. Next: v0.5.0b content pack (levels 4–5 + endgame).
 
 Current strategy:
 
@@ -15,9 +15,10 @@ Current strategy:
 1. Preserve the stable v0.1.3 local MVP
 2. Keep the app Docker-deployable with Supabase Cloud as external backend
 3. Missing Supabase env must not break local anonymous mode
-4. v0.4 content expansion fully delivered and documented
-5. Plan next phase (v0.5.0a)
-6. Avoid AI/payment/teacher/leaderboard scope creep
+4. v0.4 content series completed (4 slices: plan, content, validation, metadata)
+5. v0.5.0a next phase plan completed (direction: content expansion to 60+)
+6. v0.5.0b content pack: levels 4–5 + endgame (next)
+7. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -854,11 +855,30 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.5.0a — Planning
+# ✅ v0.5.0a Next Phase Plan — COMPLETED (2026-05-25)
+
+## What was done
+
+- Created `docs/NEXT_PHASE_PLAN_v0.5.md` with:
+  - 4 candidate directions evaluated (content expansion, UX polish, multi-step depth, infrastructure)
+  - Primary direction selected: content expansion to ~60+ problems
+  - Rationale: fulfills original MVP scope, fills levels 4–5 and endgame gap, proven process from v0.4
+  - 3 implementation slices defined (v0.5.0b content pack, v0.5.0c validation, v0.5.0d stabilization)
+  - Explicit out-of-scope boundaries and acceptance rules
+- No implementation work — planning only.
+
+## PR
+
+- Branch: `docs/v0.5.0a-next-phase-plan`
+- PR: #60
+
+---
+
+# Next Task: v0.5.0b — Content Pack: Levels 4–5 + Endgame
 
 ## Goal
 
-Define the next development phase. This is a planning-only slice. Potential directions: content expansion to ~60+ problems, multi-step content beyond 2 steps, product polish, or infrastructure improvements.
+Add 12–15 new problems at difficulty levels 4 and 5 across existing categories, plus endgame category problems at levels 1–3. Focus on single-step problems.
 
 ---
 
@@ -891,10 +911,12 @@ Define the next development phase. This is a planning-only slice. Potential dire
 - Fill category gaps (life_death, opening).
 - Refine tags and metadata.
 
-## v0.5.0 — TBD
+## v0.5.0 — Content Expansion (continued)
 
-- Planning-only next phase (v0.5.0a).
-- Potential directions: content expansion, multi-step depth, product polish, infrastructure.
+- v0.5.0a: next phase plan (completed)
+- v0.5.0b: content pack — levels 4–5 + endgame
+- v0.5.0c: content validation
+- v0.5.0d: stabilization and release notes
 
 ---
 
