@@ -897,11 +897,36 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.5.0c — Content Validation and Regression
+# ✅ v0.5.0c — Content Validation and Regression — COMPLETED (2026-05-25)
+
+## What was done
+
+- Added 8 validation tests in `src/__tests__/problems.test.ts`:
+  - All 14 v0.5.0b IDs exist
+  - v0.5.0b IDs beyond old ranges (no reuse)
+  - Level 4 and 5 problems exist after v0.5.0b
+  - Endgame category level range (1–3)
+  - CAP-015 answer captures white (0 liberties after play)
+  - CAP-017 answer fills only corner liberty at (0,0)
+  - ESC-009 initial black group has >0 liberties
+  - ESC-009 answers are empty points
+- Created `docs/CONTENT_REVIEW_v0.5.0c.md`
+- Updated `docs/TASKS.md`: marked v0.5.0c delivered, next → v0.5.0d
+- Test count: 250 → 258
+- No content bugs found in v0.5.0b problems
+
+## PR
+
+- Branch: `test/v0.5.0c-content-validation-regression`
+- PR: #64
+
+---
+
+# Next Task: v0.5.0d — Stabilization and Release Notes
 
 ## Goal
 
-Add validation tests for all new problems, verify multi-step problem data, and stabilize the content pipeline before v0.5.0d release.
+Run full validation, finalize release notes, and tag v0.5.0. Confirm that the content pipeline, validation framework, and documentation are stable.
 
 ---
 
@@ -938,7 +963,7 @@ Add validation tests for all new problems, verify multi-step problem data, and s
 
 - v0.5.0a: next phase plan (completed)
 - v0.5.0b: content pack — levels 4–5 + endgame (completed)
-- v0.5.0c: content validation and regression
+- v0.5.0c: content validation and regression (completed)
 - v0.5.0d: stabilization and release notes
 
 ---
