@@ -3188,5 +3188,1043 @@
     "explanation": "白棋占了一个角，黑棋应该抢占另一个空角。",
     "successMessage": "很好！你知道开局要抢空角！",
     "failureMessage": "还有哪几个角是空的？"
+  },
+  {
+    "id": "CAP-015",
+    "boardSize": 9,
+    "category": "capture",
+    "level": 4,
+    "tags": [
+      "capture",
+      "atari",
+      "liberty-counting"
+    ],
+    "toPlay": "black",
+    "title": "三面包围",
+    "description": "白棋两颗棋子从三面包围，如何吃掉它们？",
+    "initialStones": [
+      {
+        "x": 4,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 5,
+        "y": 3
+      },
+      {
+        "x": 5,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "白棋的两个棋子连在一起。",
+      "黑棋已经围了三面，剩下哪一面？",
+      "从外面紧气就能吃掉白棋。"
+    ],
+    "explanation": "黑棋从外面紧气，白棋只剩一口气，被吃掉了。",
+    "successMessage": "厉害！你会用包围的方法吃棋了！",
+    "failureMessage": "看看白棋还有哪一面是空的。"
+  },
+  {
+    "id": "CAP-016",
+    "boardSize": 9,
+    "category": "capture",
+    "level": 5,
+    "tags": [
+      "capture",
+      "atari",
+      "liberty-counting"
+    ],
+    "toPlay": "black",
+    "title": "三角白棋",
+    "description": "白棋三角形状有三个子，黑棋怎样吃掉它们？",
+    "initialStones": [
+      {
+        "x": 2,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 2,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "白棋有三个子，但它们的出路不多了。",
+      "黑棋已经围了大部分，白棋还剩上面一个出口。",
+      "堵住上面的出口，白棋就被吃掉了。"
+    ],
+    "explanation": "黑棋堵住上面的出口，白棋三角全部被吃。",
+    "successMessage": "太棒了！你能打败三角白棋！",
+    "failureMessage": "想想白棋还剩哪里可以跑？"
+  },
+  {
+    "id": "CAP-017",
+    "boardSize": 9,
+    "category": "capture",
+    "level": 5,
+    "tags": [
+      "capture",
+      "atari",
+      "corner"
+    ],
+    "toPlay": "black",
+    "title": "角上追吃",
+    "description": "角上的白棋想逃跑，黑棋能追上吗？",
+    "initialStones": [
+      {
+        "x": 1,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 0,
+        "y": 2
+      }
+    ],
+    "hints": [
+      "白棋在角上只有两个子。",
+      "黑棋堵住白棋往中间跑的路。",
+      "从角上紧气，白棋就跑不掉了。"
+    ],
+    "explanation": "黑棋堵住角上最后一口气，白棋被吃。",
+    "successMessage": "完美！白棋跑不掉了！",
+    "failureMessage": "想想怎样堵住白棋的去路。"
+  },
+  {
+    "id": "ESC-009",
+    "boardSize": 9,
+    "category": "escape",
+    "level": 4,
+    "tags": [
+      "escape",
+      "liberty-counting",
+      "extend"
+    ],
+    "toPlay": "black",
+    "title": "两子逃跑",
+    "description": "两颗黑棋被白棋包围，一起往哪里跑？",
+    "initialStones": [
+      {
+        "x": 3,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 3
+      },
+      {
+        "x": 4,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "两颗黑棋被白棋三面包围。",
+      "它们现在只有右边是空的。",
+      "一起向右跑，气就变多了！"
+    ],
+    "explanation": "黑棋向右跑，增加了气，从包围中逃出来了。",
+    "successMessage": "很好！两颗黑棋都安全了！",
+    "failureMessage": "看看哪边是空的？"
+  },
+  {
+    "id": "ESC-010",
+    "boardSize": 9,
+    "category": "escape",
+    "level": 5,
+    "tags": [
+      "escape",
+      "liberty-counting",
+      "sequence"
+    ],
+    "toPlay": "black",
+    "title": "边上长蛇",
+    "description": "黑棋三个子在边上排成一条线，快被包围了，往哪里跑？",
+    "initialStones": [
+      {
+        "x": 4,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 7,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 7,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 8
+      }
+    ],
+    "hints": [
+      "黑棋三个子在边上被白棋三面包围了。",
+      "黑棋现在只能往下面跑。",
+      "往下面长，黑棋就安全了。"
+    ],
+    "explanation": "黑棋往下面长出去，脱离了被包围的险境。",
+    "successMessage": "厉害！黑棋长蛇成功逃跑了！",
+    "failureMessage": "想想黑棋还剩哪个方向可以走。"
+  },
+  {
+    "id": "CC-012",
+    "boardSize": 9,
+    "category": "connect_cut",
+    "level": 4,
+    "tags": [
+      "cut",
+      "weak-point",
+      "atari"
+    ],
+    "toPlay": "black",
+    "title": "切断白棋（四）",
+    "description": "白棋有一个弱点，黑棋能切断它们吗？",
+    "initialStones": [
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 2
+      }
+    ],
+    "hints": [
+      "白棋三个子连成一条线。",
+      "中间有一个点断了，黑棋下在那里就能切断白棋。",
+      "从下面切断，白棋就被分开了。"
+    ],
+    "explanation": "黑棋从下面切断，白棋被分成两段。",
+    "successMessage": "真棒！你找到了白棋的弱点！",
+    "failureMessage": "看看白棋中间哪里是弱点。"
+  },
+  {
+    "id": "CC-013",
+    "boardSize": 9,
+    "category": "connect_cut",
+    "level": 5,
+    "tags": [
+      "cut",
+      "weak-point",
+      "capture"
+    ],
+    "toPlay": "black",
+    "title": "切断还是连接？",
+    "description": "白棋有断点，黑棋如何切断并吃掉一块？",
+    "initialStones": [
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 3
+      }
+    ],
+    "hints": [
+      "白棋三个子连成一条线。",
+      "黑棋从下面切断，还能吃掉一颗白棋。",
+      "切断后，中间的白棋就被包围了。"
+    ],
+    "explanation": "黑棋切断白棋，并且下面的白棋无路可逃。",
+    "successMessage": "太厉害了！一石二鸟！",
+    "failureMessage": "从哪里切断既能分开又能吃子？"
+  },
+  {
+    "id": "LD-008",
+    "boardSize": 9,
+    "category": "life_death",
+    "level": 4,
+    "tags": [
+      "life_death",
+      "two-eyes"
+    ],
+    "toPlay": "black",
+    "title": "角上做活",
+    "description": "黑棋在角上的形状还差一点才能活，下在哪里？",
+    "initialStones": [
+      {
+        "x": 1,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 0,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 2,
+        "y": 2
+      }
+    ],
+    "hints": [
+      "黑棋在角上的形状还差一口气才能活。",
+      "下在一个关键点，黑棋就能做出两个眼。",
+      "补上那个缺口，两个眼就出来了。"
+    ],
+    "explanation": "黑棋补上关键点，做出两个眼，活棋了。",
+    "successMessage": "漂亮！黑棋活下来了！",
+    "failureMessage": "想想怎样做出两个眼。"
+  },
+  {
+    "id": "LD-009",
+    "boardSize": 9,
+    "category": "life_death",
+    "level": 5,
+    "tags": [
+      "life_death",
+      "two-eyes"
+    ],
+    "toPlay": "black",
+    "title": "中间做眼",
+    "description": "黑棋在中间被包围了，怎样才能活棋？",
+    "initialStones": [
+      {
+        "x": 3,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 6,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "黑棋被白棋团团包围了。",
+      "黑棋中间还有一个空点可以下。",
+      "下在中间，黑棋就做出两个眼了！"
+    ],
+    "explanation": "黑棋下在中间，做出两个眼，白棋无法杀死黑棋。",
+    "successMessage": "完美！黑棋活棋了！",
+    "failureMessage": "想想中间那个空点下在哪里。"
+  },
+  {
+    "id": "OP-005",
+    "boardSize": 9,
+    "category": "opening",
+    "level": 4,
+    "tags": [
+      "opening",
+      "corner",
+      "big-point"
+    ],
+    "toPlay": "black",
+    "title": "占边",
+    "description": "四个角都有人占了，黑棋下一步占哪里最大？",
+    "initialStones": [
+      {
+        "x": 2,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 6,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 2
+      },
+      {
+        "x": 6,
+        "y": 4
+      },
+      {
+        "x": 4,
+        "y": 6
+      },
+      {
+        "x": 2,
+        "y": 4
+      },
+      {
+        "x": 4,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "四个角都被占了，现在要往边上发展。",
+      "边上的大场比角落的星位小一点。",
+      "棋盘的中间和四条边的中间都是好点。"
+    ],
+    "explanation": "角被占完后，边上的大场和中间是最重要的地方。",
+    "successMessage": "很好！你知道下了角之后要占边！",
+    "failureMessage": "看看边上还有哪些好位置。"
+  },
+  {
+    "id": "END-001",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 1,
+    "tags": [
+      "endgame",
+      "corner"
+    ],
+    "toPlay": "black",
+    "title": "最后的大场",
+    "description": "棋盘上大部分地方都下满了，黑棋最后占哪里最大？",
+    "initialStones": [
+      {
+        "x": 2,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 6,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "四个角都分好了。",
+      "棋盘中间还有一个空点。",
+      "下在中间，虽然不大，但这是最后的好点。"
+    ],
+    "explanation": "棋盘上只剩中间一个大点了，黑棋占住它。",
+    "successMessage": "好！你学会了收官！",
+    "failureMessage": "看看哪里还空着？"
+  },
+  {
+    "id": "END-002",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 2,
+    "tags": [
+      "endgame",
+      "edge"
+    ],
+    "toPlay": "black",
+    "title": "守住边界",
+    "description": "黑棋要守住自己的地盘，下在哪里最好？",
+    "initialStones": [
+      {
+        "x": 1,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 2,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 2,
+        "y": 2
+      }
+    ],
+    "hints": [
+      "黑棋在左下角有一块地盘。",
+      "白棋想从外面侵入，黑棋需要补一手。",
+      "下在 (2,2) 就能守住自己的地盘。"
+    ],
+    "explanation": "黑棋补在边界上，白棋就无法侵入了。",
+    "successMessage": "真棒！黑棋的地盘保住了！",
+    "failureMessage": "想想黑棋哪里需要防守？"
+  },
+  {
+    "id": "END-003",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 3,
+    "tags": [
+      "endgame",
+      "edge"
+    ],
+    "toPlay": "black",
+    "title": "缩小白棋",
+    "description": "白棋的地盘很大，黑棋从哪里缩小它？",
+    "initialStones": [
+      {
+        "x": 5,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 7,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 7,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 7,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 7,
+        "y": 7,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 6,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 7,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 7,
+        "y": 4,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 6,
+        "y": 6
+      }
+    ],
+    "hints": [
+      "白棋在右下角有一块地盘。",
+      "黑棋从外面下进去可以缩小白棋的地。",
+      "下在 (6,6) 附近，白棋的地就变小了。"
+    ],
+    "explanation": "黑棋下在白棋地盘边上的好点，缩小了白棋的目数。",
+    "successMessage": "好棋！黑棋成功缩小了白棋的地！",
+    "failureMessage": "想想从哪里可以缩小白棋。"
+  },
+  {
+    "id": "END-004",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 2,
+    "tags": [
+      "endgame",
+      "connect"
+    ],
+    "toPlay": "black",
+    "title": "连接回家",
+    "description": "黑棋一颗子被白棋隔开了，怎么把它接回来？",
+    "initialStones": [
+      {
+        "x": 2,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 3,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "黑棋在右边多了一颗子，需要接回来。",
+      "中间有一颗白棋挡住了路。",
+      "黑棋从上面连接，就能把棋子接回来了。"
+    ],
+    "explanation": "黑棋从上面连过去，棋子都连在一起了。",
+    "successMessage": "很好！黑棋的棋子都回家了！",
+    "failureMessage": "想想从哪里连接。"
   }
 ]
