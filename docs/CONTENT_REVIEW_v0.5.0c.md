@@ -37,7 +37,8 @@ as correct. No new content bugs were discovered.
 | endgame | 4 | 1–3 |
 | **Total** | **65** | **1–5** |
 
-65 problems total, all single-step. 0 multi-step in the v0.5.0b pack.
+65 problems total: 56 single-step and 9 multi-step.
+The v0.5.0b pack added 14 single-step and 0 multi-step problems.
 
 ## 4. Test / Build Results
 
