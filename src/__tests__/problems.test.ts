@@ -159,8 +159,8 @@ describe("validateAllProblems", () => {
 describe("problem data quality", () => {
   const problems = loadProblems();
 
-  it("total problem count is 51", () => {
-    expect(problems).toHaveLength(51);
+  it("total problem count is 65", () => {
+    expect(problems).toHaveLength(65);
   });
 
   it("v0.1.2 added problem IDs exist", () => {
@@ -278,6 +278,7 @@ describe("problem data quality", () => {
         connect_cut: ["connect", "cut"],
         life_death: ["life_death"],
         opening: ["opening"],
+        endgame: ["endgame"],
       };
       for (const problem of problems) {
         const expected = catTagMap[problem.category] || [];

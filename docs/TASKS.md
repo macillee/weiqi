@@ -874,11 +874,34 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.5.0b — Content Pack: Levels 4–5 + Endgame
+# ✅ v0.5.0b — Content Pack: Levels 4–5 + Endgame — COMPLETED (2026-05-25)
+
+## What was done
+
+- Added 14 new single-step problems to `src/data/problems.json`:
+  - CAP-015 through CAP-017 (capture, levels 4–5)
+  - ESC-009 through ESC-010 (escape, levels 4–5)
+  - CC-012 through CC-013 (connect_cut, levels 4–5)
+  - LD-008 through LD-009 (life_death, levels 4–5)
+  - OP-005 (opening, level 4)
+  - END-001 through END-004 (endgame, levels 1–3)
+- Problem count: 51 → 65
+- Created `docs/CONTENT_REVIEW_v0.5.0b.md`
+- Updated `src/__tests__/problems.test.ts`: count 51→65, added endgame to catTagMap
+- All 250 tests pass, build succeeds
+
+## PR
+
+- Branch: `feat/v0.5.0b-levels-endgame-content`
+- PR: #62
+
+---
+
+# Next Task: v0.5.0c — Content Validation and Regression
 
 ## Goal
 
-Add 12–15 new problems at difficulty levels 4 and 5 across existing categories, plus endgame category problems at levels 1–3. Focus on single-step problems.
+Add validation tests for all new problems, verify multi-step problem data, and stabilize the content pipeline before v0.5.0d release.
 
 ---
 
@@ -914,8 +937,8 @@ Add 12–15 new problems at difficulty levels 4 and 5 across existing categories
 ## v0.5.0 — Content Expansion (continued)
 
 - v0.5.0a: next phase plan (completed)
-- v0.5.0b: content pack — levels 4–5 + endgame
-- v0.5.0c: content validation
+- v0.5.0b: content pack — levels 4–5 + endgame (completed)
+- v0.5.0c: content validation and regression
 - v0.5.0d: stabilization and release notes
 
 ---
