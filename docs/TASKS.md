@@ -940,11 +940,31 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.6.0a — Next Phase Plan
+# ✅ v0.6.0a — Next Phase Plan — COMPLETED (2026-05-26)
+
+## What was done
+
+- Created `docs/NEXT_PHASE_PLAN_v0.6.md` with:
+  - 5 candidate directions evaluated (UX polish, multi-step depth, infrastructure, content balancing, deployment)
+  - Primary direction selected: UX polish / child-facing gameplay refinement
+  - Rationale: content is sufficient at 65 problems; known UX gaps directly affect children
+  - 4 implementation slices defined (v0.6.0b board labels, v0.6.0c animations, v0.6.0d audio, v0.6.0e hints)
+  - Explicit out-of-scope boundaries and acceptance rules
+- Updated `docs/TASKS.md`: marked v0.6.0a delivered, next → v0.6.0b
+- Docs-only task; no code or data changes
+
+## PR
+
+- Branch: `docs/v0.6.0a-next-phase-plan`
+- PR: #67
+
+---
+
+# Next Task: v0.6.0b — Chinese Board Coordinate Labels
 
 ## Goal
 
-Identify the next direction after v0.5 content expansion. Evaluate candidates (UX polish, multi-step depth, infrastructure, additional categories) and define implementation slices.
+Add Chinese numeral labels (一到九) along board edges to help children identify intersection coordinates. No gameplay logic changes.
 
 ---
 
@@ -984,9 +1004,13 @@ Identify the next direction after v0.5 content expansion. Evaluate candidates (U
 - v0.5.0c: content validation and regression (completed)
 - v0.5.0d: stabilization and release notes (completed)
 
-## v0.6.0 — Next Phase
+## v0.6.0 — UX Polish and Gameplay Refinement
 
-- v0.6.0a: next phase plan
+- v0.6.0a: next phase plan (completed)
+- v0.6.0b: Chinese board coordinate labels
+- v0.6.0c: success animations and star effects
+- v0.6.0d: audio feedback (correct/wrong)
+- v0.6.0e (optional): hint presentation polish
 
 ---
 
