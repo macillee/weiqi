@@ -922,11 +922,29 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.5.0d — Stabilization and Release Notes
+# ✅ v0.5.0d — Stabilization and Release Notes — COMPLETED (2026-05-25)
+
+## What was done
+
+- Created `docs/RELEASE_NOTES_v0.5.md` with:
+  - Summary of v0.5.0a/b/c deliverables
+  - Final content inventory (65 problems, categories, levels, single/multi-step split)
+  - Known limitations and manual QA checklist
+- Updated `docs/TASKS.md`: marked v0.5.0d delivered, next → v0.6.0a
+- Docs-only task; no code or data changes
+
+## PR
+
+- Branch: `docs/v0.5.0d-stabilization-release-notes`
+- PR: #66
+
+---
+
+# Next Task: v0.6.0a — Next Phase Plan
 
 ## Goal
 
-Run full validation, finalize release notes, and tag v0.5.0. Confirm that the content pipeline, validation framework, and documentation are stable.
+Identify the next direction after v0.5 content expansion. Evaluate candidates (UX polish, multi-step depth, infrastructure, additional categories) and define implementation slices.
 
 ---
 
@@ -964,7 +982,11 @@ Run full validation, finalize release notes, and tag v0.5.0. Confirm that the co
 - v0.5.0a: next phase plan (completed)
 - v0.5.0b: content pack — levels 4–5 + endgame (completed)
 - v0.5.0c: content validation and regression (completed)
-- v0.5.0d: stabilization and release notes
+- v0.5.0d: stabilization and release notes (completed)
+
+## v0.6.0 — Next Phase
+
+- v0.6.0a: next phase plan
 
 ---
 
