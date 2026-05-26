@@ -936,7 +936,7 @@ Manual validation (requires Supabase env):
 ## PR
 
 - Branch: `docs/v0.5.0d-stabilization-release-notes`
-- PR: #65
+- PR: #66
 
 ---
 

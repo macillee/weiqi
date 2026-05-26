@@ -88,7 +88,7 @@ fills gaps at difficulty levels 4 and 5 across existing categories.
 |---|---|---|
 | 1 | App loads in local anonymous mode | No login required; no Supabase env needed |
 | 2 | Problem list / category navigation | 65 problems listed; category filter works |
-| 3 | Level 4 problems reachable | e.g. CAP-015, CAP-016, ESC-009 load correctly |
+| 3 | Level 4 problems reachable | e.g. CAP-015, ESC-009, CC-012, LD-008, OP-005 load correctly |
 | 4 | Level 5 problems reachable | e.g. CAP-017, ESC-010, LD-009 load correctly |
 | 5 | Endgame problems reachable | END-001 through END-004 render with correct board |
 | 6 | Single-step play | Tap a point → correctness feedback shown |
