@@ -131,6 +131,11 @@ Polish Docker compose workflow, document Supabase local setup, add env validatio
 
 **Acceptance:** Board renders with coordinates in all viewports; `npm run test` passes; `npm run build` passes.
 
+**Non-goals:**
+- no gameplay logic changes
+- no problem data changes
+- no schema changes
+
 ### v0.6.0c — Success Animations and Star Effects
 
 - Add lightweight CSS/keyframe animation on correct answer
@@ -139,6 +144,11 @@ Polish Docker compose workflow, document Supabase local setup, add env validatio
 - No new animation library dependencies if possible (CSS-only)
 
 **Acceptance:** Correct answer triggers visual feedback; `npm run test` passes; `npm run build` passes.
+
+**Non-goals:**
+- no new dependencies if CSS-only
+- no navigation/layout redesign
+- no problem data changes
 
 ### v0.6.0d — Audio Feedback (Correct/Wrong)
 
@@ -149,6 +159,11 @@ Polish Docker compose workflow, document Supabase local setup, add env validatio
 
 **Acceptance:** Audio plays on answer submission; toggleable in settings; `npm run test` passes; `npm run build` passes.
 
+**Non-goals:**
+- no external audio library
+- no package/lockfile changes unless explicitly re-scoped
+- no mandatory audio without opt-out
+
 ### v0.6.0e (optional) — Hint Presentation Polish
 
 - Style hints as progressive reveal cards instead of flat text
@@ -156,6 +171,11 @@ Polish Docker compose workflow, document Supabase local setup, add env validatio
 - Keep hint content unchanged
 
 **Acceptance:** Hints display progressively with board highlights; `npm run test` passes; `npm run build` passes.
+
+**Non-goals:**
+- no hint content changes
+- no answer/validation changes
+- no problem data changes
 
 ---
 

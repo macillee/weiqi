@@ -956,7 +956,7 @@ Manual validation (requires Supabase env):
 ## PR
 
 - Branch: `docs/v0.6.0a-next-phase-plan`
-- PR: #67
+- PR: #68
 
 ---
 
