@@ -6,8 +6,10 @@ import StoneComponent from "./Stone";
 import BoardHighlight from "./BoardHighlight";
 import BoardPoint from "./BoardPoint";
 
-const BOARD_PADDING = 30;
+const BOARD_PADDING = 40;
 const CELL_SIZE = 40;
+const LABEL_FONT_SIZE = 12;
+const CHINESE_NUMBERS = ['一', '二', '三', '四', '五', '六', '七', '八', '九'];
 
 function getStarPoints(size: number): Array<{ x: number; y: number }> {
   if (size === 9) {
@@ -153,6 +155,63 @@ export default function GoBoard({
     }
   }
 
+  const labelY = BOARD_PADDING / 2;
+  const labelYBottom = svgSize - BOARD_PADDING / 2;
+  const labelX = BOARD_PADDING / 2;
+  const labelXRight = svgSize - BOARD_PADDING / 2;
+
+  const coordinateLabels = [];
+  for (let i = 0; i < size; i++) {
+    const pos = coordToPixel(i);
+    const ch = CHINESE_NUMBERS[i];
+    coordinateLabels.push(
+      <text
+        key={`label-top-${i}`}
+        x={pos}
+        y={labelY}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontSize={LABEL_FONT_SIZE}
+        fill="#333"
+      >
+        {ch}
+      </text>,
+      <text
+        key={`label-bottom-${i}`}
+        x={pos}
+        y={labelYBottom}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontSize={LABEL_FONT_SIZE}
+        fill="#333"
+      >
+        {ch}
+      </text>,
+      <text
+        key={`label-left-${i}`}
+        x={labelX}
+        y={pos}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontSize={LABEL_FONT_SIZE}
+        fill="#333"
+      >
+        {ch}
+      </text>,
+      <text
+        key={`label-right-${i}`}
+        x={labelXRight}
+        y={pos}
+        textAnchor="middle"
+        dominantBaseline="central"
+        fontSize={LABEL_FONT_SIZE}
+        fill="#333"
+      >
+        {ch}
+      </text>,
+    );
+  }
+
   return (
     <svg
       viewBox={`0 0 ${svgSize} ${svgSize}`}
@@ -172,6 +231,7 @@ export default function GoBoard({
       />
       {gridLines}
       {starPointElements}
+      {coordinateLabels}
       {highlightElements}
       {stoneElements}
       {lastMoveElement}

@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.5.0a delivered — next phase plan defined. Selected direction: content expansion to ~60+ problems. Next: v0.5.0b content pack (levels 4–5 + endgame).
+v0.6.0b complete — Chinese board coordinate labels added. Next: v0.6.0c success animations and star effects.
 
 Current strategy:
 
@@ -960,11 +960,38 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.6.0b — Chinese Board Coordinate Labels
+# ✅ v0.6.0b — Chinese Board Coordinate Labels — COMPLETED (2026-05-30)
+
+## What was done
+
+- `src/components/board/GoBoard.tsx`:
+  - Increased `BOARD_PADDING` from 30 to 40 to accommodate labels
+  - Added `CHINESE_NUMBERS` constant (一 to 九)
+  - Rendered Chinese numeral text labels on all four sides of the board
+  - Labels placed in padding area outside grid, using `textAnchor="middle"` and `dominantBaseline="central"`
+  - Font size 12px, color `#333` to match grid lines
+- Labels consist of:
+  - Top: 一 二 三 四 五 六 七 八 九 (column labels)
+  - Bottom: same as top
+  - Left: 一 二 三 四 五 六 七 八 九 (row labels)
+  - Right: same as left
+- No gameplay logic changes
+- No problem data, schema, scheduling, weekly report, package/lockfile, SQL, payment, teacher/admin, leaderboard, board-size, or SGF changes
+- `npm run test` passes (258 tests)
+- `npm run build` passes
+
+## PR
+
+- Branch: `feat/v0.6.0b-chinese-board-coordinate-labels`
+- PR: #72
+
+---
+
+# Next Task: v0.6.0c — Success Animations and Star Effects
 
 ## Goal
 
-Add Chinese numeral labels (一到九) along board edges to help children identify intersection coordinates. No gameplay logic changes.
+Add visual celebration effects when children answer correctly, including star animations that reinforce positive feedback.
 
 ---
 
@@ -1007,7 +1034,7 @@ Add Chinese numeral labels (一到九) along board edges to help children identi
 ## v0.6.0 — UX Polish and Gameplay Refinement
 
 - v0.6.0a: next phase plan (completed)
-- v0.6.0b: Chinese board coordinate labels
+- v0.6.0b: Chinese board coordinate labels (completed)
 - v0.6.0c: success animations and star effects
 - v0.6.0d: audio feedback (correct/wrong)
 - v0.6.0e (optional): hint presentation polish
