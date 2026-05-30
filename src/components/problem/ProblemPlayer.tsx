@@ -5,6 +5,7 @@ import GoBoard from "@/components/board/GoBoard";
 import ProblemHeader from "@/components/problem/ProblemHeader";
 import HintPanel from "@/components/problem/HintPanel";
 import FeedbackDialog from "@/components/problem/FeedbackDialog";
+import CelebrationOverlay from "@/components/problem/CelebrationOverlay";
 import type { Problem } from "@/lib/problems";
 import type { Stone as BoardStone, Highlight } from "@/lib/board";
 import {
@@ -41,6 +42,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     x: number;
     y: number;
   } | null>(null);
+  const [celebrateTrigger, setCelebrateTrigger] = useState(0);
 
   // Reset all state when problem changes
   useEffect(() => {
@@ -121,6 +123,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
       onAttempt?.(x, y, isCorrect, currentHintIndex > 0);
 
       if (isCorrect) {
+        setCelebrateTrigger((prev) => prev + 1);
         if (isMultiStep) {
           // Update step result
           setStepResults((prev) => {
@@ -311,13 +314,16 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
         </div>
       )}
 
-      <GoBoard
-        size={problem.boardSize}
-        stones={boardStones}
-        disabled={isDisabled}
-        highlights={highlights}
-        onPointClick={handlePointClick}
-      />
+      <div className="relative">
+        <CelebrationOverlay triggered={celebrateTrigger > 0} key={celebrateTrigger} />
+        <GoBoard
+          size={problem.boardSize}
+          stones={boardStones}
+          disabled={isDisabled}
+          highlights={highlights}
+          onPointClick={handlePointClick}
+        />
+      </div>
 
       {currentResult === null && (
         <HintPanel

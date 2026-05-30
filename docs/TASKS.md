@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.5.0a delivered — next phase plan defined. Selected direction: content expansion to ~60+ problems. Next: v0.5.0b content pack (levels 4–5 + endgame).
+v0.6.0a delivered — next phase plan defined (UX polish / child-facing gameplay refinement). v0.6.0b Chinese board coordinate labels in progress (PR #72). v0.6.0c success animations and star effects now in progress.
 
 Current strategy:
 
@@ -16,9 +16,11 @@ Current strategy:
 2. Keep the app Docker-deployable with Supabase Cloud as external backend
 3. Missing Supabase env must not break local anonymous mode
 4. v0.4 content series completed (4 slices: plan, content, validation, metadata)
-5. v0.5.0a next phase plan completed (direction: content expansion to 60+)
-6. v0.5.0b content pack: levels 4–5 + endgame (next)
-7. Avoid AI/payment/teacher/leaderboard scope creep
+5. v0.5 content series completed (4 slices)
+6. v0.6.0a next phase plan completed (direction: UX polish)
+7. v0.6.0b Chinese board coordinate labels in progress (PR #72)
+8. v0.6.0c success animations and star effects completed
+9. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -960,11 +962,29 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.6.0b — Chinese Board Coordinate Labels
+# ✅ v0.6.0c — Success Animations and Star Effects — COMPLETED (2026-05-30)
+
+## What was done
+
+- `src/components/problem/CelebrationOverlay.tsx`: new component that renders 12 floating star/sparkle emoji particles with randomized positions, sizes, delays, and rotations. Auto-dismisses after 1.5 seconds.
+- `src/app/globals.css`: added `@keyframes celebrate-star` animation (scale-in, float-up, fade-out) and `.animate-celebrate-star` utility class.
+- `src/components/problem/ProblemPlayer.tsx`: integrated `CelebrationOverlay` wrapped around `GoBoard` in a `relative` container. Animation triggers on correct answer via `celebrateTrigger` counter that remounts the overlay component. Wrong answers do not trigger animation.
+- `docs/TASKS.md`: marked v0.6.0c delivered, next → v0.6.0d.
+- `npm run test` passes (258 tests).
+- `npm run build` passes.
+
+## PR
+
+- Branch: `feat/v0.6.0c-success-animations-star-effects`
+- PR: #
+
+---
+
+# Next Task: v0.6.0d — Audio Feedback
 
 ## Goal
 
-Add Chinese numeral labels (一到九) along board edges to help children identify intersection coordinates. No gameplay logic changes.
+Add audio feedback (correct/wrong sounds) to reinforce answer feedback for children.
 
 ---
 
@@ -1007,8 +1027,8 @@ Add Chinese numeral labels (一到九) along board edges to help children identi
 ## v0.6.0 — UX Polish and Gameplay Refinement
 
 - v0.6.0a: next phase plan (completed)
-- v0.6.0b: Chinese board coordinate labels
-- v0.6.0c: success animations and star effects
+- v0.6.0b: Chinese board coordinate labels (in progress, PR #72)
+- v0.6.0c: success animations and star effects (completed)
 - v0.6.0d: audio feedback (correct/wrong)
 - v0.6.0e (optional): hint presentation polish
 
