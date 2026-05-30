@@ -976,7 +976,7 @@ Manual validation (requires Supabase env):
 ## PR
 
 - Branch: `feat/v0.6.0c-success-animations-star-effects`
-- PR: #
+- PR: #76
 
 ---
 
