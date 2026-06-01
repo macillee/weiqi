@@ -21,7 +21,7 @@ Current strategy:
 7. v0.6.0b Chinese board coordinate labels completed (PR #72)
 8. v0.6.0c success animations and star effects completed (PR #76)
 9. v0.6.0d toggleable audio feedback completed (PR #78)
-10. v0.6.0e hint presentation polish completed (PR TBD)
+10. v0.6.0e hint presentation polish completed (PR #80)
 11. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -1066,7 +1066,7 @@ Manual validation (requires Supabase env):
 ## PR
 
 - Branch: `feat/v0.6.0e-hint-presentation`
-- PR: TBD
+- PR: #80
 
 ---
 
@@ -1120,7 +1120,7 @@ Produce a v0.6 release notes document covering v0.6.0a–e, validate the full se
 - v0.6.0b: Chinese board coordinate labels (completed, PR #72)
 - v0.6.0c: success animations and star effects (completed, PR #76)
 - v0.6.0d: toggleable audio feedback (completed, PR #78)
-- v0.6.0e: hint presentation polish (completed, PR TBD)
+- v0.6.0e: hint presentation polish (completed, PR #80)
 - v0.6 stabilization: release notes + next-phase plan (next)
 - v0.6.0e (optional): hint presentation polish
 
