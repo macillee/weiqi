@@ -13,11 +13,11 @@ A web-based Go (Weiqi) training app for children (ages 7–9) who have been lear
 - **Core features**: daily practice, level-based adventure mode, wrong book, star rewards, learning report
 - **Deeper learning**: multi-step problems, spaced review scheduling, parent weekly report
 - **Optional cloud sync (Supabase)**: email sign-up/sign-in, child profiles, server-side progress, localStorage → cloud import
-- **UX polish**: 9×9 SVG board, Chinese coordinate labels (一–九), celebration star animation, toggleable answer audio feedback
-- **Tests**: `npm run test` — 269 passing across 18 test files
+- **UX polish**: 9×9 SVG board, Chinese coordinate labels (一–九), celebration star animation, toggleable answer audio, progressive hint cards with deterministic board markers
+- **Tests**: `npm run test` — 293 passing across 20 test files
 - **Build**: `npm run build` passes; `docker compose up --build` runs the app locally
 
-Next up: **v0.6.0e — Hint presentation polish**.
+Next up: **v0.6 stabilization & release notes**.
 
 ## Project Goal
 
@@ -36,6 +36,7 @@ The first version is **not** a complete Go playing platform — it is a focused,
 - **Optional cloud (Supabase)**: email auth, child profiles, server-side progress, local-to-cloud import
 - **Demo route**: `/demo` never writes to learning progress — safe to try
 - **Answer audio**: short Web Audio tones on correct (660Hz) / wrong (220Hz); opt-out via "Settings → Audio" persists in localStorage
+- **Progressive hints**: each hint is a numbered card with a fade-in animation; hints that mention a `(x, y)` coordinate also add a small outlined ring marker on the board (only while no answer is submitted)
 
 ## Explicitly Out of Scope
 

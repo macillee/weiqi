@@ -14,6 +14,7 @@ import {
   getCurrentStepData,
 } from "@/lib/multi-step-problem";
 import { playCorrect, playWrong } from "@/lib/audioFeedback";
+import { getRevealedHintCoordinates } from "@/lib/hintCoordinate";
 
 type ProblemPlayerProps = {
   problem: Problem;
@@ -269,8 +270,29 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
       }
     }
 
+    const showHintMarkers =
+      currentResult === null && !showAnswer && currentHintIndex > 0;
+    if (showHintMarkers) {
+      const points = getRevealedHintCoordinates(
+        currentHints,
+        currentHintIndex,
+        problem.boardSize,
+      );
+      for (const p of points) {
+        h.push({ x: p.x, y: p.y, type: "hint" });
+      }
+    }
+
     return h;
-  }, [currentWrongMove, currentResult, showAnswer, currentAnswers]);
+  }, [
+    currentWrongMove,
+    currentResult,
+    showAnswer,
+    currentAnswers,
+    currentHints,
+    currentHintIndex,
+    problem.boardSize,
+  ]);
 
   const isDisabled = currentResult !== null;
 

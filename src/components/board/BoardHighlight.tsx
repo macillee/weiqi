@@ -7,11 +7,11 @@ type BoardHighlightProps = {
   highlightType: HighlightType;
 };
 
-const highlightColors: Record<HighlightType, string> = {
-  correct: "rgba(34, 197, 94, 0.6)",
-  wrong: "rgba(239, 68, 68, 0.6)",
-  hint: "rgba(59, 130, 246, 0.6)",
-  lastMove: "rgba(234, 179, 8, 0.5)",
+const highlightColors: Record<HighlightType, { fill: string; stroke: string }> = {
+  correct: { fill: "rgba(34, 197, 94, 0.6)", stroke: "rgba(34, 197, 94, 0.9)" },
+  wrong: { fill: "rgba(239, 68, 68, 0.6)", stroke: "rgba(239, 68, 68, 0.9)" },
+  hint: { fill: "rgba(59, 130, 246, 0.0)", stroke: "rgba(59, 130, 246, 0.95)" },
+  lastMove: { fill: "rgba(234, 179, 8, 0.5)", stroke: "rgba(234, 179, 8, 0.9)" },
 };
 
 export default function BoardHighlight({
@@ -26,8 +26,23 @@ export default function BoardHighlight({
         cx={cx}
         cy={cy}
         r={radius * 0.35}
-        fill={highlightColors[highlightType]}
+        fill={highlightColors[highlightType].fill}
       />
+    );
+  }
+
+  if (highlightType === "hint") {
+    return (
+      <g pointerEvents="none">
+        <circle
+          cx={cx}
+          cy={cy}
+          r={radius * 0.4}
+          fill={highlightColors[highlightType].fill}
+          stroke={highlightColors[highlightType].stroke}
+          strokeWidth={2.5}
+        />
+      </g>
     );
   }
 
@@ -36,7 +51,7 @@ export default function BoardHighlight({
       cx={cx}
       cy={cy}
       r={radius * 0.85}
-      fill={highlightColors[highlightType]}
+      fill={highlightColors[highlightType].fill}
     />
   );
 }

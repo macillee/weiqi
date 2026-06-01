@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.6.0d complete — toggleable audio feedback added. Next: v0.6.0e hint presentation polish.
+v0.6.0e complete — hint presentation polished (progressive cards + deterministic board markers). Next: v0.6 stabilization & release notes.
 
 Current strategy:
 
@@ -21,7 +21,8 @@ Current strategy:
 7. v0.6.0b Chinese board coordinate labels completed (PR #72)
 8. v0.6.0c success animations and star effects completed (PR #76)
 9. v0.6.0d toggleable audio feedback completed (PR #78)
-10. Avoid AI/payment/teacher/leaderboard scope creep
+10. v0.6.0e hint presentation polish completed (PR #80)
+11. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1033,11 +1034,47 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.6.0e — Hint Presentation Polish
+# ✅ v0.6.0e — Hint Presentation Polish — COMPLETED (2026-06-01)
+
+## What was done
+
+- `src/lib/hintCoordinate.ts`: new deterministic parser
+  - `extractHintCoordinate(text, boardSize): {x,y} | null` — strict regex match on `(x, y)` with non-negative integers, both within `[0, boardSize)`
+  - `extractHintCoordinates(hints, boardSize): Point[]` — convenience for an array
+  - Direction words (上面/左边/中间 etc.) and malformed input return `null`; no natural-language guessing
+- `src/components/board/BoardHighlight.tsx`: hint highlight is now a small **outlined** ring (`r * 0.4`, no fill) — visually distinct from the large filled green/red circles used for correct/wrong answers
+- `src/components/problem/HintPanel.tsx`: progressive cards
+  - Each revealed hint renders as a card with a numbered badge (1, 2, 3 …), 💡 icon, and visible/total counter
+  - Newly revealed card gets a 0.4s fade-in animation via a new `hint-fade-in` keyframe in `globals.css`
+  - Empty state distinguishes "no hints in problem" vs "hints available but none revealed"
+  - "显示提示" button remains, hidden when all shown or no hints
+- `src/components/problem/ProblemPlayer.tsx`: derives hint coordinates from the current step's revealed hints and adds them as `type: "hint"` highlights, gated by `result === null && !showAnswer && visibleCount > 0` so they never collide with correct/wrong overlays
+- `src/__tests__/hintCoordinate.test.ts`: 15 tests covering parse, multi-occurrence, out-of-range, malformed, empty/null input, boardSize boundary
+- `src/__tests__/HintPanel.test.tsx`: 9 tests covering empty state, progressive reveal, card count matches visibleCount, show-hint button visibility, click callback, and counter
+- `src/app/globals.css`: added `@keyframes hint-fade-in` and `.animate-hint-fade-in` utility
+- `docs/TASKS.md`: marked v0.6.0e delivered, next → v0.6 stabilization & release notes
+- `npm run test` passes (269 + 24 = 293 tests, 20 files)
+- `npm run build` passes
+- No `package.json` / `package-lock.json` changes
+- No problem data, schema, answer validation, spaced review, weekly report, Supabase, or SQL changes
+- No new external dependencies
+
+## Known limitation (documented)
+
+- Hint coordinates are extracted only from the deterministic `(x, y)` text pattern. Hints that use directional language (上面, 左边, 中间, 角) intentionally do **not** produce a board indicator — this avoids fragile natural-language guessing. Card text remains the only signal in those cases.
+
+## PR
+
+- Branch: `feat/v0.6.0e-hint-presentation`
+- PR: #80
+
+---
+
+# Next Task: v0.6 Stabilization & Release Notes
 
 ## Goal
 
-Style hints as progressive reveal cards and add visual indicators on the board at the corresponding coordinates. Keep hint content unchanged.
+Produce a v0.6 release notes document covering v0.6.0a–e, validate the full set of UX polish slices, and recommend the next phase.
 
 ---
 
@@ -1083,7 +1120,8 @@ Style hints as progressive reveal cards and add visual indicators on the board a
 - v0.6.0b: Chinese board coordinate labels (completed, PR #72)
 - v0.6.0c: success animations and star effects (completed, PR #76)
 - v0.6.0d: toggleable audio feedback (completed, PR #78)
-- v0.6.0e: hint presentation polish (next)
+- v0.6.0e: hint presentation polish (completed, PR #80)
+- v0.6 stabilization: release notes + next-phase plan (next)
 - v0.6.0e (optional): hint presentation polish
 
 ---
