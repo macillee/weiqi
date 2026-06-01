@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { resetProgress } from "@/lib/progress";
 import { useSupabaseAuth } from "@/lib/supabase/auth";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { signOutUser } from "@/lib/supabase/auth-actions";
+import {
+  loadAudioPreference,
+  setAudioEnabled,
+} from "@/lib/audioFeedback";
 
 export default function SettingsPage() {
   const [showConfirm, setShowConfirm] = useState(false);
@@ -14,6 +18,16 @@ export default function SettingsPage() {
   const configured = isSupabaseConfigured();
   const [signingOut, setSigningOut] = useState(false);
   const [signOutError, setSignOutError] = useState<string | null>(null);
+  const [audioEnabled, setAudioEnabledState] = useState(true);
+
+  useEffect(() => {
+    setAudioEnabledState(loadAudioPreference());
+  }, []);
+
+  function handleToggleAudio(enabled: boolean) {
+    setAudioEnabled(enabled);
+    setAudioEnabledState(enabled);
+  }
 
   function handleReset() {
     resetProgress();
@@ -90,6 +104,33 @@ export default function SettingsPage() {
             <p className="text-red-600 text-sm">{signOutError}</p>
           </div>
         )}
+
+        <div className="bg-white rounded-xl p-6 shadow-lg mb-6">
+          <h2 className="text-lg font-bold text-amber-900 mb-2">声音设置</h2>
+          <p className="text-sm text-gray-600 mb-4">
+            答对或答错时播放短促提示音。关闭后，答题时不会发出任何声音。
+          </p>
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-sm text-gray-700">
+              {audioEnabled ? "声音：开" : "声音：关"}
+            </span>
+            <button
+              type="button"
+              role="switch"
+              aria-checked={audioEnabled}
+              onClick={() => handleToggleAudio(!audioEnabled)}
+              className={`relative w-14 h-8 rounded-full transition-colors ${
+                audioEnabled ? "bg-green-500" : "bg-gray-300"
+              }`}
+            >
+              <span
+                className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full shadow transition-transform ${
+                  audioEnabled ? "translate-x-6" : "translate-x-0"
+                }`}
+              />
+            </button>
+          </div>
+        </div>
 
         <div className="bg-white rounded-xl p-6 shadow-lg">
           <h2 className="text-lg font-bold text-amber-900 mb-2">

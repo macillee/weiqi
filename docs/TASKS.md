@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.6.0c complete — success animations and star effects added. Next: v0.6.0d audio feedback.
+v0.6.0d complete — toggleable audio feedback added. Next: v0.6.0e hint presentation polish.
 
 Current strategy:
 
@@ -20,7 +20,8 @@ Current strategy:
 6. v0.6.0a next phase plan completed (direction: UX polish)
 7. v0.6.0b Chinese board coordinate labels completed (PR #72)
 8. v0.6.0c success animations and star effects completed (PR #76)
-9. Avoid AI/payment/teacher/leaderboard scope creep
+9. v0.6.0d toggleable audio feedback completed (PR TBD)
+10. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1007,11 +1008,36 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.6.0d — Audio Feedback
+# ✅ v0.6.0d — Toggleable Audio Feedback — COMPLETED (2026-06-01)
+
+## What was done
+
+- `src/lib/audioFeedback.ts`: new helper module
+  - `playCorrect()` / `playWrong()` use Web Audio API generated tones (sine wave, ~140–160ms, gentle gain) with envelope ramp to avoid clicks
+  - `loadAudioPreference()` / `isAudioEnabled()` / `setAudioEnabled(enabled)` persist user choice to `localStorage["children-go-app:v0.6:audio"]` (default = enabled)
+  - All functions are no-op safe when `window` / `AudioContext` is unavailable (SSR, autoplay block, no Web Audio); never throw
+  - `AudioContext` is created lazily, cached, and resumed on first call
+- `src/__tests__/audioFeedback.test.ts`: 11 new tests covering default preference, persistence, malformed values, localStorage access errors, no-op when disabled, tone parameter shape, and graceful fallback when AudioContext is missing
+- `src/components/problem/ProblemPlayer.tsx`: invokes `playCorrect()` on correct answers and `playWrong()` on wrong answers; both are fire-and-forget (`void`) so audio never blocks the answer flow
+- `src/app/settings/page.tsx`: new "声音设置" card with on/off toggle (accessible `role="switch"`, `aria-checked`); state initialized from `loadAudioPreference()` on mount
+- `docs/TASKS.md`: marked v0.6.0d delivered, next → v0.6.0e hint presentation polish
+- `npm run test` passes (258 + 11 = 269 tests)
+- `npm run build` passes
+- No `package.json` / `package-lock.json` changes
+- No problem data, schema, spaced review, weekly report, Supabase, or SQL changes
+
+## PR
+
+- Branch: `feat/v0.6.0d-audio-feedback`
+- PR: TBD
+
+---
+
+# Next Task: v0.6.0e — Hint Presentation Polish
 
 ## Goal
 
-Add audio feedback (correct/wrong sounds) to reinforce answer feedback for children.
+Style hints as progressive reveal cards and add visual indicators on the board at the corresponding coordinates. Keep hint content unchanged.
 
 ---
 
@@ -1056,7 +1082,8 @@ Add audio feedback (correct/wrong sounds) to reinforce answer feedback for child
 - v0.6.0a: next phase plan (completed)
 - v0.6.0b: Chinese board coordinate labels (completed, PR #72)
 - v0.6.0c: success animations and star effects (completed, PR #76)
-- v0.6.0d: audio feedback (correct/wrong)
+- v0.6.0d: toggleable audio feedback (completed, PR TBD)
+- v0.6.0e: hint presentation polish (next)
 - v0.6.0e (optional): hint presentation polish
 
 ---
