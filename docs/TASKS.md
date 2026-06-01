@@ -1113,7 +1113,7 @@ Recommended secondary if content gap is judged non-pressing:
 ## PR
 
 - Branch: `docs/v0.6-stabilization-release-notes`
-- PR: TBD (closes #81)
+- PR: #82 (closes #81)
 
 ---
 
