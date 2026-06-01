@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   extractHintCoordinate,
   extractHintCoordinates,
+  getRevealedHintCoordinates,
 } from "@/lib/hintCoordinate";
 
 describe("extractHintCoordinate", () => {
@@ -97,5 +98,60 @@ describe("extractHintCoordinates", () => {
 
   it("returns an empty array for empty input", () => {
     expect(extractHintCoordinates([], 9)).toEqual([]);
+  });
+});
+
+describe("getRevealedHintCoordinates (regression: do not leak future hints)", () => {
+  it("returns no coordinates when visibleCount is 0", () => {
+    const hints = ["第一条 (1,1)", "第二条 (2,2)"];
+    expect(getRevealedHintCoordinates(hints, 0, 9)).toEqual([]);
+  });
+
+  it("only uses the first visible hint when visibleCount is 1", () => {
+    const hints = ["第一条 (1,1)", "第二条 (2,2)"];
+    expect(getRevealedHintCoordinates(hints, 1, 9)).toEqual([
+      { x: 1, y: 1 },
+    ]);
+    expect(
+      getRevealedHintCoordinates(hints, 1, 9).some(
+        (p) => p.x === 2 && p.y === 2,
+      ),
+    ).toBe(false);
+  });
+
+  it("reveals additional coordinates only when visibleCount grows", () => {
+    const hints = ["第一条 (1,1)", "第二条 (2,2)", "第三条 (3,3)"];
+    expect(getRevealedHintCoordinates(hints, 1, 9)).toEqual([
+      { x: 1, y: 1 },
+    ]);
+    expect(getRevealedHintCoordinates(hints, 2, 9)).toEqual([
+      { x: 1, y: 1 },
+      { x: 2, y: 2 },
+    ]);
+    expect(getRevealedHintCoordinates(hints, 3, 9)).toEqual([
+      { x: 1, y: 1 },
+      { x: 2, y: 2 },
+      { x: 3, y: 3 },
+    ]);
+  });
+
+  it("clamps visibleCount to hints.length", () => {
+    const hints = ["第一条 (1,1)"];
+    expect(getRevealedHintCoordinates(hints, 99, 9)).toEqual([
+      { x: 1, y: 1 },
+    ]);
+  });
+
+  it("treats negative visibleCount as 0", () => {
+    const hints = ["第一条 (1,1)"];
+    expect(getRevealedHintCoordinates(hints, -3, 9)).toEqual([]);
+  });
+
+  it("ignores non-coord hints entirely", () => {
+    const hints = ["上面", "下在 (2,2) 就行", "左边"];
+    expect(getRevealedHintCoordinates(hints, 1, 9)).toEqual([]);
+    expect(getRevealedHintCoordinates(hints, 2, 9)).toEqual([
+      { x: 2, y: 2 },
+    ]);
   });
 });

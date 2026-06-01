@@ -33,3 +33,13 @@ export function extractHintCoordinates(
   }
   return out;
 }
+
+export function getRevealedHintCoordinates(
+  hints: ReadonlyArray<string>,
+  visibleCount: number,
+  boardSize: number,
+): Point[] {
+  const safeCount = Math.max(0, Math.min(visibleCount, hints.length));
+  if (safeCount === 0) return [];
+  return extractHintCoordinates(hints.slice(0, safeCount), boardSize);
+}
