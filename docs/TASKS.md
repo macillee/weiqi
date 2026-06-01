@@ -20,7 +20,7 @@ Current strategy:
 6. v0.6.0a next phase plan completed (direction: UX polish)
 7. v0.6.0b Chinese board coordinate labels completed (PR #72)
 8. v0.6.0c success animations and star effects completed (PR #76)
-9. v0.6.0d toggleable audio feedback completed (PR TBD)
+9. v0.6.0d toggleable audio feedback completed (PR #78)
 10. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -1029,7 +1029,7 @@ Manual validation (requires Supabase env):
 ## PR
 
 - Branch: `feat/v0.6.0d-audio-feedback`
-- PR: TBD
+- PR: #78
 
 ---
 
@@ -1082,7 +1082,7 @@ Style hints as progressive reveal cards and add visual indicators on the board a
 - v0.6.0a: next phase plan (completed)
 - v0.6.0b: Chinese board coordinate labels (completed, PR #72)
 - v0.6.0c: success animations and star effects (completed, PR #76)
-- v0.6.0d: toggleable audio feedback (completed, PR TBD)
+- v0.6.0d: toggleable audio feedback (completed, PR #78)
 - v0.6.0e: hint presentation polish (next)
 - v0.6.0e (optional): hint presentation polish
 
