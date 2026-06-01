@@ -94,15 +94,17 @@ export default function PracticePage() {
   const handleNext = useCallback(async () => {
     if (!session) return;
     const updated = advancePracticeSession(session);
-    setSession(updated);
     if (updated.completed) {
+      setPhase("summary");
+      setSession(updated);
       const result = await recordDailyPracticeCompleteWithSync(parentUserId);
       setProgress(result.progress);
       setStarsEarnedThisSession((prev) => prev + result.starsEarned);
       if (result.sync.synced || result.sync.error) {
         setSyncResult(result.sync);
       }
-      setPhase("summary");
+    } else {
+      setSession(updated);
     }
   }, [session, parentUserId]);
 
@@ -226,8 +228,9 @@ export default function PracticePage() {
     );
   }
 
-  if (phase === "playing" && session) {
+  if (phase === "playing" && session && !session.completed) {
     const problem = session.problems[session.currentIndex];
+    if (!problem) return null;
     return (
       <div className="min-h-screen bg-amber-50">
         <div className="max-w-2xl mx-auto">
