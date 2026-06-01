@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.6.0e complete — hint presentation polished (progressive cards + deterministic board markers). Next: v0.6 stabilization & release notes.
+v0.6 stabilization complete — release notes and manual QA checklist published. Next: v0.7.0a planning (recommended primary direction: content balancing — endgame / opening / level distribution; secondary: infrastructure / E2E / CI hardening).
 
 Current strategy:
 
@@ -22,7 +22,8 @@ Current strategy:
 8. v0.6.0c success animations and star effects completed (PR #76)
 9. v0.6.0d toggleable audio feedback completed (PR #78)
 10. v0.6.0e hint presentation polish completed (PR #80)
-11. Avoid AI/payment/teacher/leaderboard scope creep
+11. v0.6 stabilization completed — release notes and QA checklist published
+12. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1070,11 +1071,66 @@ Manual validation (requires Supabase env):
 
 ---
 
-# Next Task: v0.6 Stabilization & Release Notes
+# ✅ v0.6 Stabilization & Release Notes — COMPLETED (2026-06-01)
+
+## What was done
+
+- `docs/RELEASE_NOTES_v0.6.md` — v0.6 release notes covering v0.6.0a–e:
+  direction and rationale, per-slice summary (PR #68/#72/#76/#78/#80),
+  backward compatibility, known limitations (including
+  deterministic-only hint coordinate parsing), validation status, and
+  a short next-phase comparison.
+- `docs/QA_CHECKLIST_v0.6.md` — manual QA checklist covering local
+  anonymous mode, `/demo` isolation, practice / level / chapter flows,
+  Chinese board labels, correct-answer celebration, audio
+  enable/disable + refresh persistence, progressive hint cards,
+  deterministic board hint markers and overlap rules with
+  correct/wrong overlays, wrong book, report, spaced review smoke
+  check, build/test smoke check, and mobile sanity.
+- `docs/TASKS.md` — current phase updated to v0.6 stabilization
+  complete, next task set to v0.7.0a planning, future roadmap cleaned
+  to remove the stale "v0.6.0e (optional)" trailing line and to
+  introduce a v0.7.0 planning entry.
+- Docs-only change. No code, test, config, package, lockfile, schema,
+  problem data, audio, animation, hint, coordinate-label, spaced
+  review, weekly report, wrong book, progress, Supabase, or SQL
+  behavior was modified.
+- `npm run test` and `npm run build` were not re-run for this PR —
+  no code paths changed. The numbers cited in the release notes
+  (299 tests / 20 files) were captured against `main` at `ac94ffb`
+  immediately after v0.6.0e (PR #80) merged.
+
+## Next phase recommendation
+
+`v0.7.0a` should be a planning-only slice that selects a single
+direction. Recommended primary: **content balancing** (more endgame,
+more opening, better level 3–5 distribution) — addresses the v0.5
+limitations and continues the proven v0.4 / v0.5 expansion pattern.
+Recommended secondary if content gap is judged non-pressing:
+**infrastructure / E2E / CI hardening**. See
+`docs/RELEASE_NOTES_v0.6.md` section 7 for the full comparison.
+
+## PR
+
+- Branch: `docs/v0.6-stabilization-release-notes`
+- PR: TBD (closes #81)
+
+---
+
+# Next Task: v0.7.0a Next Phase Plan
 
 ## Goal
 
-Produce a v0.6 release notes document covering v0.6.0a–e, validate the full set of UX polish slices, and recommend the next phase.
+Produce a planning-only `docs/NEXT_PHASE_PLAN_v0.7.md` that:
+
+- evaluates candidate directions (content balancing, deeper multi-step,
+  infrastructure / E2E / CI, deployment / Supabase env hardening);
+- selects exactly one primary direction with rationale;
+- defines 2–4 small, reviewable implementation slices;
+- lists explicit out-of-scope boundaries (no AI, no payment, no teacher
+  / admin, no leaderboard, no 13×13 / 19×19, no SGF, no schema rewrite,
+  no redesign);
+- does **not** start implementation.
 
 ---
 
@@ -1121,8 +1177,14 @@ Produce a v0.6 release notes document covering v0.6.0a–e, validate the full se
 - v0.6.0c: success animations and star effects (completed, PR #76)
 - v0.6.0d: toggleable audio feedback (completed, PR #78)
 - v0.6.0e: hint presentation polish (completed, PR #80)
-- v0.6 stabilization: release notes + next-phase plan (next)
-- v0.6.0e (optional): hint presentation polish
+- v0.6 stabilization: release notes + QA checklist (completed, PR #81)
+
+## v0.7.0 — Next Phase (Planning Only)
+
+- v0.7.0a: next phase plan (next; planning-only; selects one of content
+  balancing, deeper multi-step, infrastructure / E2E / CI, or deployment
+  / Supabase env hardening; see `docs/RELEASE_NOTES_v0.6.md` section 7
+  for the comparison)
 
 ---
 
