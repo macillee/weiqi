@@ -13,6 +13,7 @@ import {
   computeBoardStonesForStep,
   getCurrentStepData,
 } from "@/lib/multi-step-problem";
+import { playCorrect, playWrong } from "@/lib/audioFeedback";
 
 type ProblemPlayerProps = {
   problem: Problem;
@@ -123,6 +124,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
       onAttempt?.(x, y, isCorrect, currentHintIndex > 0);
 
       if (isCorrect) {
+        void playCorrect();
         setCelebrateTrigger((prev) => prev + 1);
         if (isMultiStep) {
           // Update step result
@@ -145,6 +147,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
         }
       } else {
         // Wrong answer
+        void playWrong();
         if (isMultiStep) {
           const newWrong = currentWrongAttempts + 1;
           
