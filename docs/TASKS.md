@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.6.0a delivered — next phase plan defined (UX polish / child-facing gameplay refinement). v0.6.0b Chinese board coordinate labels in progress (PR #72). v0.6.0c success animations and star effects now in progress.
+v0.6.0c complete — success animations and star effects added. Next: v0.6.0d audio feedback.
 
 Current strategy:
 
@@ -18,8 +18,8 @@ Current strategy:
 4. v0.4 content series completed (4 slices: plan, content, validation, metadata)
 5. v0.5 content series completed (4 slices)
 6. v0.6.0a next phase plan completed (direction: UX polish)
-7. v0.6.0b Chinese board coordinate labels in progress (PR #72)
-8. v0.6.0c success animations and star effects completed
+7. v0.6.0b Chinese board coordinate labels completed (PR #72)
+8. v0.6.0c success animations and star effects completed (PR #76)
 9. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -962,6 +962,33 @@ Manual validation (requires Supabase env):
 
 ---
 
+# ✅ v0.6.0b — Chinese Board Coordinate Labels — COMPLETED (2026-05-30)
+
+## What was done
+
+- `src/components/board/GoBoard.tsx`:
+  - Increased `BOARD_PADDING` from 30 to 40 to accommodate labels
+  - Added `CHINESE_NUMBERS` constant (一 to 九)
+  - Rendered Chinese numeral text labels on all four sides of the board
+  - Labels placed in padding area outside grid, using `textAnchor="middle"` and `dominantBaseline="central"`
+  - Font size 12px, color `#333` to match grid lines
+- Labels consist of:
+  - Top: 一 二 三 四 五 六 七 八 九 (column labels)
+  - Bottom: same as top
+  - Left: 一 二 三 四 五 六 七 八 九 (row labels)
+  - Right: same as left
+- No gameplay logic changes
+- No problem data, schema, scheduling, weekly report, package/lockfile, SQL, payment, teacher/admin, leaderboard, board-size, or SGF changes
+- `npm run test` passes (258 tests)
+- `npm run build` passes
+
+## PR
+
+- Branch: `feat/v0.6.0b-chinese-board-coordinate-labels`
+- PR: #72
+
+---
+
 # ✅ v0.6.0c — Success Animations and Star Effects — COMPLETED (2026-05-30)
 
 ## What was done
@@ -1027,8 +1054,8 @@ Add audio feedback (correct/wrong sounds) to reinforce answer feedback for child
 ## v0.6.0 — UX Polish and Gameplay Refinement
 
 - v0.6.0a: next phase plan (completed)
-- v0.6.0b: Chinese board coordinate labels (in progress, PR #72)
-- v0.6.0c: success animations and star effects (completed)
+- v0.6.0b: Chinese board coordinate labels (completed, PR #72)
+- v0.6.0c: success animations and star effects (completed, PR #76)
 - v0.6.0d: audio feedback (correct/wrong)
 - v0.6.0e (optional): hint presentation polish
 
