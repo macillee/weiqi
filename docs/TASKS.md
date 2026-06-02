@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.6 stabilization complete — release notes and manual QA checklist published. Next: v0.7.0a planning (recommended primary direction: content balancing — endgame / opening / level distribution; secondary: infrastructure / E2E / CI hardening).
+v0.7.0a planning complete — primary direction selected: content balancing (endgame + opening + level 3–5 rebalance). Next: v0.7.0b content pack.
 
 Current strategy:
 
@@ -22,8 +22,10 @@ Current strategy:
 8. v0.6.0c success animations and star effects completed (PR #76)
 9. v0.6.0d toggleable audio feedback completed (PR #78)
 10. v0.6.0e hint presentation polish completed (PR #80)
-11. v0.6 stabilization completed — release notes and QA checklist published
-12. Avoid AI/payment/teacher/leaderboard scope creep
+11. v0.6 stabilization completed — release notes and QA checklist published (PR #82)
+12. v0.6 follow-up fix completed — /practice last-problem async race (PR #84)
+13. v0.7.0a next phase plan completed — primary direction: content balancing
+14. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1117,20 +1119,93 @@ Recommended secondary if content gap is judged non-pressing:
 
 ---
 
-# Next Task: v0.7.0a Next Phase Plan
+# ✅ v0.6 Follow-up: /practice Last-Problem Async Race Fix — COMPLETED (2026-06-02)
+
+## What was done
+
+- `src/app/practice/page.tsx`:
+  - `handleNext` now calls `setPhase("summary")` in the same
+    batched update as `setSession(updated)` when the advanced
+    session is `completed`, so the `"playing"` branch never sees
+    an out-of-bounds `session.currentIndex`. The async
+    `recordDailyPracticeCompleteWithSync` call happens **after**
+    the phase flip, so the `"summary"` branch re-renders during
+    the await window.
+  - Render branch gated on `!session.completed` plus a defensive
+    `if (!problem) return null` belt-and-suspenders guard.
+- `src/__tests__/practice-page.test.tsx` (new, 2 tests):
+  - End-of-session regression: with a deferred
+    `recordDailyPracticeCompleteWithSync` Promise, asserts the
+    summary phase is rendered synchronously and ProblemPlayer is
+    never rendered with an undefined / `"MISSING"` problem during
+    the await window.
+  - Non-final advance: with two problems, `onNext` on the first
+    problem stays in playing phase and does **not** call
+    `recordDailyPracticeCompleteWithSync`.
+- `npm run test` passes (301 tests / 21 files).
+- `npm run build` passes.
+- No `package.json` / `package-lock.json` changes.
+- No problem data, schema, ProblemPlayer, audio, animation, hint,
+  coordinate-label, spaced review, weekly report, Supabase, or
+  SQL changes.
+
+## PR
+
+- Branch: `fix/practice-completion-race`
+- PR: #84 (closes #83)
+
+---
+
+# ✅ v0.7.0a — Next Phase Plan — COMPLETED (2026-06-02)
+
+## What was done
+
+- `docs/NEXT_PHASE_PLAN_v0.7.md` — next phase plan covering:
+  - context: v0.6 polish + stabilization + follow-up fix shipped;
+    65 problems across 6 categories; level 2 dominance;
+    endgame / opening thin.
+  - 4 candidate directions evaluated (content balancing, deeper
+    multi-step, infrastructure / E2E / CI, deployment / Supabase
+    env hardening) with strengths, weaknesses, slice count, and
+    fit-now verdict for each.
+  - primary direction selected: **A — content balancing**
+    (endgame + opening + level 3–5 rebalance), with rationale
+    tied to v0.5 documented limitations and v0.6 UX readiness.
+  - 3 implementation slices defined (v0.7.0b content pack,
+    v0.7.0c content validation, v0.7.0d stabilization and release
+    notes), each with goal, scope, acceptance criteria, and
+    explicit non-goals.
+  - out-of-scope boundaries and v0.7 acceptance rules
+    (one PR per slice, no schema rewrite, no package / lockfile
+    unless explicitly scoped, no AI / payment / teacher / admin /
+    leaderboard / board-size / SGF / multiplayer).
+- `docs/TASKS.md` updated: current phase set to v0.7.0a complete,
+  next task set to v0.7.0b, future roadmap cleaned and extended
+  with v0.7.0b/c/d entries.
+- Docs-only change. No code, test, config, package, lockfile,
+  schema, problem data, runtime, Supabase, or SQL behavior was
+  modified.
+
+## PR
+
+- Branch: `docs/v0.7.0a-next-phase-plan`
+- PR: TBD (closes #85)
+
+---
+
+# Next Task: v0.7.0b Endgame + Opening + Level 3–5 Content Pack
 
 ## Goal
 
-Produce a planning-only `docs/NEXT_PHASE_PLAN_v0.7.md` that:
+Bring the problem library from 65 to ~80 problems by adding
+endgame and opening content and rebalancing level 3–5, while
+staying strictly within the existing single-step and 2-step
+multi-step schema.
 
-- evaluates candidate directions (content balancing, deeper multi-step,
-  infrastructure / E2E / CI, deployment / Supabase env hardening);
-- selects exactly one primary direction with rationale;
-- defines 2–4 small, reviewable implementation slices;
-- lists explicit out-of-scope boundaries (no AI, no payment, no teacher
-  / admin, no leaderboard, no 13×13 / 19×19, no SGF, no schema rewrite,
-  no redesign);
-- does **not** start implementation.
+See `docs/NEXT_PHASE_PLAN_v0.7.md` § 4 for the proposed scope,
+acceptance criteria, and non-goals of v0.7.0b. This planning
+entry intentionally does **not** pre-author any problem or
+pre-define the exact ID list — that is v0.7.0b's job.
 
 ---
 
@@ -1177,14 +1252,15 @@ Produce a planning-only `docs/NEXT_PHASE_PLAN_v0.7.md` that:
 - v0.6.0c: success animations and star effects (completed, PR #76)
 - v0.6.0d: toggleable audio feedback (completed, PR #78)
 - v0.6.0e: hint presentation polish (completed, PR #80)
-- v0.6 stabilization: release notes + QA checklist (completed, PR #81)
+- v0.6 stabilization: release notes + QA checklist (completed, PR #82)
+- v0.6 follow-up: /practice last-problem async race fix (completed, PR #84)
 
-## v0.7.0 — Next Phase (Planning Only)
+## v0.7.0 — Content Balancing (Endgame + Opening + Level 3–5)
 
-- v0.7.0a: next phase plan (next; planning-only; selects one of content
-  balancing, deeper multi-step, infrastructure / E2E / CI, or deployment
-  / Supabase env hardening; see `docs/RELEASE_NOTES_v0.6.md` section 7
-  for the comparison)
+- v0.7.0a: next phase plan (completed, PR TBD / issue #85)
+- v0.7.0b: endgame + opening + level 3–5 content pack (next)
+- v0.7.0c: content validation and regression
+- v0.7.0d: stabilization and release notes
 
 ---
 
