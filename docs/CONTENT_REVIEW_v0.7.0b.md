@@ -18,12 +18,12 @@
 | END-007 | endgame | 4 | endgame, center, connect | Connect two separate black groups by playing between them, joining them into one larger group |
 | END-008 | endgame | 5 | endgame, center, defend | Defend the last big point in the center before white can take it (introduces "one-point ko-like" defensive play) |
 | OP-006 | opening | 5 | opening, center, tengen | Play tengen (4,4) after opponent takes a corner — high-level balanced opening concept |
-| OP-007 | opening | 3 | opening, approach | Approach an opponent's corner stone with a small knight's move (5,3) |
-| OP-008 | opening | 3 | opening, corner, secure | Secure your own corner with a small knight's move (1,1 → 2,1) |
-| OP-009 | opening | 4 | opening, extend | Extend from a corner stone along the side to claim a base |
-| CAP-018 | capture | 3 | capture, big-group, liberty-counting | Capture a white 2×2 block by filling one of its two remaining liberties |
+| OP-007 | opening | 3 | opening, approach | Approach an opponent's corner stone with a 2-space diagonal ("small knight's move" 小飞) at (2,2) |
+| OP-008 | opening | 3 | opening, corner, secure | Secure your own corner stone at (0,0) with a 2-space diagonal ("small knight's move" 小飞) extension to (2,2) |
+| OP-009 | opening | 4 | opening, extend | Extend from a corner stone at (0,0) along the left edge to (0,3) to claim a side base |
+| CAP-018 | capture | 3 | capture, big-group, liberty-counting | Capture a white 2×2 block (in atari) by filling its only remaining liberty (4,1), capturing all 4 stones in one move |
 | ESC-011 | escape | 3 | escape, center, atari | Escape a single black stone in atari by extending toward the center |
-| CC-014 | connect_cut | 3 | connect_cut, cut, separate | Cut two white stones in a line by playing between them |
+| CC-014 | connect_cut | 3 | connect_cut, cut, separate | Cut between two white stones at (3,2) and (3,4) by playing (3,3) |
 | LD-010 | life_death | 3 | life_death, eye, make-eye | Make the first eye in a 3×3 ring of black stones by playing the center |
 
 ### Category Distribution After Addition
@@ -76,11 +76,11 @@ Black plays first. The corner area near (0,0) has a small empty region surrounde
 
 ### END-007 — 中腹连接 (L4, center, connect)
 
-Black plays first. Two separate black groups in the center: vertical group at (3,2)(3,3)(4,3) and diagonal pair at (5,4)(5,5). Answer (4,4) sits adjacent to both (4,3) and (5,4), connecting them into a single 5-stone group. The L4 lesson: "look for points that touch two of your own groups."
+Black plays first. Two separate black groups in the center: 3-stone group at (3,2)(3,3)(4,3) and 2-stone pair at (5,4)(5,5). Answer (4,4) sits adjacent to both (4,3) and (5,4), connecting the 5 existing stones plus the new stone into a single 6-stone group. The L4 lesson: "look for points that touch two of your own groups."
 
 ### END-008 — 中腹的防守 (L5, center, defend)
 
-Black plays first. Center area near (3,3)(4,3)(3,4) with a white stone at (2,4) and (4,2). The last big empty point in this center is (4,4). If black doesn't play (4,4), white can invade. Answer (4,4) defends the territory.
+Black plays first. Center area with black at (2,2)(2,3)(2,4)(3,2)(3,4)(4,2) and white at (5,2)(5,3)(5,4)(3,5)(4,5). The key connecting point for the black group is (3,3). Answer (3,3) joins (3,2), (3,4), and (2,3) into a single group with many more liberties, defending against white's pressure from both sides.
 
 ### OP-006 — 对手占角后下天元 (L5, opening, tengen)
 
@@ -88,27 +88,27 @@ Black plays first. White has taken a corner at (2,2). Black's answer is the teng
 
 ### OP-007 — 小飞挂角 (L3, opening, approach)
 
-Black plays first. White corner stone at (0,0). Black plays (2,2) — a "small knight's move" (小飞) approach, demonstrating standard approach-play pattern.
+Black plays first. White corner stone at (0,0). Black plays (2,2) — a 2-space diagonal "small knight's move" (小飞) approach, demonstrating standard approach-play pattern.
 
 ### OP-008 — 小飞守角 (L3, opening, corner, secure)
 
-Black plays first. Black corner stone at (1,1). Black's answer (2,1) is a "small knight's move" (小飞) corner extension, securing the corner shape.
+Black plays first. Black corner stone at (0,0). Black's answer (2,2) is a 2-space diagonal "small knight's move" (小飞) corner extension, securing the corner shape.
 
 ### OP-009 — 开拆 (L4, opening, extend)
 
-Black plays first. Black corner stone at (1,1). Black's answer (1,4) extends along the 2nd line to claim a side base. Lesson: extending from a stable stone claims territory.
+Black plays first. Black corner stone at (0,0). Black's answer (0,3) extends 3 spaces down the left edge to claim a side base. Lesson: extending from a stable corner stone claims territory along the side.
 
 ### CAP-018 — 吃掉白棋大块 (L3, big-group, liberty-counting)
 
-White 2×2 block at (3,2)(3,3)(4,2)(4,3) is fully surrounded by black. White has 2 liberties left: (3,1) and (4,1). Filling either captures the entire 4-stone white group. Both (3,1) and (4,1) are valid answers.
+White 2×2 block at (3,2)(3,3)(4,2)(4,3) is surrounded by black on all sides: (2,2)(2,3)(2,4)(3,1)(3,4)(4,4)(5,2)(5,3)(5,4). After black's (3,1), white has only 1 liberty left at (4,1). Answer (4,1) fills that final liberty and captures the entire 4-stone white group in a single move.
 
 ### ESC-011 — 跑向中腹 (L3, escape, atari)
 
-Single black stone at (3,3) is in atari — surrounded by white on three sides. White stones: (2,3), (4,3), (3,2), (3,5), (2,2), (4,2). Black's only remaining liberty is (3,4). Answer (3,4) escapes into the center.
+Single black stone at (3,3) is in atari — surrounded on three sides by white. White stones: (2,3), (2,4), (3,2), (4,2), (4,3), (4,4). Black's only remaining liberty is (3,4). Answer (3,4) extends into open space to gain breathing room.
 
 ### CC-014 — 切断白棋 (L3, cut, separate)
 
-Two white stones in a vertical line at (4,2) and (4,3), with empty points between them and surrounding space. Black's answer (4,4) is adjacent to (4,3) — by playing there, black separates (4,2) from the rest of the line. Wait, the answer is (4,4) per the schema but the "cut" semantic is to separate two white groups. Re-verified: with white at (4,2) and a 3-stone white line nearby, playing (4,4) splits the white formation. The L3 cut pattern is "play between enemy groups to divide them."
+Two white stones one space apart in a vertical line at (3,2) and (3,4), with the empty (3,3) between them. Black plays (3,3) to occupy the connection point. After black's (3,3), the two white stones can no longer connect in a single move. Black stones at (2,2) and (2,4) flank the cut. The L3 cut pattern: "play between enemy stones to prevent them from joining."
 
 ### LD-010 — 做出眼 (L3, eye, make-eye)
 
@@ -123,7 +123,7 @@ Two white stones in a vertical line at (4,2) and (4,3), with empty points betwee
 | No duplicate IDs | pass |
 | All coordinates inside 9×9 board | pass |
 | All answers empty points | pass |
-| No zero-liberty initial groups | pass (verified CAP-018 white group has 2 liberties, ESC-011 black stone has 1 liberty) |
+| No zero-liberty initial groups | pass (verified CAP-018 white group has 1 liberty, ESC-011 black stone has 1 liberty) |
 | Canonical tags | pass |
 | Category-aligned tags | pass |
 | `validateAllProblems` | pass |

@@ -534,19 +534,28 @@ describe("problem data quality", () => {
         expect(adj54).toBe(true);
       });
 
-      it("CAP-018 answers (3,1) or (4,1) are liberties of the white 2x2 block", () => {
+      it("CAP-018: white 2x2 block is in atari; filling the only liberty (4,1) captures all 4 stones", () => {
         const p = problems.find((x) => x.id === "CAP-018")!;
-        for (const ans of p.answers) {
-          const occupied = p.initialStones.some(
-            (s) => s.x === ans.x && s.y === ans.y,
-          );
-          expect(occupied).toBe(false);
-        }
-        // Verify the white 2x2 block is in atari before the answer.
+        // Single answer (4,1).
+        expect(p.answers).toEqual([{ x: 4, y: 1 }]);
+        // Answer point must be empty in the initial state.
+        const occupied = p.initialStones.some(
+          (s) => s.x === 4 && s.y === 1,
+        );
+        expect(occupied).toBe(false);
+        // White 2x2 block must be in atari (exactly 1 liberty).
         const whiteStones = p.initialStones.filter((s) => s.color === "white");
         const whiteGroup = getGroup(whiteStones[0], p.initialStones, p.boardSize);
-        const libs = countLiberties(whiteGroup, p.initialStones, p.boardSize);
-        expect(libs).toBe(2);
+        const initialLibs = countLiberties(whiteGroup, p.initialStones, p.boardSize);
+        expect(initialLibs).toBe(1);
+        // After black plays the answer, the white group has 0 liberties
+        // (i.e., the 4-stone block is captured in a single move).
+        const afterStones = [
+          ...p.initialStones,
+          { x: 4, y: 1, color: "black" as const },
+        ];
+        const afterLibs = countLiberties(whiteGroup, afterStones, p.boardSize);
+        expect(afterLibs).toBe(0);
       });
 
       it("ESC-011 black stone is in atari and answer escapes to center", () => {
