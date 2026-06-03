@@ -100,7 +100,7 @@ Black plays first. Black corner stone at (0,0). Black's answer (0,3) extends 3 s
 
 ### CAP-018 — 吃掉白棋大块 (L3, big-group, liberty-counting)
 
-White 2×2 block at (3,2)(3,3)(4,2)(4,3) is surrounded by black on all sides: (2,2)(2,3)(2,4)(3,1)(3,4)(4,4)(5,2)(5,3)(5,4). After black's (3,1), white has only 1 liberty left at (4,1). Answer (4,1) fills that final liberty and captures the entire 4-stone white group in a single move.
+White 2×2 block at (3,2)(3,3)(4,2)(4,3) is surrounded by black on all sides: (2,2)(2,3)(2,4)(3,1)(3,4)(4,4)(5,2)(5,3)(5,4). With black already occupying (3,1), white has only 1 liberty left at (4,1). Answer (4,1) fills that final liberty and captures the entire 4-stone white group in a single move.
 
 ### ESC-011 — 跑向中腹 (L3, escape, atari)
 

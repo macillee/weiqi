@@ -1247,15 +1247,38 @@ Recommended secondary if content gap is judged non-pressing:
 
 ## Goal
 
-Bring the problem library from 65 to ~80 problems by adding
-endgame and opening content and rebalancing level 3–5, while
-staying strictly within the existing single-step and 2-step
-multi-step schema.
+Validate the v0.7.0b content pack and strengthen regression
+checks. v0.7.0c is validation-only and does **not** add new
+problems or modify existing ones in `src/data/problems.json`
+unless a v0.7.0b content bug is discovered and must be fixed.
 
-See `docs/NEXT_PHASE_PLAN_v0.7.md` § 4 for the proposed scope,
-acceptance criteria, and non-goals of v0.7.0b. This planning
-entry intentionally does **not** pre-author any problem or
-pre-define the exact ID list — that is v0.7.0b's job.
+## Scope
+
+- Audit all 12 v0.7.0b problems for Go-logic correctness
+  beyond the v0.7.0b test block: stone adjacency, group
+  connectivity, answer adjacency to the target group, and
+  consistent semantics between title / description / hints /
+  explanation / answer.
+- Strengthen `src/__tests__/problems.test.ts` with additional
+  regression tests that pin v0.7.0b content (per-problem
+  answer uniqueness, answer-point emptiness, ≥2 hints, copy
+  tone, category-aligned tag) — mirroring the v0.5.0c
+  review-time checks pattern.
+- Add `docs/CONTENT_REVIEW_v0.7.0c.md` (mirroring
+  `docs/CONTENT_REVIEW_v0.5.0c.md`) with the validation log.
+- Re-run `npm run test` and `npm run build` and update
+  TASKS.md test/build numbers in the v0.7.0c completed block.
+
+## Non-goals
+
+- No new problem additions.
+- No changes to `chapters.ts`, daily practice rotation,
+  ProblemPlayer, audio, animation, hint presentation,
+  coordinate labels, spaced review, weekly report, Supabase,
+  SQL, package.json, or lockfile.
+
+See `docs/NEXT_PHASE_PLAN_v0.7.md` § 5 for the proposed
+scope, acceptance criteria, and non-goals of v0.7.0c.
 
 ---
 
