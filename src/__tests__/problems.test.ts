@@ -160,8 +160,8 @@ describe("validateAllProblems", () => {
 describe("problem data quality", () => {
   const problems = loadProblems();
 
-  it("total problem count is 65", () => {
-    expect(problems).toHaveLength(65);
+  it("total problem count is 77", () => {
+    expect(problems).toHaveLength(77);
   });
 
   it("v0.1.2 added problem IDs exist", () => {
@@ -356,11 +356,11 @@ describe("problem data quality", () => {
       expect(levels.filter((l) => l === 5).length).toBeGreaterThanOrEqual(1);
     });
 
-    it("endgame category problems have valid level range (1-3)", () => {
+    it("endgame category problems have valid level range (1-5)", () => {
       const endgame = problems.filter((p) => p.category === "endgame");
       for (const p of endgame) {
         expect(p.level).toBeGreaterThanOrEqual(1);
-        expect(p.level).toBeLessThanOrEqual(3);
+        expect(p.level).toBeLessThanOrEqual(5);
       }
     });
 
@@ -419,6 +419,176 @@ describe("problem data quality", () => {
           );
           expect(occupied).toBe(false);
         }
+      });
+    });
+  });
+
+  describe("v0.7.0b content pack validation", () => {
+    const newIds = [
+      "END-005", "END-006", "END-007", "END-008",
+      "OP-006", "OP-007", "OP-008", "OP-009",
+      "CAP-018",
+      "ESC-011",
+      "CC-014",
+      "LD-010",
+    ];
+
+    it("all 12 v0.7.0b problem IDs exist", () => {
+      const ids = problems.map((p) => p.id);
+      for (const id of newIds) {
+        expect(ids).toContain(id);
+      }
+    });
+
+    it("v0.7.0b IDs are beyond v0.5.0b ranges (no accidental reuse)", () => {
+      const oldMax: Record<string, number> = {
+        CAP: 17, ESC: 10, CC: 13, LD: 9, OP: 5, END: 4,
+      };
+      for (const id of newIds) {
+        const match = id.match(/^([A-Z]+)-0*(\d+)$/);
+        if (!match) continue;
+        const prefix = match[1];
+        const num = parseInt(match[2], 10);
+        if (oldMax[prefix] !== undefined) {
+          expect(num).toBeGreaterThan(oldMax[prefix]);
+        }
+      }
+    });
+
+    it("endgame count increases by at least 4 (v0.5.0b: 4 → v0.7.0b: 8)", () => {
+      const endgame = problems.filter((p) => p.category === "endgame");
+      expect(endgame.length).toBeGreaterThanOrEqual(8);
+    });
+
+    it("opening count increases by at least 3 (v0.5.0b: 5 → v0.7.0b: 9)", () => {
+      const opening = problems.filter((p) => p.category === "opening");
+      expect(opening.length).toBeGreaterThanOrEqual(8);
+    });
+
+    it("at least one new opening level 5 problem exists (OP-006)", () => {
+      const op5 = problems.filter(
+        (p) => p.category === "opening" && p.level === 5,
+      );
+      expect(op5.length).toBeGreaterThanOrEqual(1);
+      expect(op5.map((p) => p.id)).toContain("OP-006");
+    });
+
+    it("at least one new endgame level 4 problem exists (END-007)", () => {
+      const end4 = problems.filter(
+        (p) => p.category === "endgame" && p.level === 4,
+      );
+      expect(end4.length).toBeGreaterThanOrEqual(1);
+      expect(end4.map((p) => p.id)).toContain("END-007");
+    });
+
+    it("at least one new endgame level 5 problem exists (END-008)", () => {
+      const end5 = problems.filter(
+        (p) => p.category === "endgame" && p.level === 5,
+      );
+      expect(end5.length).toBeGreaterThanOrEqual(1);
+      expect(end5.map((p) => p.id)).toContain("END-008");
+    });
+
+    it("level 3-5 problem count increases meaningfully", () => {
+      const upper = problems.filter((p) => p.level >= 3);
+      expect(upper.length).toBeGreaterThanOrEqual(30);
+    });
+
+    it("all v0.7.0b problems are 9x9 single-step (no 3+ step)", () => {
+      const newProblems = problems.filter((p) => newIds.includes(p.id));
+      for (const p of newProblems) {
+        expect(p.boardSize).toBe(9);
+        expect(p.steps === undefined || p.totalSteps === undefined || p.totalSteps <= 2).toBe(true);
+      }
+    });
+
+    describe("review-time correctness checks", () => {
+      it("END-005 answer is empty and adjacent to black wall", () => {
+        const p = problems.find((x) => x.id === "END-005")!;
+        const occupied = p.initialStones.some(
+          (s) => s.x === 3 && s.y === 4,
+        );
+        expect(occupied).toBe(false);
+        // Adjacent black stones: (2,4), (3,3), (3,5)
+        for (const [x, y] of [[2, 4], [3, 3], [3, 5]]) {
+          const adj = p.initialStones.some(
+            (s) => s.x === x && s.y === y && s.color === "black",
+          );
+          expect(adj).toBe(true);
+        }
+      });
+
+      it("END-007 connects the two black groups via (4,4)", () => {
+        const p = problems.find((x) => x.id === "END-007")!;
+        const ans = p.answers[0];
+        expect(ans).toEqual({ x: 4, y: 4 });
+        // Two black groups: (3,2)(3,3)(4,3) and (5,4)(5,5).
+        // (4,4) is adjacent to (4,3) and (5,4) so playing it joins them.
+        const adj34 = p.initialStones.some(
+          (s) => s.x === 4 && s.y === 3 && s.color === "black",
+        );
+        const adj54 = p.initialStones.some(
+          (s) => s.x === 5 && s.y === 4 && s.color === "black",
+        );
+        expect(adj34).toBe(true);
+        expect(adj54).toBe(true);
+      });
+
+      it("CAP-018 answers (3,1) or (4,1) are liberties of the white 2x2 block", () => {
+        const p = problems.find((x) => x.id === "CAP-018")!;
+        for (const ans of p.answers) {
+          const occupied = p.initialStones.some(
+            (s) => s.x === ans.x && s.y === ans.y,
+          );
+          expect(occupied).toBe(false);
+        }
+        // Verify the white 2x2 block is in atari before the answer.
+        const whiteStones = p.initialStones.filter((s) => s.color === "white");
+        const whiteGroup = getGroup(whiteStones[0], p.initialStones, p.boardSize);
+        const libs = countLiberties(whiteGroup, p.initialStones, p.boardSize);
+        expect(libs).toBe(2);
+      });
+
+      it("ESC-011 black stone is in atari and answer escapes to center", () => {
+        const p = problems.find((x) => x.id === "ESC-011")!;
+        const blackStone = p.initialStones.find((s) => s.color === "black")!;
+        const blackGroup = getGroup(blackStone, p.initialStones, p.boardSize);
+        const libs = countLiberties(blackGroup, p.initialStones, p.boardSize);
+        expect(libs).toBe(1);
+        // Answer (3,4) must be empty and is the only liberty.
+        const occupied = p.initialStones.some(
+          (s) => s.x === 3 && s.y === 4,
+        );
+        expect(occupied).toBe(false);
+      });
+
+      it("OP-006 answer (4,4) is the tengen (center of 9x9)", () => {
+        const p = problems.find((x) => x.id === "OP-006")!;
+        expect(p.answers).toEqual([{ x: 4, y: 4 }]);
+        const occupied = p.initialStones.some(
+          (s) => s.x === 4 && s.y === 4,
+        );
+        expect(occupied).toBe(false);
+      });
+
+      it("LD-010 answer (3,3) is the center of the 3x3 black ring", () => {
+        const p = problems.find((x) => x.id === "LD-010")!;
+        expect(p.answers).toEqual([{ x: 3, y: 3 }]);
+        // The 8 ring stones must all be black.
+        for (const [x, y] of [
+          [2, 2], [2, 3], [2, 4],
+          [3, 2],          [3, 4],
+          [4, 2], [4, 3], [4, 4],
+        ]) {
+          const stone = p.initialStones.find(
+            (s) => s.x === x && s.y === y,
+          );
+          expect(stone?.color).toBe("black");
+        }
+        const occupied = p.initialStones.some(
+          (s) => s.x === 3 && s.y === 3,
+        );
+        expect(occupied).toBe(false);
       });
     });
   });

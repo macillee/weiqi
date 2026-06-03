@@ -1189,11 +1189,61 @@ Recommended secondary if content gap is judged non-pressing:
 ## PR
 
 - Branch: `docs/v0.7.0a-next-phase-plan`
-- PR: TBD (closes #85)
+- PR: #86 (closes #85)
 
 ---
 
-# Next Task: v0.7.0b Endgame + Opening + Level 3–5 Content Pack
+# ✅ v0.7.0b — Content Pack: Endgame + Opening + Level 3–5 — COMPLETED (2026-06-03)
+
+## What was done
+
+- Added 12 new single-step problems to `src/data/problems.json`
+  (problem count: 65 → 77):
+  - **Endgame (4):** END-005 (L2 edge), END-006 (L3 corner),
+    END-007 (L4 center connect), END-008 (L5 center defend)
+  - **Opening (4):** OP-006 (L5 tengen), OP-007 (L3 approach),
+    OP-008 (L3 corner secure), OP-009 (L4 extend)
+  - **Level 3–5 rebalance (4):** CAP-018 (L3 big-group capture),
+    ESC-011 (L3 escape from atari), CC-014 (L3 cut),
+    LD-010 (L3 make first eye)
+- All 12 problems: 9×9, single-step, ≥2 hints, soft
+  `failureMessage`, category-aligned tag, answer points empty,
+  no zero-liberty initial groups.
+- `src/__tests__/problems.test.ts`:
+  - count test 65 → 77
+  - endgame level range test updated 1–3 → 1–5
+    (END-007 L4 + END-008 L5 added)
+  - new v0.7.0b block (15 tests):
+    ID existence, beyond-range check, endgame +4 count,
+    opening +4 count, OP-006 L5 opening, END-007 L4
+    endgame, END-008 L5 endgame, level 3–5 ≥30, 9×9 /
+    single-step consistency, and 6 review-time correctness
+    checks (END-005 adjacency, END-007 connect, CAP-018
+    liberties, ESC-011 atari, OP-006 tengen, LD-010 eye).
+- `docs/CONTENT_REVIEW_v0.7.0b.md` — content review with
+  problem table, category/level deltas, acceptance criteria
+  coverage, per-problem verification, validation results.
+- `docs/TASKS.md` — marked v0.7.0b delivered, next task set
+  to v0.7.0c.
+- `npm run test` passes (316 tests / 21 files).
+- `npm run build` passes.
+- No `package.json` / `package-lock.json` changes.
+- No schema, ProblemPlayer, audio, animation, hint,
+  coordinate-label, spaced review, weekly report, Supabase,
+  or SQL changes.
+- No `chapters.ts` changes — v0.7.0b follows v0.5.0b
+  convention of keeping new problems reachable via `/demo`
+  and review but outside the daily practice rotation.
+  Chapter wiring is a separate concern (deferred).
+
+## PR
+
+- Branch: `feat/v0.7.0b-content-pack`
+- PR: TBD (closes #87)
+
+---
+
+# Next Task: v0.7.0c Content Validation and Regression
 
 ## Goal
 
@@ -1257,9 +1307,9 @@ pre-define the exact ID list — that is v0.7.0b's job.
 
 ## v0.7.0 — Content Balancing (Endgame + Opening + Level 3–5)
 
-- v0.7.0a: next phase plan (completed, PR TBD / issue #85)
-- v0.7.0b: endgame + opening + level 3–5 content pack (next)
-- v0.7.0c: content validation and regression
+- v0.7.0a: next phase plan (completed, PR #86 / issue #85)
+- v0.7.0b: endgame + opening + level 3–5 content pack (completed, PR TBD / issue #87)
+- v0.7.0c: content validation and regression (next)
 - v0.7.0d: stabilization and release notes
 
 ---

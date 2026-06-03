@@ -4227,5 +4227,400 @@
     "explanation": "黑棋从上面连过去，棋子都连在一起了。",
     "successMessage": "很好！黑棋的棋子都回家了！",
     "failureMessage": "想想从哪里连接。"
+  },
+  {
+    "id": "END-005",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 2,
+    "tags": [
+      "endgame",
+      "edge"
+    ],
+    "toPlay": "black",
+    "title": "边上的最后一步",
+    "description": "黑棋的地盘边上还有一个缺口，黑棋应该下在哪里？",
+    "initialStones": [
+      { "x": 2, "y": 3, "color": "black" },
+      { "x": 2, "y": 4, "color": "black" },
+      { "x": 2, "y": 5, "color": "black" },
+      { "x": 3, "y": 3, "color": "black" },
+      { "x": 3, "y": 5, "color": "black" },
+      { "x": 4, "y": 3, "color": "black" },
+      { "x": 4, "y": 5, "color": "black" },
+      { "x": 5, "y": 3, "color": "white" },
+      { "x": 5, "y": 4, "color": "white" },
+      { "x": 5, "y": 5, "color": "white" }
+    ],
+    "answers": [
+      { "x": 3, "y": 4 }
+    ],
+    "hints": [
+      "看看黑棋地盘的边上哪里有缺口。",
+      "缺口的上下都是黑棋。",
+      "下在 (3, 4) 就能把缺口补上。"
+    ],
+    "explanation": "黑棋下在缺口 (3, 4)，把边空补上了，白棋就不能再侵入了。",
+    "successMessage": "好！你补好了边空！",
+    "failureMessage": "看看哪里是黑棋地盘的缺口。"
+  },
+  {
+    "id": "END-006",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 3,
+    "tags": [
+      "endgame",
+      "corner"
+    ],
+    "toPlay": "black",
+    "title": "角上的要点",
+    "description": "白棋在右边立了一块，黑棋要抢角上的要点，下在哪里？",
+    "initialStones": [
+      { "x": 2, "y": 2, "color": "black" },
+      { "x": 2, "y": 3, "color": "black" },
+      { "x": 2, "y": 4, "color": "black" },
+      { "x": 3, "y": 2, "color": "black" },
+      { "x": 4, "y": 2, "color": "white" },
+      { "x": 4, "y": 3, "color": "white" },
+      { "x": 4, "y": 4, "color": "white" }
+    ],
+    "answers": [
+      { "x": 3, "y": 3 }
+    ],
+    "hints": [
+      "黑棋的角上有一个大空点。",
+      "白棋在外面围了一圈。",
+      "下在 (3, 3) 就能把角上的大空抢下来。"
+    ],
+    "explanation": "角上的大空 (3, 3) 是双方都想抢的要点，黑棋先下手就能围住。",
+    "successMessage": "好！你抢到了角上的要点！",
+    "failureMessage": "看看黑棋角上哪里是空的。"
+  },
+  {
+    "id": "END-007",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 4,
+    "tags": [
+      "endgame",
+      "center",
+      "connect"
+    ],
+    "toPlay": "black",
+    "title": "中腹连接",
+    "description": "中腹有两块黑棋被白棋分开，怎么把它们连起来？",
+    "initialStones": [
+      { "x": 3, "y": 2, "color": "black" },
+      { "x": 3, "y": 3, "color": "black" },
+      { "x": 4, "y": 3, "color": "black" },
+      { "x": 4, "y": 2, "color": "white" },
+      { "x": 5, "y": 4, "color": "black" },
+      { "x": 5, "y": 5, "color": "black" },
+      { "x": 4, "y": 5, "color": "white" }
+    ],
+    "answers": [
+      { "x": 4, "y": 4 }
+    ],
+    "hints": [
+      "中腹有两块黑棋，还没连上。",
+      "中间有一个空格可以连。",
+      "下在 (4, 4) 就能把两块黑棋连起来。"
+    ],
+    "explanation": "在 (4, 4) 下一子就把中腹两块黑棋连成一块,气更多了。",
+    "successMessage": "好！你把黑棋连起来了！",
+    "failureMessage": "看看两块黑棋中间哪里是空的。"
+  },
+  {
+    "id": "END-008",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 5,
+    "tags": [
+      "endgame",
+      "center",
+      "defend"
+    ],
+    "toPlay": "black",
+    "title": "中腹的防守",
+    "description": "白棋从两边压过来，黑棋在中腹应该下在哪里守住？",
+    "initialStones": [
+      { "x": 2, "y": 2, "color": "black" },
+      { "x": 2, "y": 3, "color": "black" },
+      { "x": 2, "y": 4, "color": "black" },
+      { "x": 3, "y": 2, "color": "black" },
+      { "x": 3, "y": 4, "color": "black" },
+      { "x": 4, "y": 2, "color": "black" },
+      { "x": 5, "y": 2, "color": "white" },
+      { "x": 5, "y": 3, "color": "white" },
+      { "x": 5, "y": 4, "color": "white" },
+      { "x": 3, "y": 5, "color": "white" },
+      { "x": 4, "y": 5, "color": "white" }
+    ],
+    "answers": [
+      { "x": 3, "y": 3 }
+    ],
+    "hints": [
+      "黑棋在左上一块，被白棋从两边压。",
+      "中间有一个空格能同时守住两边。",
+      "下在 (3, 3) 可以把黑棋连成一块。"
+    ],
+    "explanation": "中腹的 (3, 3) 是关键点，下在那里把黑棋连成一块，气就更多了。",
+    "successMessage": "太好了！你守住了中腹！",
+    "failureMessage": "看看黑棋中间哪里是空的。"
+  },
+  {
+    "id": "OP-006",
+    "boardSize": 9,
+    "category": "opening",
+    "level": 5,
+    "tags": [
+      "opening",
+      "center",
+      "tengen"
+    ],
+    "toPlay": "black",
+    "title": "对手占角后下天元",
+    "description": "白棋在左上角占了一个，黑棋下一步应该下在哪里？",
+    "initialStones": [
+      { "x": 2, "y": 2, "color": "white" }
+    ],
+    "answers": [
+      { "x": 4, "y": 4 }
+    ],
+    "hints": [
+      "白棋只占了一个角。",
+      "不要在角上和对手纠缠。",
+      "下在 (4, 4) 是天元，是全局最大的点。"
+    ],
+    "explanation": "对手占了一角后，黑棋抢占天元可以形成大模样，是高级布局思路。",
+    "successMessage": "太好了！你学会了抢天元！",
+    "failureMessage": "看看哪个位置最重要。"
+  },
+  {
+    "id": "OP-007",
+    "boardSize": 9,
+    "category": "opening",
+    "level": 3,
+    "tags": [
+      "opening",
+      "approach"
+    ],
+    "toPlay": "black",
+    "title": "小飞挂角",
+    "description": "白棋在一个角上下了一颗子，黑棋怎么靠近？",
+    "initialStones": [
+      { "x": 3, "y": 3, "color": "white" }
+    ],
+    "answers": [
+      { "x": 4, "y": 3 }
+    ],
+    "hints": [
+      "白棋只有一颗子。",
+      "黑棋要在白棋附近下。",
+      "下在 (4, 3) 是常见的小飞挂角。"
+    ],
+    "explanation": "小飞挂角是开局常见的下法，可以限制白棋的发展。",
+    "successMessage": "好！你学会了小飞挂角！",
+    "failureMessage": "靠近白棋的位置是好选择。"
+  },
+  {
+    "id": "OP-008",
+    "boardSize": 9,
+    "category": "opening",
+    "level": 3,
+    "tags": [
+      "opening",
+      "corner",
+      "secure"
+    ],
+    "toPlay": "black",
+    "title": "小飞守角",
+    "description": "黑棋在角上下了一颗子，怎么把角守好？",
+    "initialStones": [
+      { "x": 2, "y": 2, "color": "black" }
+    ],
+    "answers": [
+      { "x": 3, "y": 2 }
+    ],
+    "hints": [
+      "黑棋在角上有一颗子。",
+      "再加一颗就能把角守住。",
+      "下在 (3, 2) 形成小飞守角。"
+    ],
+    "explanation": "在小飞位置再下就形成了守角，角上的地盘更稳了。",
+    "successMessage": "好！你学会了小飞守角！",
+    "failureMessage": "看看怎么让黑棋的角更稳。"
+  },
+  {
+    "id": "OP-009",
+    "boardSize": 9,
+    "category": "opening",
+    "level": 4,
+    "tags": [
+      "opening",
+      "extend"
+    ],
+    "toPlay": "black",
+    "title": "开拆",
+    "description": "黑棋有一个角上的子，怎么往外发展？",
+    "initialStones": [
+      { "x": 2, "y": 2, "color": "black" }
+    ],
+    "answers": [
+      { "x": 2, "y": 4 }
+    ],
+    "hints": [
+      "黑棋在角上有一颗子。",
+      "角上稳了，可以往外发展。",
+      "下在 (2, 4) 是开拆，可以扩大地盘。"
+    ],
+    "explanation": "开拆是从角上往外发展的重要手段，可以扩大黑棋的地盘。",
+    "successMessage": "好！你学会了开拆！",
+    "failureMessage": "看看怎么从角上往外走。"
+  },
+  {
+    "id": "CAP-018",
+    "boardSize": 9,
+    "category": "capture",
+    "level": 3,
+    "tags": [
+      "capture",
+      "big-group",
+      "liberty-counting"
+    ],
+    "toPlay": "black",
+    "title": "吃掉白棋大块",
+    "description": "一大块白棋被黑棋围住了，黑棋怎么吃掉它们？",
+    "initialStones": [
+      { "x": 2, "y": 2, "color": "black" },
+      { "x": 2, "y": 3, "color": "black" },
+      { "x": 2, "y": 4, "color": "black" },
+      { "x": 3, "y": 4, "color": "black" },
+      { "x": 4, "y": 4, "color": "black" },
+      { "x": 5, "y": 2, "color": "black" },
+      { "x": 5, "y": 3, "color": "black" },
+      { "x": 5, "y": 4, "color": "black" },
+      { "x": 3, "y": 2, "color": "white" },
+      { "x": 3, "y": 3, "color": "white" },
+      { "x": 4, "y": 2, "color": "white" },
+      { "x": 4, "y": 3, "color": "white" }
+    ],
+    "answers": [
+      { "x": 3, "y": 1 },
+      { "x": 4, "y": 1 }
+    ],
+    "hints": [
+      "白棋被围在中间一整块。",
+      "白棋只剩两口气了。",
+      "下在 (3, 1) 或 (4, 1) 都能吃掉白棋。"
+    ],
+    "explanation": "白棋大块只剩两口气,堵住任一边的气就能提掉整块。",
+    "successMessage": "太厉害了！你吃掉了大块白棋！",
+    "failureMessage": "看看白棋大块上下哪里是空的。"
+  },
+  {
+    "id": "ESC-011",
+    "boardSize": 9,
+    "category": "escape",
+    "level": 3,
+    "tags": [
+      "escape",
+      "center",
+      "atari"
+    ],
+    "toPlay": "black",
+    "title": "跑向中腹",
+    "description": "黑棋被白棋围住了，只剩一口气，怎么逃出去？",
+    "initialStones": [
+      { "x": 2, "y": 3, "color": "white" },
+      { "x": 2, "y": 4, "color": "white" },
+      { "x": 3, "y": 2, "color": "white" },
+      { "x": 4, "y": 2, "color": "white" },
+      { "x": 4, "y": 3, "color": "white" },
+      { "x": 4, "y": 4, "color": "white" },
+      { "x": 3, "y": 3, "color": "black" }
+    ],
+    "answers": [
+      { "x": 3, "y": 4 }
+    ],
+    "hints": [
+      "黑棋只剩一口气了。",
+      "往中腹跑才有空间。",
+      "下在 (3, 4) 可以逃向中腹。"
+    ],
+    "explanation": "往中腹方向跑,棋子可以获得更多空间,不容易被围住。",
+    "successMessage": "好！你跑出去了！",
+    "failureMessage": "看看哪个方向还有空间。"
+  },
+  {
+    "id": "CC-014",
+    "boardSize": 9,
+    "category": "connect_cut",
+    "level": 3,
+    "tags": [
+      "connect_cut",
+      "cut",
+      "separate"
+    ],
+    "toPlay": "black",
+    "title": "切断白棋",
+    "description": "两颗白棋还没连起来，黑棋怎么切断它们？",
+    "initialStones": [
+      { "x": 2, "y": 2, "color": "black" },
+      { "x": 2, "y": 4, "color": "black" },
+      { "x": 3, "y": 2, "color": "white" },
+      { "x": 3, "y": 4, "color": "white" }
+    ],
+    "answers": [
+      { "x": 3, "y": 3 }
+    ],
+    "hints": [
+      "两颗白棋还没连上。",
+      "它们中间有一个空格。",
+      "下在 (3, 3) 就能切断白棋。"
+    ],
+    "explanation": "在两颗白棋中间下一子,就切断了它们的连接,各变一块。",
+    "successMessage": "好！你切断了白棋！",
+    "failureMessage": "看看白棋中间哪里是空的。"
+  },
+  {
+    "id": "LD-010",
+    "boardSize": 9,
+    "category": "life_death",
+    "level": 3,
+    "tags": [
+      "life_death",
+      "eye",
+      "make-eye"
+    ],
+    "toPlay": "black",
+    "title": "做出眼",
+    "description": "黑棋的棋子已经围成一个圈，下在哪里能做出眼？",
+    "initialStones": [
+      { "x": 2, "y": 2, "color": "black" },
+      { "x": 2, "y": 3, "color": "black" },
+      { "x": 2, "y": 4, "color": "black" },
+      { "x": 3, "y": 2, "color": "black" },
+      { "x": 3, "y": 4, "color": "black" },
+      { "x": 4, "y": 2, "color": "black" },
+      { "x": 4, "y": 3, "color": "black" },
+      { "x": 4, "y": 4, "color": "black" },
+      { "x": 1, "y": 3, "color": "white" },
+      { "x": 3, "y": 1, "color": "white" },
+      { "x": 5, "y": 3, "color": "white" },
+      { "x": 3, "y": 5, "color": "white" }
+    ],
+    "answers": [
+      { "x": 3, "y": 3 }
+    ],
+    "hints": [
+      "黑棋的棋子已经围成了一个圈。",
+      "圈中间还有一个空点。",
+      "下在 (3, 3) 就能做出眼。"
+    ],
+    "explanation": "在圈中间下子,黑棋就做出了一个眼,棋子变安全了。",
+    "successMessage": "好！你做出了眼！",
+    "failureMessage": "看看圈的中间。"
   }
 ]
