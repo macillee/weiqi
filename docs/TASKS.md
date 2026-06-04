@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.8.0c wire life_death + endgame + opening complete. Next: v0.8.0d (optional) wire multi-step problems.
+v0.8 content wiring complete (v0.8.0a–d). All 77 problems now wired into chapters. Next: v0.8 stabilization / release notes.
 
 Current strategy:
 
@@ -31,7 +31,8 @@ Current strategy:
 17. v0.8.0a next phase plan completed — primary direction: chapter/daily-practice wiring
 18. v0.8.0b wire capture + escape + connect_cut completed — 21 new problems wired (45 total)
 19. v0.8.0c wire life_death + endgame + opening completed — 23 new problems wired (68 total)
-20. Avoid AI/payment/teacher/leaderboard scope creep
+20. v0.8.0d wire multi-step problems completed — 9 multi-step problems wired (77 total, full library)
+21. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1437,6 +1438,37 @@ Recommended secondary if content gap is judged non-pressing:
 
 ---
 
+# ✅ v0.8.0d — Wire Multi-Step Problems — COMPLETED (2026-06-04)
+
+## What was done
+
+- `src/lib/chapters.ts` — wired all 9 existing multi-step problems into their category-correct chapters:
+
+  **Capture (3):** added capture-10 with MULTI-001 (L2), MULTI-004 (L2), MULTI-005 (L2)
+  **Life/Death (3):** added life-death-5 with MULTI-002 (L3), MULTI-006 (L3), MULTI-007 (L3)
+  **Connect/Cut (2):** added connect-cut-7 with MULTI-003 (L2), MULTI-008 (L2)
+  **Escape (1):** added escape-7 with MULTI-009 (L2)
+
+  Note: MULTI-009 is category `escape` in the actual problem data (not connect_cut as the v0.8.0a plan suggested), so it was placed in the escape chapter per the issue instruction to follow actual problem category.
+
+- `getAllProblemIds()` returns 77 unique IDs — full problems.json library now wired.
+- No existing wired problem was removed or reordered.
+- No single-step wiring was changed from v0.8.0b/v0.8.0c.
+- No changes to `src/lib/practice.ts`.
+- `npm run test` passes (326 tests / 21 files — count unchanged, no existing test asserted prior wired count).
+- `npm run build` passes.
+- `docs/TASKS.md` updated — marked v0.8.0d delivered, next → v0.8 stabilization / release notes.
+
+## Non-goals respected
+
+- No problem data changes (`src/data/problems.json` untouched).
+- No schema changes.
+- No `practice.ts`, `ProblemPlayer`, UI, audio, animation, hint,
+  coordinate-label, spaced review, weekly report, Supabase, SQL,
+  package, or lockfile changes.
+
+---
+
 # Future Roadmap
 
 ## v0.2.3 — Server Progress
@@ -1494,8 +1526,9 @@ Recommended secondary if content gap is judged non-pressing:
 
 - v0.8.0a: next phase plan (completed, PR #95 / issue #94)
 - v0.8.0b: wire capture + escape + connect_cut (completed, PR #97 / issue #96)
-- v0.8.0c: wire life_death + endgame + opening (completed, PR TBD / issue #98)
-- v0.8.0d: wire multi-step problems (optional, next)
+- v0.8.0c: wire life_death + endgame + opening (completed, PR #99 / issue #98)
+- v0.8.0d: wire multi-step problems (completed, PR TBD / issue #100)
+- v0.8 stabilization: release notes + QA checklist (next)
 
 ---
 
