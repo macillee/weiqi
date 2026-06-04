@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   detectImportEligibility,
   markImportOffered,
-  type ImportDetectionResult,
 } from "@/lib/progress-import";
 
 const PROGRESS_KEY = "children-go-app:v0.1:progress";
@@ -122,7 +121,6 @@ describe("detectImportEligibility", () => {
 
   it("returns no_local_progress when localStorage.getItem throws", () => {
     // Simulate localStorage failure
-    const originalGetItem = localStorage.getItem.bind(localStorage);
     vi.spyOn(localStorage, "getItem").mockImplementation(() => {
       throw new Error("localStorage unavailable");
     });

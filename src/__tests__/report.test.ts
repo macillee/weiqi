@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { computeReportStats } from "@/lib/report";
 import * as progressModule from "@/lib/progress";
 import * as problemsModule from "@/lib/problems";
+import type { Problem } from "@/lib/problems";
 
 vi.mock("@/lib/progress", () => ({
   loadProgress: vi.fn(),
@@ -11,13 +12,13 @@ vi.mock("@/lib/problems", () => ({
   loadProblems: vi.fn(),
 }));
 
-function mockProblems() {
+function mockProblems(): Problem[] {
   return [
     {
       id: "CAP-001",
-      boardSize: 9,
+      boardSize: 9 as const,
       category: "capture" as const,
-      level: 1,
+      level: 1 as const,
       tags: ["capture"],
       toPlay: "black" as const,
       title: "Capture 1",
@@ -31,9 +32,9 @@ function mockProblems() {
     },
     {
       id: "ESC-001",
-      boardSize: 9,
+      boardSize: 9 as const,
       category: "escape" as const,
-      level: 1,
+      level: 1 as const,
       tags: ["escape"],
       toPlay: "black" as const,
       title: "Escape 1",
@@ -58,6 +59,7 @@ describe("computeReportStats", () => {
       wrongProblems: {},
       attempts: [],
       achievements: [],
+      reviewSchedule: {},
     });
     vi.mocked(problemsModule.loadProblems).mockReturnValue(mockProblems());
   });
@@ -107,6 +109,7 @@ describe("computeReportStats", () => {
         },
       ],
       achievements: [],
+      reviewSchedule: {},
     });
 
     const stats = computeReportStats();
@@ -150,6 +153,7 @@ describe("computeReportStats", () => {
         },
       ],
       achievements: [],
+      reviewSchedule: {},
     });
 
     const stats = computeReportStats();
@@ -193,6 +197,7 @@ describe("computeReportStats", () => {
         },
       ],
       achievements: [],
+      reviewSchedule: {},
     });
 
     const stats = computeReportStats();
@@ -218,6 +223,7 @@ describe("computeReportStats", () => {
         },
       ],
       achievements: [],
+      reviewSchedule: {},
     });
 
     const stats = computeReportStats();
@@ -241,6 +247,7 @@ describe("computeReportStats", () => {
       },
       attempts: [],
       achievements: [],
+      reviewSchedule: {},
     });
 
     const stats = computeReportStats();

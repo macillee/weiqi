@@ -25,10 +25,8 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
-      # TODO: remove continue-on-error once pre-existing lint errors are fixed
       - name: Lint
         run: npm run lint
-        continue-on-error: true
 
       - name: Typecheck
         run: npm run typecheck

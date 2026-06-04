@@ -5,7 +5,7 @@ import type { Root } from "react-dom/client";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
 import type { Problem } from "@/lib/problems";
 
-globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+(globalThis as Record<string, unknown>).IS_REACT_ACT_ENVIRONMENT = true;
 
 vi.mock("@/components/board/GoBoard", () => ({
   default: ({

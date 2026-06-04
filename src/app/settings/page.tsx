@@ -20,9 +20,11 @@ export default function SettingsPage() {
   const [signOutError, setSignOutError] = useState<string | null>(null);
   const [audioEnabled, setAudioEnabledState] = useState(true);
 
+  /* eslint-disable react-hooks/set-state-in-effect -- localStorage init must happen client-side */
   useEffect(() => {
     setAudioEnabledState(loadAudioPreference());
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   function handleToggleAudio(enabled: boolean) {
     setAudioEnabled(enabled);

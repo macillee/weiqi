@@ -16,8 +16,6 @@ export function computeNextReview(
   currentState: ProblemReviewState | null,
   now: Date,
 ): { nextReviewAt: string; intervalDays: number } {
-  const today = dateString(now);
-
   switch (outcome) {
     case "failed":
       return { nextReviewAt: dateString(addDays(now, 1)), intervalDays: 1 };

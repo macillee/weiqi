@@ -38,6 +38,7 @@ export default function CelebrationOverlay({
   const [particles, setParticles] = useState<StarParticle[]>([]);
   const [show, setShow] = useState(false);
 
+  /* eslint-disable react-hooks/set-state-in-effect -- animation trigger must set state in effect */
   useEffect(() => {
     if (!triggered) return;
     setParticles(generateParticles());
@@ -47,7 +48,9 @@ export default function CelebrationOverlay({
       onComplete?.();
     }, 1500);
     return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- onComplete is stable or intentionally excluded
   }, [triggered]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   if (!show) return null;
 
