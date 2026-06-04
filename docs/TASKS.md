@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.7.0a planning complete — primary direction selected: content balancing (endgame + opening + level 3–5 rebalance). Next: v0.7.0b content pack.
+v0.7.0c content validation and regression complete. Next: v0.7.0d stabilization and release notes.
 
 Current strategy:
 
@@ -25,7 +25,9 @@ Current strategy:
 11. v0.6 stabilization completed — release notes and QA checklist published (PR #82)
 12. v0.6 follow-up fix completed — /practice last-problem async race (PR #84)
 13. v0.7.0a next phase plan completed — primary direction: content balancing
-14. Avoid AI/payment/teacher/leaderboard scope creep
+14. v0.7.0b content pack completed — 12 new problems (77 total)
+15. v0.7.0c content validation and regression completed
+16. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1243,42 +1245,36 @@ Recommended secondary if content gap is judged non-pressing:
 
 ---
 
-# Next Task: v0.7.0c Content Validation and Regression
+# ✅ v0.7.0c — Content Validation and Regression — COMPLETED (2026-06-04)
 
-## Goal
+## What was done
 
-Validate the v0.7.0b content pack and strengthen regression
-checks. v0.7.0c is validation-only and does **not** add new
-problems or modify existing ones in `src/data/problems.json`
-unless a v0.7.0b content bug is discovered and must be fixed.
+- Added 6 per-problem correctness checks in `src/__tests__/problems.test.ts`:
+  - END-006: answer (3,3) empty, fills black corner wall gap
+  - END-008: answer (3,3) empty, fills black formation internal gap
+  - OP-007: answer (2,2) empty, proper knight approach to white corner
+  - OP-008: answer (2,2) empty, proper knight enclosure from black corner
+  - OP-009: answer (0,3) empty, proper edge extension
+  - CC-014: answer (3,3) empty, cuts white groups at (3,2) and (3,4)
+- Added `describe("per-property v0.7.0b validation")` block (4 tests):
+  - All answer points empty in initial board state
+  - All problems have ≥2 hints
+  - All failureMessages avoid harsh wording
+  - All problems have exactly 1 answer point
+- Created `docs/CONTENT_REVIEW_v0.7.0c.md` — validation log with
+  per-problem verification, final distribution (77 problems),
+  and known limitations.
+- Updated `docs/TASKS.md` — marked v0.7.0c delivered, next → v0.7.0d.
+- `npm run test` passes: 326 tests (21 files).
+- `npm run build` passes.
 
-## Scope
-
-- Audit all 12 v0.7.0b problems for Go-logic correctness
-  beyond the v0.7.0b test block: stone adjacency, group
-  connectivity, answer adjacency to the target group, and
-  consistent semantics between title / description / hints /
-  explanation / answer.
-- Strengthen `src/__tests__/problems.test.ts` with additional
-  regression tests that pin v0.7.0b content (per-problem
-  answer uniqueness, answer-point emptiness, ≥2 hints, copy
-  tone, category-aligned tag) — mirroring the v0.5.0c
-  review-time checks pattern.
-- Add `docs/CONTENT_REVIEW_v0.7.0c.md` (mirroring
-  `docs/CONTENT_REVIEW_v0.5.0c.md`) with the validation log.
-- Re-run `npm run test` and `npm run build` and update
-  TASKS.md test/build numbers in the v0.7.0c completed block.
-
-## Non-goals
+## Non-goals respected
 
 - No new problem additions.
 - No changes to `chapters.ts`, daily practice rotation,
   ProblemPlayer, audio, animation, hint presentation,
   coordinate labels, spaced review, weekly report, Supabase,
   SQL, package.json, or lockfile.
-
-See `docs/NEXT_PHASE_PLAN_v0.7.md` § 5 for the proposed
-scope, acceptance criteria, and non-goals of v0.7.0c.
 
 ---
 
@@ -1331,9 +1327,9 @@ scope, acceptance criteria, and non-goals of v0.7.0c.
 ## v0.7.0 — Content Balancing (Endgame + Opening + Level 3–5)
 
 - v0.7.0a: next phase plan (completed, PR #86 / issue #85)
-- v0.7.0b: endgame + opening + level 3–5 content pack (completed, PR TBD / issue #87)
-- v0.7.0c: content validation and regression (next)
-- v0.7.0d: stabilization and release notes
+- v0.7.0b: endgame + opening + level 3–5 content pack (completed, PR #89 / issue #87)
+- v0.7.0c: content validation and regression (completed, PR #91 / issue #90)
+- v0.7.0d: stabilization and release notes (next)
 
 ---
 
