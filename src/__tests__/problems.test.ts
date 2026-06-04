@@ -599,6 +599,132 @@ describe("problem data quality", () => {
         );
         expect(occupied).toBe(false);
       });
+
+      it("END-006 answer (3,3) is empty and fills the gap in the black corner wall", () => {
+        const p = problems.find((x) => x.id === "END-006")!;
+        expect(p.answers).toEqual([{ x: 3, y: 3 }]);
+        const occupied = p.initialStones.some(
+          (s) => s.x === 3 && s.y === 3,
+        );
+        expect(occupied).toBe(false);
+        // Black wall exists at (2,2),(2,3),(2,4),(3,2)
+        for (const [x, y] of [[2, 2], [2, 3], [2, 4], [3, 2]]) {
+          const stone = p.initialStones.find(
+            (s) => s.x === x && s.y === y,
+          );
+          expect(stone?.color).toBe("black");
+        }
+      });
+
+      it("END-008 answer (3,3) is empty and fills black's internal gap", () => {
+        const p = problems.find((x) => x.id === "END-008")!;
+        expect(p.answers).toEqual([{ x: 3, y: 3 }]);
+        const occupied = p.initialStones.some(
+          (s) => s.x === 3 && s.y === 3,
+        );
+        expect(occupied).toBe(false);
+        // Black formation around the gap
+        for (const [x, y] of [[2, 2], [2, 3], [2, 4], [3, 2], [3, 4], [4, 2]]) {
+          const stone = p.initialStones.find(
+            (s) => s.x === x && s.y === y,
+          );
+          expect(stone?.color).toBe("black");
+        }
+      });
+
+      it("OP-007 answer (2,2) is the small knight approach to white corner (0,0)", () => {
+        const p = problems.find((x) => x.id === "OP-007")!;
+        expect(p.answers).toEqual([{ x: 2, y: 2 }]);
+        const occupied = p.initialStones.some(
+          (s) => s.x === 2 && s.y === 2,
+        );
+        expect(occupied).toBe(false);
+      });
+
+      it("OP-008 answer (2,2) is the small knight enclosure from black corner (0,0)", () => {
+        const p = problems.find((x) => x.id === "OP-008")!;
+        expect(p.answers).toEqual([{ x: 2, y: 2 }]);
+        const occupied = p.initialStones.some(
+          (s) => s.x === 2 && s.y === 2,
+        );
+        expect(occupied).toBe(false);
+      });
+
+      it("OP-009 answer (0,3) is a proper extension along the edge from (0,0)", () => {
+        const p = problems.find((x) => x.id === "OP-009")!;
+        expect(p.answers).toEqual([{ x: 0, y: 3 }]);
+        const occupied = p.initialStones.some(
+          (s) => s.x === 0 && s.y === 3,
+        );
+        expect(occupied).toBe(false);
+      });
+
+      it("CC-014 answer (3,3) cuts the two white groups at (3,2) and (3,4)", () => {
+        const p = problems.find((x) => x.id === "CC-014")!;
+        expect(p.answers).toEqual([{ x: 3, y: 3 }]);
+        const occupied = p.initialStones.some(
+          (s) => s.x === 3 && s.y === 3,
+        );
+        expect(occupied).toBe(false);
+        // White stones on both sides of (3,3)
+        const whiteAbove = p.initialStones.some(
+          (s) => s.x === 3 && s.y === 4 && s.color === "white",
+        );
+        const whiteBelow = p.initialStones.some(
+          (s) => s.x === 3 && s.y === 2 && s.color === "white",
+        );
+        expect(whiteAbove).toBe(true);
+        expect(whiteBelow).toBe(true);
+      });
+    });
+
+    describe("per-property v0.7.0b validation", () => {
+      it("all v0.7.0b answer points are empty in the initial board state", () => {
+        const newProblems = problems.filter((p) => newIds.includes(p.id));
+        for (const p of newProblems) {
+          for (const ans of p.answers) {
+            const occupied = p.initialStones.some(
+              (s) => s.x === ans.x && s.y === ans.y,
+            );
+            expect([p.id, `(${ans.x},${ans.y}) occupied`]).toBeTruthy();
+            expect(occupied).toBe(false);
+          }
+        }
+      });
+
+      it("all v0.7.0b problems have at least 2 hints", () => {
+        const newProblems = problems.filter((p) => newIds.includes(p.id));
+        for (const p of newProblems) {
+          expect(p.hints.length).toBeGreaterThanOrEqual(2);
+        }
+      });
+
+      it("all v0.7.0b failureMessages avoid harsh or blame wording", () => {
+        const harshPatterns = [
+          /错[误了]/,
+          /笨/,
+          /傻/,
+          /太差/,
+          /不行/,
+          /不对/,
+          /错了/,
+        ];
+        const newProblems = problems.filter((p) => newIds.includes(p.id));
+        for (const p of newProblems) {
+          for (const pattern of harshPatterns) {
+            expect([p.id, p.failureMessage]).toBeTruthy();
+            expect(p.failureMessage).not.toMatch(pattern);
+          }
+        }
+      });
+
+      it("all v0.7.0b problems have a single answer point (no multi-answer)", () => {
+        const newProblems = problems.filter((p) => newIds.includes(p.id));
+        for (const p of newProblems) {
+          expect([p.id, p.answers.length]).toBeTruthy();
+          expect(p.answers.length).toBe(1);
+        }
+      });
     });
   });
 
