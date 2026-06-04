@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.8 content wiring complete (v0.8.0a–d). All 77 problems now wired into chapters. Next: v0.8 stabilization / release notes.
+v0.8 stabilization complete. All 77 problems wired into chapters and daily practice. Next: v0.9.0a planning.
 
 Current strategy:
 
@@ -32,7 +32,8 @@ Current strategy:
 18. v0.8.0b wire capture + escape + connect_cut completed — 21 new problems wired (45 total)
 19. v0.8.0c wire life_death + endgame + opening completed — 23 new problems wired (68 total)
 20. v0.8.0d wire multi-step problems completed — 9 multi-step problems wired (77 total, full library)
-21. Avoid AI/payment/teacher/leaderboard scope creep
+21. v0.8 stabilization completed — release notes and QA checklist published
+22. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1469,6 +1470,58 @@ Recommended secondary if content gap is judged non-pressing:
 
 ---
 
+# ✅ v0.8 Stabilization & Release Notes — COMPLETED (2026-06-04)
+
+## What was done
+
+- `docs/RELEASE_NOTES_v0.8.md` — v0.8 release notes covering:
+  direction and rationale (chapter/daily-practice wiring selected in
+  v0.8.0a), v0.8.0b/c/d wiring summary with per-chapter problem tables,
+  final chapter inventory (6 chapters, 36 levels, 77 problems, 68
+  single-step + 9 multi-step), backward compatibility, known
+  limitations (no skill filtering, 2-step only, no E2E/CI), validation
+  status, and next-phase recommendation (v0.9.0a — infrastructure/E2E/CI
+  hardening recommended primary).
+- `docs/QA_CHECKLIST_v0.8.md` — manual QA checklist with 25 sections
+  covering: scope confirmation, environment check, local anonymous mode,
+  demo isolation, all 6 chapters flow (capture, escape, connect_cut,
+  opening, life_death, endgame), multi-step regression, practice flow,
+  v0.6 polish regression (labels, celebration, audio, hints), v0.7
+  content regression, wrong book, report, spaced review, build/test
+  smoke check, mobile sanity, release decision template, and completion
+  criteria.
+- `docs/TASKS.md` — current phase updated to v0.8 stabilization complete,
+  next task set to v0.9.0a, future roadmap updated.
+- Docs-only change. No code, test, config, package, lockfile,
+  schema, problem data, runtime, Supabase, or SQL behavior was modified.
+
+## PR
+
+- Branch: `docs/v0.8-stabilization-release-notes`
+- PR: TBD (closes #102)
+
+---
+
+# Next Task: v0.9.0a Next Phase Plan
+
+## Goal
+
+Select a single primary direction for v0.9, define 1–3 implementation
+slices, and list explicit non-goals. v0.9.0a is planning-only and does
+**not** include implementation.
+
+Candidate directions (from `docs/RELEASE_NOTES_v0.8.md` section 8):
+
+- A. Infrastructure / E2E / CI hardening (recommended primary)
+- B. Deployment / Supabase env hardening
+- C. Deeper multi-step (3+ step, schema v2)
+- D. Further content expansion
+- E. Daily-practice skill filtering / level-aware selection
+
+See `docs/RELEASE_NOTES_v0.8.md` section 8 for the full comparison.
+
+---
+
 # Future Roadmap
 
 ## v0.2.3 — Server Progress
@@ -1527,8 +1580,12 @@ Recommended secondary if content gap is judged non-pressing:
 - v0.8.0a: next phase plan (completed, PR #95 / issue #94)
 - v0.8.0b: wire capture + escape + connect_cut (completed, PR #97 / issue #96)
 - v0.8.0c: wire life_death + endgame + opening (completed, PR #99 / issue #98)
-- v0.8.0d: wire multi-step problems (completed, PR TBD / issue #100)
-- v0.8 stabilization: release notes + QA checklist (next)
+- v0.8.0d: wire multi-step problems (completed, PR #101 / issue #100)
+- v0.8 stabilization: release notes + QA checklist (completed)
+
+## v0.9.0 — TBD
+
+- v0.9.0a: next phase plan (next)
 
 ---
 
