@@ -68,6 +68,31 @@ export const chapters: Chapter[] = [
     levels: [
       { id: "opening-1", title: "第 1 关", problemIds: ["OP-001"] },
       { id: "opening-2", title: "第 2 关", problemIds: ["OP-002", "OP-003"] },
+      { id: "opening-3", title: "第 3 关", problemIds: ["OP-004", "OP-007", "OP-008"] },
+      { id: "opening-4", title: "第 4 关", problemIds: ["OP-005", "OP-009", "OP-006"] },
+    ],
+  },
+  {
+    id: "life_death",
+    title: "死活山洞",
+    emoji: "🏯",
+    description: "学会救活自己的棋",
+    levels: [
+      { id: "life-death-1", title: "第 1 关", problemIds: ["LD-001", "LD-002", "LD-007"] },
+      { id: "life-death-2", title: "第 2 关", problemIds: ["LD-003", "LD-004", "LD-006"] },
+      { id: "life-death-3", title: "第 3 关", problemIds: ["LD-010"] },
+      { id: "life-death-4", title: "第 4 关", problemIds: ["LD-008", "LD-009"] },
+    ],
+  },
+  {
+    id: "endgame",
+    title: "官子山谷",
+    emoji: "🌄",
+    description: "学会收官",
+    levels: [
+      { id: "endgame-1", title: "第 1 关", problemIds: ["END-001", "END-002", "END-004"] },
+      { id: "endgame-2", title: "第 2 关", problemIds: ["END-005", "END-003", "END-006"] },
+      { id: "endgame-3", title: "第 3 关", problemIds: ["END-007", "END-008"] },
     ],
   },
 ];

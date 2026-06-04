@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.8.0b wire capture + escape + connect_cut complete. Next: v0.8.0c wire life_death + endgame + opening.
+v0.8.0c wire life_death + endgame + opening complete. Next: v0.8.0d (optional) wire multi-step problems.
 
 Current strategy:
 
@@ -30,7 +30,8 @@ Current strategy:
 16. v0.7 stabilization completed — release notes and QA checklist published
 17. v0.8.0a next phase plan completed — primary direction: chapter/daily-practice wiring
 18. v0.8.0b wire capture + escape + connect_cut completed — 21 new problems wired (45 total)
-19. Avoid AI/payment/teacher/leaderboard scope creep
+19. v0.8.0c wire life_death + endgame + opening completed — 23 new problems wired (68 total)
+20. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1394,6 +1395,48 @@ Recommended secondary if content gap is judged non-pressing:
 
 ---
 
+# ✅ v0.8.0c — Wire Life/Death + Endgame + Opening — COMPLETED (2026-06-04)
+
+## What was done
+
+- `src/lib/chapters.ts` — wired 23 single-step problems:
+
+  **Life/Death (9):** LD-001~LD-004, LD-006~LD-010 across 4 new levels
+  in a new `life_death` chapter (死活山洞, 🏯):
+  - life-death-1: LD-001 (L2), LD-002 (L2), LD-007 (L2)
+  - life-death-2: LD-003 (L3), LD-004 (L3), LD-006 (L3)
+  - life-death-3: LD-010 (L3)
+  - life-death-4: LD-008 (L4), LD-009 (L5)
+
+  **Endgame (8):** END-001~END-008 across 3 levels in a new `endgame`
+  chapter (官子山谷, 🌄):
+  - endgame-1: END-001 (L1), END-002 (L2), END-004 (L2)
+  - endgame-2: END-005 (L2), END-003 (L3), END-006 (L3)
+  - endgame-3: END-007 (L4), END-008 (L5)
+
+  **Opening (6):** extended existing `opening` chapter with 2 new levels:
+  - opening-3: OP-004 (L1), OP-007 (L3), OP-008 (L3)
+  - opening-4: OP-005 (L4), OP-009 (L4), OP-006 (L5)
+
+- `getAllProblemIds()` returns 68 unique IDs (45 existing + 23 new).
+- No existing wired problem was removed or reordered.
+- No capture, escape, or connect_cut wiring was changed from v0.8.0b.
+- No multi-step problems were wired.
+- No changes to `src/lib/practice.ts`.
+- `npm run test` passes (326 tests / 21 files — count unchanged).
+- `npm run build` passes.
+- `docs/TASKS.md` updated — marked v0.8.0c delivered, next → v0.8.0d.
+
+## Non-goals respected
+
+- No problem data changes (`src/data/problems.json` untouched).
+- No schema changes.
+- No `practice.ts`, `ProblemPlayer`, UI, audio, animation, hint,
+  coordinate-label, spaced review, weekly report, Supabase, SQL,
+  package, or lockfile changes.
+
+---
+
 # Future Roadmap
 
 ## v0.2.3 — Server Progress
@@ -1450,9 +1493,9 @@ Recommended secondary if content gap is judged non-pressing:
 ## v0.8.0 — Content Wiring
 
 - v0.8.0a: next phase plan (completed, PR #95 / issue #94)
-- v0.8.0b: wire capture + escape + connect_cut (completed, PR TBD / issue #96)
-- v0.8.0c: wire life_death + endgame + opening (next)
-- v0.8.0d: wire multi-step problems (optional)
+- v0.8.0b: wire capture + escape + connect_cut (completed, PR #97 / issue #96)
+- v0.8.0c: wire life_death + endgame + opening (completed, PR TBD / issue #98)
+- v0.8.0d: wire multi-step problems (optional, next)
 
 ---
 
