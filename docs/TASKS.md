@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.9.0a planning complete. Primary direction: Infrastructure / E2E / CI Hardening. Next: v0.9.0b GitHub Actions CI + Playwright setup.
+v0.9.0b CI + Playwright setup in progress. Next: v0.9.0c E2E smoke tests for core flows.
 
 Current strategy:
 
@@ -34,7 +34,7 @@ Current strategy:
 20. v0.8.0d wire multi-step problems completed — 9 multi-step problems wired (77 total, full library)
   21. v0.8 stabilization completed — release notes and QA checklist published
   22. v0.9.0a next phase plan completed — primary direction: infrastructure / E2E / CI hardening
-  23. Pre-existing lint/typecheck errors fixed — all quality gates now pass
+  23. v0.9.0b GitHub Actions CI + Playwright setup completed
   24. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -1540,92 +1540,86 @@ Recommended secondary if content gap is judged non-pressing:
 
 ---
 
-# ✅ Pre-existing Lint / Typecheck Cleanup — COMPLETED (2026-06-04)
+# ✅ v0.9.0b — GitHub Actions CI + Playwright Setup — COMPLETED (2026-06-04)
 
 ## What was done
 
-Fixed all pre-existing ESLint errors and TypeScript errors so that CI
-quality gates (`npm run lint`, `npm run typecheck`) can pass cleanly.
+- `.github/workflows/ci.yml` — GitHub Actions workflow that:
+  - Triggers on pushes to `main` and PRs against `main`.
+  - Uses Node.js 22 with `npm ci`.
+  - Installs Playwright Chromium browsers.
+  - Runs `npm run lint`, `npm run typecheck`, `npm run test`,
+    `npm run build`, and `npm run test:e2e` as hard gates.
+  - Uploads Playwright traces on failure (7-day retention).
+- `playwright.config.ts` — Playwright configuration:
+  - Test directory: `./e2e`.
+  - Chromium project only.
+  - Web server: standalone server on port 3100.
+  - `reuseExistingServer: !process.env.CI`.
+  - 2 retries in CI, 0 locally.
+  - `forbidOnly` in CI.
+- `e2e/home.spec.ts` — one minimal smoke test:
+  - Boots the app and navigates to `/`.
+  - Asserts `h1` contains "欢迎回来，小棋手！".
+  - Asserts navigation links (今日练习, 闯关地图, 错题本, 学习报告) are visible.
+  - Does not depend on Supabase env variables.
+  - Does not write real progress or require authentication.
+- `package.json` — added `@playwright/test` dev dependency; added
+  `test:e2e` script.
+- `package-lock.json` — updated consistently.
+- `docs/TASKS.md` — marked v0.9.0b delivered, next task → v0.9.0c.
 
-**ESLint (21 errors + 17 warnings → 0 + 0):**
+## Prerequisite
 
-- `react-hooks/set-state-in-effect` (7 errors in client components):
-  suppressed with targeted `eslint-disable` / `eslint-enable` blocks.
-  These are correct patterns for client-side-only data initialization
-  from localStorage.
-- `@typescript-eslint/no-explicit-any` (14 errors in test files):
-  replaced with proper type casts or eslint-disable comments.
-- `@typescript-eslint/no-unused-vars` (17 warnings across test and
-  source files): removed unused imports and variables.
-- Fixed `lint` script from broken `next lint` (removed in Next 16) to
-  `eslint src/` in `package.json`.
-
-**TypeScript (multiple errors → 0):**
-
-- Added missing `reviewSchedule: {}` to mock `StudentProgress` objects
-  in test files.
-- Used `as const` for `boardSize`/`level` literals to satisfy union
-  types in test files.
-- Typed `globalThis` assignments with `Record<string, unknown>` in
-  test files.
-- Added missing `import { describe, it, expect } from "vitest"` in
-  `progress-import-hash.test.ts`.
-- Fixed `null`/`undefined` mismatches in `progress-import-v2.test.ts`.
-- Used `as unknown as SupabaseClient` for mock client objects.
-
-**Configuration:**
-
-- `vitest.config.ts`: added `exclude` for `e2e/` directory so vitest
-  does not pick up Playwright tests. This is a necessary configuration
-  fix: without it, `npm run test` would fail because vitest tries to
-  run Playwright tests in jsdom.
-- `.gitignore`: added `test-results/` and `playwright-report/` for
-  Playwright artifacts.
+This PR depends on PR #109 (lint/typecheck cleanup) which was merged
+first so that `npm run lint` and `npm run typecheck` exit 0, enabling
+CI hard gates.
 
 ## Validation
 
-- `npm run lint`: exit 0, no errors or warnings.
-- `npm run typecheck`: exit 0, no errors.
+- `npm run lint`: exit 0 (after PR #109 cleanup).
+- `npm run typecheck`: exit 0 (after PR #109 cleanup).
 - `npm run test`: 326 tests / 21 files pass.
 - `npm run build`: passes.
-- No product behavior changes. All `src/app/`, `src/components/`,
-  `src/lib/` changes are lint/typecheck-only fixes.
+- `npm run test:e2e`: 1 test passes.
 
----
-
-# Next Task: v0.9.0b GitHub Actions CI + Playwright Setup
-
-## Goal
-
-Add a GitHub Actions workflow that runs lint, typecheck, test, and build
-on every push and PR. Install Playwright as a dev dependency with a
-minimal smoke test that validates the app boots and the home page renders.
-
-## Scope
-
-- `.github/workflows/ci.yml`
-- `package.json` (add `@playwright/test`, add `test:e2e` script)
-- `package-lock.json` (updated by npm install)
-- `e2e/` directory with one smoke test
-- `playwright.config.ts`
-
-## Acceptance Criteria
-
-- GitHub Actions workflow runs on every push to `main` and on every PR
-  against `main`.
-- Workflow runs lint, typecheck, test, and build; fails PR if any step
-  exits non-zero.
-- Playwright smoke test boots the app and asserts the home page renders.
-- `npm run test:e2e` script added to `package.json`.
-- `npm run test` (unit tests) still passes.
-- `npm run build` still passes.
-
-## Non-goals
+## Non-goals respected
 
 - No comprehensive E2E test suite (deferred to v0.9.0c).
 - No release QA automation (deferred to v0.9.0d).
-- No schema, problem data, runtime code, or UI changes.
-- No changes to `src/lib/` or `src/app/` source code.
+- No `src/` source code changes in this PR.
+- No changes to `src/lib/chapters.ts` or `src/lib/practice.ts`.
+- No SQL/Supabase, AI, payment, teacher/admin, leaderboard, board-size,
+  SGF, multiplayer, or app redesign work.
+
+---
+
+# Next Task: v0.9.0c E2E Smoke Tests for Core Flows
+
+## Goal
+
+Add Playwright smoke tests that cover the core learner-facing flows:
+chapter navigation, practice session, demo isolation, and local anonymous
+mode.
+
+## Scope
+
+- `e2e/` directory (new test files only). No changes to `src/` source code.
+
+## Acceptance Criteria
+
+- E2E tests cover: home page chapters, `/levels`, `/levels/capture`,
+  `/demo`, `/practice`, `/settings`.
+- All E2E tests pass in CI (`npm run test:e2e`).
+- Unit tests (`npm run test`) still pass.
+- Build (`npm run build`) still passes.
+
+## Non-goals
+
+- No visual regression testing.
+- No performance benchmarking.
+- No comprehensive wrong-book / report / spaced-review E2E coverage.
+- No changes to `src/` source code.
 
 ---
 
@@ -1693,8 +1687,8 @@ minimal smoke test that validates the app boots and the home page renders.
 ## v0.9.0 — Infrastructure / E2E / CI Hardening
 
 - v0.9.0a: next phase plan (completed)
-- v0.9.0b: GitHub Actions CI + Playwright setup (next)
-- v0.9.0c: E2E smoke tests for core flows
+- v0.9.0b: GitHub Actions CI + Playwright setup (completed)
+- v0.9.0c: E2E smoke tests for core flows (next)
 - v0.9.0d (optional): release QA automation + stabilization
 
 ---
