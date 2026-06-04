@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.7.0c content validation and regression complete. Next: v0.7.0d stabilization and release notes.
+v0.7 content balancing complete — stabilized and documented. Next: v0.8.0a next phase planning.
 
 Current strategy:
 
@@ -27,7 +27,8 @@ Current strategy:
 13. v0.7.0a next phase plan completed — primary direction: content balancing
 14. v0.7.0b content pack completed — 12 new problems (77 total)
 15. v0.7.0c content validation and regression completed
-16. Avoid AI/payment/teacher/leaderboard scope creep
+16. v0.7 stabilization completed — release notes and QA checklist published
+17. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1278,6 +1279,37 @@ Recommended secondary if content gap is judged non-pressing:
 
 ---
 
+# ✅ v0.7.0d — Stabilization and Release Notes — COMPLETED (2026-06-04)
+
+## What was done
+
+- Created `docs/RELEASE_NOTES_v0.7.md` with:
+  - v0.7 direction and rationale (content balancing selected in v0.7.0a)
+  - v0.7.0b content additions (12 new problems, final library: 77)
+  - v0.7.0c validation summary (10 new tests, CONTENT_REVIEW created)
+  - Final content inventory (category and level distribution)
+  - Known limitations and backward compatibility
+  - Next-phase recommendation: v0.8.0a planning with chapter/daily-practice
+    content wiring as the primary candidate
+- Created `docs/QA_CHECKLIST_v0.7.md` with:
+  - 18 sections covering scope confirmation, environment check,
+    local anonymous mode, demo isolation, practice flow, level/chapter flow,
+    v0.6 polish regression (labels, celebration, audio, hints),
+    v0.7 content sanity (all 12 new problems), wrong book, report,
+    spaced review, build/test smoke check, mobile sanity,
+    release decision template, and completion criteria
+- Updated `docs/TASKS.md`: current phase set to v0.7 stabilization complete,
+  next task set to v0.8.0a, future roadmap updated
+- Docs-only change. No code, test, config, package, lockfile,
+  schema, problem data, runtime, Supabase, or SQL behavior was modified.
+
+## PR
+
+- Branch: `docs/v0.7.0d-stabilization-release-notes`
+- PR: TBD (closes #92)
+
+---
+
 # Future Roadmap
 
 ## v0.2.3 — Server Progress
@@ -1329,7 +1361,11 @@ Recommended secondary if content gap is judged non-pressing:
 - v0.7.0a: next phase plan (completed, PR #86 / issue #85)
 - v0.7.0b: endgame + opening + level 3–5 content pack (completed, PR #89 / issue #87)
 - v0.7.0c: content validation and regression (completed, PR #91 / issue #90)
-- v0.7.0d: stabilization and release notes (next)
+- v0.7.0d: stabilization and release notes (completed, PR TBD / issue #92)
+
+## v0.8.0 — Planning (next)
+
+- v0.8.0a: next phase plan (next task) — docs-only planning to select primary v0.8 direction
 
 ---
 
