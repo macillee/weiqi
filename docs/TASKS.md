@@ -1307,7 +1307,7 @@ Recommended secondary if content gap is judged non-pressing:
 ## PR
 
 - Branch: `docs/v0.7.0d-stabilization-release-notes`
-- PR: TBD (closes #92)
+- PR: #93 (closes #92)
 
 ---
 
@@ -1345,7 +1345,7 @@ Recommended secondary if content gap is judged non-pressing:
 ## PR
 
 - Branch: `docs/v0.8.0a-next-phase-plan`
-- PR: TBD (closes #94)
+- PR: #95 (closes #94)
 
 ---
 
@@ -1404,7 +1404,7 @@ Recommended secondary if content gap is judged non-pressing:
 
 ## v0.8.0 — Content Wiring
 
-- v0.8.0a: next phase plan (completed, PR TBD / issue #94)
+- v0.8.0a: next phase plan (completed, PR #95 / issue #94)
 - v0.8.0b: wire capture + escape + connect_cut (next)
 - v0.8.0c: wire life_death + endgame + opening
 - v0.8.0d: wire multi-step problems (optional)

@@ -243,20 +243,21 @@ Estimated slice count: 2–3 implementation slices.
 
 ### v0.8.0b — Wire Existing Content: Capture + Escape + Connect_Cut
 
-- **Goal:** Wire all unwired capture (CAP-011 ~ CAP-018), escape
-  (ESC-006 ~ ESC-011), and connect_cut (CC-007 ~ CC-014) problems into
-  their respective chapter structures. Add appropriate level nodes to
-  existing chapters; no new chapter creation needed.
+- **Goal:** Wire all unwired single-step capture (8: CAP-011 ~ CAP-018),
+  escape (6: ESC-006 ~ ESC-011), and connect_cut (7: CC-007 ~ CC-009,
+  CC-011 ~ CC-014) problems into their respective chapter structures.
+  Add appropriate level nodes to existing chapters; no new chapter
+  creation needed.
 - **Scope:** `src/lib/chapters.ts` only.
 - **Acceptance criteria:**
-  - 27 newly wired problems appear in their correct chapter and level
+  - 21 newly wired problems appear in their correct chapter and level
     progression (capture-6 ~ capture-8, escape-4 ~ escape-6,
     connect-cut-4 ~ connect-cut-6, etc.).
   - Level ordering respects difficulty (lower-level problems first,
     higher-level problems later).
-  - `getAllProblemIds()` returns all 43 wired problems (24 existing + 19
-    new from these categories) — capture, escape, connect_cut chapters
-    complete.
+  - `getAllProblemIds()` returns 45 wired problems (24 existing + 21
+    new) — capture, escape, connect_cut single-step problems fully
+    wired.
   - Daily practice selection (`selectDailyProblems`) includes the newly
     wired problems automatically (no `practice.ts` change needed).
   - No existing wired problem is removed or re-ordered from its current
@@ -265,34 +266,35 @@ Estimated slice count: 2–3 implementation slices.
     wiring-dependent tests).
   - `npm run build` passes.
 - **Non-goals:**
+  - No wiring of multi-step problems (deferred to v0.8.0d).
   - No new chapters for life_death, endgame, or multi-step.
   - No `practice.ts`, `ProblemPlayer`, schema, or runtime code changes.
   - No `src/data/problems.json` changes.
 
 ### v0.8.0c — Wire Existing Content: Life_Death + Endgame + Opening
 
-- **Goal:** Wire all unwired life_death (LD-001 ~ LD-010), endgame
-  (END-001 ~ END-008), and remaining opening (OP-004 ~ OP-009) problems.
-  This slice requires creating two new chapters: **死活山洞** (life_death)
-  and **官子山谷** (endgame), plus extending the existing opening chapter.
+- **Goal:** Wire all unwired single-step life_death (9: LD-001 ~ LD-004,
+  LD-006 ~ LD-010), endgame (8: END-001 ~ END-008), and opening
+  (6: OP-004 ~ OP-009) problems. This slice requires creating two new
+  chapters: **死活山洞** (life_death) and **官子山谷** (endgame), plus
+  extending the existing opening chapter.
 - **Scope:** `src/lib/chapters.ts` only.
 - **Acceptance criteria:**
   - `chapters.ts` includes two new chapter entries with level nodes for
-    life_death (LD-001 ~ LD-010) and endgame (END-001 ~ END-008), and
-    extends the existing opening chapter (OP-004 ~ OP-009).
-  - All 8 endgame and 12 life_death problems are wired.
-  - All 6 remaining opening problems are wired (opening total: 9).
+    life_death and endgame, and extends the existing opening chapter.
+  - 23 newly wired problems appear in their correct chapter and level
+    progression: 9 life_death + 8 endgame + 6 opening.
   - Level ordering respects difficulty; categories with no prior chapter
     structure design reasonable level progressions.
-  - `getAllProblemIds()` returns 77 — the full library is wired.
+  - `getAllProblemIds()` returns 68 (45 from v0.8.0b + 23 new).
   - `npm run test` passes.
   - `npm run build` passes.
 - **Non-goals:**
   - No changes to existing chapter structure for capture, escape, or
     connect_cut.
+  - No wiring of multi-step problems (deferred to v0.8.0d).
   - No `practice.ts`, `ProblemPlayer`, schema, or runtime code changes.
   - No `src/data/problems.json` changes.
-  - No multi-step problems wired (deferred to v0.8.0d or later).
 
 ### v0.8.0d (optional) — Wire Multi-Step Problems
 
@@ -301,11 +303,13 @@ Estimated slice count: 2–3 implementation slices.
 - **Scope:** `src/lib/chapters.ts` only.
 - **Acceptance criteria:**
   - All 9 multi-step problems are wired into their relevant category
-    chapters (e.g. MULTI-001 ~ MULTI-003 in capture, MULTI-004 ~
-    MULTI-007 in life_death, MULTI-008 ~ MULTI-009 in connect_cut).
+    chapters (e.g. MULTI-001, MULTI-004, MULTI-005 in capture;
+    MULTI-002, MULTI-006, MULTI-007 in life_death; MULTI-003, MULTI-008,
+    MULTI-009 in connect_cut).
   - Multi-step problems appear at appropriate level positions (after
     single-step problems of similar difficulty).
-  - `getAllProblemIds()` returns 77 — full library remains wired.
+  - `getAllProblemIds()` returns all 77 problems — full library wired;
+    single-step split: 68, multi-step: 9.
   - `npm run test` passes.
   - `npm run build` passes.
 - **Non-goals:**
