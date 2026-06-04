@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { getWeekRange, computeWeeklyReport } from "@/lib/weekly-report";
-import type { StudentProgress, AttemptRecord, WrongProblemState, ProblemReviewState } from "@/lib/progress";
+import type { StudentProgress, AttemptRecord } from "@/lib/progress";
 
 describe("getWeekRange", () => {
   it("returns Monday to Sunday for a Wednesday", () => {
@@ -78,7 +78,6 @@ function emptyProgress(): StudentProgress {
 
 describe("computeWeeklyReport", () => {
   const wedMay27 = new Date("2026-05-27T12:00:00Z");
-  const monMay25 = "2026-05-25";
 
   it("returns empty report for new user", () => {
     const report = computeWeeklyReport(emptyProgress(), wedMay27);

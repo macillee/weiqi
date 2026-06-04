@@ -7,6 +7,7 @@ import {
   getPracticeSummary,
 } from "@/lib/practice";
 import * as problemsModule from "@/lib/problems";
+import type { Problem } from "@/lib/problems";
 import * as chaptersModule from "@/lib/chapters";
 
 vi.mock("@/lib/problems", () => ({
@@ -17,12 +18,12 @@ vi.mock("@/lib/chapters", () => ({
   getAllProblemIds: vi.fn(),
 }));
 
-function makeProblem(id: string) {
+function makeProblem(id: string): Problem {
   return {
     id,
-    boardSize: 9,
+    boardSize: 9 as const,
     category: "capture" as const,
-    level: 1,
+    level: 1 as const,
     tags: ["capture"],
     toPlay: "black" as const,
     title: `Problem ${id}`,

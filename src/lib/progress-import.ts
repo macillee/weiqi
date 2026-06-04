@@ -11,7 +11,6 @@
 import { type StudentProgress, PROGRESS_KEY, loadProgress } from "./progress";
 import { createSupabaseClient } from "./supabase/client";
 import { classifySupabaseError, type SupabaseError } from "./supabase/supabase-error";
-import type { WrongProblemStatus } from "./supabase/server-progress";
 
 export type ImportEligibilityStatus =
   | "no_local_progress"

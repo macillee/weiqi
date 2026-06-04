@@ -15,6 +15,7 @@ function freshProgress(): StudentProgress {
     wrongProblems: {},
     attempts: [],
     achievements: [],
+    reviewSchedule: {},
   };
 }
 

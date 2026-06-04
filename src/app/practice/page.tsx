@@ -4,7 +4,6 @@ import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
 import { selectDailyProblems, type PracticeSession, createPracticeSession, recordResult, advancePracticeSession, getPracticeSummary } from "@/lib/practice";
-import type { Problem } from "@/lib/problems";
 import {
   loadProgress,
   saveProgress,
@@ -29,9 +28,11 @@ export default function PracticePage() {
   const { session: authSession } = useSupabaseAuth();
   const parentUserId = authSession?.user?.id ?? null;
 
+  /* eslint-disable react-hooks/set-state-in-effect -- localStorage init must happen client-side */
   useEffect(() => {
     setProgress(loadProgress());
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   function handleStart() {
     const problems = selectDailyProblems();

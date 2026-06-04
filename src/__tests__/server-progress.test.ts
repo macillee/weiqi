@@ -103,6 +103,7 @@ describe("server-progress — error handling", () => {
         error: { message: "Fetch failed", code: "NETWORK_ERROR" },
       },
     });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockCreateClient.mockReturnValue(mockClient as any);
 
     const result = await loadServerProgress("test-child-id");
@@ -117,6 +118,7 @@ describe("server-progress — error handling", () => {
         error: { message: "Network error", code: "NETWORK_ERROR" },
       },
     });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockCreateClient.mockReturnValue(mockClient as any);
 
     const result = await syncAttemptToServer(
@@ -151,6 +153,7 @@ describe("server-progress — error handling", () => {
         error: { message: "Fetch failed", code: "NETWORK_ERROR" },
       },
     });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockCreateClient.mockReturnValue(mockClient as any);
 
     const result = await loadReportData("test-child-id");
@@ -175,6 +178,7 @@ describe("server-progress — data mapping", () => {
         error: null,
       },
     });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockCreateClient.mockReturnValue(mockClient as any);
 
     const result = await loadServerProgress("test-child-id");
@@ -203,6 +207,7 @@ describe("server-progress — data mapping", () => {
         error: null,
       },
     });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockCreateClient.mockReturnValue(mockClient as any);
 
     const result = await loadServerProgress("test-child-id");
@@ -234,6 +239,7 @@ describe("server-progress — data mapping", () => {
         error: null,
       },
     });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockCreateClient.mockReturnValue(mockClient as any);
 
     const result = await loadReportData("test-child-id");
@@ -259,6 +265,7 @@ describe("server-progress — data mapping", () => {
         error: { code: "PGRST116", message: "Results not found" },
       },
     });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockCreateClient.mockReturnValue(mockClient as any);
 
     const result = await loadServerProgress("test-child-id");
@@ -276,6 +283,7 @@ describe("server-progress — syncAttemptToServer success path", () => {
       insert: { data: null, error: null },
       upsert: { data: null, error: null },
     });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockCreateClient.mockReturnValue(mockClient as any);
 
     const result = await syncAttemptToServer(
@@ -314,6 +322,7 @@ describe("server-progress — syncAttemptToServer success path", () => {
         return Promise.resolve({ data: null, error: null });
       }),
     };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockCreateClient.mockReturnValue(mockClient as any);
 
     const result = await syncAttemptToServer(
@@ -364,6 +373,7 @@ describe("server-progress — syncAttemptToServer success path", () => {
         });
       }),
     };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockCreateClient.mockReturnValue(mockClient as any);
 
     const result = await syncAttemptToServer(
@@ -414,6 +424,7 @@ describe("server-progress — wrong_problems mapping", () => {
         error: null,
       },
     });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     mockCreateClient.mockReturnValue(mockClient as any);
 
     const result = await loadServerProgress("test-child-id");

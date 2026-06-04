@@ -38,9 +38,11 @@ export default function WrongBookPage() {
     setWrongProblems(active);
   }
 
+  /* eslint-disable react-hooks/set-state-in-effect -- localStorage init must happen client-side */
   useEffect(() => {
     refreshProgress();
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   function startReview(wp: WrongProblemState) {
     const problem = getProblemById(wp.problemId);
@@ -51,7 +53,7 @@ export default function WrongBookPage() {
   }
 
   const handleAttempt = useCallback(
-    async (x: number, y: number, isCorrect: boolean, usedHint: boolean) => {
+    async (_x: number, _y: number, isCorrect: boolean) => {
       if (!reviewProblem) return;
       const result = await updateWrongProblemReviewWithSync(
         parentUserId,

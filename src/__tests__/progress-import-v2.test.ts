@@ -19,6 +19,7 @@ vi.mock("@/lib/progress", () => ({
 }));
 
 import { createSupabaseClient } from "@/lib/supabase/client";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { loadProgress } from "@/lib/progress";
 
 const mockedCreateClient = vi.mocked(createSupabaseClient);
@@ -76,14 +77,14 @@ describe("checkAlreadyImported", () => {
 
   it("returns alreadyImported=true when count > 0", async () => {
     const mockFrom = vi.fn().mockReturnValue(mockCheckChain(5));
-    mockedCreateClient.mockReturnValue({ from: mockFrom });
+    mockedCreateClient.mockReturnValue({ from: mockFrom } as unknown as SupabaseClient);
     const result = await checkAlreadyImported("profile-1");
     expect(result.alreadyImported).toBe(true);
   });
 
   it("returns error when Supabase query fails", async () => {
     const mockFrom = vi.fn().mockReturnValue(mockCheckErrorChain());
-    mockedCreateClient.mockReturnValue({ from: mockFrom });
+    mockedCreateClient.mockReturnValue({ from: mockFrom } as unknown as SupabaseClient);
     const result = await checkAlreadyImported("profile-1");
     expect(result.alreadyImported).toBe(false);
     expect(result.error).not.toBeNull();
@@ -136,7 +137,7 @@ describe("importLocalProgressToServer", () => {
     mockedCreateClient.mockReturnValue(null);
     mockedLoadProgress.mockReturnValue({
       stars: 0, streakDays: 0, completedProblemIds: [], masteredProblemIds: [],
-      wrongProblems: {}, attempts: [], achievements: [],
+      wrongProblems: {}, attempts: [], achievements: [], reviewSchedule: {},
     });
     const result = await importLocalProgressToServer("profile-1");
     expect(result.success).toBe(true);
@@ -150,7 +151,7 @@ describe("importLocalProgressToServer", () => {
       stars: 3, streakDays: 1, completedProblemIds: [], masteredProblemIds: [],
       wrongProblems: {},
       attempts: [{ problemId: "CAP-001", selectedX: 1, selectedY: 1, isCorrect: true, usedHint: false, timeSpentSeconds: 5, createdAt: "2026-01-01T00:00:00Z" }],
-      achievements: [],
+      achievements: [], reviewSchedule: {},
     });
     const result = await importLocalProgressToServer("profile-1");
     expect(result.success).toBe(false);
@@ -163,7 +164,7 @@ describe("importLocalProgressToServer", () => {
       stars: 3, streakDays: 1, completedProblemIds: ["CAP-001"], masteredProblemIds: [],
       wrongProblems: {},
       attempts: [{ problemId: "CAP-001", selectedX: 1, selectedY: 1, isCorrect: true, usedHint: false, timeSpentSeconds: 5, createdAt: "2026-01-01T00:00:00Z" }],
-      achievements: [],
+      achievements: [], reviewSchedule: {},
     });
 
     // from calls: check(select), attempts(insert), summary read(select+eq+maybeSingle), summary write(upsert)
@@ -175,7 +176,7 @@ describe("importLocalProgressToServer", () => {
       .mockReturnValueOnce(mockSummarySelectChain(null))   // 3. summary read (no existing)
       .mockReturnValueOnce({ upsert: mockSummaryUpsert }); // 4. summary write
 
-    mockedCreateClient.mockReturnValue({ from: mockFrom });
+    mockedCreateClient.mockReturnValue({ from: mockFrom } as unknown as SupabaseClient);
 
     const result = await importLocalProgressToServer("profile-1");
     expect(result.success).toBe(true);
@@ -188,10 +189,10 @@ describe("importLocalProgressToServer", () => {
     mockedLoadProgress.mockReturnValue({
       stars: 0, streakDays: 0, completedProblemIds: [], masteredProblemIds: [],
       wrongProblems: {
-        "CAP-002": { wrongCount: 2, correctReviewCount: 1, status: "active", lastWrongAt: "2026-01-02T00:00:00Z", lastReviewAt: null },
+        "CAP-002": { problemId: "CAP-002", wrongCount: 2, correctReviewCount: 1, status: "active", lastWrongAt: "2026-01-02T00:00:00Z", lastReviewAt: undefined },
       },
       attempts: [{ problemId: "CAP-002", selectedX: 3, selectedY: 3, isCorrect: false, usedHint: false, timeSpentSeconds: 10, createdAt: "2026-01-02T00:00:00Z" }],
-      achievements: [],
+      achievements: [], reviewSchedule: {},
     });
 
     const mockAttemptInsert = vi.fn().mockResolvedValue({ error: null });
@@ -204,7 +205,7 @@ describe("importLocalProgressToServer", () => {
       .mockReturnValueOnce(mockSummarySelectChain(null))   // 4. summary read
       .mockReturnValueOnce({ upsert: mockSummaryUpsert }); // 5. summary write
 
-    mockedCreateClient.mockReturnValue({ from: mockFrom });
+    mockedCreateClient.mockReturnValue({ from: mockFrom } as unknown as SupabaseClient);
 
     const result = await importLocalProgressToServer("profile-1");
     expect(result.success).toBe(true);
@@ -217,12 +218,12 @@ describe("importLocalProgressToServer", () => {
       stars: 3, streakDays: 1, completedProblemIds: [], masteredProblemIds: [],
       wrongProblems: {},
       attempts: [{ problemId: "CAP-001", selectedX: 1, selectedY: 1, isCorrect: true, usedHint: false, timeSpentSeconds: 5, createdAt: "2026-01-01T00:00:00Z" }],
-      achievements: [],
+      achievements: [], reviewSchedule: {},
     });
 
     // checkAlreadyImported: count > 0 → short-circuit
     const mockFrom = vi.fn().mockReturnValueOnce(mockCheckChain(1));
-    mockedCreateClient.mockReturnValue({ from: mockFrom });
+    mockedCreateClient.mockReturnValue({ from: mockFrom } as unknown as SupabaseClient);
 
     const result = await importLocalProgressToServer("profile-1");
     expect(result.success).toBe(true);
@@ -236,7 +237,7 @@ describe("importLocalProgressToServer", () => {
       stars: 5, streakDays: 3, completedProblemIds: ["CAP-001", "CAP-002"], masteredProblemIds: ["CAP-001"],
       wrongProblems: {},
       attempts: [{ problemId: "CAP-002", selectedX: 2, selectedY: 2, isCorrect: true, usedHint: false, timeSpentSeconds: 8, createdAt: "2026-01-03T00:00:00Z" }],
-      achievements: [],
+      achievements: [], reviewSchedule: {},
     });
 
     // Server has: stars=2, streak=1, completed=[CAP-003]
@@ -253,7 +254,7 @@ describe("importLocalProgressToServer", () => {
       .mockReturnValueOnce(mockSummarySelectChain(existingSummary))
       .mockReturnValueOnce({ upsert: mockSummaryUpsert });
 
-    mockedCreateClient.mockReturnValue({ from: mockFrom });
+    mockedCreateClient.mockReturnValue({ from: mockFrom } as unknown as SupabaseClient);
 
     const result = await importLocalProgressToServer("profile-1");
     expect(result.success).toBe(true);
@@ -271,7 +272,7 @@ describe("importLocalProgressToServer", () => {
       stars: 3, streakDays: 1, completedProblemIds: [], masteredProblemIds: [],
       wrongProblems: {},
       attempts: [{ problemId: "CAP-001", selectedX: 1, selectedY: 1, isCorrect: true, usedHint: false, timeSpentSeconds: 5, createdAt: "2026-01-01T00:00:00Z" }],
-      achievements: [],
+      achievements: [], reviewSchedule: {},
     });
 
     const mockAttemptInsert = vi.fn().mockResolvedValue({ error: { code: "PGRST301", message: "network error" } });
@@ -279,7 +280,7 @@ describe("importLocalProgressToServer", () => {
       .mockReturnValueOnce(mockCheckChain(0))
       .mockReturnValueOnce({ insert: mockAttemptInsert });
 
-    mockedCreateClient.mockReturnValue({ from: mockFrom });
+    mockedCreateClient.mockReturnValue({ from: mockFrom } as unknown as SupabaseClient);
 
     const result = await importLocalProgressToServer("profile-1");
     expect(result.success).toBe(false);
@@ -290,9 +291,9 @@ describe("importLocalProgressToServer", () => {
   it("returns error when wrong_problems upsert fails", async () => {
     mockedLoadProgress.mockReturnValue({
       stars: 0, streakDays: 0, completedProblemIds: [], masteredProblemIds: [],
-      wrongProblems: { "CAP-002": { wrongCount: 1, correctReviewCount: 0, status: "active", lastWrongAt: "2026-01-02T00:00:00Z", lastReviewAt: null } },
+      wrongProblems: { "CAP-002": { problemId: "CAP-002", wrongCount: 1, correctReviewCount: 0, status: "active", lastWrongAt: "2026-01-02T00:00:00Z", lastReviewAt: undefined } },
       attempts: [{ problemId: "CAP-002", selectedX: 3, selectedY: 3, isCorrect: false, usedHint: false, timeSpentSeconds: 10, createdAt: "2026-01-02T00:00:00Z" }],
-      achievements: [],
+      achievements: [], reviewSchedule: {},
     });
 
     const mockAttemptInsert = vi.fn().mockResolvedValue({ error: null });
@@ -302,7 +303,7 @@ describe("importLocalProgressToServer", () => {
       .mockReturnValueOnce({ insert: mockAttemptInsert })
       .mockReturnValueOnce({ upsert: mockWrongUpsert });
 
-    mockedCreateClient.mockReturnValue({ from: mockFrom });
+    mockedCreateClient.mockReturnValue({ from: mockFrom } as unknown as SupabaseClient);
 
     const result = await importLocalProgressToServer("profile-1");
     expect(result.success).toBe(false);
@@ -315,7 +316,7 @@ describe("importLocalProgressToServer", () => {
       stars: 3, streakDays: 1, completedProblemIds: [], masteredProblemIds: [],
       wrongProblems: {},
       attempts: [{ problemId: "CAP-001", selectedX: 1, selectedY: 1, isCorrect: true, usedHint: false, timeSpentSeconds: 5, createdAt: "2026-01-01T00:00:00Z" }],
-      achievements: [],
+      achievements: [], reviewSchedule: {},
     });
 
     const mockAttemptInsert = vi.fn().mockResolvedValue({ error: null });
@@ -326,7 +327,7 @@ describe("importLocalProgressToServer", () => {
       .mockReturnValueOnce(mockSummarySelectChain(null))
       .mockReturnValueOnce({ upsert: mockSummaryUpsert });
 
-    mockedCreateClient.mockReturnValue({ from: mockFrom });
+    mockedCreateClient.mockReturnValue({ from: mockFrom } as unknown as SupabaseClient);
 
     const result = await importLocalProgressToServer("profile-1");
     expect(result.success).toBe(false);
@@ -339,11 +340,11 @@ describe("importLocalProgressToServer", () => {
       stars: 3, streakDays: 1, completedProblemIds: [], masteredProblemIds: [],
       wrongProblems: {},
       attempts: [{ problemId: "CAP-001", selectedX: 1, selectedY: 1, isCorrect: true, usedHint: false, timeSpentSeconds: 5, createdAt: "2026-01-01T00:00:00Z" }],
-      achievements: [],
+      achievements: [], reviewSchedule: {},
     });
 
     const mockFrom = vi.fn().mockReturnValueOnce(mockCheckErrorChain());
-    mockedCreateClient.mockReturnValue({ from: mockFrom });
+    mockedCreateClient.mockReturnValue({ from: mockFrom } as unknown as SupabaseClient);
 
     const result = await importLocalProgressToServer("profile-1");
     expect(result.success).toBe(false);
@@ -356,7 +357,7 @@ describe("importLocalProgressToServer", () => {
       stars: 3, streakDays: 1, completedProblemIds: ["CAP-001"], masteredProblemIds: [],
       wrongProblems: {},
       attempts: [{ problemId: "CAP-001", selectedX: 1, selectedY: 1, isCorrect: true, usedHint: false, timeSpentSeconds: 5, createdAt: "2026-01-01T00:00:00Z" }],
-      achievements: [],
+      achievements: [], reviewSchedule: {},
     });
 
     const mockAttemptInsert = vi.fn().mockResolvedValue({ error: { code: "23505", message: "duplicate" } });
@@ -367,7 +368,7 @@ describe("importLocalProgressToServer", () => {
       .mockReturnValueOnce(mockSummarySelectChain(null))
       .mockReturnValueOnce({ upsert: mockSummaryUpsert });
 
-    mockedCreateClient.mockReturnValue({ from: mockFrom });
+    mockedCreateClient.mockReturnValue({ from: mockFrom } as unknown as SupabaseClient);
 
     const result = await importLocalProgressToServer("profile-1");
     expect(result.success).toBe(true);

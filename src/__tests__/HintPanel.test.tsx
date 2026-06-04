@@ -4,7 +4,7 @@ import { createRoot } from "react-dom/client";
 import type { Root } from "react-dom/client";
 import HintPanel from "@/components/problem/HintPanel";
 
-globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+(globalThis as Record<string, unknown>).IS_REACT_ACT_ENVIRONMENT = true;
 
 let root: Root | null = null;
 let container: HTMLDivElement | null = null;
