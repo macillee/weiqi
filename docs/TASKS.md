@@ -1249,7 +1249,7 @@ Recommended secondary if content gap is judged non-pressing:
 
 ## What was done
 
-- Added 7 per-problem correctness checks in `src/__tests__/problems.test.ts`:
+- Added 6 per-problem correctness checks in `src/__tests__/problems.test.ts`:
   - END-006: answer (3,3) empty, fills black corner wall gap
   - END-008: answer (3,3) empty, fills black formation internal gap
   - OP-007: answer (2,2) empty, proper knight approach to white corner
@@ -1328,7 +1328,7 @@ Recommended secondary if content gap is judged non-pressing:
 
 - v0.7.0a: next phase plan (completed, PR #86 / issue #85)
 - v0.7.0b: endgame + opening + level 3–5 content pack (completed, PR #89 / issue #87)
-- v0.7.0c: content validation and regression (completed, PR #90 / issue #90)
+- v0.7.0c: content validation and regression (completed, PR #91 / issue #90)
 - v0.7.0d: stabilization and release notes (next)
 
 ---
