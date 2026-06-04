@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.7 content balancing complete — stabilized and documented. Next: v0.8.0a next phase planning.
+v0.8.0a planning complete — primary direction selected: chapter/daily-practice content wiring. Next: v0.8.0b wire capture + escape + connect_cut.
 
 Current strategy:
 
@@ -28,7 +28,8 @@ Current strategy:
 14. v0.7.0b content pack completed — 12 new problems (77 total)
 15. v0.7.0c content validation and regression completed
 16. v0.7 stabilization completed — release notes and QA checklist published
-17. Avoid AI/payment/teacher/leaderboard scope creep
+17. v0.8.0a next phase plan completed — primary direction: chapter/daily-practice wiring
+18. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1306,7 +1307,45 @@ Recommended secondary if content gap is judged non-pressing:
 ## PR
 
 - Branch: `docs/v0.7.0d-stabilization-release-notes`
-- PR: TBD (closes #92)
+- PR: #93 (closes #92)
+
+---
+
+# ✅ v0.8.0a — Next Phase Plan — COMPLETED (2026-06-04)
+
+## What was done
+
+- `docs/NEXT_PHASE_PLAN_v0.8.md` — next phase plan covering:
+  - context: v0.7 content balancing complete; 77 problems, 6 categories,
+    levels 1–5; only 24 of 77 problems wired into chapters; remaining
+    53 only reachable via `/demo` and spaced review.
+  - 5 candidate directions evaluated (chapter/daily-practice content
+    wiring, infrastructure/E2E/CI hardening, deployment/Supabase env
+    hardening, deeper multi-step support, further content expansion)
+    with strengths, weaknesses, estimated slice count, and fit-now
+    verdict for each.
+  - primary direction selected: **A — chapter/daily-practice content
+    wiring** (wire the 53 unwired problems into `chapters.ts`), with
+    rationale tied to the 69 % wiring gap, deferred commitment from
+    v0.7.0b, and lowest risk among high-impact directions.
+  - 3 implementation slices defined:
+    - v0.8.0b: wire capture (CAP-011~018) + escape (ESC-006~011) +
+      connect_cut (CC-007~014) into existing chapters
+    - v0.8.0c: create new life_death and endgame chapters; wire
+      LD-001~010, END-001~008, and remaining OP-004~009
+    - v0.8.0d (optional): wire 9 multi-step problems (MULTI-001~009)
+  - out-of-scope boundaries and v0.8 acceptance rules
+    (one PR per slice, `chapters.ts` only, no schema/package/lockfile
+    changes, no AI/payment/teacher/admin/leaderboard/board-size/SGF).
+- `docs/TASKS.md` updated: current phase set to v0.8.0a complete,
+  next task set to v0.8.0b, future roadmap extended with v0.8 entries.
+- Docs-only change. No code, test, config, package, lockfile,
+  schema, problem data, runtime, Supabase, or SQL behavior was modified.
+
+## PR
+
+- Branch: `docs/v0.8.0a-next-phase-plan`
+- PR: #95 (closes #94)
 
 ---
 
@@ -1363,9 +1402,12 @@ Recommended secondary if content gap is judged non-pressing:
 - v0.7.0c: content validation and regression (completed, PR #91 / issue #90)
 - v0.7.0d: stabilization and release notes (completed, PR TBD / issue #92)
 
-## v0.8.0 — Planning (next)
+## v0.8.0 — Content Wiring
 
-- v0.8.0a: next phase plan (next task) — docs-only planning to select primary v0.8 direction
+- v0.8.0a: next phase plan (completed, PR #95 / issue #94)
+- v0.8.0b: wire capture + escape + connect_cut (next)
+- v0.8.0c: wire life_death + endgame + opening
+- v0.8.0d: wire multi-step problems (optional)
 
 ---
 
