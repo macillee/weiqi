@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.8 stabilization complete. All 77 problems wired into chapters and daily practice. Next: v0.9.0a planning.
+v0.9.0a planning complete. Primary direction: Infrastructure / E2E / CI Hardening. Next: v0.9.0b GitHub Actions CI + Playwright setup.
 
 Current strategy:
 
@@ -32,8 +32,9 @@ Current strategy:
 18. v0.8.0b wire capture + escape + connect_cut completed — 21 new problems wired (45 total)
 19. v0.8.0c wire life_death + endgame + opening completed — 23 new problems wired (68 total)
 20. v0.8.0d wire multi-step problems completed — 9 multi-step problems wired (77 total, full library)
-21. v0.8 stabilization completed — release notes and QA checklist published
-22. Avoid AI/payment/teacher/leaderboard scope creep
+  21. v0.8 stabilization completed — release notes and QA checklist published
+  22. v0.9.0a next phase plan completed — primary direction: infrastructure / E2E / CI hardening
+  23. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1498,27 +1499,79 @@ Recommended secondary if content gap is judged non-pressing:
 ## PR
 
 - Branch: `docs/v0.8-stabilization-release-notes`
-- PR: TBD (closes #102)
+- PR: #104 (closes #102)
 
 ---
 
-# Next Task: v0.9.0a Next Phase Plan
+# ✅ v0.9.0a — Next Phase Plan — COMPLETED (2026-06-04)
+
+## What was done
+
+- `docs/NEXT_PHASE_PLAN_v0.9.md` — next phase plan covering:
+  - context: v0.8 content wiring complete; 77 problems all wired; manual
+    QA checklist at 25 sections; no CI or E2E; daily practice lacks skill
+    filtering; multi-step capped at 2 steps.
+  - 5 candidate directions evaluated (infrastructure / E2E / CI hardening,
+    deployment / Supabase env hardening, deeper multi-step support,
+    further content expansion, daily-practice skill filtering) with
+    strengths, weaknesses, estimated slice count, and fit-now verdict
+    for each.
+  - primary direction selected: **A — infrastructure / E2E / CI hardening**
+    with rationale tied to v0.8 release notes recommendation, highest
+    long-term ROI, and preparation for all future directions.
+  - 3 implementation slices defined:
+    - v0.9.0b: GitHub Actions CI + Playwright setup
+    - v0.9.0c: E2E smoke tests for core flows
+    - v0.9.0d (optional): release QA automation + stabilization
+  - out-of-scope boundaries and v0.9 acceptance rules
+    (one PR per slice, no mixing, package/lockfile changes scoped to
+    v0.9.0b only, no schema change, no AI/payment/teacher/admin/
+    leaderboard/board-size/SGF/multiplayer scope creep).
+- `docs/TASKS.md` updated: current phase set to v0.9.0a complete,
+  next task set to v0.9.0b, future roadmap updated.
+- Docs-only change. No code, test, config, package, lockfile,
+  schema, problem data, runtime, Supabase, or SQL behavior was modified.
+
+## PR
+
+- Branch: `docs/v0.9.0a-next-phase-plan`
+- PR: TBD (closes #105)
+
+---
+
+# Next Task: v0.9.0b GitHub Actions CI + Playwright Setup
 
 ## Goal
 
-Select a single primary direction for v0.9, define 1–3 implementation
-slices, and list explicit non-goals. v0.9.0a is planning-only and does
-**not** include implementation.
+Add a GitHub Actions workflow that runs lint, typecheck, test, and build
+on every push and PR. Install Playwright as a dev dependency with a
+minimal smoke test that validates the app boots and the home page renders.
 
-Candidate directions (from `docs/RELEASE_NOTES_v0.8.md` section 8):
+## Scope
 
-- A. Infrastructure / E2E / CI hardening (recommended primary)
-- B. Deployment / Supabase env hardening
-- C. Deeper multi-step (3+ step, schema v2)
-- D. Further content expansion
-- E. Daily-practice skill filtering / level-aware selection
+- `.github/workflows/ci.yml`
+- `package.json` (add `@playwright/test`, add `test:e2e` script)
+- `package-lock.json` (updated by npm install)
+- `e2e/` directory with one smoke test
+- `playwright.config.ts`
 
-See `docs/RELEASE_NOTES_v0.8.md` section 8 for the full comparison.
+## Acceptance Criteria
+
+- GitHub Actions workflow runs on every push to `main` and on every PR
+  against `main`.
+- Workflow runs lint, typecheck, test, and build; fails PR if any step
+  exits non-zero.
+- Playwright smoke test boots the app and asserts the home page renders.
+- `npm run test:e2e` script added to `package.json`.
+- `npm run test` (unit tests) still passes.
+- `npm run build` still passes.
+
+## Non-goals
+
+- No comprehensive E2E test suite (deferred to v0.9.0c).
+- No release QA automation (deferred to v0.9.0d).
+- No schema, problem data, runtime code, or UI changes.
+- No changes to `src/lib/` or `src/app/` source code.
 
 ---
 
@@ -1583,9 +1636,12 @@ See `docs/RELEASE_NOTES_v0.8.md` section 8 for the full comparison.
 - v0.8.0d: wire multi-step problems (completed, PR #101 / issue #100)
 - v0.8 stabilization: release notes + QA checklist (completed)
 
-## v0.9.0 — TBD
+## v0.9.0 — Infrastructure / E2E / CI Hardening
 
-- v0.9.0a: next phase plan (next)
+- v0.9.0a: next phase plan (completed)
+- v0.9.0b: GitHub Actions CI + Playwright setup (next)
+- v0.9.0c: E2E smoke tests for core flows
+- v0.9.0d (optional): release QA automation + stabilization
 
 ---
 
