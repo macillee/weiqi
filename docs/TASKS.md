@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.8.0a planning complete — primary direction selected: chapter/daily-practice content wiring. Next: v0.8.0b wire capture + escape + connect_cut.
+v0.8.0b wire capture + escape + connect_cut complete. Next: v0.8.0c wire life_death + endgame + opening.
 
 Current strategy:
 
@@ -29,7 +29,8 @@ Current strategy:
 15. v0.7.0c content validation and regression completed
 16. v0.7 stabilization completed — release notes and QA checklist published
 17. v0.8.0a next phase plan completed — primary direction: chapter/daily-practice wiring
-18. Avoid AI/payment/teacher/leaderboard scope creep
+18. v0.8.0b wire capture + escape + connect_cut completed — 21 new problems wired (45 total)
+19. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1349,6 +1350,50 @@ Recommended secondary if content gap is judged non-pressing:
 
 ---
 
+# ✅ v0.8.0b — Wire Capture + Escape + Connect_Cut — COMPLETED (2026-06-04)
+
+## What was done
+
+- `src/lib/chapters.ts` — wired 21 single-step problems into existing
+  chapters:
+
+  **Capture (8):** CAP-011~CAP-018 across 4 new levels (capture-6~9)
+  - capture-6: CAP-011 (L1), CAP-012 (L2)
+  - capture-7: CAP-013 (L2), CAP-014 (L2)
+  - capture-8: CAP-018 (L3)
+  - capture-9: CAP-015 (L4), CAP-016 (L5), CAP-017 (L5)
+
+  **Escape (6):** ESC-006~ESC-011 across 3 new levels (escape-4~6)
+  - escape-4: ESC-006 (L2), ESC-007 (L2), ESC-008 (L2)
+  - escape-5: ESC-011 (L3)
+  - escape-6: ESC-009 (L4), ESC-010 (L5)
+
+  **Connect/Cut (7):** CC-007~CC-009, CC-011~CC-014 across 3 new levels
+  (connect-cut-4~6)
+  - connect-cut-4: CC-007 (L2), CC-008 (L2), CC-011 (L2)
+  - connect-cut-5: CC-009 (L3), CC-014 (L3)
+  - connect-cut-6: CC-012 (L4), CC-013 (L5)
+
+- `getAllProblemIds()` returns 45 unique IDs (24 existing + 21 new).
+- No existing wired problem was removed or reordered.
+- No multi-step, life_death, endgame, or opening problems were wired.
+- No changes to `src/lib/practice.ts` — daily practice automatically
+  picks up newly wired problems via existing `getAllProblemIds()`.
+- `npm run test` passes (326 tests / 21 files — unchanged, no existing
+  test asserted the previous wired count).
+- `npm run build` passes.
+- `docs/TASKS.md` updated — marked v0.8.0b delivered, next → v0.8.0c.
+
+## Non-goals respected
+
+- No problem data changes (`src/data/problems.json` untouched).
+- No schema changes.
+- No `practice.ts`, `ProblemPlayer`, UI, audio, animation, hint,
+  coordinate-label, spaced review, weekly report, Supabase, SQL,
+  package, or lockfile changes.
+
+---
+
 # Future Roadmap
 
 ## v0.2.3 — Server Progress
@@ -1405,8 +1450,8 @@ Recommended secondary if content gap is judged non-pressing:
 ## v0.8.0 — Content Wiring
 
 - v0.8.0a: next phase plan (completed, PR #95 / issue #94)
-- v0.8.0b: wire capture + escape + connect_cut (next)
-- v0.8.0c: wire life_death + endgame + opening
+- v0.8.0b: wire capture + escape + connect_cut (completed, PR TBD / issue #96)
+- v0.8.0c: wire life_death + endgame + opening (next)
 - v0.8.0d: wire multi-step problems (optional)
 
 ---

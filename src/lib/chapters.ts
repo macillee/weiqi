@@ -26,6 +26,10 @@ export const chapters: Chapter[] = [
       { id: "capture-3", title: "第 3 关", problemIds: ["CAP-005", "CAP-006"] },
       { id: "capture-4", title: "第 4 关", problemIds: ["CAP-007", "CAP-008", "CAP-009"] },
       { id: "capture-5", title: "第 5 关", problemIds: ["CAP-010"] },
+      { id: "capture-6", title: "第 6 关", problemIds: ["CAP-011", "CAP-012"] },
+      { id: "capture-7", title: "第 7 关", problemIds: ["CAP-013", "CAP-014"] },
+      { id: "capture-8", title: "第 8 关", problemIds: ["CAP-018"] },
+      { id: "capture-9", title: "第 9 关", problemIds: ["CAP-015", "CAP-016", "CAP-017"] },
     ],
   },
   {
@@ -37,6 +41,9 @@ export const chapters: Chapter[] = [
       { id: "escape-1", title: "第 1 关", problemIds: ["ESC-001"] },
       { id: "escape-2", title: "第 2 关", problemIds: ["ESC-002", "ESC-003"] },
       { id: "escape-3", title: "第 3 关", problemIds: ["ESC-004", "ESC-005"] },
+      { id: "escape-4", title: "第 4 关", problemIds: ["ESC-006", "ESC-007", "ESC-008"] },
+      { id: "escape-5", title: "第 5 关", problemIds: ["ESC-011"] },
+      { id: "escape-6", title: "第 6 关", problemIds: ["ESC-009", "ESC-010"] },
     ],
   },
   {
@@ -48,6 +55,9 @@ export const chapters: Chapter[] = [
       { id: "connect-cut-1", title: "第 1 关", problemIds: ["CC-001", "CC-002"] },
       { id: "connect-cut-2", title: "第 2 关", problemIds: ["CC-003", "CC-004"] },
       { id: "connect-cut-3", title: "第 3 关", problemIds: ["CC-005", "CC-006"] },
+      { id: "connect-cut-4", title: "第 4 关", problemIds: ["CC-007", "CC-008", "CC-011"] },
+      { id: "connect-cut-5", title: "第 5 关", problemIds: ["CC-009", "CC-014"] },
+      { id: "connect-cut-6", title: "第 6 关", problemIds: ["CC-012", "CC-013"] },
     ],
   },
   {
