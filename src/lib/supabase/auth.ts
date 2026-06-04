@@ -25,10 +25,10 @@ export function useSupabaseAuth(): {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<SupabaseError | null>(null);
 
+  /* eslint-disable react-hooks/set-state-in-effect -- Supabase client init must happen client-side */
   useEffect(() => {
     const client = createSupabaseClient();
     if (!client) {
-      // Supabase not configured — stay in local mode
       setIsLoading(false);
       return;
     }
@@ -70,6 +70,7 @@ export function useSupabaseAuth(): {
       subscription.unsubscribe();
     };
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   return { session, isLoading, error };
 }

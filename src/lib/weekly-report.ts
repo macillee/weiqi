@@ -1,4 +1,4 @@
-import type { StudentProgress, ProblemReviewState } from "./progress";
+import type { StudentProgress } from "./progress";
 import { getDueProblems } from "./spaced-review";
 
 export type WeeklyReport = {

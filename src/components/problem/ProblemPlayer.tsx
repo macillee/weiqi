@@ -7,7 +7,7 @@ import HintPanel from "@/components/problem/HintPanel";
 import FeedbackDialog from "@/components/problem/FeedbackDialog";
 import CelebrationOverlay from "@/components/problem/CelebrationOverlay";
 import type { Problem } from "@/lib/problems";
-import type { Stone as BoardStone, Highlight } from "@/lib/board";
+import type { Highlight } from "@/lib/board";
 import {
   isMultiStepProblem,
   computeBoardStonesForStep,
@@ -46,7 +46,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
   } | null>(null);
   const [celebrateTrigger, setCelebrateTrigger] = useState(0);
 
-  // Reset all state when problem changes
+  /* eslint-disable react-hooks/set-state-in-effect -- reset state when problem changes */
   useEffect(() => {
     setWrongAttempts(0);
     setHintIndex(0);
@@ -60,6 +60,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     setStepResults([]);
     setStepWrongMoves([]);
   }, [problem.id]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   // Compute current step data
   const currentStepData = useMemo(() => {

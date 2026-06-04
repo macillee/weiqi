@@ -121,7 +121,7 @@ describe("validateProblem", () => {
 
   it("fails for invalid category", () => {
     const result = validateProblem(
-      makeValidProblem({ category: "invalid" as any }),
+      makeValidProblem({ category: "invalid" as unknown as Problem["category"] }),
     );
     expect(result.valid).toBe(false);
     expect(result.errors.some((e) => e.includes("invalid category"))).toBe(
@@ -130,7 +130,7 @@ describe("validateProblem", () => {
   });
 
   it("fails for invalid level", () => {
-    const result = validateProblem(makeValidProblem({ level: 6 as any }));
+    const result = validateProblem(makeValidProblem({ level: 6 as unknown as Problem["level"] }));
     expect(result.valid).toBe(false);
     expect(result.errors.some((e) => e.includes("level"))).toBe(true);
   });
@@ -257,7 +257,6 @@ describe("problem data quality", () => {
   });
 
   it("v0.4.0b single-step IDs use numbers beyond old ranges (no accidental reuse)", () => {
-    const problems = loadProblems();
     const oldMax: Record<string, number> = {
       CAP: 13, ESC: 7, CC: 9, LD: 4, OP: 3,
     };

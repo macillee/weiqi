@@ -40,7 +40,9 @@ export default function ImportPromptBanner() {
     if (hasImportCompletedLocally()) return;
 
     const result = detectImportEligibility();
+    /* eslint-disable react-hooks/set-state-in-effect -- localStorage init must happen client-side */
     setDetection(result);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [session]);
 
   // Hide conditions

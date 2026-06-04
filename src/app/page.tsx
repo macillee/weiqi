@@ -17,12 +17,14 @@ export default function Home() {
   const [signingOut, setSigningOut] = useState(false);
   const [signOutError, setSignOutError] = useState<string | null>(null);
 
+  /* eslint-disable react-hooks/set-state-in-effect -- localStorage init must happen client-side */
   useEffect(() => {
     const progress = loadProgress();
     setStars(progress.stars);
     const activeWrong = getActiveWrongProblems(progress.wrongProblems);
     setWrongCount(activeWrong.length);
   }, []);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   async function handleSignOut() {
     setSigningOut(true);

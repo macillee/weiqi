@@ -5,18 +5,14 @@ import {
   recordDailyPracticeComplete as recordLocalDailyPractice,
   updateWrongProblemOnCorrect,
   updateWrongProblemOnWrong,
-  getActiveWrongProblems,
   type StudentProgress,
-  type WrongProblemState,
 } from "./progress";
 import { isSupabaseConfigured } from "./supabase/client";
 import { getSelectedChildProfileId } from "./selected-child";
 import {
   syncAttemptToServer,
   loadReportData,
-  type ServerSyncResult,
   type ServerReportData,
-  type WrongProblemStatus,
 } from "./supabase/server-progress";
 
 export type ProgressMode = "local" | "server";

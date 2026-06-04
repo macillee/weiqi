@@ -2,6 +2,7 @@
  * Tests for buildAttemptHash determinism (v0.2.4c).
  */
 
+import { describe, it, expect } from "vitest";
 import { buildAttemptHash } from "@/lib/progress-import";
 
 describe("buildAttemptHash (exported for v0.2.4c)", () => {
