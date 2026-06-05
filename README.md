@@ -99,7 +99,7 @@ docker compose -f docker-compose.dev.yml up
 docker compose up --build
 ```
 
-可选：在 `.env.local` 中配置 `NEXT_PUBLIC_SUPABASE_URL` 与 `NEXT_PUBLIC_SUPABASE_ANON_KEY` 启用云端账号、孩子档案与进度同步。**未配置时不影响任何本地功能**。
+可选：在 `.env.local` 中配置 `NEXT_PUBLIC_SUPABASE_URL` 与 `NEXT_PUBLIC_SUPABASE_ANON_KEY` 启用云端账号、孩子档案与进度同步。Docker Compose 会自动读取 `.env.local`（如果存在）。**未配置时不影响任何本地功能**。
 
 ## 项目结构（节选）
 
