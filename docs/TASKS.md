@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.11.0b Docker Supabase env passthrough delivered — Docker Compose now passes optional Supabase vars, .env.example expanded. Next: v0.11.0c CI Docker build verification.
+v0.11.0c CI Docker build verification + deployment docs refresh delivered. Next: v0.11.0d stabilization / release notes.
 
 Current strategy:
 
@@ -44,7 +44,8 @@ Current strategy:
   30. v0.10 stabilization completed — release notes and QA checklist published
   31. v0.11.0a next phase plan completed — primary direction: Deployment / Supabase environment hardening
   32. v0.11.0b Docker Supabase env passthrough completed — Docker Compose passes optional Supabase vars, .env.example expanded
-  33. Avoid AI/payment/teacher/leaderboard scope creep
+  33. v0.11.0c CI Docker build verification + deployment docs refresh completed — CI catches Docker build regressions, deployment doc current
+  34. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -280,7 +281,7 @@ Delivered:
 - `docs/SUPABASE_DESIGN_v0.2.md` — schema, RLS, client data layer, implementation phases, cloud-failure tolerance
 - `docs/DATA_MIGRATION_v0.2.md` — localStorage import, merge, idempotency, failure handling
 - `docs/QA_CHECKLIST_v0.2.md` — Auth, child profile, RLS, server progress, migration, regression QA
-- `docs/DEPLOYMENT_STRATEGY_v0.2.md` — Docker app deployment with Supabase Cloud as external backend
+- `docs/DEPLOYMENT.md` — Docker app deployment with Supabase Cloud as external backend (replaces stale v0.2 strategy doc)
 - `docs/DESIGN_REVIEW_v0.2.md` — design review findings with severity ratings
 
 Key decisions:
@@ -1927,29 +1928,84 @@ problem data, schema, SQL/Supabase behavior changes were included.
 
 ---
 
-# Next Task: v0.11.0c — CI Docker Build Verification + Deployment Documentation Refresh
+# ✅ v0.11.0c — CI Docker Build Verification + Deployment Documentation Refresh — COMPLETED (2026-06-05)
+
+## Deliverables
+
+- `.github/workflows/ci.yml` — added Docker build verification step
+  (`docker compose build`) after existing lint/typecheck/test/build/E2E
+  gates. Does not start the container or run E2E against Docker.
+- `docs/DEPLOYMENT.md` — new deployment document replacing stale
+  `docs/DEPLOYMENT_STRATEGY_v0.2.md`. Covers current deployment modes
+  (local anonymous, Supabase cloud-sync, Docker production, Docker dev),
+  Docker Compose env behavior, environment variables, cloud-failure
+  tolerance, validation commands, current baseline, and out-of-scope
+  boundaries.
+- `docs/DEPLOYMENT_STRATEGY_v0.2.md` — removed (replaced by
+  `docs/DEPLOYMENT.md`).
+- `docs/TASKS.md` — marked v0.11.0c delivered, next task → v0.11.0d.
+
+## CI Docker Build Summary
+
+The new step runs `docker compose build` on `ubuntu-latest` after all
+existing app validation gates. It catches Dockerfile or compose build
+regressions without starting services or running E2E against Docker.
+
+## Deployment Documentation Summary
+
+Replaced the v0.2-era `DEPLOYMENT_STRATEGY_v0.2.md` with a current
+`DEPLOYMENT.md` that accurately describes:
+
+- Local anonymous mode (no Supabase env required).
+- Optional Supabase cloud-sync mode via `.env.local`.
+- Docker Compose production and dev configurations.
+- `env_file: .env.local (required: false)` behavior.
+- Current validation commands including `docker compose build`.
+- Current feature baseline (77 problems, v0.10 skill filtering, CI gates).
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 351 passed (21 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | 6 passed |
+
+No `src/` source files, tests, E2E tests, package/lockfile, problem data,
+schema, SQL/Supabase runtime behavior changes were included.
+
+## Branch
+
+- `ci/v0.11.0c-docker-build-verification` → PR #TBD
+
+---
+
+# Next Task: v0.11.0d — Stabilization / Release Notes
 
 ## Goal
 
-Ensure CI catches Docker build regressions and bring deployment
-documentation up to date with the current codebase.
+Stabilize the v0.11 deployment hardening series and publish release notes
+plus QA checklist.
 
 ## Scope
 
-- `.github/workflows/ci.yml` — add Docker build step.
-- `docs/DEPLOYMENT_STRATEGY_v0.2.md` — refresh to reflect current
-  codebase and Docker/Supabase setup.
+- `docs/RELEASE_NOTES_v0.11.md` — summary of v0.11.0a/b/c deliverables.
+- `docs/QA_CHECKLIST_v0.11.md` — manual QA checklist for Docker
+  deployment, Supabase env passthrough, CI Docker build, and regression.
+- `docs/TASKS.md` — mark v0.11 complete, set next phase.
 
 ## Acceptance Criteria
 
-- CI includes Docker build step that fails on build error.
-- Deployment docs accurately reflect current state.
-- Existing CI gates still pass.
+- Release notes document all v0.11 slices with validation results.
+- QA checklist covers Docker deployment, Supabase env, CI Docker step,
+  and regression.
+- `npm run build` and `npm run test` pass.
 
 ## Non-goals
 
-- No Docker compose service start or E2E-against-Docker in CI.
-- No changes to `src/` source code.
+- No code or test changes.
 - No schema or data changes.
 
 ---
@@ -2034,7 +2090,7 @@ documentation up to date with the current codebase.
 
 - v0.11.0a: next phase plan (completed)
 - v0.11.0b: Docker compose Supabase env passthrough + .env.example guidance (completed)
-- v0.11.0c: CI Docker build verification + deployment documentation refresh
+- v0.11.0c: CI Docker build verification + deployment documentation refresh (completed)
 - v0.11.0d: stabilization / release notes
 
 ---
