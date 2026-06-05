@@ -1674,6 +1674,14 @@ CI hard gates.
   - 3 implementation slices (b, c, d) with acceptance criteria and
     non-goals
   - out-of-scope boundaries and v0.10 acceptance rules
+- `docs/TASKS.md` — marked v0.10.0a delivered, next task set to v0.10.0b
+
+## Branch
+
+- `docs/v0.10.0a-next-phase-plan` → PR #116
+
+---
+
 # ✅ v0.10.0b — Category-Balanced Selection with Basic Level Clamping — COMPLETED (2026-06-05)
 
 ## Deliverables
@@ -1685,9 +1693,11 @@ CI hard gates.
   random selection.
 - `src/app/practice/page.tsx` — passes current `progress` state to
   `selectDailyProblems`.
-- `src/__tests__/practice.test.ts` — 7 new tests: null progress fallback,
-  empty progress fallback, level clamp (low-level child), level clamp
-  (high-level child), category balance, sparse pool.
+- `src/__tests__/practice.test.ts` — 8 new/updated selection tests: null
+  progress fallback, empty progress fallback, null random fallback
+  category-cap guard, stale completed IDs fallback, level clamp
+  (low-level child), level clamp (high-level child), category balance,
+  sparse pool.
 - `docs/TASKS.md` — marked v0.10.0b delivered, next task → v0.10.0c.
 
 ## Validation
@@ -1696,7 +1706,7 @@ CI hard gates.
 |---|---|
 | `npm run lint` | Exit 0 |
 | `npm run typecheck` | Exit 0 |
-| `npm run test` | 332 passed (21 files) |
+| `npm run test` | 334 passed (21 files) |
 | `npm run build` | Compiled successfully |
 | `npm run test:e2e` | 6 passed (3.2s) |
 
