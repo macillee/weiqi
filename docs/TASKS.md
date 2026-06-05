@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.11.0a next phase plan delivered — primary direction: Deployment / Supabase environment hardening. Next: v0.11.0b Docker compose Supabase env passthrough.
+v0.11.0b Docker Supabase env passthrough delivered — Docker Compose now passes optional Supabase vars, .env.example expanded. Next: v0.11.0c CI Docker build verification.
 
 Current strategy:
 
@@ -43,7 +43,8 @@ Current strategy:
   29. v0.10.0d multi-step awareness completed — multi-step problems gated by single-step eligibility
   30. v0.10 stabilization completed — release notes and QA checklist published
   31. v0.11.0a next phase plan completed — primary direction: Deployment / Supabase environment hardening
-  32. Avoid AI/payment/teacher/leaderboard scope creep
+  32. v0.11.0b Docker Supabase env passthrough completed — Docker Compose passes optional Supabase vars, .env.example expanded
+  33. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1882,31 +1883,74 @@ merged. This docs-only PR does not re-run validation checks.
 
 ---
 
-# Next Task: v0.11.0b — Docker Compose Supabase Env Passthrough + `.env.example` Guidance
+# ✅ v0.11.0b — Docker Compose Supabase Env Passthrough + `.env.example` Guidance — COMPLETED (2026-06-05)
+
+## Deliverables
+
+- `docker-compose.yml` — added `NEXT_PUBLIC_SUPABASE_URL` and
+  `NEXT_PUBLIC_SUPABASE_ANON_KEY` passthrough via shell interpolation
+  with empty defaults (`${VAR:-}`), so Docker starts without Supabase
+  env and passes values through when set.
+- `docker-compose.dev.yml` — same passthrough for dev mode.
+- `.env.example` — expanded comments to clarify optional Supabase
+  setup, local anonymous fallback, Docker usage (`.env.local` or shell
+  env), and service-role key safety warning.
+- `README.md` — updated Docker deployment section to mention that
+  Docker Compose reads Supabase vars from `.env.local` or shell env.
+- `docs/TASKS.md` — marked v0.11.0b delivered, next task → v0.11.0c.
+
+## Docker/Env Behavior Summary
+
+| Scenario | Behavior |
+|---|---|
+| No `.env.local`, no shell env | App starts in local anonymous mode |
+| `.env.local` with Supabase vars | Docker Compose reads vars; app enters cloud-sync mode |
+| Shell env with Supabase vars | Docker Compose reads vars; app enters cloud-sync mode |
+| Missing one of two vars | App treats Supabase as unconfigured; local anonymous mode |
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 351 passed (21 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | 6 passed |
+| `docker compose up --build` | Starts without Supabase env; reachable at localhost:3000 |
+
+No `src/` source files, tests, E2E tests, CI workflow, package/lockfile,
+problem data, schema, SQL/Supabase behavior changes were included.
+
+## Branch
+
+- `chore/v0.11.0b-docker-supabase-env` → PR TBD
+
+---
+
+# Next Task: v0.11.0c — CI Docker Build Verification + Deployment Documentation Refresh
 
 ## Goal
 
-Make cloud-sync mode work out of the box in Docker and improve first-run
-developer experience.
+Ensure CI catches Docker build regressions and bring deployment
+documentation up to date with the current codebase.
 
 ## Scope
 
-- `docker-compose.yml` — add Supabase env passthrough.
-- `docker-compose.dev.yml` — same env passthrough for dev mode.
-- `.env.example` — add guidance comments.
-- Documentation updates for first-run setup.
+- `.github/workflows/ci.yml` — add Docker build step.
+- `docs/DEPLOYMENT_STRATEGY_v0.2.md` — refresh to reflect current
+  codebase and Docker/Supabase setup.
 
 ## Acceptance Criteria
 
-- `docker compose up --build` starts without Supabase env.
-- With valid Supabase credentials, Docker compose passes them through.
-- `.env.example` contains clear optional Supabase setup guidance.
-- No runtime code changes in `src/`.
+- CI includes Docker build step that fails on build error.
+- Deployment docs accurately reflect current state.
+- Existing CI gates still pass.
 
 ## Non-goals
 
-- No changes to `src/lib/supabase/` client code.
-- No CI Docker build step (deferred to v0.11.0c).
+- No Docker compose service start or E2E-against-Docker in CI.
+- No changes to `src/` source code.
 - No schema or data changes.
 
 ---
@@ -1990,7 +2034,7 @@ developer experience.
 ## v0.11.0 — Deployment / Supabase Environment Hardening
 
 - v0.11.0a: next phase plan (completed)
-- v0.11.0b: Docker compose Supabase env passthrough + .env.example guidance (next)
+- v0.11.0b: Docker compose Supabase env passthrough + .env.example guidance (completed)
 - v0.11.0c: CI Docker build verification + deployment documentation refresh
 - v0.11.0d: stabilization / release notes
 
