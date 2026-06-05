@@ -1608,8 +1608,7 @@ CI hard gates.
 - Existing `e2e/home.spec.ts` retained (1 test, home page smoke).
 - Total E2E coverage: 6 tests across home, levels, chapter, demo, practice, settings.
 - Tests pass without Supabase env, login, or child profile setup.
-- Tests clean localStorage to avoid order dependence.
-- Use stable user-facing text and role selectors where practical.
+- Tests use stable user-facing text and role selectors where practical.
 - No `src/` source files modified.
 - No `package.json`, `package-lock.json`, `playwright.config.ts`, or CI workflow changes.
 - `npm run lint` — passed.

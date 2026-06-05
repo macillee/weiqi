@@ -8,8 +8,7 @@ test.describe("Demo page smoke", () => {
     await expect(page.locator("text=第 1 / 77 题")).toBeVisible();
 
     await expect(page.getByText("CAP-001")).toBeVisible();
-    await expect(page.getByText("ESC-001")).toBeVisible();
-
-    await page.evaluate(() => localStorage.clear());
+    await expect(page.getByRole("img", { name: "9x9 Go board" })).toBeVisible();
+    await expect(page.getByText("显示提示")).toBeVisible();
   });
 });
