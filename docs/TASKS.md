@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.9.0b CI + Playwright setup in progress. Next: v0.9.0c E2E smoke tests for core flows.
+v0.9.0c E2E smoke tests for core flows completed. Next: v0.9.0d release QA automation + stabilization.
 
 Current strategy:
 
@@ -34,8 +34,9 @@ Current strategy:
 20. v0.8.0d wire multi-step problems completed — 9 multi-step problems wired (77 total, full library)
   21. v0.8 stabilization completed — release notes and QA checklist published
   22. v0.9.0a next phase plan completed — primary direction: infrastructure / E2E / CI hardening
-  23. v0.9.0b GitHub Actions CI + Playwright setup completed
-  24. Avoid AI/payment/teacher/leaderboard scope creep
+   23. v0.9.0b GitHub Actions CI + Playwright setup completed
+   24. v0.9.0c E2E smoke tests for core flows completed — 6 tests across home, levels, chapter, demo, practice, settings
+   25. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1594,32 +1595,68 @@ CI hard gates.
 
 ---
 
-# Next Task: v0.9.0c E2E Smoke Tests for Core Flows
+# ✅ v0.9.0c — E2E Smoke Tests for Core Flows — COMPLETED (2026-06-05)
+
+## What was done
+
+- Added 5 new Playwright test files to `e2e/`:
+  - `e2e/levels.spec.ts` — `/levels` renders all 6 chapter entries
+  - `e2e/chapter.spec.ts` — `/levels/capture` renders with levels
+  - `e2e/demo.spec.ts` — `/demo` loads a problem with board and controls
+  - `e2e/practice.spec.ts` — `/practice` shows idle state with start button
+  - `e2e/settings.spec.ts` — `/settings` renders with audio toggle
+- Existing `e2e/home.spec.ts` retained (1 test, home page smoke).
+- Total E2E coverage: 6 tests across home, levels, chapter, demo, practice, settings.
+- Tests pass without Supabase env, login, or child profile setup.
+- Tests clean localStorage to avoid order dependence.
+- Use stable user-facing text and role selectors where practical.
+- No `src/` source files modified.
+- No `package.json`, `package-lock.json`, `playwright.config.ts`, or CI workflow changes.
+- `npm run lint` — passed.
+- `npm run typecheck` — passed.
+- `npm run test` — 326 passed (21 files).
+- `npm run build` — compiled successfully.
+- `npm run test:e2e` — 6 passed (3.8s, Chromium).
+- `docs/TASKS.md` updated — marked v0.9.0c delivered, next → v0.9.0d.
+
+## Non-goals respected
+
+- No visual regression testing or golden screenshots.
+- No performance benchmarking.
+- No comprehensive wrong-book / report / spaced-review E2E coverage.
+- No `src/` source code changes.
+- No package or lockfile changes.
+- No Playwright config or CI workflow changes.
+
+---
+
+# Next Task: v0.9.0d Release QA Automation + Stabilization
 
 ## Goal
 
-Add Playwright smoke tests that cover the core learner-facing flows:
-chapter navigation, practice session, demo isolation, and local anonymous
-mode.
+Polish and stabilize the v0.9 infrastructure series with release notes,
+QA checklist, and any final CI/E2E hardening. Evaluate whether the
+infrastructure foundation is solid enough to ship v0.9.
 
 ## Scope
 
-- `e2e/` directory (new test files only). No changes to `src/` source code.
+- `docs/RELEASE_NOTES_v0.9.md` — release notes and QA checklist
+- `docs/TASKS.md` — mark v0.9 stabilization delivered, set next task
 
 ## Acceptance Criteria
 
-- E2E tests cover: home page chapters, `/levels`, `/levels/capture`,
-  `/demo`, `/practice`, `/settings`.
-- All E2E tests pass in CI (`npm run test:e2e`).
-- Unit tests (`npm run test`) still pass.
-- Build (`npm run build`) still passes.
+- All CI gates (lint, typecheck, test, build, e2e) pass on latest main.
+- Release notes document v0.9.0a–c deliverables and known limitations.
+- QA checklist covers CI, E2E, and local anonymous mode regression.
+- Next-phase recommendation identifies and justifies a single direction
+  (likely v0.10.0a planning).
 
 ## Non-goals
 
-- No visual regression testing.
-- No performance benchmarking.
-- No comprehensive wrong-book / report / spaced-review E2E coverage.
-- No changes to `src/` source code.
+- No changes to Playwright test coverage.
+- No changes to CI workflow or config.
+- No `src/` source code changes.
+- No package or lockfile changes.
 
 ---
 
@@ -1688,8 +1725,8 @@ mode.
 
 - v0.9.0a: next phase plan (completed)
 - v0.9.0b: GitHub Actions CI + Playwright setup (completed)
-- v0.9.0c: E2E smoke tests for core flows (next)
-- v0.9.0d (optional): release QA automation + stabilization
+- v0.9.0c: E2E smoke tests for core flows (completed)
+- v0.9.0d (optional): release QA automation + stabilization (next)
 
 ---
 
