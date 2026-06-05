@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.12.0a next phase plan delivered — primary direction: practice explainability / child-facing learning UX. Next: v0.12.0b selection rationale tags.
+v0.12.0a next phase plan delivered — primary direction: AI-first intermediate progression. Next: v0.12.0b AI feasibility spike.
 
 Current strategy:
 
@@ -46,7 +46,7 @@ Current strategy:
   32. v0.11.0b Docker Supabase env passthrough completed — Docker Compose passes optional Supabase vars, .env.example expanded
   33. v0.11.0c CI Docker build verification + deployment docs refresh completed — CI catches Docker build regressions, deployment doc current
   34. v0.11.0d stabilization completed — release notes and QA checklist published
-  35. v0.12.0a next phase plan completed — primary direction: practice explainability / child-facing learning UX
+  35. v0.12.0a next phase plan completed — primary direction: AI-first intermediate progression / AI coach & sparring
   36. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -2023,10 +2023,11 @@ problem data, runtime, Supabase, or SQL behavior was modified.
 ## Deliverables
 
 - `docs/NEXT_PHASE_PLAN_v0.12.md` — next phase plan evaluating 5 candidate
-  directions (practice explainability, Supabase sync hardening, content
-  expansion, deeper multi-step, AI exploration). Selected primary
-  direction: practice explainability / child-facing learning UX.
-  Defined 4 implementation slices (v0.12.0b–e).
+  directions (AI-first intermediate progression, practice explainability,
+  content expansion, deeper multi-step, Supabase sync hardening).
+  Selected primary direction: **AI-first intermediate progression /
+  AI coach & sparring for a one-year learner**. Defined 5 implementation
+  slices (v0.12.0b–f).
 - `docs/TASKS.md` — marked v0.12.0a delivered, next task → v0.12.0b.
 
 ## Validation
@@ -2045,37 +2046,35 @@ problem data, runtime, Supabase, or SQL behavior was modified.
 
 ---
 
-# Next Task: v0.12.0b — Selection Rationale Tags
+# Next Task: v0.12.0b — AI Feasibility Spike / Architecture Decision
 
 ## Goal
 
-Surface why each daily-practice problem was selected with a small,
-non-distracting tag.
+Evaluate AI approaches for child-safe Go interaction and make an informed
+architecture decision before full implementation.
 
 ## Scope
 
-- `src/lib/practice.ts` — extend `selectDailyProblems` return type to
-  include per-problem selection rationale (e.g., `"review"`,
-  `"wrong_review"`, `"category_balance"`, `"new"`).
-- `src/app/practice/page.tsx` — display a small tag or badge next to
-  the problem header indicating the selection type.
-- `src/__tests__/practice.test.ts` — tests for rationale tagging.
+- `docs/AI_FEASIBILITY_SPIKE_v0.12.md` — feasibility report covering
+  AI approach evaluation (KataGo / GTP, LLM explanation, rule-engine),
+  deployment model, cost analysis, latency targets, privacy and safety,
+  child-appropriate UX, and recommended architecture decision.
+- No `src/` code changes.
+- No new dependencies.
 
 ## Acceptance Criteria
 
-- `selectDailyProblems` returns rationale for each selected problem.
-- Practice page shows a tag for each problem (e.g., "复习", "错题",
-  "新题").
-- Tags are minimal and non-distracting for 7–9 year olds.
-- Existing selection behavior unchanged.
-- `npm run test`, `npm run build` pass.
+- Feasibility report exists with evaluated approaches, cost/latency/
+  safety analysis, and a recommended architecture decision.
+- No code changes introduced.
+- `npm run build` and `npm run test` pass (unchanged).
 
 ## Non-goals
 
-- No changes to the selection algorithm.
-- No new UI components beyond a minimal tag/badge.
-- No changes to wrong-book, report, or chapter pages.
-- No schema or data changes.
+- No full product implementation.
+- No AI model training or fine-tuning.
+- No changes to existing problem data or schemas.
+- No server-side API endpoints.
 
 ---
 
@@ -2162,13 +2161,14 @@ non-distracting tag.
 - v0.11.0c: CI Docker build verification + deployment documentation refresh (completed)
 - v0.11.0d: stabilization / release notes (completed)
 
-## v0.12.0 — Practice Explainability / Child-Facing Learning UX
+## v0.12.0 — AI-First Intermediate Progression
 
 - v0.12.0a: next phase plan (completed)
-- v0.12.0b: selection rationale tags
-- v0.12.0c: category and level context in practice
-- v0.12.0d: practice session summary enhancement
-- v0.12.0e: stabilization / release notes
+- v0.12.0b: AI feasibility spike / architecture decision
+- v0.12.0c: level calibration / intermediate challenge entry
+- v0.12.0d: bounded AI review / AI coach prototype
+- v0.12.0e: intermediate content expansion or AI-assisted problem pipeline
+- v0.12.0f: stabilization / release notes
 
 ---
 

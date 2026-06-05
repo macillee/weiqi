@@ -1,4 +1,4 @@
-# v0.12 — Next Phase Plan: Practice Explainability / Child-Facing Learning UX
+# v0.12 — Next Phase Plan: AI-First Intermediate Progression
 
 > Project: 小棋童围棋闯关
 > Phase: v0.12.0a — planning
@@ -26,74 +26,84 @@ v0.11 completed deployment hardening. The product now has:
 - **Infrastructure** (v0.9): CI with 6 gates (lint/typecheck/unit/build/
   E2E/Docker), 6 E2E smoke tests.
 
-What the product lacks:
+### Core product constraint
 
-- Children cannot see **why** a problem was selected (review, weak
-  category, level match, new practice). The selection algorithm is
-  invisible.
-- There is no **encouragement or context** tied to the selection
-  rationale. A review problem looks the same as a brand-new problem.
-- The practice experience is functional but **emotionally flat** —
-  children see a sequence of problems without narrative or feedback
-  about their learning journey.
+The target child has studied Go for about one year. Current introductory
+problems (levels 1–2) are no longer a good fit. The primary gap is
+**stage/level mismatch** — the child needs appropriately challenging
+intermediate learning, not more beginner onboarding or UI polish around
+existing introductory content.
+
+- Existing 77 introductory problems are baseline/foundation, not the
+  main growth path.
+- Future public-user beginner onboarding can be improved later.
+- v0.12 prioritizes the current child's real stage over generic beginner
+  guidance.
 
 ---
 
 ## 2. Candidate Direction Evaluation
 
-### A. Practice Explainability / Child-Facing Learning UX
+### A. AI-First Intermediate Progression / AI Coach & Sparring
 
 **Strengths:**
 
-- Direct child impact — children see context for each problem
-  ("复习错题", "新题", "吃子训练").
-- Low technical risk — UI-only or data-light changes; no algorithm
-  or schema changes required.
-- Leverages v0.10 selection algorithm: the rationale already exists in
-  the code (priority type, category, level), it just needs to be
-  surfaced.
-- Strengthens the learning loop: children understand that review and
-  weak-category practice are intentional, not random.
-- Small, reviewable slices — each slice can be a single PR.
-- Compatible with any future direction (multi-step, content, AI).
+- Directly addresses the core product gap: stage/level mismatch for a
+  one-year learner.
+- AI review can explain mistakes and alternatives in solved/wrong
+  problems — conceptually appropriate for intermediate learning
+  (reading, liberties, connection/cut, life-death shape, direction of
+  play).
+- AI sparring provides adaptive challenge that static problems cannot.
+- User preference is clearly AI-oriented.
+- Feasibility spike as a first slice reduces risk before full
+  commitment.
+- Compatible with existing problem library (AI review works on any
+  problem).
 
 **Weaknesses / Risks:**
 
-- Risk of UI clutter for young children (7–9). Design must be minimal
-  and non-distracting.
-- Selection rationale must be extracted without coupling the UI to
-  internal algorithm details.
-- Marginal impact if children do not read or notice the indicators.
+- External API dependency (cost, availability, data privacy).
+- Latency and quality control for child-safe, age-appropriate AI
+  output.
+- Not all AI approaches are suitable for 7–9 year olds; output must
+  be filtered and bounded.
+- Larger slice scope than pure UI changes.
+- Requires careful evaluation before full commitment (feasibility spike
+  is mandatory).
 
-**Estimated Slice Count:** 3–4
+**Estimated Slice Count:** 4–5 (including feasibility spike and
+stabilization)
 
-**Verdict:** Primary direction — directly improves the child's learning
-experience, leverages existing v0.10 infrastructure, low risk, and
-compatible with all future directions.
+**Verdict:** Primary direction — directly addresses the core product
+gap (stage mismatch) and aligns with user preference for AI-oriented
+intermediate learning.
 
 ---
 
-### B. Server Progress Completion / Supabase Sync Hardening
+### B. Practice Explainability / Child-Facing Learning UX
 
 **Strengths:**
 
-- Server progress sync already works (v0.2.3c).
-- Could add offline queue, conflict resolution, or retry hardening.
+- Low technical risk — UI-only changes.
+- Leverages v0.10 selection algorithm rationale.
 
 **Weaknesses / Risks:**
 
-- The sync layer is already functional and tested (v0.2.3b/c, v0.2.4c).
-- Further hardening has no child-facing impact.
-- Offline queue / conflict resolution adds significant complexity
-  with subtle edge cases.
-- v0.11 Docker/Supabase env hardening already improved the deployment
-  foundation; diminishing returns from further infra work.
+- Does not address the core product gap: stage/level mismatch.
+- Adding UI context around 77 introductory problems does not solve the
+  problem that the child needs appropriately challenging intermediate
+  content.
+- Marginal impact for a one-year learner who has already outgrown
+  introductory-level practice.
+- Better suited as a future polish item after the core learning path
+  is addressed.
 
-**Estimated Slice Count:** 2–3
+**Estimated Slice Count:** 3–4
 
-**Verdict:** Defer — server sync is already functional. Further
-hardening can be bundled with a future Supabase-dependent feature if
-real sync issues emerge.
+**Verdict:** Defer — does not address the core gap. Can be bundled with
+a future UX polish phase after the intermediate learning path is
+established.
 
 ---
 
@@ -106,21 +116,18 @@ real sync issues emerge.
 
 **Weaknesses / Risks:**
 
-- Diminishing returns after v0.10 skill filtering and v0.8 full wiring.
-  The algorithm now distributes 77 problems effectively across
-  categories and levels.
-- 77 problems cover 6 categories and 5 levels. The gap is primarily
-  in level 4–5 depth, not total count.
-- Content authoring is more expensive per problem than UX improvements.
-- v0.4/v0.5/v0.7 established that content packs are safe and routine —
-  this direction can be picked up at any time without risk of
-  regression.
+- Adding more introductory problems does not address stage mismatch.
+- Level 4–5 content authoring is more expensive and harder to validate.
+- Better combined with AI-assisted problem pipeline (direction A,
+  slice 4).
+- Standalone content expansion has diminishing returns after v0.10 skill
+  filtering.
 
 **Estimated Slice Count:** 2–3
 
-**Verdict:** Defer — practice explainability improves the experience
-with every existing problem; content expansion improves it only with
-each new problem. Revisit after v0.12.
+**Verdict:** Defer as standalone — should be integrated into the AI
+direction as a later slice (intermediate content expansion or
+AI-assisted problem pipeline).
 
 ---
 
@@ -128,164 +135,152 @@ each new problem. Revisit after v0.12.
 
 **Strengths:**
 
-- High pedagogical value — multi-step problems teach deeper reading.
+- High pedagogical value for intermediate learners.
 
 **Weaknesses / Risks:**
 
-- Requires `ProblemStep` schema v2 — schema migration, authoring tools,
-  and validation.
-- 3–5 slices of work with medium regression risk.
-- Current multi-step content (9 problems, 2 steps each) was wired in
-  v0.8 and gated in v0.10; the team should observe usage before
-  expanding the format.
-- No child has yet encountered multi-step problems through normal daily
-  practice (they must first complete single-step prerequisites).
-- Harder to review than UI or documentation changes.
+- Requires schema migration, authoring, and validation.
+- Does not address the core stage-mismatch gap on its own.
+- Better suited after AI review can provide feedback on multi-step
+  mistakes.
 
 **Estimated Slice Count:** 3–5
 
-**Verdict:** Defer — premature until the team has usage data on current
-2-step problems filtered through v0.10 gating. Revisit after
-observational period.
+**Verdict:** Defer — premature without AI review to support multi-step
+feedback. Revisit after AI direction is established.
 
 ---
 
-### E. AI Opponent / AI Review Exploration
+### E. Server Progress Completion / Supabase Sync Hardening
 
 **Strengths:**
 
-- Potentially high pedagogical value if done well.
-- Could differentiate the product.
+- Server progress sync already works (v0.2.3c).
 
 **Weaknesses / Risks:**
 
-- High technical risk: latency, cost, safety, age-appropriate UX,
-  content quality control.
-- Requires external API dependency (cost, availability, data privacy).
-- Not suitable for incremental, small-slice delivery.
-- The product is designed for short, focused problem-solving sessions,
-  not open-ended play against AI.
-- Current scope explicitly excludes AI (AGENTS.md, PROJECT_SPEC.md,
-  TASKS.md).
+- Already functional; further hardening has no child-facing impact.
+- AI features may require new server-side endpoints, but that is
+  scoped within the AI direction, not standalone sync hardening.
 
-**Estimated Slice Count:** Exploration only; implementation would be 5+
+**Estimated Slice Count:** 2–3
 
-**Verdict:** Defer — the product should strengthen its core learning
-loop before exploring AI. AI is a high-risk, high-cost direction that
-is incompatible with the current incremental delivery model. If pursued,
-it should be a dedicated v0.13+ planning cycle with a feasibility study.
+**Verdict:** Defer — sync is already functional. AI-related server needs
+are scoped within direction A.
 
 ---
 
 ## 3. Decision Matrix
 
-| Direction | Child impact | Parent value | Effort | Regression risk | Infra dependency | Slice fit |
-|---|---|---|---|---|---|---|
-| A. Practice explainability | High | Medium | Low | Low | None | 3–4 small |
-| B. Supabase sync hardening | None | Low | Medium | Low | Supabase | 2–3 medium |
-| C. Content expansion | Medium | Low | Medium | Low | None | 2–3 medium |
-| D. Deeper multi-step | High | Medium | High | Medium | Schema v2 | 3–5 large |
-| E. AI exploration | Uncertain | Uncertain | High | High | External API | Exploration only |
+| Direction | Child impact (intermediate) | Addresses stage mismatch | Effort | Regression risk | Slice fit |
+|---|---|---|---|---|---|
+| A. AI-first intermediate | High | Yes | Medium–High | Medium | 4–5 (spike first) |
+| B. Practice explainability | Low | No | Low | Low | 3–4 |
+| C. Content expansion | Medium | Partially | Medium | Low | 2–3 |
+| D. Deeper multi-step | High (for advanced) | Partially | High | Medium | 3–5 |
+| E. Supabase sync hardening | None | No | Medium | Low | 2–3 |
 
 ---
 
 ## 4. Selected Primary Direction
 
-**Practice explainability / child-facing learning UX.**
+**AI-first intermediate progression / AI coach & sparring for a
+one-year learner.**
 
 Justification:
 
-- **Directly leverages v0.10.** The selection algorithm already
-  produces rich rationale (priority type, category, level match). This
-  information exists in the code but is invisible to children.
-- **Strengthens the learning loop.** When children see "复习错题" or
-  "吃子训练", they understand that practice is personalized and
-  intentional. This is more motivating than a random sequence of
-  problems.
-- **Low risk.** No algorithm changes, no schema changes, no new
-  dependencies. Each slice is UI-only or data-light.
-- **Compatible with all future directions.** Explainability indicators
-  work equally well with more content (C), deeper multi-step (D), or
-  even AI-assisted review (E).
-- **Small, reviewable slices.** Each slice is a single PR with clear
-  scope.
-- **Fills a known gap.** v0.10 release notes (section 7) noted "No UI
-  explanation for why a daily problem was selected" as a known
-  limitation.
+- **Addresses the core gap.** The target child has outgrown
+  introductory content. AI-driven review and sparring provide adaptive
+  challenge that static problems cannot.
+- **Aligns with user preference.** The user has clearly expressed an
+  AI-oriented direction for v0.12.
+- **Feasibility spike de-risks.** The first implementation slice is a
+  feasibility spike that evaluates AI approaches before full commitment.
+  If the spike reveals blockers, the direction can be adjusted.
+- **Compatible with existing content.** AI review works on any problem
+  in the library; it does not require new content to be useful.
+- **Enables future directions.** AI review naturally leads to AI
+  sparring, AI-assisted problem authoring, and multi-step feedback.
+
+Product goal:
+
+> Let a one-year Go learner quickly enter an appropriately challenging
+> state through AI-driven practice, review, and opponent-like
+> interaction.
 
 ---
 
 ## 5. Slices
 
-### Slice 1 (v0.12.0b): Selection Rationale Tags
+### Slice 1 (v0.12.0b): AI Feasibility Spike / Architecture Decision
 
-**Goal:** Surface why each daily-practice problem was selected with a
-small, non-distracting tag.
+**Goal:** Evaluate AI approaches for child-safe Go interaction and make
+an informed architecture decision before full implementation.
 
 **Scope:**
 
-- `src/lib/practice.ts` — extend `selectDailyProblems` return type to
-  include per-problem selection rationale (e.g., `"review"`,
-  `"wrong_review"`, `"category_balance"`, `"new"`).
-- `src/app/practice/page.tsx` — display a small tag or badge next to
-  the problem header indicating the selection type.
-- `src/__tests__/practice.test.ts` — tests for rationale tagging.
+- `docs/AI_FEASIBILITY_SPIKE_v0.12.md` — feasibility report covering:
+  - AI approach evaluation: KataGo / GTP engine, LLM explanation,
+    rule-engine combinations.
+  - Deployment model: local vs. server-side, Docker integration,
+    API requirements.
+  - Cost analysis: per-request cost, estimated monthly cost at low
+    volume.
+  - Latency targets: acceptable response time for child interaction.
+  - Privacy and safety: data handling, content filtering,
+    age-appropriate output constraints.
+  - Child-appropriate UX: explanation style, language level, feedback
+    format.
+  - Recommended architecture decision with rationale.
+- No `src/` code changes.
+- No new dependencies.
 
 **Non-goals:**
 
-- No changes to the selection algorithm.
-- No new UI components beyond a minimal tag/badge.
-- No changes to wrong-book, report, or chapter pages.
-- No schema or data changes.
+- No full product implementation.
+- No AI model training or fine-tuning.
+- No changes to existing problem data or schemas.
+- No server-side API endpoints.
 
 **Acceptance criteria:**
 
-- `selectDailyProblems` returns rationale for each selected problem.
-- Practice page shows a tag for each problem (e.g., "复习", "错题",
-  "新题").
-- Tags are minimal and non-distracting for 7–9 year olds.
-- Existing selection behavior unchanged.
-- `npm run test`, `npm run build` pass.
-
-**Validation commands:**
-
-```bash
-npm run lint
-npm run typecheck
-npm run test
-npm run build
-npm run test:e2e
-```
+- Feasibility report exists with evaluated approaches, cost/latency/
+  safety analysis, and a recommended architecture decision.
+- No code changes introduced.
+- `npm run build` and `npm run test` pass (unchanged).
 
 ---
 
-### Slice 2 (v0.12.0c): Category and Level Context in Practice
+### Slice 2 (v0.12.0c): Level Calibration / Intermediate Challenge Entry
 
-**Goal:** Show category name and level indicator alongside each problem
-in daily practice, giving children a sense of what skill they are
-practicing.
+**Goal:** Provide a way for the app to infer or select an appropriate
+starting level for a one-year learner, avoiding default placement into
+introductory content.
 
 **Scope:**
 
-- `src/app/practice/page.tsx` — display category label (e.g., "吃子")
-  and level indicator (e.g., "⭐⭐") in the problem header area.
-- `src/lib/chapters.ts` or `src/lib/problems.ts` — helper to map
-  category IDs to display names if not already available.
-- `src/__tests__/practice.test.ts` — tests for category/level display
-  data availability.
+- `src/lib/practice.ts` — add level calibration logic that detects when
+  a child has progressed beyond introductory levels and adjusts the
+  starting level for daily practice and chapter navigation.
+- `src/app/practice/page.tsx` — surface level calibration result (e.g.,
+  show "中级练习" or equivalent when the child is above introductory
+  level).
+- `src/__tests__/practice.test.ts` — tests for level calibration.
 
 **Non-goals:**
 
-- No changes to the selection algorithm.
+- No AI integration in this slice (that comes in v0.12.0d).
 - No new pages or navigation.
-- No changes to wrong-book, report, or chapter pages.
-- No schema or data changes.
+- No changes to problem data or schemas.
+- No Supabase/server-side changes.
 
 **Acceptance criteria:**
 
-- Practice page shows category label for the current problem.
-- Practice page shows a level indicator appropriate for children.
-- Display is minimal and does not clutter the problem area.
+- Practice page detects when the child has progressed beyond
+  introductory levels and adjusts selection accordingly.
+- Children with significant progress are not defaulted into level-1
+  content.
+- Existing selection behavior unchanged for introductory-level children.
 - `npm run test`, `npm run build` pass.
 
 **Validation commands:**
@@ -300,32 +295,37 @@ npm run test:e2e
 
 ---
 
-### Slice 3 (v0.12.0d): Practice Session Summary Enhancement
+### Slice 3 (v0.12.0d): Bounded AI Review / AI Coach Prototype
 
-**Goal:** Enhance the end-of-session summary to show what the child
-practiced: categories covered, review vs. new count, and a brief
-encouragement message.
+**Goal:** Implement a bounded AI review prototype that explains mistakes
+or alternatives in solved/wrong problems.
 
 **Scope:**
 
-- `src/app/practice/page.tsx` — extend the summary view with category
-  breakdown, review/new count, and contextual encouragement.
-- `src/lib/practice.ts` — helper to compute session summary metadata
-  from the completed session.
+- `src/lib/ai-review.ts` — AI review module that sends a problem +
+  child's wrong answer to an AI endpoint and receives a child-friendly
+  explanation. Includes graceful fallback when AI is unavailable.
+- `src/app/practice/page.tsx` or `src/components/problem/` — display AI
+  review feedback after a wrong answer, with a "请AI老师帮忙" button.
+- `src/__tests__/ai-review.test.ts` — tests for AI review module
+  (mocked API, fallback behavior, output safety checks).
+- Configuration for AI endpoint (env var or local config).
 
 **Non-goals:**
 
-- No changes to the selection algorithm.
-- No new pages or navigation.
-- No server-side analytics or tracking.
-- No schema or data changes.
+- No AI sparring / opponent play (future direction).
+- No AI-generated problems (future direction).
+- No changes to existing problem data or schemas.
+- No mandatory AI — must work without AI (graceful fallback).
 
 **Acceptance criteria:**
 
-- Summary shows categories practiced.
-- Summary shows review vs. new problem count.
-- Summary includes a brief, warm encouragement message.
-- Display is child-friendly and concise.
+- After a wrong answer, child can optionally request AI review.
+- AI review provides a brief, child-friendly explanation of the
+  mistake or correct approach.
+- Graceful fallback when AI is unavailable or misconfigured.
+- AI output is bounded: short, age-appropriate, no free-form
+  conversation.
 - `npm run test`, `npm run build` pass.
 
 **Validation commands:**
@@ -340,14 +340,49 @@ npm run test:e2e
 
 ---
 
-### Slice 4 (v0.12.0e): Stabilization / Release Notes
+### Slice 4 (v0.12.0e): Intermediate Content Expansion or AI-Assisted Problem Pipeline
 
-**Goal:** Stabilize the v0.12 practice explainability series and
-publish release notes plus QA checklist.
+**Goal:** Address the content gap for intermediate learners by either
+adding level 4–5 problems or establishing an AI-assisted problem
+pipeline based on observed gaps.
 
 **Scope:**
 
-- `docs/RELEASE_NOTES_v0.12.md` — summary of v0.12.0a/b/c/d.
+- One of:
+  - **Path A (manual content):** Add 10–15 level 4–5 problems to
+    `src/data/problems.json` covering intermediate concepts (reading
+    depth, direction of play, shape recognition, life-death
+    evaluation). Follow v0.4/v0.5/v0.7 proven content process.
+  - **Path B (AI-assisted pipeline):** Design a reviewed pipeline
+    where AI generates candidate problems and a human reviews and
+    approves them before inclusion.
+- The choice between Path A and Path B should be informed by the
+  feasibility spike results (v0.12.0b).
+
+**Non-goals:**
+
+- No unreviewed AI-generated content in the problem library.
+- No schema changes.
+- No changes to existing problem data.
+
+**Acceptance criteria:**
+
+- If Path A: new problems pass `validateAllProblems`, content review
+  documented, test count updated.
+- If Path B: pipeline documented, review process defined, no
+  unreviewed content added.
+- `npm run test`, `npm run build` pass.
+
+---
+
+### Slice 5 (v0.12.0f): Stabilization / Release Notes
+
+**Goal:** Stabilize the v0.12 AI-first intermediate progression series
+and publish release notes plus QA checklist.
+
+**Scope:**
+
+- `docs/RELEASE_NOTES_v0.12.md` — summary of v0.12.0a–e.
 - `docs/QA_CHECKLIST_v0.12.md` — manual QA checklist.
 - `docs/TASKS.md` — mark v0.12 complete, set next phase.
 
@@ -359,8 +394,8 @@ publish release notes plus QA checklist.
 **Acceptance criteria:**
 
 - Release notes document all v0.12 slices.
-- QA checklist covers rationale tags, category/level context, summary
-  enhancement, and regression.
+- QA checklist covers AI feasibility, level calibration, AI review
+  prototype, content expansion, and regression.
 - `npm run build` and `npm run test` pass.
 
 ---
@@ -374,20 +409,17 @@ phase:
 - **Teacher / admin backend** — no management or monitoring dashboard.
 - **Leaderboard** — no social or competitive features.
 - **Multiplayer** — no online or local multiplayer.
-- **Board-size expansion** — 9×9 only.
+- **Board-size expansion** — 9×9 only (unless AI direction explicitly
+  requires a different size for sparring).
 - **SGF import/export** — no SGF support.
-- **Broad app redesign** — no layout overhaul or new pages beyond
-  practice page enhancements.
+- **Broad app redesign** — no layout overhaul.
 - **Unrelated infrastructure work** — no CI, Docker, or deployment
   changes.
-- **AI opponent / AI review** — no AI features.
-- **Schema changes** — `Problem`, `ProblemStep`, `StudentProgress`,
-  and all other schemas remain unchanged.
-- **Problem content** — no new problems, no edits to existing problems.
-- **Problem data** — `src/data/problems.json` is not modified.
-- **Selection algorithm changes** — `selectDailyProblems` logic is
-  unchanged; only the return type is extended to include rationale.
-- **`src/lib/supabase/` client code** — no changes.
+- **AI model training or fine-tuning** — use existing models only.
+- **Unreviewed AI-generated content** — all AI output must be bounded
+  and reviewed.
+- **Free-form AI conversation** — AI interactions are bounded to
+  specific problem review contexts.
 - **Supabase self-hosting** — out of scope per v0.2 design.
 - **Service role keys** — never exposed in browser container.
 
@@ -397,17 +429,21 @@ phase:
 
 1. **One reviewable PR per slice.** Each slice is self-contained and
    can be reviewed, merged, and deployed independently.
-2. **No mixing unrelated product areas.** A slice PR touches only
-   practice-related UI, `practice.ts` rationale extension, tests, or
-   documentation as explicitly scoped.
-3. **No package/lockfile changes unless explicitly scoped.**
-4. **No schema change.** No `Problem`, `ProblemStep`, or database schema
-   modifications.
-5. **No selection algorithm change.** The selection algorithm logic
-   remains identical; only the return type is extended.
-6. **No AI/payment/teacher/admin/leaderboard/board-size/SGF scope
-   creep.**
-7. **Each PR must pass `npm run lint`, `npm run typecheck`,
+2. **Feasibility spike must complete before AI implementation.** Slice
+   v0.12.0b must produce a documented architecture decision before
+   v0.12.0d begins implementation.
+3. **No mixing unrelated product areas.** A slice PR touches only
+   AI-related modules, practice UI, content, or documentation as
+   explicitly scoped.
+4. **No package/lockfile changes unless explicitly scoped and
+   justified.**
+5. **No schema change.** No `Problem`, `ProblemStep`, or database
+   schema modifications unless explicitly scoped in a slice.
+6. **AI must be optional and gracefully degradable.** The app must
+   work without AI. AI features are additive, not required.
+7. **No AI/payment/teacher/admin/leaderboard/board-size/SGF scope
+   creep** beyond what is explicitly scoped in the AI direction.
+8. **Each PR must pass `npm run lint`, `npm run typecheck`,
    `npm run test`, `npm run build`, and `npm run test:e2e`.**
 
 ---
@@ -416,13 +452,18 @@ phase:
 
 Reviewers should check:
 
-- Candidate evaluation is balanced and grounded in current project state.
-- The selected direction (practice explainability) is justified given
-  v0.10 selection algorithm and known limitations.
-- Slice boundaries are small enough for sequential PR review.
-- Rationale tagging does not couple the UI to internal algorithm
-  implementation details.
-- Category/level display is minimal and child-friendly.
-- Summary enhancement is concise and warm, not verbose.
-- No selection algorithm changes are introduced.
-- Scope remains as planned — no schema, data, or infra work.
+- The selected direction (AI-first intermediate progression) addresses
+  the core product gap: stage/level mismatch for a one-year learner.
+- Feasibility spike (v0.12.0b) is genuinely evaluative and does not
+  pre-commit to a specific AI approach.
+- Level calibration (v0.12.0c) solves the defaulting-into-introductory-
+  content problem.
+- AI review prototype (v0.12.0d) is bounded, child-safe, and gracefully
+  degradable.
+- Content expansion (v0.12.0e) is informed by feasibility spike results.
+- AI is evaluated as a main product direction, not only a deferred
+  high-risk novelty.
+- Existing 77 introductory problems are treated as baseline/foundation,
+  not the main growth path.
+- Scope remains as planned — no unreviewed AI content, no free-form
+  AI conversation, no payment/teacher/leaderboard scope creep.
