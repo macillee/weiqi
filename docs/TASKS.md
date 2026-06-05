@@ -1903,9 +1903,8 @@ merged. This docs-only PR does not re-run validation checks.
 
 | Scenario | Behavior |
 |---|---|
-| No `.env.local`, no shell env | App starts in local anonymous mode |
+| No `.env.local` | App starts in local anonymous mode |
 | `.env.local` with Supabase vars | Docker Compose reads vars via `env_file`; app enters cloud-sync mode |
-| Shell env with `--env-file .env.local` | Docker Compose reads vars; app enters cloud-sync mode |
 | Missing one of two vars | App treats Supabase as unconfigured; local anonymous mode |
 
 ## Validation
