@@ -1806,7 +1806,7 @@ forced into the session.
 
 ## Branch
 
-- `feat/v0.10.0d-multi-step-awareness` → PR TBD
+- `feat/v0.10.0d-multi-step-awareness` → PR #122
 
 ---
 
