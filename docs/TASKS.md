@@ -1768,11 +1768,13 @@ CI hard gates.
   and `isMultiStepEligible` helper functions. Multi-step problems are now excluded
   unless the child has completed at least one single-step problem in the same category
   AND their max level in that category is within 1 of the multi-step problem's level.
-- `src/__tests__/practice.test.ts` — 8 new multi-step eligibility tests: ineligible
+- `src/__tests__/practice.test.ts` — 10 new multi-step eligibility tests: ineligible
   when no single-step completed in category, ineligible when max level too low,
   eligible when within 1 level, ineligible due review not forced, ineligible wrong
   problem not forced, category balance preserved, safe fallback when filtering
-  leaves too few candidates.
+  leaves too few candidates (asserts ineligible excluded), ineligible due review
+  excluded even with sparse candidates, ineligible wrong problem excluded even
+  with sparse candidates.
 - `docs/TASKS.md` — marked v0.10.0d delivered, next task → v0.10 stabilization.
 - `src/data/problems.json` — not modified.
 - `ProblemStep` schema — not changed.
@@ -1798,7 +1800,7 @@ forced into the session.
 |---|---|
 | `npm run lint` | Exit 0 |
 | `npm run typecheck` | Exit 0 |
-| `npm run test` | 348 passed (21 files) |
+| `npm run test` | 350 passed (21 files) |
 | `npm run build` | Compiled successfully |
 | `npm run test:e2e` | 6 passed |
 

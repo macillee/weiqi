@@ -1009,6 +1009,129 @@ describe("selectDailyProblems", () => {
     const selected = selectDailyProblems(progress, "2020-06-05");
     expect(selected.length).toBeGreaterThan(0);
     expect(selected.length).toBeLessThanOrEqual(10);
+    expect(selected.every((p) => !p.id.startsWith("MULTI-"))).toBe(true);
+  });
+
+  it("excludes ineligible multi-step due review even when eligible candidates are fewer than 10", () => {
+    const singleStepProblems = Array.from({ length: 3 }, (_, i) =>
+      makeProblem(`SINGLE-${String(i + 1).padStart(3, "0")}`, {
+        level: 1,
+        category: "capture",
+      }),
+    );
+    const multiStepDueProblem = makeProblem("MULTI-DUE-SPARSE", {
+      level: 3,
+      category: "capture",
+      totalSteps: 2,
+      steps: [
+        {
+          step: 1,
+          answers: [{ x: 3, y: 3 }],
+          hints: ["Hint 1"],
+          explanation: "Step 1",
+          successMessage: "Good",
+          failureMessage: "Try again",
+        },
+        {
+          step: 2,
+          answers: [{ x: 4, y: 4 }],
+          hints: ["Hint 2"],
+          explanation: "Step 2",
+          successMessage: "Done",
+          failureMessage: "Try again",
+        },
+      ],
+    });
+    const problems = [...singleStepProblems, multiStepDueProblem];
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 5,
+      streakDays: 1,
+      completedProblemIds: ["SINGLE-001"],
+      masteredProblemIds: [],
+      wrongProblems: {},
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {
+        "MULTI-DUE-SPARSE": {
+          problemId: "MULTI-DUE-SPARSE",
+          nextReviewAt: "2020-01-01",
+          intervalDays: 1,
+          lastResult: "failed",
+          lastReviewAt: "2019-12-31",
+        },
+      },
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      expect(selected.some((p) => p.id === "MULTI-DUE-SPARSE")).toBe(false);
+    }
+  });
+
+  it("excludes ineligible multi-step wrong problem even when eligible candidates are fewer than 10", () => {
+    const singleStepProblems = Array.from({ length: 3 }, (_, i) =>
+      makeProblem(`SINGLE-${String(i + 1).padStart(3, "0")}`, {
+        level: 1,
+        category: "capture",
+      }),
+    );
+    const multiStepWrongProblem = makeProblem("MULTI-WRONG-SPARSE", {
+      level: 3,
+      category: "capture",
+      totalSteps: 2,
+      steps: [
+        {
+          step: 1,
+          answers: [{ x: 3, y: 3 }],
+          hints: ["Hint 1"],
+          explanation: "Step 1",
+          successMessage: "Good",
+          failureMessage: "Try again",
+        },
+        {
+          step: 2,
+          answers: [{ x: 4, y: 4 }],
+          hints: ["Hint 2"],
+          explanation: "Step 2",
+          successMessage: "Done",
+          failureMessage: "Try again",
+        },
+      ],
+    });
+    const problems = [...singleStepProblems, multiStepWrongProblem];
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 5,
+      streakDays: 1,
+      completedProblemIds: ["SINGLE-001"],
+      masteredProblemIds: [],
+      wrongProblems: {
+        "MULTI-WRONG-SPARSE": {
+          problemId: "MULTI-WRONG-SPARSE",
+          wrongCount: 2,
+          correctReviewCount: 0,
+          lastWrongAt: "2020-06-01",
+          status: "active",
+        },
+      },
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {},
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      expect(selected.some((p) => p.id === "MULTI-WRONG-SPARSE")).toBe(false);
+    }
   });
 });
 

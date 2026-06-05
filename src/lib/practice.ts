@@ -157,6 +157,13 @@ export function selectDailyProblems(
   const available = allProblems.filter((p) => allIds.includes(p.id));
 
   if (available.length <= DAILY_PRACTICE_COUNT) {
+    if (hasUsableProgress(progress, available)) {
+      const usableProgress = progress as StudentProgress;
+      const filtered = available.filter((p) =>
+        isMultiStepEligible(p, usableProgress, allProblems)
+      );
+      return filtered.length > 0 ? filtered : available;
+    }
     return available;
   }
 
@@ -176,9 +183,7 @@ export function selectDailyProblems(
     isMultiStepEligible(p, usableProgress, allProblems)
   );
 
-  const candidates = eligibleCandidates.length >= DAILY_PRACTICE_COUNT
-    ? eligibleCandidates
-    : baseCandidates;
+  const candidates = eligibleCandidates;
 
   const now = today ?? todayString();
   const { problems: priority, usedCats } = getPriorityProblems(
