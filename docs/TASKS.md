@@ -1887,11 +1887,11 @@ merged. This docs-only PR does not re-run validation checks.
 
 ## Deliverables
 
-- `docker-compose.yml` — added `NEXT_PUBLIC_SUPABASE_URL` and
-  `NEXT_PUBLIC_SUPABASE_ANON_KEY` passthrough via shell interpolation
-  with empty defaults (`${VAR:-}`), so Docker starts without Supabase
-  env and passes values through when set.
-- `docker-compose.dev.yml` — same passthrough for dev mode.
+- `docker-compose.yml` — added `env_file: .env.local (required: false)` so
+  Docker Compose reads Supabase vars from `.env.local` when present.
+  Removed explicit `${VAR:-}` passthrough from `environment` to avoid
+  empty-string override of `env_file` values.
+- `docker-compose.dev.yml` — same `env_file` for dev mode.
 - `.env.example` — expanded comments to clarify optional Supabase
   setup, local anonymous fallback, Docker usage (`.env.local` or shell
   env), and service-role key safety warning.
@@ -1904,8 +1904,8 @@ merged. This docs-only PR does not re-run validation checks.
 | Scenario | Behavior |
 |---|---|
 | No `.env.local`, no shell env | App starts in local anonymous mode |
-| `.env.local` with Supabase vars | Docker Compose reads vars; app enters cloud-sync mode |
-| Shell env with Supabase vars | Docker Compose reads vars; app enters cloud-sync mode |
+| `.env.local` with Supabase vars | Docker Compose reads vars via `env_file`; app enters cloud-sync mode |
+| Shell env with `--env-file .env.local` | Docker Compose reads vars; app enters cloud-sync mode |
 | Missing one of two vars | App treats Supabase as unconfigured; local anonymous mode |
 
 ## Validation
