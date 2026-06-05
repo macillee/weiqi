@@ -1755,7 +1755,7 @@ CI hard gates.
 
 ## Branch
 
-- `feat/v0.10.0c-spaced-review-priority` → PR #?
+- `feat/v0.10.0c-spaced-review-priority` → PR #120
 
 ---
 
