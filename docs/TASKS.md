@@ -1726,10 +1726,10 @@ CI hard gates.
   1 slot for a non-mastered wrong problem; priority selections count
   toward per-category caps; v0.10.0b category balance and level clamp
   preserved.
-- `src/__tests__/practice.test.ts` — 7 new tests: due review included,
-  future review excluded, wrong problem included, duplicate prevention,
-  category balance with review/wrong, mastered wrong excluded,
-  null/empty/stale fallback regression.
+- `src/__tests__/practice.test.ts` — 7 new/updated review-priority tests: due
+  review included, future review excluded, wrong problem included,
+  duplicate prevention, category balance with review/wrong, mastered
+  wrong excluded, unavailable due review ID ignored.
 - `docs/TASKS.md` — marked v0.10.0c delivered, next task → v0.10.0d.
 - `src/lib/spaced-review.ts` — not modified.
 
@@ -1749,7 +1749,7 @@ CI hard gates.
 |---|---|
 | `npm run lint` | Exit 0 |
 | `npm run typecheck` | Exit 0 |
-| `npm run test` | 340 passed (21 files) |
+| `npm run test` | 341 passed (21 files) |
 | `npm run build` | Compiled successfully |
 | `npm run test:e2e` | 6 passed (3.5s) |
 
