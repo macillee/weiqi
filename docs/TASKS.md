@@ -1924,7 +1924,7 @@ problem data, schema, SQL/Supabase behavior changes were included.
 
 ## Branch
 
-- `chore/v0.11.0b-docker-supabase-env` → PR TBD
+- `chore/v0.11.0b-docker-supabase-env` → PR #128
 
 ---
 
