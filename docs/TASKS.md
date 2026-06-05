@@ -1972,13 +1972,14 @@ Replaced the v0.2-era `DEPLOYMENT_STRATEGY_v0.2.md` with a current
 | `npm run test` | 351 passed (21 files) |
 | `npm run build` | Compiled successfully |
 | `npm run test:e2e` | 6 passed |
+| `docker compose build` | Not validated locally (Docker daemon not running); CI step added for verification |
 
 No `src/` source files, tests, E2E tests, package/lockfile, problem data,
 schema, SQL/Supabase runtime behavior changes were included.
 
 ## Branch
 
-- `ci/v0.11.0c-docker-build-verification` → PR #TBD
+- `ci/v0.11.0c-docker-build-verification` → PR #130
 
 ---
 
