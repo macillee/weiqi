@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.9 infrastructure series complete (v0.9.0a–d). All CI gates and E2E smoke tests in place. Next: v0.10.0a planning (recommended: daily-practice skill filtering).
+v0.10.0a planning complete — primary direction: daily-practice skill filtering / level-aware selection. Next: v0.10.0b category-balanced selection with basic level clamping.
 
 Current strategy:
 
@@ -37,7 +37,9 @@ Current strategy:
 23. v0.9.0b GitHub Actions CI + Playwright setup completed
 24. v0.9.0c E2E smoke tests for core flows completed — 6 tests across home, levels, chapter, demo, practice, settings
 25. v0.9 stabilization completed — release notes and QA checklist published
-26. Avoid AI/payment/teacher/leaderboard scope creep
+26. v0.10.0a next phase plan completed — primary direction: daily-practice skill filtering / level-aware selection
+27. v0.10.0b category-balanced selection with basic level clamping (next)
+28. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1661,31 +1663,60 @@ CI hard gates.
 
 ---
 
-# Next Task: v0.10.0a — Planning (Recommended: Daily-Practice Skill Filtering)
+# ✅ v0.10.0a — Next Phase Plan — COMPLETED (2026-06-05)
+
+## Deliverables
+
+- `docs/NEXT_PHASE_PLAN_v0.10.md` — next phase plan covering:
+  - evaluation of all 5 required candidate directions
+  - selected primary direction: daily-practice skill filtering / level-aware
+    selection
+  - 3 implementation slices (b, c, d) with acceptance criteria and
+    non-goals
+  - out-of-scope boundaries and v0.10 acceptance rules
+- `docs/TASKS.md` — marked v0.10.0a delivered, next task set to v0.10.0b
+
+## Branch
+
+- `docs/v0.10.0a-next-phase-plan`
+
+---
+
+# Next Task: v0.10.0b — Category-Balanced Selection with Basic Level Clamping
 
 ## Goal
 
-Select the next product direction via a docs-only planning slice.
-Recommended primary: daily-practice skill filtering / level-aware
-selection (`selectDailyProblems` improvement). Secondary: deployment /
-Supabase env hardening.
+Replace `selectDailyProblems` with an algorithm that distributes the 10
+daily problems across categories and clamps to a reasonable level range
+based on the child's demonstrated progress.
 
 ## Scope
 
-- `docs/NEXT_PHASE_PLAN_v0.10.md`
-- `docs/TASKS.md` — mark v0.10.0a delivered, set next task
+- `src/lib/practice.ts` — rewrite `selectDailyProblems` signature to
+  accept `StudentProgress | null`; add category round-robin and level
+  clamping.
+- `src/app/practice/page.tsx` — pass `StudentProgress` to selection.
+- Update existing tests to pass mock progress.
+- New unit tests for category balancing, level clamping, empty-progress
+  fallback.
 
 ## Acceptance Criteria
 
-- Planning document evaluates at least 3 candidate directions.
-- One primary direction is selected with clear rationale.
-- Out-of-scope boundaries and non-goals are documented.
-- No implementation work is started.
+- `selectDailyProblems` signature changes to accept `StudentProgress | null`.
+- 10 problems selected daily; no more than 3 from the same category.
+- No problem level exceeds `max(childMaxLevel, 2)`.
+- Empty progress returns random selection.
+- All existing tests pass; new tests cover selection logic.
+- `npm run lint`, `npm run typecheck`, `npm run test`, `npm run build`,
+  `npm run test:e2e` all pass.
 
 ## Non-goals
 
-- No changes to `src/`, `e2e/`, CI config, package files.
-- No implementation of any direction.
+- No spaced-review integration (deferred to v0.10.0c).
+- No multi-step awareness (deferred to v0.10.0d).
+- No schema changes.
+- No problem content changes.
+- No UI changes beyond data flow.
 
 ---
 
@@ -1757,9 +1788,12 @@ Supabase env hardening.
 - v0.9.0c: E2E smoke tests for core flows (completed, PR #112 / issue #111)
 - v0.9.0d: release QA automation + stabilization (completed, PR TBD / issue #113)
 
-## v0.10.0 — Planning (next)
+## v0.10.0 — Daily-Practice Skill Filtering / Level-Aware Selection
 
-- v0.10.0a: next phase plan (next — recommended: daily-practice skill filtering)
+- v0.10.0a: next phase plan (completed, PR TBD / issue #115)
+- v0.10.0b: category-balanced selection with basic level clamping (next)
+- v0.10.0c: spaced review integration
+- v0.10.0d: multi-step awareness and safe exposure
 
 ---
 
