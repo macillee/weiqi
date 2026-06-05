@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.12.0b AI feasibility spike delivered — recommended: bounded LLM explanation layer with rule/template fallback. Next: v0.12.0c level calibration.
+v0.12.0b AI feasibility spike delivered — recommended: local-first Go AI / rule-assisted coach. Next: v0.12.0c level calibration.
 
 Current strategy:
 
@@ -47,7 +47,7 @@ Current strategy:
   33. v0.11.0c CI Docker build verification + deployment docs refresh completed — CI catches Docker build regressions, deployment doc current
   34. v0.11.0d stabilization completed — release notes and QA checklist published
   35. v0.12.0a next phase plan completed — primary direction: AI-first intermediate progression / AI coach & sparring
-  36. v0.12.0b AI feasibility spike completed — recommended: bounded LLM explanation layer with rule/template fallback
+  36. v0.12.0b AI feasibility spike completed — recommended: local-first Go AI / rule-assisted coach with optional local LLM
   37. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -2062,15 +2062,17 @@ problem data, runtime, Supabase, or SQL behavior was modified.
 
 ## Recommended Architecture Decision
 
-**Bounded LLM explanation layer with rule/template fallback.**
+**Local-first Go AI / rule-assisted coach, with optional local LLM
+explanation; external LLM only as an opt-in adapter.**
 
-- Next.js API route (`/api/ai-review`) proxies LLM API calls;
-  server-side API key.
-- Rule/template fallback when AI is unavailable, slow, or misconfigured.
-- New env vars: `AI_API_KEY` (server-side only), `AI_API_BASE_URL`
-  (optional).
-- No Go engine, no GPU, no sidecar process.
-- KataGo/GTP integration deferred to future phase.
+- Rule/template baseline always available (pure TypeScript, no deps).
+- Optional KataGo engine integration for 9×9 analysis (CPU, reduced
+  playouts, local GTP sidecar).
+- Optional local LLM via Ollama for warm Chinese explanations.
+- External LLM API only if user explicitly configures it (opt-in).
+- No data leaves the machine by default.
+- New env vars: `AI_ENGINE_PATH` (optional), `AI_OLLAMA_URL` (optional),
+  `AI_API_KEY` (opt-in external only).
 
 ## Validation
 
