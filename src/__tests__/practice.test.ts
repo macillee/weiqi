@@ -1133,6 +1133,52 @@ describe("selectDailyProblems", () => {
       expect(selected.some((p) => p.id === "MULTI-WRONG-SPARSE")).toBe(false);
     }
   });
+
+  it("excludes all-ineligible multi-step problems in sparse pool when no single-step is completed in category", () => {
+    const multiStepProblems = Array.from({ length: 5 }, (_, i) =>
+      makeProblem(`MULTI-ALL-${String(i + 1).padStart(3, "0")}`, {
+        level: 3,
+        category: "capture",
+        totalSteps: 2,
+        steps: [
+          {
+            step: 1,
+            answers: [{ x: 3, y: 3 }],
+            hints: ["Hint 1"],
+            explanation: "Step 1",
+            successMessage: "Good",
+            failureMessage: "Try again",
+          },
+          {
+            step: 2,
+            answers: [{ x: 4, y: 4 }],
+            hints: ["Hint 2"],
+            explanation: "Step 2",
+            successMessage: "Done",
+            failureMessage: "Try again",
+          },
+        ],
+      }),
+    );
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(multiStepProblems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      multiStepProblems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 5,
+      streakDays: 1,
+      completedProblemIds: ["MULTI-ALL-001"],
+      masteredProblemIds: [],
+      wrongProblems: {},
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {},
+    };
+
+    const selected = selectDailyProblems(progress, "2020-06-05");
+    expect(selected.every((p) => !p.id.startsWith("MULTI-ALL-"))).toBe(true);
+  });
 });
 
 describe("practice session management", () => {

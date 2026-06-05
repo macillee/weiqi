@@ -159,10 +159,9 @@ export function selectDailyProblems(
   if (available.length <= DAILY_PRACTICE_COUNT) {
     if (hasUsableProgress(progress, available)) {
       const usableProgress = progress as StudentProgress;
-      const filtered = available.filter((p) =>
+      return available.filter((p) =>
         isMultiStepEligible(p, usableProgress, allProblems)
       );
-      return filtered.length > 0 ? filtered : available;
     }
     return available;
   }
