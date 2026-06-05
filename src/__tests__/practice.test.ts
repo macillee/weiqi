@@ -115,6 +115,31 @@ describe("selectDailyProblems", () => {
     expect(selected.every((p) => p.category === "life_death")).toBe(true);
   });
 
+  it("stale completed IDs not in available pool fall back to random selection", () => {
+    const problems = Array.from({ length: 15 }, (_, i) =>
+      makeProblem(`CURRENT-${i}`, { category: "escape", level: 1 }),
+    );
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 5,
+      streakDays: 1,
+      completedProblemIds: ["OLD-001", "OLD-002"],
+      masteredProblemIds: [],
+      wrongProblems: {},
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {},
+    };
+
+    const selected = selectDailyProblems(progress);
+    expect(selected).toHaveLength(10);
+    expect(selected.every((p) => p.category === "escape")).toBe(true);
+  });
+
   it("limits progress-based level clamp when child has low-level completions", () => {
     const problems = [
       makeProblem("L1-A", { level: 1, category: "capture" }),

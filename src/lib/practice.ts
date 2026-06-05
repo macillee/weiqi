@@ -37,15 +37,17 @@ function deriveMaxLevel(
   return Math.max(...done.map((p) => p.level));
 }
 
-function isFallbackProgress(
+function hasUsableProgress(
   progress: StudentProgress | null | undefined,
+  available: Problem[],
 ): boolean {
-  if (progress == null) return true;
-  const relevantIds = [
+  if (progress == null) return false;
+  const relevantIds = new Set([
     ...(progress.completedProblemIds ?? []),
     ...(progress.masteredProblemIds ?? []),
-  ];
-  return relevantIds.length === 0;
+  ]);
+  if (relevantIds.size === 0) return false;
+  return available.some((p) => relevantIds.has(p.id));
 }
 
 function pickRandom(available: Problem[]): Problem[] {
@@ -65,7 +67,7 @@ export function selectDailyProblems(
     return available;
   }
 
-  if (isFallbackProgress(progress)) {
+  if (!hasUsableProgress(progress, available)) {
     return pickRandom(available);
   }
 
