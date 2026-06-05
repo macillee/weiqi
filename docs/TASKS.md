@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.12.0a next phase plan delivered — primary direction: AI-first intermediate progression. Next: v0.12.0b AI feasibility spike.
+v0.12.0b AI feasibility spike delivered — recommended: local-first Go AI / rule-assisted coach. Next: v0.12.0c level calibration.
 
 Current strategy:
 
@@ -47,7 +47,8 @@ Current strategy:
   33. v0.11.0c CI Docker build verification + deployment docs refresh completed — CI catches Docker build regressions, deployment doc current
   34. v0.11.0d stabilization completed — release notes and QA checklist published
   35. v0.12.0a next phase plan completed — primary direction: AI-first intermediate progression / AI coach & sparring
-  36. Avoid AI/payment/teacher/leaderboard scope creep
+  36. v0.12.0b AI feasibility spike completed — recommended: local-first Go AI / rule-assisted coach with optional local LLM
+  37. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -2046,35 +2047,79 @@ problem data, runtime, Supabase, or SQL behavior was modified.
 
 ---
 
-# Next Task: v0.12.0b — AI Feasibility Spike / Architecture Decision
+# ✅ v0.12.0b — AI Feasibility Spike / Architecture Decision — COMPLETED (2026-06-05)
+
+## Deliverables
+
+- `docs/AI_FEASIBILITY_SPIKE_v0.12.md` — decision-grade feasibility
+  report covering: product goal and constraints, 5 AI use-case
+  candidates, 5 technical approach comparisons (LLM-only, KataGo/GTP,
+  rule+templates, hybrid engine+LLM, AI content pipeline), deployment
+  and runtime options, cost and latency model, privacy and safety
+  constraints, child-appropriate UX constraints, recommended
+  architecture decision, and proposed next implementation slice.
+- `docs/TASKS.md` — marked v0.12.0b delivered, next task → v0.12.0c.
+
+## Recommended Architecture Decision
+
+**Local-first Go AI / rule-assisted coach, with optional local LLM
+explanation; external LLM only as an opt-in adapter.**
+
+- Rule/template baseline always available (pure TypeScript, no deps).
+- Optional KataGo engine integration for 9×9 analysis (CPU, reduced
+  playouts, local GTP sidecar).
+- Optional local LLM via Ollama for warm Chinese explanations.
+- External LLM API only if user explicitly configures it (opt-in).
+- No data leaves the machine by default.
+- New env vars: `AI_ENGINE_PATH` (optional), `AI_OLLAMA_URL` (optional),
+  `AI_API_KEY` (opt-in external only).
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run build` | Compiled successfully |
+| `npm run test` | 351 passed (21 files) |
+
+Docs-only change. No code, test, config, package, lockfile, schema,
+problem data, runtime, Supabase, or SQL behavior was modified.
+
+## Branch
+
+- `docs/v0.12.0b-ai-feasibility-spike` → PR #TBD
+
+---
+
+# Next Task: v0.12.0c — Level Calibration / Intermediate Challenge Entry
 
 ## Goal
 
-Evaluate AI approaches for child-safe Go interaction and make an informed
-architecture decision before full implementation.
+Detect when a child has progressed beyond introductory levels and adjust
+the starting level for daily practice, avoiding default placement into
+level-1 content.
 
 ## Scope
 
-- `docs/AI_FEASIBILITY_SPIKE_v0.12.md` — feasibility report covering
-  AI approach evaluation (KataGo / GTP, LLM explanation, rule-engine),
-  deployment model, cost analysis, latency targets, privacy and safety,
-  child-appropriate UX, and recommended architecture decision.
-- No `src/` code changes.
-- No new dependencies.
+- `src/lib/practice.ts` — add level calibration logic based on existing
+  progress data (completed/mastered problem IDs, level distribution).
+- `src/app/practice/page.tsx` — surface level calibration result.
+- `src/__tests__/practice.test.ts` — tests for level calibration.
 
 ## Acceptance Criteria
 
-- Feasibility report exists with evaluated approaches, cost/latency/
-  safety analysis, and a recommended architecture decision.
-- No code changes introduced.
-- `npm run build` and `npm run test` pass (unchanged).
+- Practice page detects when the child has progressed beyond
+  introductory levels and adjusts selection accordingly.
+- Children with significant progress are not defaulted into level-1
+  content.
+- Existing selection behavior unchanged for introductory-level children.
+- `npm run test`, `npm run build` pass.
 
 ## Non-goals
 
-- No full product implementation.
-- No AI model training or fine-tuning.
-- No changes to existing problem data or schemas.
-- No server-side API endpoints.
+- No AI integration (that comes in v0.12.0d).
+- No new pages or navigation.
+- No changes to problem data or schemas.
+- No Supabase/server-side changes.
 
 ---
 
@@ -2164,7 +2209,7 @@ architecture decision before full implementation.
 ## v0.12.0 — AI-First Intermediate Progression
 
 - v0.12.0a: next phase plan (completed)
-- v0.12.0b: AI feasibility spike / architecture decision
+- v0.12.0b: AI feasibility spike / architecture decision (completed)
 - v0.12.0c: level calibration / intermediate challenge entry
 - v0.12.0d: bounded AI review / AI coach prototype
 - v0.12.0e: intermediate content expansion or AI-assisted problem pipeline
