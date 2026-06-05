@@ -32,12 +32,12 @@ Current strategy:
 18. v0.8.0b wire capture + escape + connect_cut completed — 21 new problems wired (45 total)
 19. v0.8.0c wire life_death + endgame + opening completed — 23 new problems wired (68 total)
 20. v0.8.0d wire multi-step problems completed — 9 multi-step problems wired (77 total, full library)
-  21. v0.8 stabilization completed — release notes and QA checklist published
-  22. v0.9.0a next phase plan completed — primary direction: infrastructure / E2E / CI hardening
-   23. v0.9.0b GitHub Actions CI + Playwright setup completed
-    24. v0.9.0c E2E smoke tests for core flows completed — 6 tests across home, levels, chapter, demo, practice, settings
-    25. v0.9 stabilization completed — release notes and QA checklist published
-    26. Avoid AI/payment/teacher/leaderboard scope creep
+21. v0.8 stabilization completed — release notes and QA checklist published
+22. v0.9.0a next phase plan completed — primary direction: infrastructure / E2E / CI hardening
+23. v0.9.0b GitHub Actions CI + Playwright setup completed
+24. v0.9.0c E2E smoke tests for core flows completed — 6 tests across home, levels, chapter, demo, practice, settings
+25. v0.9 stabilization completed — release notes and QA checklist published
+26. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---

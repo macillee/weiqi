@@ -53,23 +53,28 @@ The full rationale and slice boundaries are recorded in
 
 ## 3. Prerequisite Cleanup (PR #109)
 
-Before CI could be enforced, pre-existing lint and TypeScript errors had
-to be resolved:
+Before CI could be enforced, PR #109 resolved pre-existing ESLint errors
+(21 errors + 17 warnings → 0) and TypeScript errors so that `npm run lint`
+and `npm run typecheck` exit cleanly. Changes included:
 
-- `src/__tests__/problems.test.ts` — unused variable `i`, unused import
-  `validateBoard`, `p` redeclared in same block
-- `src/__tests__/server-progress.test.ts` — unused parameter `p`
-- `src/__tests__/weekly-report.test.ts` — unused import `describe`
-- `src/__tests__/practice-page.test.tsx` — unused parameter `p`
-- `src/components/board/GoBoard.tsx` — unused import `isPointOnBoard`
-- `src/__tests__/progress-import-v2.test.ts` — `any` type usage,
-  `done` callback misuse
-- `src/app/settings/page.tsx` — renamed `setAudioEnabled` conflict
-  (import vs local function)
-- `vitest.config.ts` — excluded `e2e/` from vitest test discovery
-  (Playwright files should not be picked up by vitest)
-
-After cleanup: `npm run lint` and `npm run typecheck` both exit 0.
+- Fixed `package.json` — `lint` script from broken `next lint` (removed
+  in Next 16) to `eslint src/`.
+- Added targeted `eslint-disable` blocks for
+  `react-hooks/set-state-in-effect` in 7 client components where
+  localStorage init / animation reset in `useEffect` is the correct
+  pattern.
+- Removed unused imports and variables across test and source files.
+- Added proper type casts in test files for mock objects
+  (`SupabaseClient`, `globalThis`, literal types).
+- Added missing `reviewSchedule: {}` to mock `StudentProgress` objects
+  in tests.
+- Added `import { describe, it, expect } from "vitest"` in
+  `progress-import-hash.test.ts`.
+- Fixed `null`/`undefined` mismatches in progress import tests.
+- Added `vitest.config.ts` exclusion for `e2e/` so vitest does not
+  pick up Playwright tests.
+- Added `.gitignore` entries for Playwright artifacts (`test-results/`,
+  `playwright-report/`).
 
 ---
 
