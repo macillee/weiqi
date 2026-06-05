@@ -9,6 +9,7 @@ import {
 import * as problemsModule from "@/lib/problems";
 import type { Problem } from "@/lib/problems";
 import * as chaptersModule from "@/lib/chapters";
+import type { StudentProgress } from "@/lib/progress";
 
 vi.mock("@/lib/problems", () => ({
   loadProblems: vi.fn(),
@@ -18,7 +19,10 @@ vi.mock("@/lib/chapters", () => ({
   getAllProblemIds: vi.fn(),
 }));
 
-function makeProblem(id: string): Problem {
+function makeProblem(
+  id: string,
+  overrides?: Partial<Problem>,
+): Problem {
   return {
     id,
     boardSize: 9 as const,
@@ -34,6 +38,7 @@ function makeProblem(id: string): Problem {
     explanation: "Exp",
     successMessage: "Good",
     failureMessage: "Try again",
+    ...overrides,
   };
 }
 
@@ -75,6 +80,180 @@ describe("selectDailyProblems", () => {
     const selected = selectDailyProblems();
     expect(selected).toHaveLength(1);
     expect(selected[0].id).toBe("A-001");
+  });
+
+  it("accepts null progress and returns 10 problems", () => {
+    const selected = selectDailyProblems(null);
+    expect(selected).toHaveLength(10);
+  });
+
+  it("accepts empty progress and returns 10 problems", () => {
+    const emptyProgress: StudentProgress = {
+      stars: 0,
+      streakDays: 0,
+      completedProblemIds: [],
+      masteredProblemIds: [],
+      wrongProblems: {},
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {},
+    };
+    const selected = selectDailyProblems(emptyProgress);
+    expect(selected).toHaveLength(10);
+  });
+
+  it("limits progress-based level clamp when child has low-level completions", () => {
+    const problems = [
+      makeProblem("L1-A", { level: 1, category: "capture" }),
+      makeProblem("L1-B", { level: 1, category: "capture" }),
+      makeProblem("L1-C", { level: 1, category: "capture" }),
+      makeProblem("L1-D", { level: 1, category: "escape" }),
+      makeProblem("L1-E", { level: 1, category: "escape" }),
+      makeProblem("L1-F", { level: 1, category: "connect_cut" }),
+      makeProblem("L1-G", { level: 1, category: "connect_cut" }),
+      makeProblem("L1-H", { level: 1, category: "life_death" }),
+      makeProblem("L1-I", { level: 1, category: "life_death" }),
+      makeProblem("L1-J", { level: 1, category: "opening" }),
+      makeProblem("L1-K", { level: 1, category: "opening" }),
+      makeProblem("L1-L", { level: 1, category: "endgame" }),
+      makeProblem("L2-A", { level: 2, category: "capture" }),
+      makeProblem("L2-B", { level: 2, category: "escape" }),
+      makeProblem("L4-A", { level: 4, category: "life_death" }),
+      makeProblem("L4-B", { level: 4, category: "opening" }),
+    ];
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 5,
+      streakDays: 3,
+      completedProblemIds: ["L1-A", "L1-B", "L2-A"],
+      masteredProblemIds: [],
+      wrongProblems: {},
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {},
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress);
+      expect(selected).toHaveLength(10);
+      for (const p of selected) {
+        expect(p.level).toBeLessThanOrEqual(2);
+      }
+    }
+  });
+
+  it("does not clamp when progress has high-level completions", () => {
+    const problems = [
+      makeProblem("L4-A", { level: 4, category: "capture" }),
+      makeProblem("L4-B", { level: 4, category: "escape" }),
+      makeProblem("L5-A", { level: 5, category: "life_death" }),
+      makeProblem("L5-B", { level: 5, category: "opening" }),
+      makeProblem("L2-A", { level: 2, category: "endgame" }),
+      makeProblem("L2-B", { level: 2, category: "connect_cut" }),
+      makeProblem("L1-A", { level: 1, category: "capture" }),
+      makeProblem("L1-B", { level: 1, category: "escape" }),
+      makeProblem("L1-C", { level: 1, category: "life_death" }),
+      makeProblem("L1-D", { level: 1, category: "opening" }),
+      makeProblem("L1-E", { level: 1, category: "endgame" }),
+      makeProblem("L1-F", { level: 1, category: "connect_cut" }),
+    ];
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 10,
+      streakDays: 5,
+      completedProblemIds: ["L4-A", "L5-A"],
+      masteredProblemIds: [],
+      wrongProblems: {},
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {},
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress);
+      expect(selected.length).toBe(10);
+      const hasHighLevel = selected.some((p) => p.level >= 4);
+      expect(hasHighLevel).toBe(true);
+    }
+  });
+
+  it("distributes no more than 3 from a single category when alternatives exist", () => {
+    const problems: Problem[] = [];
+    const categories = [
+      "capture", "escape", "connect_cut",
+      "life_death", "opening", "endgame",
+    ] as const;
+    let idx = 0;
+    for (const cat of categories) {
+      for (let n = 0; n < 5; n++) {
+        idx++;
+        problems.push(
+          makeProblem(`P-${String(idx).padStart(3, "0")}`, {
+            category: cat,
+            level: 1,
+          }),
+        );
+      }
+    }
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 0,
+      streakDays: 0,
+      completedProblemIds: [],
+      masteredProblemIds: [],
+      wrongProblems: {},
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {},
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress);
+      expect(selected).toHaveLength(10);
+      const catCounts: Record<string, number> = {};
+      for (const p of selected) {
+        catCounts[p.category] = (catCounts[p.category] ?? 0) + 1;
+      }
+      for (const count of Object.values(catCounts)) {
+        expect(count).toBeLessThanOrEqual(3);
+      }
+    }
+  });
+
+  it("does not crash when pool has sparse categories", () => {
+    const problems = [
+      makeProblem("ONLY-A", { category: "capture", level: 1 }),
+      makeProblem("ONLY-B", { category: "capture", level: 1 }),
+      makeProblem("ONLY-C", { category: "capture", level: 1 }),
+      makeProblem("ONLY-D", { category: "capture", level: 1 }),
+      makeProblem("ONLY-E", { category: "capture", level: 1 }),
+      makeProblem("ONLY-F", { category: "capture", level: 1 }),
+      makeProblem("ONLY-G", { category: "capture", level: 1 }),
+      makeProblem("ONLY-H", { category: "capture", level: 1 }),
+      makeProblem("ONLY-I", { category: "capture", level: 1 }),
+      makeProblem("ONLY-J", { category: "capture", level: 1 }),
+      makeProblem("ONLY-K", { category: "capture", level: 1 }),
+      makeProblem("ONLY-L", { category: "capture", level: 1 }),
+    ];
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const selected = selectDailyProblems();
+    expect(selected).toHaveLength(10);
   });
 });
 
