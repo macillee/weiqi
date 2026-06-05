@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.9.0c E2E smoke tests for core flows completed. Next: v0.9.0d release QA automation + stabilization.
+v0.9 infrastructure series complete (v0.9.0a–d). All CI gates and E2E smoke tests in place. Next: v0.10.0a planning (recommended: daily-practice skill filtering).
 
 Current strategy:
 
@@ -35,8 +35,9 @@ Current strategy:
   21. v0.8 stabilization completed — release notes and QA checklist published
   22. v0.9.0a next phase plan completed — primary direction: infrastructure / E2E / CI hardening
    23. v0.9.0b GitHub Actions CI + Playwright setup completed
-   24. v0.9.0c E2E smoke tests for core flows completed — 6 tests across home, levels, chapter, demo, practice, settings
-   25. Avoid AI/payment/teacher/leaderboard scope creep
+    24. v0.9.0c E2E smoke tests for core flows completed — 6 tests across home, levels, chapter, demo, practice, settings
+    25. v0.9 stabilization completed — release notes and QA checklist published
+    26. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1629,33 +1630,62 @@ CI hard gates.
 
 ---
 
-# Next Task: v0.9.0d Release QA Automation + Stabilization
+# ✅ v0.9.0d — Release QA Automation and Stabilization — COMPLETED (2026-06-05)
+
+## What was done
+
+- `docs/RELEASE_NOTES_v0.9.md` — release notes covering:
+  - v0.9 direction and rationale (infrastructure / E2E / CI hardening)
+  - Prerequisite cleanup (PR #109)
+  - v0.9.0a–c per-slice summary with PR references
+  - CI inventory (triggers, gates, Node.js 22, Chromium)
+  - E2E inventory (6 tests, what is / is not covered)
+  - Current product baseline (77 problems, 77/77 wired)
+  - Known limitations and next-phase recommendation
+  - Recommended: v0.10.0a planning for daily-practice skill filtering
+- `docs/QA_CHECKLIST_v0.9.md` — QA checklist covering:
+  - CI gate validation
+  - Local validation commands
+  - E2E smoke per-route checklist
+  - v0.8/v0.7/v0.6 regression checks
+  - Release decision template and completion criteria
+- `docs/TASKS.md` — marked v0.9 stabilization delivered, next → v0.10.0a
+
+## Non-goals respected
+
+- No changes to `src/` source files
+- No changes to `e2e/` tests
+- No changes to `.github/workflows/ci.yml` or `playwright.config.ts`
+- No package or lockfile changes
+- No problem data, schema, or runtime UI changes
+
+---
+
+# Next Task: v0.10.0a — Planning (Recommended: Daily-Practice Skill Filtering)
 
 ## Goal
 
-Polish and stabilize the v0.9 infrastructure series with release notes,
-QA checklist, and any final CI/E2E hardening. Evaluate whether the
-infrastructure foundation is solid enough to ship v0.9.
+Select the next product direction via a docs-only planning slice.
+Recommended primary: daily-practice skill filtering / level-aware
+selection (`selectDailyProblems` improvement). Secondary: deployment /
+Supabase env hardening.
 
 ## Scope
 
-- `docs/RELEASE_NOTES_v0.9.md` — release notes and QA checklist
-- `docs/TASKS.md` — mark v0.9 stabilization delivered, set next task
+- `docs/NEXT_PHASE_PLAN_v0.10.md`
+- `docs/TASKS.md` — mark v0.10.0a delivered, set next task
 
 ## Acceptance Criteria
 
-- All CI gates (lint, typecheck, test, build, e2e) pass on latest main.
-- Release notes document v0.9.0a–c deliverables and known limitations.
-- QA checklist covers CI, E2E, and local anonymous mode regression.
-- Next-phase recommendation identifies and justifies a single direction
-  (likely v0.10.0a planning).
+- Planning document evaluates at least 3 candidate directions.
+- One primary direction is selected with clear rationale.
+- Out-of-scope boundaries and non-goals are documented.
+- No implementation work is started.
 
 ## Non-goals
 
-- No changes to Playwright test coverage.
-- No changes to CI workflow or config.
-- No `src/` source code changes.
-- No package or lockfile changes.
+- No changes to `src/`, `e2e/`, CI config, package files.
+- No implementation of any direction.
 
 ---
 
@@ -1722,10 +1752,14 @@ infrastructure foundation is solid enough to ship v0.9.
 
 ## v0.9.0 — Infrastructure / E2E / CI Hardening
 
-- v0.9.0a: next phase plan (completed)
-- v0.9.0b: GitHub Actions CI + Playwright setup (completed)
-- v0.9.0c: E2E smoke tests for core flows (completed)
-- v0.9.0d (optional): release QA automation + stabilization (next)
+- v0.9.0a: next phase plan (completed, PR #106 / issue #105)
+- v0.9.0b: GitHub Actions CI + Playwright setup (completed, PR #110 / issue #107)
+- v0.9.0c: E2E smoke tests for core flows (completed, PR #112 / issue #111)
+- v0.9.0d: release QA automation + stabilization (completed, PR TBD / issue #113)
+
+## v0.10.0 — Planning (next)
+
+- v0.10.0a: next phase plan (next — recommended: daily-practice skill filtering)
 
 ---
 
