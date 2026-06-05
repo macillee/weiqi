@@ -18,8 +18,9 @@ However, deployment and Supabase configuration remain minimally
 documented and untested outside of local development:
 
 - Docker compose does not pass Supabase environment variables.
-- `.env.example` lists only two variables with no guidance on where
-  to find values or what happens when they are missing.
+- `.env.example` lists the Supabase variables and basic dashboard/source guidance,
+  but does not clearly document optional fallback behavior, Docker env passthrough,
+  or first-run decision paths.
 - `docs/DEPLOYMENT_STRATEGY_v0.2.md` describes the intended model but
   has not been validated against the current Docker setup since v0.2.
 - No CI step verifies that the Docker build succeeds or that the app
@@ -188,10 +189,8 @@ first-run developer experience.
   `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY` passthrough
   with documentation comments.
 - `docker-compose.dev.yml` — same env passthrough for dev mode.
-- `.env.example` — add comments explaining:
-  - Where to find Supabase URL and anon key (Supabase dashboard).
-  - That both variables are optional and the app works fully without them.
-  - That `.env.local` is the target file (gitignored).
+- `.env.example` — expand existing comments to clarify optional fallback
+  behavior, Docker usage, and `.env.local` setup.
 - Documentation — update any first-run instructions to mention
   `.env.local` setup.
 

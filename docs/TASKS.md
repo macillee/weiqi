@@ -1878,7 +1878,7 @@ merged. This docs-only PR does not re-run validation checks.
 
 ## Branch
 
-- `docs/v0.11.0a-next-phase-plan` → PR TBD
+- `docs/v0.11.0a-next-phase-plan` → PR #126
 
 ---
 
