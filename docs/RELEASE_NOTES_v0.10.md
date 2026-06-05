@@ -71,7 +71,7 @@ The full rationale and slice boundaries are recorded in
   - Basic level clamp: selected problem levels should not exceed
     `max(childMaxLevel, 2)` when enough lower-level candidates exist.
 - `/practice` passes current `progress` into `selectDailyProblems`.
-- 3 new unit tests for category balance and level clamp.
+- 8 new/updated selection tests covering null/empty/stale fallback, category balance, level clamp, and sparse pool behavior.
 - `npm run test`: 334 passed (21 files).
 
 ### v0.10.0c — Spaced Review and Wrong-Problem Priority (PR #120)

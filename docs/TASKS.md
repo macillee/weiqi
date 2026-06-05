@@ -1845,7 +1845,7 @@ This docs-only PR does not re-run validation checks.
 
 ## Branch
 
-- `docs/v0.10-stabilization-release-notes` → PR TBD
+- `docs/v0.10-stabilization-release-notes` → PR #124
 
 ---
 
