@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.10.0a planning complete — primary direction: daily-practice skill filtering / level-aware selection. Next: v0.10.0b category-balanced selection with basic level clamping.
+v0.10.0b category-balanced selection delivered — daily practice is now level-clamped and category-balanced. Next: v0.10.0c spaced review integration.
 
 Current strategy:
 
@@ -38,7 +38,7 @@ Current strategy:
 24. v0.9.0c E2E smoke tests for core flows completed — 6 tests across home, levels, chapter, demo, practice, settings
 25. v0.9 stabilization completed — release notes and QA checklist published
 26. v0.10.0a next phase plan completed — primary direction: daily-practice skill filtering / level-aware selection
-27. v0.10.0b category-balanced selection with basic level clamping (next)
+27. v0.10.0b category-balanced selection with basic level clamping completed — 10 problems, max 3 per category, level clamp guided by progress
 28. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -1678,45 +1678,76 @@ CI hard gates.
 
 ## Branch
 
-- `docs/v0.10.0a-next-phase-plan`
+- `docs/v0.10.0a-next-phase-plan` → PR #116
 
 ---
 
-# Next Task: v0.10.0b — Category-Balanced Selection with Basic Level Clamping
+# ✅ v0.10.0b — Category-Balanced Selection with Basic Level Clamping — COMPLETED (2026-06-05)
+
+## Deliverables
+
+- `src/lib/practice.ts` — `selectDailyProblems` signature updated to
+  accept `StudentProgress | null`; round-robin category selection with
+  max 3 per category; level clamp at `max(childMaxLevel, 2)` from
+  completed/mastered problem IDs; empty-progress fallback preserves
+  random selection.
+- `src/app/practice/page.tsx` — passes current `progress` state to
+  `selectDailyProblems`.
+- `src/__tests__/practice.test.ts` — 8 new/updated selection tests: null
+  progress fallback, empty progress fallback, null random fallback
+  category-cap guard, stale completed IDs fallback, level clamp
+  (low-level child), level clamp (high-level child), category balance,
+  sparse pool.
+- `docs/TASKS.md` — marked v0.10.0b delivered, next task → v0.10.0c.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 334 passed (21 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | 6 passed (3.2s) |
+
+## Branch
+
+- `feat/v0.10.0b-category-balanced-selection` → PR #118
+
+---
+
+# Next Task: v0.10.0c — Spaced Review Integration
 
 ## Goal
 
-Replace `selectDailyProblems` with an algorithm that distributes the 10
-daily problems across categories and clamps to a reasonable level range
-based on the child's demonstrated progress.
+Incorporate `reviewSchedule` and `wrongProblems` into daily selection so
+problems due for review and previously failed problems are prioritized.
 
 ## Scope
 
-- `src/lib/practice.ts` — rewrite `selectDailyProblems` signature to
-  accept `StudentProgress | null`; add category round-robin and level
-  clamping.
-- `src/app/practice/page.tsx` — pass `StudentProgress` to selection.
-- Update existing tests to pass mock progress.
-- New unit tests for category balancing, level clamping, empty-progress
-  fallback.
+- `src/lib/practice.ts` — add review-priority logic; dedicate 1–2 daily
+  slots to due reviews from `reviewSchedule`, 1 slot to a previously
+  wrong problem.
+- New unit tests for review priority, wrong-problem rotation, empty
+  review schedule fallback.
+- `docs/TASKS.md` — mark v0.10.0c delivered, set next to v0.10.0d.
 
 ## Acceptance Criteria
 
-- `selectDailyProblems` signature changes to accept `StudentProgress | null`.
-- 10 problems selected daily; no more than 3 from the same category.
-- No problem level exceeds `max(childMaxLevel, 2)`.
-- Empty progress returns random selection.
-- All existing tests pass; new tests cover selection logic.
-- `npm run lint`, `npm run typecheck`, `npm run test`, `npm run build`,
-  `npm run test:e2e` all pass.
+- If `reviewSchedule` contains problems due today, at least 1 is included.
+- If `wrongProblems` is non-empty, at least 1 wrong problem is included
+  (unless all are already in today's review slots).
+- Category balance and level clamp from v0.10.0b are preserved.
+- Empty review/wrong state falls back to v0.10.0b behavior.
+- All existing tests pass; new tests cover review logic.
+- E2E practice smoke test passes.
 
 ## Non-goals
 
-- No spaced-review integration (deferred to v0.10.0c).
-- No multi-step awareness (deferred to v0.10.0d).
+- No changes to the review schedule algorithm itself.
+- No UI for reviewing due problems differently from new problems.
 - No schema changes.
 - No problem content changes.
-- No UI changes beyond data flow.
 
 ---
 
@@ -1786,12 +1817,12 @@ based on the child's demonstrated progress.
 - v0.9.0a: next phase plan (completed, PR #106 / issue #105)
 - v0.9.0b: GitHub Actions CI + Playwright setup (completed, PR #110 / issue #107)
 - v0.9.0c: E2E smoke tests for core flows (completed, PR #112 / issue #111)
-- v0.9.0d: release QA automation + stabilization (completed, PR TBD / issue #113)
+- v0.9.0d: release QA automation + stabilization (completed, PR #114 / issue #113)
 
 ## v0.10.0 — Daily-Practice Skill Filtering / Level-Aware Selection
 
-- v0.10.0a: next phase plan (completed, PR TBD / issue #115)
-- v0.10.0b: category-balanced selection with basic level clamping (next)
+- v0.10.0a: next phase plan (completed, PR #116 / issue #115)
+- v0.10.0b: category-balanced selection with basic level clamping (completed, PR #118)
 - v0.10.0c: spaced review integration
 - v0.10.0d: multi-step awareness and safe exposure
 

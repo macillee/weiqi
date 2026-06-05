@@ -1,25 +1,128 @@
 import { loadProblems, type Problem } from "@/lib/problems";
 import { getAllProblemIds } from "@/lib/chapters";
+import type { StudentProgress } from "@/lib/progress";
 
 const DAILY_PRACTICE_COUNT = 10;
 
-export function selectDailyProblems(): Problem[] {
+const KNOWN_CATEGORIES = [
+  "capture",
+  "escape",
+  "connect_cut",
+  "life_death",
+  "opening",
+  "endgame",
+] as const;
+
+function shuffle<T>(arr: T[]): void {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+function deriveMaxLevel(
+  progress: StudentProgress | null | undefined,
+  available: Problem[],
+): number {
+  if (!progress) return 5;
+  const relevantIds = [
+    ...new Set([
+      ...(progress.completedProblemIds ?? []),
+      ...(progress.masteredProblemIds ?? []),
+    ]),
+  ];
+  if (relevantIds.length === 0) return 5;
+  const done = available.filter((p) => relevantIds.includes(p.id));
+  if (done.length === 0) return 5;
+  return Math.max(...done.map((p) => p.level));
+}
+
+function hasUsableProgress(
+  progress: StudentProgress | null | undefined,
+  available: Problem[],
+): boolean {
+  if (progress == null) return false;
+  const relevantIds = new Set([
+    ...(progress.completedProblemIds ?? []),
+    ...(progress.masteredProblemIds ?? []),
+  ]);
+  if (relevantIds.size === 0) return false;
+  return available.some((p) => relevantIds.has(p.id));
+}
+
+function pickRandom(available: Problem[]): Problem[] {
+  const shuffled = [...available];
+  shuffle(shuffled);
+  return shuffled.slice(0, DAILY_PRACTICE_COUNT);
+}
+
+export function selectDailyProblems(
+  progress?: StudentProgress | null,
+): Problem[] {
   const allProblems = loadProblems();
   const allIds = getAllProblemIds();
-  const availableProblems = allProblems.filter((p) =>
-    allIds.includes(p.id),
-  );
+  const available = allProblems.filter((p) => allIds.includes(p.id));
 
-  if (availableProblems.length <= DAILY_PRACTICE_COUNT) {
-    return availableProblems;
+  if (available.length <= DAILY_PRACTICE_COUNT) {
+    return available;
   }
 
-  const shuffled = [...availableProblems];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  if (!hasUsableProgress(progress, available)) {
+    return pickRandom(available);
   }
-  return shuffled.slice(0, DAILY_PRACTICE_COUNT);
+
+  const childMax = deriveMaxLevel(progress, available);
+  const maxAllowed = Math.max(childMax, 2);
+  const levelFiltered = available.filter((p) => p.level <= maxAllowed);
+  const candidates = levelFiltered.length >= DAILY_PRACTICE_COUNT
+    ? levelFiltered
+    : available;
+
+  const byCat: Record<string, Problem[]> = {};
+  const mixed: Problem[] = [];
+  for (const p of candidates) {
+    if (p.category === "mixed") {
+      mixed.push(p);
+    } else {
+      if (!byCat[p.category]) byCat[p.category] = [];
+      byCat[p.category].push(p);
+    }
+  }
+
+  for (const arr of Object.values(byCat)) shuffle(arr);
+  shuffle(mixed);
+
+  const selected: Problem[] = [];
+  const countPerCat: Record<string, number> = {};
+  const maxPerCat = 3;
+  let moved = true;
+
+  while (selected.length < DAILY_PRACTICE_COUNT && moved) {
+    moved = false;
+    for (const cat of KNOWN_CATEGORIES) {
+      if (selected.length >= DAILY_PRACTICE_COUNT) break;
+      const bucket = byCat[cat] ?? [];
+      const used = countPerCat[cat] ?? 0;
+      if (used < maxPerCat && bucket.length > 0) {
+        selected.push(bucket.shift()!);
+        countPerCat[cat] = used + 1;
+        moved = true;
+      }
+    }
+
+    if (selected.length < DAILY_PRACTICE_COUNT && mixed.length > 0) {
+      selected.push(mixed.shift()!);
+      moved = true;
+    }
+  }
+
+  if (selected.length < DAILY_PRACTICE_COUNT) {
+    const remaining = candidates.filter((p) => !selected.includes(p));
+    shuffle(remaining);
+    selected.push(...remaining.slice(0, DAILY_PRACTICE_COUNT - selected.length));
+  }
+
+  return selected;
 }
 
 export type PracticeResult = {

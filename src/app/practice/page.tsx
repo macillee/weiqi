@@ -35,7 +35,7 @@ export default function PracticePage() {
   /* eslint-enable react-hooks/set-state-in-effect */
 
   function handleStart() {
-    const problems = selectDailyProblems();
+    const problems = selectDailyProblems(progress);
     const newSession = createPracticeSession(problems);
     setSession(newSession);
     setPhase("playing");
