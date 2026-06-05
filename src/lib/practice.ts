@@ -56,8 +56,59 @@ function pickRandom(available: Problem[]): Problem[] {
   return shuffled.slice(0, DAILY_PRACTICE_COUNT);
 }
 
+function todayString(): string {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+function getPriorityProblems(
+  progress: StudentProgress,
+  candidates: Problem[],
+  today: string,
+): { problems: Problem[]; usedCats: Record<string, number> } {
+  const candidateIds = new Set(candidates.map((p) => p.id));
+  const problems: Problem[] = [];
+  const usedCats: Record<string, number> = {};
+
+  const dueEntries = Object.entries(progress.reviewSchedule).filter(
+    ([id, state]) => state.nextReviewAt <= today && candidateIds.has(id),
+  );
+  shuffle(dueEntries);
+  for (let i = 0; i < Math.min(dueEntries.length, 2); i++) {
+    const p = candidates.find((c) => c.id === dueEntries[i][0]);
+    if (p) {
+      problems.push(p);
+      if (p.category !== "mixed") {
+        usedCats[p.category] = (usedCats[p.category] ?? 0) + 1;
+      }
+    }
+  }
+
+  const selectedIds = new Set(problems.map((p) => p.id));
+  const wrongEntries = Object.entries(progress.wrongProblems).filter(
+    ([id, state]) =>
+      state.status !== "mastered" && candidateIds.has(id) && !selectedIds.has(id),
+  );
+  shuffle(wrongEntries);
+  if (wrongEntries.length > 0) {
+    const p = candidates.find((c) => c.id === wrongEntries[0][0]);
+    if (p) {
+      problems.push(p);
+      if (p.category !== "mixed") {
+        usedCats[p.category] = (usedCats[p.category] ?? 0) + 1;
+      }
+    }
+  }
+
+  return { problems, usedCats };
+}
+
 export function selectDailyProblems(
   progress?: StudentProgress | null,
+  today?: string,
 ): Problem[] {
   const allProblems = loadProblems();
   const allIds = getAllProblemIds();
@@ -70,17 +121,27 @@ export function selectDailyProblems(
   if (!hasUsableProgress(progress, available)) {
     return pickRandom(available);
   }
+  const usableProgress = progress as StudentProgress;
 
-  const childMax = deriveMaxLevel(progress, available);
+  const childMax = deriveMaxLevel(usableProgress, available);
   const maxAllowed = Math.max(childMax, 2);
   const levelFiltered = available.filter((p) => p.level <= maxAllowed);
   const candidates = levelFiltered.length >= DAILY_PRACTICE_COUNT
     ? levelFiltered
     : available;
 
+  const now = today ?? todayString();
+  const { problems: priority, usedCats } = getPriorityProblems(
+    usableProgress,
+    candidates,
+    now,
+  );
+  const priorityIds = new Set(priority.map((p) => p.id));
+
   const byCat: Record<string, Problem[]> = {};
   const mixed: Problem[] = [];
   for (const p of candidates) {
+    if (priorityIds.has(p.id)) continue;
     if (p.category === "mixed") {
       mixed.push(p);
     } else {
@@ -92,8 +153,8 @@ export function selectDailyProblems(
   for (const arr of Object.values(byCat)) shuffle(arr);
   shuffle(mixed);
 
-  const selected: Problem[] = [];
-  const countPerCat: Record<string, number> = {};
+  const selected = [...priority];
+  const countPerCat = { ...usedCats };
   const maxPerCat = 3;
   let moved = true;
 
