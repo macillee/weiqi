@@ -1893,10 +1893,10 @@ merged. This docs-only PR does not re-run validation checks.
   empty-string override of `env_file` values.
 - `docker-compose.dev.yml` — same `env_file` for dev mode.
 - `.env.example` — expanded comments to clarify optional Supabase
-  setup, local anonymous fallback, Docker usage (`.env.local` or shell
-  env), and service-role key safety warning.
+  setup, local anonymous fallback, Docker usage via `.env.local`,
+  and service-role key safety warning.
 - `README.md` — updated Docker deployment section to mention that
-  Docker Compose reads Supabase vars from `.env.local` or shell env.
+  Docker Compose reads Supabase vars from `.env.local` when present.
 - `docs/TASKS.md` — marked v0.11.0b delivered, next task → v0.11.0c.
 
 ## Docker/Env Behavior Summary
