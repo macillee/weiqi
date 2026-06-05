@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.11 deployment hardening series complete. Next: v0.12.0a next phase planning.
+v0.12.0a next phase plan delivered — primary direction: practice explainability / child-facing learning UX. Next: v0.12.0b selection rationale tags.
 
 Current strategy:
 
@@ -46,7 +46,8 @@ Current strategy:
   32. v0.11.0b Docker Supabase env passthrough completed — Docker Compose passes optional Supabase vars, .env.example expanded
   33. v0.11.0c CI Docker build verification + deployment docs refresh completed — CI catches Docker build regressions, deployment doc current
   34. v0.11.0d stabilization completed — release notes and QA checklist published
-  35. Avoid AI/payment/teacher/leaderboard scope creep
+  35. v0.12.0a next phase plan completed — primary direction: practice explainability / child-facing learning UX
+  36. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -2017,28 +2018,63 @@ problem data, runtime, Supabase, or SQL behavior was modified.
 
 ---
 
-# Next Task: v0.12.0a — Next Phase Planning
+# ✅ v0.12.0a — Next Phase Plan — COMPLETED (2026-06-05)
+
+## Deliverables
+
+- `docs/NEXT_PHASE_PLAN_v0.12.md` — next phase plan evaluating 5 candidate
+  directions (practice explainability, Supabase sync hardening, content
+  expansion, deeper multi-step, AI exploration). Selected primary
+  direction: practice explainability / child-facing learning UX.
+  Defined 4 implementation slices (v0.12.0b–e).
+- `docs/TASKS.md` — marked v0.12.0a delivered, next task → v0.12.0b.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run build` | Compiled successfully |
+| `npm run test` | 351 passed (21 files) |
+
+Docs-only change. No code, test, config, package, lockfile, schema,
+problem data, runtime, Supabase, or SQL behavior was modified.
+
+## Branch
+
+- `docs/v0.12.0a-next-phase-plan` → PR #TBD
+
+---
+
+# Next Task: v0.12.0b — Selection Rationale Tags
 
 ## Goal
 
-Plan the next product phase after v0.11 deployment hardening. Evaluate
-candidate directions and select one with slice definitions.
+Surface why each daily-practice problem was selected with a small,
+non-distracting tag.
 
 ## Scope
 
-- `docs/NEXT_PHASE_PLAN_v0.12.md` — planning document.
-- `docs/TASKS.md` — mark v0.12.0a delivered, set next task.
+- `src/lib/practice.ts` — extend `selectDailyProblems` return type to
+  include per-problem selection rationale (e.g., `"review"`,
+  `"wrong_review"`, `"category_balance"`, `"new"`).
+- `src/app/practice/page.tsx` — display a small tag or badge next to
+  the problem header indicating the selection type.
+- `src/__tests__/practice.test.ts` — tests for rationale tagging.
 
 ## Acceptance Criteria
 
-- Planning doc evaluates all relevant candidate directions.
-- One direction selected with rationale.
-- Implementation slices defined with scope and non-goals.
-- No implementation work.
+- `selectDailyProblems` returns rationale for each selected problem.
+- Practice page shows a tag for each problem (e.g., "复习", "错题",
+  "新题").
+- Tags are minimal and non-distracting for 7–9 year olds.
+- Existing selection behavior unchanged.
+- `npm run test`, `npm run build` pass.
 
 ## Non-goals
 
-- No code or test changes.
+- No changes to the selection algorithm.
+- No new UI components beyond a minimal tag/badge.
+- No changes to wrong-book, report, or chapter pages.
 - No schema or data changes.
 
 ---
@@ -2125,6 +2161,14 @@ candidate directions and select one with slice definitions.
 - v0.11.0b: Docker compose Supabase env passthrough + .env.example guidance (completed)
 - v0.11.0c: CI Docker build verification + deployment documentation refresh (completed)
 - v0.11.0d: stabilization / release notes (completed)
+
+## v0.12.0 — Practice Explainability / Child-Facing Learning UX
+
+- v0.12.0a: next phase plan (completed)
+- v0.12.0b: selection rationale tags
+- v0.12.0c: category and level context in practice
+- v0.12.0d: practice session summary enhancement
+- v0.12.0e: stabilization / release notes
 
 ---
 
