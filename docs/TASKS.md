@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.10.0d multi-step awareness delivered — multi-step problems are now gated by single-step completion in the same category. Next: v0.10 stabilization / release notes.
+v0.10 stabilization delivered — daily-practice skill filtering series complete. Next: v0.11.0a next phase plan.
 
 Current strategy:
 
@@ -41,7 +41,8 @@ Current strategy:
 27. v0.10.0b category-balanced selection with basic level clamping completed — 10 problems, max 3 per category, level clamp guided by progress
   28. v0.10.0c spaced review integration completed — due reviews + wrong problems prioritized in selection
   29. v0.10.0d multi-step awareness completed — multi-step problems gated by single-step eligibility
-  30. Avoid AI/payment/teacher/leaderboard scope creep
+  30. v0.10 stabilization completed — release notes and QA checklist published
+  31. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1810,29 +1811,69 @@ forced into the session.
 
 ---
 
-# Next Task: v0.10 Stabilization / Release Notes
+# ✅ v0.10 Stabilization / Release Notes — COMPLETED (2026-06-05)
+
+## Deliverables
+
+- `docs/RELEASE_NOTES_v0.10.md` — v0.10 release notes covering direction
+  and rationale, per-slice summary (PR #116/#118/#120/#122), current
+  behavior inventory, compatibility, validation status, known limitations,
+  and next-phase recommendation.
+- `docs/QA_CHECKLIST_v0.10.md` — manual QA checklist covering automated
+  gates, local validation, daily-practice selection behavior (null/empty/
+  stale fallback, category balance, level clamp, due review priority,
+  wrong-problem priority, duplicate prevention, multi-step eligibility,
+  sparse candidate behavior), E2E regression, content regression, v0.6
+  polish regression, optional Supabase checks, and release decision
+  template.
+- `docs/TASKS.md` — marked v0.10 complete, next task → v0.11.0a.
+- Docs-only change. No code, test, config, package, lockfile, schema,
+  problem data, runtime, Supabase, or SQL behavior was modified.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 351 passed (21 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | 6 passed |
+
+Validation values inherited from `main` after v0.10.0d (PR #122) merged.
+This docs-only PR does not re-run validation checks.
+
+## Branch
+
+- `docs/v0.10-stabilization-release-notes` → PR TBD
+
+---
+
+# Next Task: v0.11.0a — Next Phase Plan
 
 ## Goal
 
-Stabilize the v0.10 daily-practice skill filtering series and publish release
-notes and QA checklist.
+Select the next primary direction after v0.10 daily-practice skill
+filtering. Evaluate candidate directions and define implementation
+slices with explicit non-goals.
 
 ## Scope
 
-- `docs/RELEASE_NOTES_v0.10.md` — summary of v0.10.0a/b/c/d deliverables.
-- `docs/QA_CHECKLIST_v0.10.md` — manual QA checklist for daily-practice
-  category balance, level clamping, spaced review priority, wrong-problem
-  priority, multi-step eligibility, and fallback behavior.
-- `docs/TASKS.md` — mark v0.10 complete, set next phase.
+- `docs/NEXT_PHASE_PLAN_v0.11.md` — planning document only.
+- `docs/TASKS.md` — mark v0.11.0a delivered, set next task.
 
 ## Acceptance Criteria
 
-- Release notes document all v0.10 slices with validation results.
-- QA checklist covers category balance, level clamp, review priority,
-  wrong priority, multi-step gating, and fallback scenarios.
-- `npm run build` passes.
-- `npm run test` passes.
-- `npm run test:e2e` passes.
+- One primary direction selected with rationale.
+- 1–3 implementation slices defined.
+- Explicit non-goals listed.
+- No implementation work.
+
+## Non-goals
+
+- No code changes.
+- No schema or data changes.
+- No new content.
 
 ---
 
@@ -1908,8 +1949,9 @@ notes and QA checklist.
 
 - v0.10.0a: next phase plan (completed, PR #116 / issue #115)
 - v0.10.0b: category-balanced selection with basic level clamping (completed, PR #118)
-- v0.10.0c: spaced review integration (completed)
-- v0.10.0d: multi-step awareness and safe exposure (completed)
+- v0.10.0c: spaced review integration (completed, PR #120)
+- v0.10.0d: multi-step awareness and safe exposure (completed, PR #122)
+- v0.10 stabilization: release notes + QA checklist (completed)
 
 ---
 
