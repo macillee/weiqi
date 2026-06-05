@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.10 stabilization delivered — daily-practice skill filtering series complete. Next: v0.11.0a next phase plan.
+v0.11.0a next phase plan delivered — primary direction: Deployment / Supabase environment hardening. Next: v0.11.0b Docker compose Supabase env passthrough.
 
 Current strategy:
 
@@ -42,7 +42,8 @@ Current strategy:
   28. v0.10.0c spaced review integration completed — due reviews + wrong problems prioritized in selection
   29. v0.10.0d multi-step awareness completed — multi-step problems gated by single-step eligibility
   30. v0.10 stabilization completed — release notes and QA checklist published
-  31. Avoid AI/payment/teacher/leaderboard scope creep
+  31. v0.11.0a next phase plan completed — primary direction: Deployment / Supabase environment hardening
+  32. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1849,31 +1850,64 @@ This docs-only PR does not re-run validation checks.
 
 ---
 
-# Next Task: v0.11.0a — Next Phase Plan
+# ✅ v0.11.0a — Next Phase Plan — COMPLETED (2026-06-05)
+
+## Deliverables
+
+- `docs/NEXT_PHASE_PLAN_v0.11.md` — next phase plan evaluating 5 candidate
+  directions (Deployment / Supabase env hardening, UI explainability,
+  deeper multi-step, content expansion, release automation maturity).
+  Selected primary direction: Deployment / Supabase environment hardening.
+  Defined 3 implementation slices (v0.11.0b/c/d).
+- `docs/TASKS.md` — marked v0.11.0a delivered, next task → v0.11.0b.
+- Docs-only change. No code, test, config, package, lockfile, schema,
+  problem data, runtime, Supabase, or SQL behavior was modified.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 351 passed (21 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | 6 passed |
+
+Validation values inherited from `main` after v0.10 stabilization (PR #124)
+merged. This docs-only PR does not re-run validation checks.
+
+## Branch
+
+- `docs/v0.11.0a-next-phase-plan` → PR TBD
+
+---
+
+# Next Task: v0.11.0b — Docker Compose Supabase Env Passthrough + `.env.example` Guidance
 
 ## Goal
 
-Select the next primary direction after v0.10 daily-practice skill
-filtering. Evaluate candidate directions and define implementation
-slices with explicit non-goals.
+Make cloud-sync mode work out of the box in Docker and improve first-run
+developer experience.
 
 ## Scope
 
-- `docs/NEXT_PHASE_PLAN_v0.11.md` — planning document only.
-- `docs/TASKS.md` — mark v0.11.0a delivered, set next task.
+- `docker-compose.yml` — add Supabase env passthrough.
+- `docker-compose.dev.yml` — same env passthrough for dev mode.
+- `.env.example` — add guidance comments.
+- Documentation updates for first-run setup.
 
 ## Acceptance Criteria
 
-- One primary direction selected with rationale.
-- 1–3 implementation slices defined.
-- Explicit non-goals listed.
-- No implementation work.
+- `docker compose up --build` starts without Supabase env.
+- With valid Supabase credentials, Docker compose passes them through.
+- `.env.example` contains clear optional Supabase setup guidance.
+- No runtime code changes in `src/`.
 
 ## Non-goals
 
-- No code changes.
+- No changes to `src/lib/supabase/` client code.
+- No CI Docker build step (deferred to v0.11.0c).
 - No schema or data changes.
-- No new content.
 
 ---
 
@@ -1951,7 +1985,14 @@ slices with explicit non-goals.
 - v0.10.0b: category-balanced selection with basic level clamping (completed, PR #118)
 - v0.10.0c: spaced review integration (completed, PR #120)
 - v0.10.0d: multi-step awareness and safe exposure (completed, PR #122)
-- v0.10 stabilization: release notes + QA checklist (completed)
+- v0.10 stabilization: release notes + QA checklist (completed, PR #124)
+
+## v0.11.0 — Deployment / Supabase Environment Hardening
+
+- v0.11.0a: next phase plan (completed)
+- v0.11.0b: Docker compose Supabase env passthrough + .env.example guidance (next)
+- v0.11.0c: CI Docker build verification + deployment documentation refresh
+- v0.11.0d: stabilization / release notes
 
 ---
 
