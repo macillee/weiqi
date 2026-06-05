@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.10.0c spaced review integration delivered — due reviews and wrong problems are now prioritized in daily selection. Next: v0.10.0d multi-step awareness and safe exposure.
+v0.10.0d multi-step awareness delivered — multi-step problems are now gated by single-step completion in the same category. Next: v0.10 stabilization / release notes.
 
 Current strategy:
 
@@ -39,8 +39,9 @@ Current strategy:
 25. v0.9 stabilization completed — release notes and QA checklist published
 26. v0.10.0a next phase plan completed — primary direction: daily-practice skill filtering / level-aware selection
 27. v0.10.0b category-balanced selection with basic level clamping completed — 10 problems, max 3 per category, level clamp guided by progress
-28. v0.10.0c spaced review integration completed — due reviews + wrong problems prioritized in selection
-28. Avoid AI/payment/teacher/leaderboard scope creep
+  28. v0.10.0c spaced review integration completed — due reviews + wrong problems prioritized in selection
+  29. v0.10.0d multi-step awareness completed — multi-step problems gated by single-step eligibility
+  30. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1759,37 +1760,77 @@ CI hard gates.
 
 ---
 
-# Next Task: v0.10.0d — Multi-Step Awareness and Safe Exposure
+# ✅ v0.10.0d — Multi-Step Awareness and Safe Exposure — COMPLETED (2026-06-05)
+
+## Deliverables
+
+- `src/lib/practice.ts` — added `isMultiStepProblem`, `getCategorySingleStepMaxLevel`, 
+  and `isMultiStepEligible` helper functions. Multi-step problems are now excluded
+  unless the child has completed at least one single-step problem in the same category
+  AND their max level in that category is within 1 of the multi-step problem's level.
+- `src/__tests__/practice.test.ts` — 8 new multi-step eligibility tests: ineligible
+  when no single-step completed in category, ineligible when max level too low,
+  eligible when within 1 level, ineligible due review not forced, ineligible wrong
+  problem not forced, category balance preserved, safe fallback when filtering
+  leaves too few candidates.
+- `docs/TASKS.md` — marked v0.10.0d delivered, next task → v0.10 stabilization.
+- `src/data/problems.json` — not modified.
+- `ProblemStep` schema — not changed.
+
+## Algorithm Summary
+
+`isMultiStepEligible(problem, progress, problems)`:
+1. Check if problem is multi-step via `totalSteps > 1` or `steps.length > 0`.
+2. Non-multi-step and mixed-category problems are always eligible.
+3. For multi-step problems in a specific category:
+   - Find all completed/mastered single-step problems in that category.
+   - If none found → not eligible.
+   - Get max level from those single-step problems.
+   - Eligible if `problem.level - categoryMaxLevel <= 1`.
+
+Multi-step filtering applied before `getPriorityProblems` and candidate pool
+construction, so ineligible multi-step due reviews and wrong problems are not
+forced into the session.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 348 passed (21 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | 6 passed |
+
+## Branch
+
+- `feat/v0.10.0d-multi-step-awareness` → PR TBD
+
+---
+
+# Next Task: v0.10 Stabilization / Release Notes
 
 ## Goal
 
-Ensure multi-step problems are not served to children who have not yet
-completed enough single-step content in related categories.
+Stabilize the v0.10 daily-practice skill filtering series and publish release
+notes and QA checklist.
 
 ## Scope
 
-- `src/lib/practice.ts` — add multi-step gating to selection algorithm.
-- New unit tests for multi-step eligibility, fallback behavior.
-- `docs/TASKS.md` — mark v0.10.0d delivered, set next task.
+- `docs/RELEASE_NOTES_v0.10.md` — summary of v0.10.0a/b/c/d deliverables.
+- `docs/QA_CHECKLIST_v0.10.md` — manual QA checklist for daily-practice
+  category balance, level clamping, spaced review priority, wrong-problem
+  priority, multi-step eligibility, and fallback behavior.
+- `docs/TASKS.md` — mark v0.10 complete, set next phase.
 
 ## Acceptance Criteria
 
-- Multi-step problems are excluded unless the child has completed at
-  least one single-step problem in the same category AND their max level
-  in that category is within 1 of the multi-step problem's level.
-- Eligibility unblocks naturally as the child progresses through
-  single-step content.
-- Category balance, level clamp, and review/wrong priority from
-  v0.10.0b/c are preserved.
-- All existing tests pass.
-- E2E practice smoke test passes.
-
-## Non-goals
-
-- No changes to `ProblemStep` schema.
-- No new multi-step content.
-- No UI indication that a problem is multi-step vs. single-step.
-- No schema or data changes.
+- Release notes document all v0.10 slices with validation results.
+- QA checklist covers category balance, level clamp, review priority,
+  wrong priority, multi-step gating, and fallback scenarios.
+- `npm run build` passes.
+- `npm run test` passes.
+- `npm run test:e2e` passes.
 
 ---
 
@@ -1866,7 +1907,7 @@ completed enough single-step content in related categories.
 - v0.10.0a: next phase plan (completed, PR #116 / issue #115)
 - v0.10.0b: category-balanced selection with basic level clamping (completed, PR #118)
 - v0.10.0c: spaced review integration (completed)
-- v0.10.0d: multi-step awareness and safe exposure (next)
+- v0.10.0d: multi-step awareness and safe exposure (completed)
 
 ---
 
