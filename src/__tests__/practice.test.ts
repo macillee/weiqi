@@ -293,6 +293,264 @@ describe("selectDailyProblems", () => {
     const selected = selectDailyProblems();
     expect(selected).toHaveLength(10);
   });
+
+  it("includes a due review problem when reviewSchedule has a due entry", () => {
+    const problems = Array.from({ length: 15 }, (_, i) =>
+      makeProblem(`P-${String(i + 1).padStart(3, "0")}`),
+    );
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 5,
+      streakDays: 1,
+      completedProblemIds: ["P-001"],
+      masteredProblemIds: [],
+      wrongProblems: {},
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {
+        "P-005": {
+          problemId: "P-005",
+          nextReviewAt: "2020-01-01",
+          intervalDays: 1,
+          lastResult: "failed",
+          lastReviewAt: "2019-12-31",
+        },
+      },
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      expect(selected.some((p) => p.id === "P-005")).toBe(true);
+    }
+  });
+
+  it("does not prioritize future-dated review problems", () => {
+    const problems: Problem[] = Array.from({ length: 14 }, (_, i) =>
+      makeProblem(`L1-${String(i + 1).padStart(3, "0")}`, { level: 1, category: "capture" }),
+    );
+    problems.push(
+      makeProblem("FUTURE-L5", { level: 5, category: "life_death" }),
+    );
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 5,
+      streakDays: 1,
+      completedProblemIds: ["L1-001"],
+      masteredProblemIds: [],
+      wrongProblems: {},
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {
+        "FUTURE-L5": {
+          problemId: "FUTURE-L5",
+          nextReviewAt: "2099-12-31",
+          intervalDays: 30,
+          lastResult: "clean",
+          lastReviewAt: "2099-01-01",
+        },
+      },
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      expect(selected.some((p) => p.id === "FUTURE-L5")).toBe(false);
+    }
+  });
+
+  it("includes a wrong problem when wrongProblems is non-empty", () => {
+    const problems = Array.from({ length: 15 }, (_, i) =>
+      makeProblem(`P-${String(i + 1).padStart(3, "0")}`),
+    );
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 5,
+      streakDays: 1,
+      completedProblemIds: ["P-001"],
+      masteredProblemIds: [],
+      wrongProblems: {
+        "P-008": {
+          problemId: "P-008",
+          wrongCount: 3,
+          correctReviewCount: 0,
+          lastWrongAt: "2020-06-01",
+          status: "active",
+        },
+      },
+      attempts: [{
+        problemId: "P-008",
+        selectedX: 1, selectedY: 1,
+        isCorrect: false, usedHint: false,
+        timeSpentSeconds: 5, createdAt: "2020-06-01",
+      }],
+      achievements: [],
+      reviewSchedule: {},
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      expect(selected.some((p) => p.id === "P-008")).toBe(true);
+    }
+  });
+
+  it("does not duplicate a wrong problem already selected as a due review", () => {
+    const problems = Array.from({ length: 15 }, (_, i) =>
+      makeProblem(`P-${String(i + 1).padStart(3, "0")}`),
+    );
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 5,
+      streakDays: 1,
+      completedProblemIds: ["P-001"],
+      masteredProblemIds: [],
+      wrongProblems: {
+        "P-003": {
+          problemId: "P-003",
+          wrongCount: 2,
+          correctReviewCount: 0,
+          lastWrongAt: "2020-06-01",
+          status: "active",
+        },
+      },
+      attempts: [{
+        problemId: "P-003",
+        selectedX: 2, selectedY: 2,
+        isCorrect: false, usedHint: false,
+        timeSpentSeconds: 10, createdAt: "2020-06-01",
+      }],
+      achievements: [],
+      reviewSchedule: {
+        "P-003": {
+          problemId: "P-003",
+          nextReviewAt: "2020-01-01",
+          intervalDays: 1,
+          lastResult: "failed",
+          lastReviewAt: "2019-12-31",
+        },
+      },
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      const count = selected.filter((p) => p.id === "P-003").length;
+      expect(count).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it("preserves category balance when review/wrong candidates are present", () => {
+    const problems: Problem[] = [];
+    const categories = [
+      "capture", "escape", "connect_cut",
+      "life_death", "opening", "endgame",
+    ] as const;
+    let idx = 0;
+    for (const cat of categories) {
+      for (let n = 0; n < 4; n++) {
+        idx++;
+        problems.push(
+          makeProblem(`P-${String(idx).padStart(3, "0")}`, {
+            category: cat, level: 1,
+          }),
+        );
+      }
+    }
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 5,
+      streakDays: 1,
+      completedProblemIds: ["P-001"],
+      masteredProblemIds: [],
+      wrongProblems: {
+        "P-003": {
+          problemId: "P-003",
+          wrongCount: 1,
+          correctReviewCount: 0,
+          lastWrongAt: "2020-06-01",
+          status: "active",
+        },
+      },
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {
+        "P-005": {
+          problemId: "P-005",
+          nextReviewAt: "2020-01-01",
+          intervalDays: 1,
+          lastResult: "failed",
+          lastReviewAt: "2019-12-31",
+        },
+      },
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      expect(selected).toHaveLength(10);
+      const catCounts: Record<string, number> = {};
+      for (const p of selected) {
+        catCounts[p.category] = (catCounts[p.category] ?? 0) + 1;
+      }
+      for (const count of Object.values(catCounts)) {
+        expect(count).toBeLessThanOrEqual(3);
+      }
+    }
+  });
+
+  it("does not select wrong problems that are mastered", () => {
+    const problems: Problem[] = Array.from({ length: 14 }, (_, i) =>
+      makeProblem(`L1-${String(i + 1).padStart(3, "0")}`, { level: 1, category: "capture" }),
+    );
+    problems.push(
+      makeProblem("MASTERED-L5", { level: 5, category: "life_death" }),
+    );
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 5,
+      streakDays: 1,
+      completedProblemIds: ["L1-001"],
+      masteredProblemIds: [],
+      wrongProblems: {
+        "MASTERED-L5": {
+          problemId: "MASTERED-L5",
+          wrongCount: 1,
+          correctReviewCount: 3,
+          lastWrongAt: "2020-05-01",
+          lastReviewAt: "2020-06-01",
+          status: "mastered",
+        },
+      },
+      attempts: [],
+      achievements: [],
+      reviewSchedule: {},
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      expect(selected.some((p) => p.id === "MASTERED-L5")).toBe(false);
+    }
+  });
 });
 
 describe("practice session management", () => {

@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.10.0b category-balanced selection delivered — daily practice is now level-clamped and category-balanced. Next: v0.10.0c spaced review integration.
+v0.10.0c spaced review integration delivered — due reviews and wrong problems are now prioritized in daily selection. Next: v0.10.0d multi-step awareness and safe exposure.
 
 Current strategy:
 
@@ -39,6 +39,7 @@ Current strategy:
 25. v0.9 stabilization completed — release notes and QA checklist published
 26. v0.10.0a next phase plan completed — primary direction: daily-practice skill filtering / level-aware selection
 27. v0.10.0b category-balanced selection with basic level clamping completed — 10 problems, max 3 per category, level clamp guided by progress
+28. v0.10.0c spaced review integration completed — due reviews + wrong problems prioritized in selection
 28. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
@@ -1716,38 +1717,79 @@ CI hard gates.
 
 ---
 
-# Next Task: v0.10.0c — Spaced Review Integration
+# ✅ v0.10.0c — Spaced Review Integration — COMPLETED (2026-06-05)
+
+## Deliverables
+
+- `src/lib/practice.ts` — added `getPriorityProblems` helper that reserves
+  up to 2 slots for due review problems (`nextReviewAt <= today`) and
+  1 slot for a non-mastered wrong problem; priority selections count
+  toward per-category caps; v0.10.0b category balance and level clamp
+  preserved.
+- `src/__tests__/practice.test.ts` — 7 new tests: due review included,
+  future review excluded, wrong problem included, duplicate prevention,
+  category balance with review/wrong, mastered wrong excluded,
+  null/empty/stale fallback regression.
+- `docs/TASKS.md` — marked v0.10.0c delivered, next task → v0.10.0d.
+- `src/lib/spaced-review.ts` — not modified.
+
+## Algorithm Summary
+
+`getPriorityProblems(progress, candidates, today)`:
+1. Scan `progress.reviewSchedule` for entries where `nextReviewAt <= today`
+   and the problem ID exists in candidates; pick up to 2.
+2. Scan `progress.wrongProblems` for non-mastered entries not already in
+   review slots; pick 1.
+3. Priority selections count toward category max-3 caps.
+4. Remaining slots filled by v0.10.0b category-balanced round-robin.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 340 passed (21 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | 6 passed (3.5s) |
+
+## Branch
+
+- `feat/v0.10.0c-spaced-review-priority` → PR #?
+
+---
+
+# Next Task: v0.10.0d — Multi-Step Awareness and Safe Exposure
 
 ## Goal
 
-Incorporate `reviewSchedule` and `wrongProblems` into daily selection so
-problems due for review and previously failed problems are prioritized.
+Ensure multi-step problems are not served to children who have not yet
+completed enough single-step content in related categories.
 
 ## Scope
 
-- `src/lib/practice.ts` — add review-priority logic; dedicate 1–2 daily
-  slots to due reviews from `reviewSchedule`, 1 slot to a previously
-  wrong problem.
-- New unit tests for review priority, wrong-problem rotation, empty
-  review schedule fallback.
-- `docs/TASKS.md` — mark v0.10.0c delivered, set next to v0.10.0d.
+- `src/lib/practice.ts` — add multi-step gating to selection algorithm.
+- New unit tests for multi-step eligibility, fallback behavior.
+- `docs/TASKS.md` — mark v0.10.0d delivered, set next task.
 
 ## Acceptance Criteria
 
-- If `reviewSchedule` contains problems due today, at least 1 is included.
-- If `wrongProblems` is non-empty, at least 1 wrong problem is included
-  (unless all are already in today's review slots).
-- Category balance and level clamp from v0.10.0b are preserved.
-- Empty review/wrong state falls back to v0.10.0b behavior.
-- All existing tests pass; new tests cover review logic.
+- Multi-step problems are excluded unless the child has completed at
+  least one single-step problem in the same category AND their max level
+  in that category is within 1 of the multi-step problem's level.
+- Eligibility unblocks naturally as the child progresses through
+  single-step content.
+- Category balance, level clamp, and review/wrong priority from
+  v0.10.0b/c are preserved.
+- All existing tests pass.
 - E2E practice smoke test passes.
 
 ## Non-goals
 
-- No changes to the review schedule algorithm itself.
-- No UI for reviewing due problems differently from new problems.
-- No schema changes.
-- No problem content changes.
+- No changes to `ProblemStep` schema.
+- No new multi-step content.
+- No UI indication that a problem is multi-step vs. single-step.
+- No schema or data changes.
 
 ---
 
@@ -1823,8 +1865,8 @@ problems due for review and previously failed problems are prioritized.
 
 - v0.10.0a: next phase plan (completed, PR #116 / issue #115)
 - v0.10.0b: category-balanced selection with basic level clamping (completed, PR #118)
-- v0.10.0c: spaced review integration
-- v0.10.0d: multi-step awareness and safe exposure
+- v0.10.0c: spaced review integration (completed)
+- v0.10.0d: multi-step awareness and safe exposure (next)
 
 ---
 
