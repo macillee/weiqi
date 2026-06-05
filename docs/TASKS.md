@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.11.0c CI Docker build verification + deployment docs refresh delivered. Next: v0.11.0d stabilization / release notes.
+v0.11 deployment hardening series complete. Next: v0.12.0a next phase planning.
 
 Current strategy:
 
@@ -45,7 +45,8 @@ Current strategy:
   31. v0.11.0a next phase plan completed — primary direction: Deployment / Supabase environment hardening
   32. v0.11.0b Docker Supabase env passthrough completed — Docker Compose passes optional Supabase vars, .env.example expanded
   33. v0.11.0c CI Docker build verification + deployment docs refresh completed — CI catches Docker build regressions, deployment doc current
-  34. Avoid AI/payment/teacher/leaderboard scope creep
+  34. v0.11.0d stabilization completed — release notes and QA checklist published
+  35. Avoid AI/payment/teacher/leaderboard scope creep
 ```
 
 ---
@@ -1983,26 +1984,57 @@ schema, SQL/Supabase runtime behavior changes were included.
 
 ---
 
-# Next Task: v0.11.0d — Stabilization / Release Notes
+# ✅ v0.11.0d — Stabilization / Release Notes — COMPLETED (2026-06-05)
+
+## Deliverables
+
+- `docs/RELEASE_NOTES_v0.11.md` — v0.11 release notes covering direction
+  and rationale, per-slice summary (PR #126/#128/#130), Docker/env
+  behavior table, CI pipeline table, compatibility, validation status,
+  known limitations, and next-phase recommendation.
+- `docs/QA_CHECKLIST_v0.11.md` — manual QA checklist covering environment
+  setup, static validation, E2E validation, Docker validation, Supabase
+  env behavior, core app regression smoke, CI expectations, deployment
+  documentation, E2E regression, content/wiring regression, v0.10 skill
+  filtering regression, v0.6 polish regression, sign-off template, and
+  completion criteria.
+- `docs/TASKS.md` — marked v0.11.0d delivered, v0.11 series complete,
+  next task → v0.12.0a next phase planning.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run build` | Compiled successfully |
+| `npm run test` | 351 passed (21 files) |
+
+Docs-only change. No code, test, config, package, lockfile, schema,
+problem data, runtime, Supabase, or SQL behavior was modified.
+
+## Branch
+
+- `docs/v0.11.0d-stabilization-release-notes` → PR #TBD
+
+---
+
+# Next Task: v0.12.0a — Next Phase Planning
 
 ## Goal
 
-Stabilize the v0.11 deployment hardening series and publish release notes
-plus QA checklist.
+Plan the next product phase after v0.11 deployment hardening. Evaluate
+candidate directions and select one with slice definitions.
 
 ## Scope
 
-- `docs/RELEASE_NOTES_v0.11.md` — summary of v0.11.0a/b/c deliverables.
-- `docs/QA_CHECKLIST_v0.11.md` — manual QA checklist for Docker
-  deployment, Supabase env passthrough, CI Docker build, and regression.
-- `docs/TASKS.md` — mark v0.11 complete, set next phase.
+- `docs/NEXT_PHASE_PLAN_v0.12.md` — planning document.
+- `docs/TASKS.md` — mark v0.12.0a delivered, set next task.
 
 ## Acceptance Criteria
 
-- Release notes document all v0.11 slices with validation results.
-- QA checklist covers Docker deployment, Supabase env, CI Docker step,
-  and regression.
-- `npm run build` and `npm run test` pass.
+- Planning doc evaluates all relevant candidate directions.
+- One direction selected with rationale.
+- Implementation slices defined with scope and non-goals.
+- No implementation work.
 
 ## Non-goals
 
@@ -2092,7 +2124,7 @@ plus QA checklist.
 - v0.11.0a: next phase plan (completed)
 - v0.11.0b: Docker compose Supabase env passthrough + .env.example guidance (completed)
 - v0.11.0c: CI Docker build verification + deployment documentation refresh (completed)
-- v0.11.0d: stabilization / release notes
+- v0.11.0d: stabilization / release notes (completed)
 
 ---
 
