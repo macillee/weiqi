@@ -37,6 +37,23 @@ function deriveMaxLevel(
   return Math.max(...done.map((p) => p.level));
 }
 
+function isFallbackProgress(
+  progress: StudentProgress | null | undefined,
+): boolean {
+  if (progress == null) return true;
+  const relevantIds = [
+    ...(progress.completedProblemIds ?? []),
+    ...(progress.masteredProblemIds ?? []),
+  ];
+  return relevantIds.length === 0;
+}
+
+function pickRandom(available: Problem[]): Problem[] {
+  const shuffled = [...available];
+  shuffle(shuffled);
+  return shuffled.slice(0, DAILY_PRACTICE_COUNT);
+}
+
 export function selectDailyProblems(
   progress?: StudentProgress | null,
 ): Problem[] {
@@ -46,6 +63,10 @@ export function selectDailyProblems(
 
   if (available.length <= DAILY_PRACTICE_COUNT) {
     return available;
+  }
+
+  if (isFallbackProgress(progress)) {
+    return pickRandom(available);
   }
 
   const childMax = deriveMaxLevel(progress, available);

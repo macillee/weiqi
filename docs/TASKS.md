@@ -1702,7 +1702,7 @@ CI hard gates.
 
 ## Branch
 
-- `feat/v0.10.0b-category-balanced-selection`
+- `feat/v0.10.0b-category-balanced-selection` → PR #118
 
 ---
 
@@ -1807,12 +1807,12 @@ problems due for review and previously failed problems are prioritized.
 - v0.9.0a: next phase plan (completed, PR #106 / issue #105)
 - v0.9.0b: GitHub Actions CI + Playwright setup (completed, PR #110 / issue #107)
 - v0.9.0c: E2E smoke tests for core flows (completed, PR #112 / issue #111)
-- v0.9.0d: release QA automation + stabilization (completed, PR TBD / issue #113)
+- v0.9.0d: release QA automation + stabilization (completed, PR #114 / issue #113)
 
 ## v0.10.0 — Daily-Practice Skill Filtering / Level-Aware Selection
 
-- v0.10.0a: next phase plan (completed, PR TBD / issue #115)
-- v0.10.0b: category-balanced selection with basic level clamping (completed)
+- v0.10.0a: next phase plan (completed, PR #116 / issue #115)
+- v0.10.0b: category-balanced selection with basic level clamping (completed, PR #118)
 - v0.10.0c: spaced review integration
 - v0.10.0d: multi-step awareness and safe exposure
 

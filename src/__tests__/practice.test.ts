@@ -102,6 +102,19 @@ describe("selectDailyProblems", () => {
     expect(selected).toHaveLength(10);
   });
 
+  it("null progress does not enforce category cap (random fallback)", () => {
+    const problems = Array.from({ length: 15 }, (_, i) =>
+      makeProblem(`SINGLE-CAT-${i}`, { category: "life_death", level: 1 }),
+    );
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+    const selected = selectDailyProblems(null);
+    expect(selected).toHaveLength(10);
+    expect(selected.every((p) => p.category === "life_death")).toBe(true);
+  });
+
   it("limits progress-based level clamp when child has low-level completions", () => {
     const problems = [
       makeProblem("L1-A", { level: 1, category: "capture" }),
@@ -209,9 +222,9 @@ describe("selectDailyProblems", () => {
     );
 
     const progress: StudentProgress = {
-      stars: 0,
-      streakDays: 0,
-      completedProblemIds: [],
+      stars: 5,
+      streakDays: 1,
+      completedProblemIds: ["P-001"],
       masteredProblemIds: [],
       wrongProblems: {},
       attempts: [],
