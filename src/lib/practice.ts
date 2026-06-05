@@ -56,6 +56,48 @@ function pickRandom(available: Problem[]): Problem[] {
   return shuffled.slice(0, DAILY_PRACTICE_COUNT);
 }
 
+function isMultiStepProblem(problem: Problem): boolean {
+  return Boolean(
+    (problem.totalSteps && problem.totalSteps > 1) ||
+    (problem.steps && problem.steps.length > 0)
+  );
+}
+
+function getCategorySingleStepMaxLevel(
+  progress: StudentProgress,
+  category: string,
+  problems: Problem[],
+): number {
+  const relevantIds = new Set([
+    ...(progress.completedProblemIds ?? []),
+    ...(progress.masteredProblemIds ?? []),
+  ]);
+  
+  const completedInCategory = problems.filter(
+    (p) => relevantIds.has(p.id) && p.category === category && !isMultiStepProblem(p)
+  );
+  
+  if (completedInCategory.length === 0) return 0;
+  return Math.max(...completedInCategory.map((p) => p.level));
+}
+
+function isMultiStepEligible(
+  problem: Problem,
+  progress: StudentProgress,
+  problems: Problem[],
+): boolean {
+  if (!isMultiStepProblem(problem)) return true;
+  
+  if (problem.category === "mixed") return true;
+  
+  const categoryMaxLevel = getCategorySingleStepMaxLevel(progress, problem.category, problems);
+  
+  if (categoryMaxLevel === 0) return false;
+  
+  const levelDiff = problem.level - categoryMaxLevel;
+  return levelDiff <= 1;
+}
+
 function todayString(): string {
   const d = new Date();
   const y = d.getFullYear();
@@ -115,6 +157,12 @@ export function selectDailyProblems(
   const available = allProblems.filter((p) => allIds.includes(p.id));
 
   if (available.length <= DAILY_PRACTICE_COUNT) {
+    if (hasUsableProgress(progress, available)) {
+      const usableProgress = progress as StudentProgress;
+      return available.filter((p) =>
+        isMultiStepEligible(p, usableProgress, allProblems)
+      );
+    }
     return available;
   }
 
@@ -126,9 +174,15 @@ export function selectDailyProblems(
   const childMax = deriveMaxLevel(usableProgress, available);
   const maxAllowed = Math.max(childMax, 2);
   const levelFiltered = available.filter((p) => p.level <= maxAllowed);
-  const candidates = levelFiltered.length >= DAILY_PRACTICE_COUNT
+  const baseCandidates = levelFiltered.length >= DAILY_PRACTICE_COUNT
     ? levelFiltered
     : available;
+
+  const eligibleCandidates = baseCandidates.filter((p) =>
+    isMultiStepEligible(p, usableProgress, allProblems)
+  );
+
+  const candidates = eligibleCandidates;
 
   const now = today ?? todayString();
   const { problems: priority, usedCats } = getPriorityProblems(
