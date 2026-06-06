@@ -5,7 +5,7 @@ test.describe("Demo page smoke", () => {
     await page.goto("/demo");
 
     await expect(page.locator("text=返回")).toBeVisible();
-    await expect(page.locator("text=第 1 / 77 题")).toBeVisible();
+    await expect(page.locator("text=第 1 / 87 题")).toBeVisible();
 
     await expect(page.getByText("CAP-001")).toBeVisible();
     await expect(page.getByRole("img", { name: "9x9 Go board" })).toBeVisible();

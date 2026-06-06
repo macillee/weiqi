@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.12.0d local rule-assisted coach delivered — short Chinese feedback after wrong answers, fully offline, deterministic. Next: v0.12.0e intermediate content expansion or AI-assisted problem pipeline.
+v0.12.0e intermediate content expansion delivered — 10 new human-reviewed intermediate problems (levels 3–5) across all categories, plus content pipeline document defining safe local-first authoring workflow. Next: v0.12.0f — v0.12 Stabilization / Release Notes / QA Checklist.
 
 Current strategy:
 
@@ -39,16 +39,16 @@ Current strategy:
 25. v0.9 stabilization completed — release notes and QA checklist published
 26. v0.10.0a next phase plan completed — primary direction: daily-practice skill filtering / level-aware selection
 27. v0.10.0b category-balanced selection with basic level clamping completed — 10 problems, max 3 per category, level clamp guided by progress
-  28. v0.10.0c spaced review integration completed — due reviews + wrong problems prioritized in selection
-  29. v0.10.0d multi-step awareness completed — multi-step problems gated by single-step eligibility
-  30. v0.10 stabilization completed — release notes and QA checklist published
-  31. v0.11.0a next phase plan completed — primary direction: Deployment / Supabase environment hardening
-  32. v0.11.0b Docker Supabase env passthrough completed — Docker Compose passes optional Supabase vars, .env.example expanded
-  33. v0.11.0c CI Docker build verification + deployment docs refresh completed — CI catches Docker build regressions, deployment doc current
-  34. v0.11.0d stabilization completed — release notes and QA checklist published
-  35. v0.12.0a next phase plan completed — primary direction: AI-first intermediate progression / AI coach & sparring
-  36. v0.12.0b AI feasibility spike completed — recommended: local-first Go AI / rule-assisted coach with optional local LLM
-  37. v0.12.0c level calibration completed — intermediate learners skip introductory content
+   28. v0.10.0c spaced review integration completed — due reviews + wrong problems prioritized in selection
+   29. v0.10.0d multi-step awareness completed — multi-step problems gated by single-step eligibility
+   30. v0.10 stabilization completed — release notes and QA checklist published
+   31. v0.11.0a next phase plan completed — primary direction: Deployment / Supabase environment hardening
+   32. v0.11.0b Docker Supabase env passthrough completed — Docker Compose passes optional Supabase vars, .env.example expanded
+   33. v0.11.0c CI Docker build verification + deployment docs refresh completed — CI catches Docker build regressions, deployment doc current
+   34. v0.11.0d stabilization completed — release notes and QA checklist published
+   35. v0.12.0a next phase plan completed — primary direction: AI-first intermediate progression / AI coach & sparring
+   36. v0.12.0b AI feasibility spike completed — recommended: local-first Go AI / rule-assisted coach with optional local LLM
+   37. v0.12.0c level calibration completed — intermediate learners skip introductory content
 ```
 
 ---
