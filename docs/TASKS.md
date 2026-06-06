@@ -7,7 +7,8 @@
 
 # Current Phase
 
-v0.13.0b local engine adapter contract and sample config delivered — defines adapter interface, config shape, setup guide, and fallback behavior. Next: v0.13.0c — Implement Server-Only Engine Adapter with Timeout Fallback.
+v0.13.0b local engine adapter contract and sample config delivered — defines adapter interface, config shape, setup guide, and fallback behavior.
+v0.13.0c server-only engine adapter implementation delivered — `engine-config.ts` (env config reader), `engine-adapter.ts` (server-only adapter with timeout fallback), 20 tests. Next: v0.13.0d — Integrate Engine-Assisted Review Behind Feature Flag.
 
 Current strategy:
 
@@ -53,7 +54,8 @@ Current strategy:
    39. v0.12.0e intermediate content expansion completed — 10 new human-reviewed level 3-5 problems + pipeline doc (PR #142)
    40. v0.12 stabilization completed — release notes and QA checklist published (PR #143)
    41. v0.13.0a local engine feasibility plan completed — evaluates KataGo integration for local move analysis without network dependency (PR #145)
-   42. v0.13.0b local engine adapter contract and sample config completed — adapter interface, config shape, setup guide, and fallback behavior defined (PR #147)
+    42. v0.13.0b local engine adapter contract and sample config completed — adapter interface, config shape, setup guide, and fallback behavior defined (PR #147)
+    43. v0.13.0c server-only engine adapter implementation completed — engine-config.ts, engine-adapter.ts, 20 tests, timeout fallback, injectable execFile/existsSync (TBD PR)
 ```
 
 ---
@@ -2253,7 +2255,54 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 ---
 
-# Future Roadmap
+# Delivered: v0.13.0c — Server-Only Local Engine Adapter with Timeout Fallback
+
+## What was done
+
+- `src/lib/engine-config.ts` — typed config reader for `KATAGO_*` env vars:
+  - `parseEngineConfig()` reads `KATAGO_ENABLED`, `BIN_PATH`, `MODEL_PATH`, `CONFIG_PATH`, `VISITS`, `TIMEOUT_MS` with safe defaults (300 visits, 5000ms timeout)
+  - `checkEngineAvailability(config, existsSync?)` validates enabled state, path existence, and file accessibility; injectable `existsSync` for testability
+  - Invalid visits/timeout values clamped to defaults; `configPath` optional
+- `src/lib/engine-adapter.ts` — server-only adapter (`import "server-only"`):
+  - `getEngineAvailability(config, existsSync?)` — availability check delegating to config module
+  - `buildAnalysisArgs(config, input)` — pure function building KataGo analysis command args (board size, initial stones, playout visits, model path, config path)
+  - `parseAnalysisOutput(raw)` — parses KataGo JSONL analysis output into typed `MoveInfo[]`
+  - `determineConfidence(topMoves)` — heuristic (low < 50 visits, medium 50–199, high ≥ 200)
+  - `analyzeWrongMove(input, config, execFileFn?, existsSync?)` — main analysis entry point: checks availability, runs subprocess with configurable timeout via injected `execFileFn`, parses output, returns typed `AnalysisResult`
+  - `defaultExecFile(command, args, options)` — real `child_process.execFile` wrapper with promise + timeout kill; never called in tests
+  - Types: `EngineReviewInput`, `MoveInfo`, `EngineReviewSignal`, `EngineAvailability`, `AnalysisResult`
+- `src/__mocks__/server-only.ts` — vitest mock for `server-only` module (build-time marker unavailable in test environment)
+- `src/types/server-only.d.ts` — ambient module declaration for TypeScript
+- `vitest.config.ts` — added resolve alias for `server-only`
+- `vitest.setup.ts` — added `vi.mock("server-only")`
+- `src/__tests__/engine-adapter.test.ts` — 20 tests:
+  - `engine-config`: env parsing (defaults, all vars, invalid clamps), availability checks (disabled, missing-binary, missing-model)
+  - `engine-adapter`: `getEngineAvailability`, `buildAnalysisArgs` (empty board, initial stones), `analyzeWrongMove` (unavailable paths, success with parsed signal, confidence levels, timeout error, unparseable output, null ranks, timeout passthrough)
+
+## Explicitly NOT delivered
+
+- No UI integration (v0.13.0d).
+- No KataGo binary, model file, or config committed to repo.
+- No `package.json` / `package-lock.json` changes.
+- No problem data, schema, Supabase, or SQL changes.
+- No Docker or CI changes.
+- No external dependencies added.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Part of `next build` — passes |
+| `npm run test` | 436 passed (23 files) |
+| `npm run build` | Compiled successfully |
+
+## Branch
+
+- `feat/v0.13.0c-server-engine-adapter`
+- PR: TBD (closes #149)
+
+---
 
 ## v0.2.3 — Server Progress
 
@@ -2349,7 +2398,7 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 - v0.13.0a: local engine feasibility and KataGo prototype plan (completed)
 - v0.13.0b: local engine adapter contract / sample config (completed)
-- v0.13.0c: implement server-only engine adapter with timeout fallback (next)
+- v0.13.0c: implement server-only engine adapter with timeout fallback (completed)
 - v0.13.0d: integrate engine-assisted review behind feature flag
 - v0.13.0e: QA / stabilization / release notes
 
