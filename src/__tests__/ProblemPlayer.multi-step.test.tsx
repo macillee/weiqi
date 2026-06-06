@@ -91,6 +91,8 @@ vi.mock("@/components/problem/FeedbackDialog", () => ({
     onNext,
     onTryAgain,
     showAnswer,
+    onShowCoach,
+    coachMessage,
   }: {
     isCorrect: boolean;
     successMessage: string;
@@ -99,14 +101,26 @@ vi.mock("@/components/problem/FeedbackDialog", () => ({
     onNext?: () => void;
     onTryAgain?: () => void;
     showAnswer: boolean;
+    onShowCoach?: () => void;
+    coachMessage?: string | null;
   }) => (
     <div
       data-testid="feedback-dialog"
       data-correct={isCorrect}
       data-show-answer={showAnswer}
+      data-coach-message={coachMessage ?? ""}
+      data-has-on-show-coach={onShowCoach ? "true" : "false"}
     >
       <p data-testid="feedback-message">{isCorrect ? successMessage : failureMessage}</p>
       {explanation && <p data-testid="feedback-explanation">{explanation}</p>}
+      {coachMessage && (
+        <p data-testid="coach-message">{coachMessage}</p>
+      )}
+      {onShowCoach && !coachMessage && (
+        <button data-testid="show-coach-btn" onClick={onShowCoach}>
+          请老师帮忙
+        </button>
+      )}
       {isCorrect && onNext && (
         <button data-testid="next-btn" onClick={onNext}>
           {showAnswer ? "下一题" : "下一步"}
@@ -521,6 +535,79 @@ describe("ProblemPlayer - board state updates between steps", () => {
 
     const step2AddedStone = container?.querySelector('[data-testid="point-4-3"]');
     expect(step2AddedStone?.textContent).toContain("black");
+  });
+});
+
+describe("ProblemPlayer - coach state resets on problem change", () => {
+  it("clears coach message when switching to a new single-step problem", () => {
+    const problem1 = createSingleStepProblem();
+    const problem2: Problem = {
+      ...problem1,
+      id: "SINGLE-002",
+      answers: [{ x: 1, y: 1 }],
+    };
+
+    renderComponent(<ProblemPlayer problem={problem1} />);
+
+    // Make a wrong move
+    click("point-0-0");
+    expect(container?.querySelector('[data-testid="show-coach-btn"]')).not.toBeNull();
+
+    // Show coach message
+    click("show-coach-btn");
+    const fb1 = container?.querySelector('[data-testid="feedback-dialog"]');
+    expect(fb1?.getAttribute("data-coach-message")).not.toBe("");
+    expect(container?.querySelector('[data-testid="show-coach-btn"]')).toBeNull();
+
+    // Switch to problem2
+    act(() => root.render(<ProblemPlayer problem={problem2} />));
+
+    // Make a wrong move on problem2
+    click("point-2-2");
+    const fb2 = container?.querySelector('[data-testid="feedback-dialog"]');
+    expect(fb2?.getAttribute("data-coach-message")).toBe("");
+    expect(container?.querySelector('[data-testid="show-coach-btn"]')).not.toBeNull();
+  });
+
+  it("clears coach message when advancing to next step in multi-step problem", () => {
+    renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
+
+    // Step 1: wrong move + show coach
+    click("point-0-0");
+    click("show-coach-btn");
+    const fb1 = container?.querySelector('[data-testid="feedback-dialog"]');
+    expect(fb1?.getAttribute("data-coach-message")).not.toBe("");
+    expect(container?.querySelector('[data-testid="show-coach-btn"]')).toBeNull();
+
+    // Try again then answer step 1 correctly and advance to step 2
+    click("try-again-btn");
+    click("point-4-3");
+    click("next-btn");
+    expect(hasText("第 2 步 / 共 2 步")).toBe(true);
+
+    // Step 2: wrong move - coach should be cleared
+    click("point-0-0");
+    const fb2 = container?.querySelector('[data-testid="feedback-dialog"]');
+    expect(fb2?.getAttribute("data-coach-message")).toBe("");
+    expect(container?.querySelector('[data-testid="show-coach-btn"]')).not.toBeNull();
+  });
+
+  it("coach message is cleared on try-again", () => {
+    renderComponent(<ProblemPlayer problem={createSingleStepProblem()} />);
+
+    // Wrong move + show coach
+    click("point-0-0");
+    click("show-coach-btn");
+    expect(container?.querySelector('[data-testid="coach-message"]')).not.toBeNull();
+    expect(container?.querySelector('[data-testid="show-coach-btn"]')).toBeNull();
+
+    // Try again
+    click("try-again-btn");
+
+    // Wrong again - coach should be cleared and button re-shown
+    click("point-0-0");
+    expect(container?.querySelector('[data-testid="coach-message"]')).toBeNull();
+    expect(container?.querySelector('[data-testid="show-coach-btn"]')).not.toBeNull();
   });
 });
 

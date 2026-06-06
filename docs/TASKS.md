@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.12.0c level calibration delivered — intermediate learners skip introductory content in daily practice. Next: v0.12.0d bounded local AI review / rule-assisted coach prototype.
+v0.12.0d local rule-assisted coach delivered — short Chinese feedback after wrong answers, fully offline, deterministic. Next: v0.12.0e intermediate content expansion or AI-assisted problem pipeline.
 
 Current strategy:
 
@@ -2135,26 +2135,62 @@ problem data, runtime, Supabase, or SQL behavior was modified.
 
 ---
 
-# Next Task: v0.12.0d — Bounded Local AI Review / Rule-Assisted Coach Prototype
+# Delivered: v0.12.0d — Bounded Local Rule-Assisted Review Coach
 
-## Goal
+## Changed Files
 
-Implement a local-first, rule/template-based Go review coach that
-provides basic move-quality feedback without requiring external AI
-services.
+- `src/lib/ai-review.ts` — new local rule/template coach module with
+  `getLocalReview()` and `validateReviewOutput()` functions
+- `src/components/problem/FeedbackDialog.tsx` — added `onShowCoach` and
+  `coachMessage` props; renders `请老师帮忙` button and coach message
+- `src/components/problem/ProblemPlayer.tsx` — integrated coach: tracks
+  wrong move, calls `getLocalReview` on button click, passes result to
+  FeedbackDialog, resets on try-again
+- `src/__tests__/ai-review.test.ts` — 51 tests: category-specific feedback
+  for all 7 categories, wrongMoves match, near-correct detection,
+  hint-used path, missing/malformed input, determinism, validation
+  (length, source, banned phrases), all-category validation sweep
+- `docs/TASKS.md` — marked v0.12.0d delivered, next task → v0.12.0e
 
-## Scope
+## Coach Behavior
 
-- Rule/template coach baseline first
-- Optional local KataGo path later or behind configuration
-- Optional local LLM later
-- External LLM only opt-in, not default
+- `getLocalReview(input)`: deterministic, local, offline
+- Uses problem `wrongMoves` entry if attempted move matches
+- Falls back to category-specific template messages, selected by input hash
+- Detects near-correct moves (within 1 intersection) → "差一点点"
+- Provides hint-used message variant when `usedHint === true`
+- All output: Chinese, 1–3 sentences, ≤150 characters, one key concept
+- No rank claims, no harsh criticism, no free-form chat, no network calls
 
-## Non-goals
+## Practice UI Integration
 
-- No external AI API usage by default.
-- No changes to problem data or schemas.
-- No new pages or navigation flows beyond practice integration.
+- After a wrong answer, FeedbackDialog shows `请老师帮忙` button
+- On click, calls `getLocalReview` with the wrong move coordinates
+- Coach message displayed in amber-bordered box
+- Button hidden once coach message shown; state resets on try-again
+- No disruption to existing hint, answer, review, or progress flow
+
+## Safety
+
+- All coach output validated by `validateReviewOutput()` (≤150 chars,
+  source === "rule-template", no banned phrases)
+- No external network calls, no API keys, no login required
+- No KataGo, Ollama, or LLM integration
+- No data saved or transmitted
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 413 passed (22 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | 6 passed (3.7s) |
+
+## Branch
+
+- `feat/v0.12.0d-local-rule-coach` → PR #140
 
 ---
 
@@ -2246,8 +2282,8 @@ services.
 - v0.12.0a: next phase plan (completed)
 - v0.12.0b: AI feasibility spike / architecture decision (completed)
 - v0.12.0c: level calibration / intermediate challenge entry (completed)
-- v0.12.0d: bounded local AI review / rule-assisted coach prototype (next)
-- v0.12.0e: intermediate content expansion or AI-assisted problem pipeline
+- v0.12.0d: bounded local AI review / rule-assisted coach prototype (completed)
+- v0.12.0e: intermediate content expansion or AI-assisted problem pipeline (next)
 - v0.12.0f: stabilization / release notes
 
 ---
