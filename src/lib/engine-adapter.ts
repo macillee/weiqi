@@ -84,7 +84,6 @@ function extractRankFromMoves(
 
 function parseAnalysisOutput(raw: string): {
   moveInfos: MoveInfo[];
-  error?: string;
 } | null {
   try {
     const lines = raw.trim().split("\n");
@@ -120,11 +119,15 @@ function determineConfidence(
   return "low";
 }
 
-export type AnalysisResult =
-  | { kind: "success"; signal: EngineReviewSignal }
-  | { kind: "unavailable"; reason?: EngineAvailabilityReason }
-  | { kind: "error"; error: string };
-
+/**
+ * Runs KataGo analysis on a wrong-move problem and returns an
+ * EngineReviewSignal on success, or null for any expected failure:
+ * disabled, missing binary/model, timeout, non-zero exit,
+ * malformed output, or any other error.
+ *
+ * Callers should treat null as "engine unavailable" and fall back
+ * to the rule/template coach without disrupting the learning flow.
+ */
 export async function analyzeWrongMove(
   input: EngineReviewInput,
   config: EngineConfig,
@@ -134,14 +137,13 @@ export async function analyzeWrongMove(
     options: { timeout: number },
   ) => Promise<{ stdout: string; stderr: string }>,
   existsSync?: (path: string) => boolean,
-): Promise<AnalysisResult> {
+): Promise<EngineReviewSignal | null> {
   const availability = getEngineAvailability(config, existsSync);
   if (!availability.available) {
-    return { kind: "unavailable", reason: availability.reason };
+    return null;
   }
 
   const args = buildAnalysisArgs(config, input);
-
   const execFile = execFileFn || defaultExecFile;
 
   try {
@@ -151,7 +153,7 @@ export async function analyzeWrongMove(
 
     const parsed = parseAnalysisOutput(result.stdout);
     if (!parsed) {
-      return { kind: "error", error: "failed to parse engine output" };
+      return null;
     }
 
     const authoredAnswerRank = extractRankFromMoves(parsed.moveInfos, input.authoredAnswer);
@@ -168,10 +170,9 @@ export async function analyzeWrongMove(
       warnings: [],
     };
 
-    return { kind: "success", signal };
-  } catch (err: unknown) {
-    const message = err instanceof Error ? err.message : String(err);
-    return { kind: "error", error: message };
+    return signal;
+  } catch {
+    return null;
   }
 }
 

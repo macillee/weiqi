@@ -121,6 +121,51 @@ describe("engine-config", () => {
       expect(result.available).toBe(false);
       expect(result.reason).toBe("missing-model");
     });
+
+    it("returns missing-binary when existsSync returns false for binPath", () => {
+      const falseExists = () => false;
+      const result = checkEngineAvailability({
+        enabled: true,
+        binPath: "/usr/local/bin/katago",
+        modelPath: "/models/kata1.bin.gz",
+        configPath: undefined,
+        visits: 300,
+        timeoutMs: 5000,
+      }, falseExists);
+      expect(result.available).toBe(false);
+      expect(result.reason).toBe("missing-binary");
+    });
+
+    it("returns missing-model when existsSync returns false for modelPath", () => {
+      let callCount = 0;
+      const falseOnSecond = () => {
+        callCount++;
+        return callCount < 2;
+      };
+      const result = checkEngineAvailability({
+        enabled: true,
+        binPath: "/usr/local/bin/katago",
+        modelPath: "/models/kata1.bin.gz",
+        configPath: undefined,
+        visits: 300,
+        timeoutMs: 5000,
+      }, falseOnSecond);
+      expect(result.available).toBe(false);
+      expect(result.reason).toBe("missing-model");
+    });
+
+    it("returns available when existsSync returns true", () => {
+      const result = checkEngineAvailability({
+        enabled: true,
+        binPath: "/usr/local/bin/katago",
+        modelPath: "/models/kata1.bin.gz",
+        configPath: undefined,
+        visits: 300,
+        timeoutMs: 5000,
+      }, mockExistsSync);
+      expect(result.available).toBe(true);
+      expect(result.reason).toBeUndefined();
+    });
   });
 });
 
@@ -209,23 +254,31 @@ describe("engine-adapter", () => {
       timeoutMs: 5000,
     };
 
-    it("returns unavailable when engine not enabled", async () => {
+    it("returns null when engine not enabled", async () => {
       const result = await analyzeWrongMove(
         makeReviewInput(),
         { ...mockConfig, enabled: false },
       );
-      expect(result.kind).toBe("unavailable");
+      expect(result).toBeNull();
     });
 
-    it("returns unavailable when paths are empty", async () => {
+    it("returns null when paths are empty", async () => {
       const result = await analyzeWrongMove(
         makeReviewInput(),
         { ...mockConfig, binPath: "" },
       );
-      expect(result.kind).toBe("unavailable");
+      expect(result).toBeNull();
     });
 
-    it("returns success with parsed signal from engine output", async () => {
+    it("returns null when model path is empty", async () => {
+      const result = await analyzeWrongMove(
+        makeReviewInput(),
+        { ...mockConfig, modelPath: "" },
+      );
+      expect(result).toBeNull();
+    });
+
+    it("returns signal with parsed engine output", async () => {
       const mockStdout = JSON.stringify({
         moveInfos: [
           { move: [2, 3], visits: 150, scoreLead: 3.5, winrate: 0.85 },
@@ -243,20 +296,18 @@ describe("engine-adapter", () => {
         mockExistsSync,
       );
 
-      expect(result.kind).toBe("success");
-      if (result.kind === "success") {
-        expect(result.signal.source).toBe("katago");
-        expect(result.signal.topMoves).toHaveLength(3);
-        expect(result.signal.topMoves[0].x).toBe(2);
-        expect(result.signal.topMoves[0].y).toBe(3);
-        expect(result.signal.authoredAnswerRank).toBe(1);
-        expect(result.signal.attemptedMoveRank).toBe(2);
-        expect(result.signal.agreesWithAuthoredAnswer).toBe(true);
-        expect(result.signal.confidence).toBe("medium");
-      }
+      expect(result).not.toBeNull();
+      expect(result!.source).toBe("katago");
+      expect(result!.topMoves).toHaveLength(3);
+      expect(result!.topMoves[0].x).toBe(2);
+      expect(result!.topMoves[0].y).toBe(3);
+      expect(result!.authoredAnswerRank).toBe(1);
+      expect(result!.attemptedMoveRank).toBe(2);
+      expect(result!.agreesWithAuthoredAnswer).toBe(true);
+      expect(result!.confidence).toBe("medium");
     });
 
-    it("returns success with low confidence when visits are low", async () => {
+    it("returns low confidence when visits are low", async () => {
       const mockStdout = JSON.stringify({
         moveInfos: [{ move: [2, 3], visits: 10 }],
       });
@@ -270,13 +321,11 @@ describe("engine-adapter", () => {
         mockExistsSync,
       );
 
-      expect(result.kind).toBe("success");
-      if (result.kind === "success") {
-        expect(result.signal.confidence).toBe("low");
-      }
+      expect(result).not.toBeNull();
+      expect(result!.confidence).toBe("low");
     });
 
-    it("returns success with high confidence when visits are high", async () => {
+    it("returns high confidence when visits are high", async () => {
       const mockStdout = JSON.stringify({
         moveInfos: [{ move: [2, 3], visits: 250 }],
       });
@@ -290,13 +339,11 @@ describe("engine-adapter", () => {
         mockExistsSync,
       );
 
-      expect(result.kind).toBe("success");
-      if (result.kind === "success") {
-        expect(result.signal.confidence).toBe("high");
-      }
+      expect(result).not.toBeNull();
+      expect(result!.confidence).toBe("high");
     });
 
-    it("returns error when engine times out", async () => {
+    it("returns null when engine times out", async () => {
       const mockExecFile = vi.fn().mockRejectedValue(new Error("process timed out"));
 
       const result = await analyzeWrongMove(
@@ -306,13 +353,10 @@ describe("engine-adapter", () => {
         mockExistsSync,
       );
 
-      expect(result.kind).toBe("error");
-      if (result.kind === "error") {
-        expect(result.error).toContain("timed out");
-      }
+      expect(result).toBeNull();
     });
 
-    it("returns error when engine returns unparseable output", async () => {
+    it("returns null when engine returns unparseable output", async () => {
       const mockExecFile = vi.fn().mockResolvedValue({ stdout: "not json", stderr: "" });
 
       const result = await analyzeWrongMove(
@@ -322,7 +366,7 @@ describe("engine-adapter", () => {
         mockExistsSync,
       );
 
-      expect(result.kind).toBe("error");
+      expect(result).toBeNull();
     });
 
     it("returns null ranks when authoredAnswer/attemptedMove not in top moves", async () => {
@@ -339,12 +383,10 @@ describe("engine-adapter", () => {
         mockExistsSync,
       );
 
-      expect(result.kind).toBe("success");
-      if (result.kind === "success") {
-        expect(result.signal.authoredAnswerRank).toBeNull();
-        expect(result.signal.attemptedMoveRank).toBeNull();
-        expect(result.signal.agreesWithAuthoredAnswer).toBe(false);
-      }
+      expect(result).not.toBeNull();
+      expect(result!.authoredAnswerRank).toBeNull();
+      expect(result!.attemptedMoveRank).toBeNull();
+      expect(result!.agreesWithAuthoredAnswer).toBe(false);
     });
 
     it("passes timeout to execFile", async () => {
@@ -362,6 +404,19 @@ describe("engine-adapter", () => {
         expect.any(Array),
         expect.objectContaining({ timeout: 3000 }),
       );
+    });
+
+    it("returns null on execFile error (non-zero exit)", async () => {
+      const mockExecFile = vi.fn().mockRejectedValue(new Error("Command failed: exit code 1"));
+
+      const result = await analyzeWrongMove(
+        makeReviewInput(),
+        mockConfig,
+        mockExecFile,
+        mockExistsSync,
+      );
+
+      expect(result).toBeNull();
     });
   });
 });
