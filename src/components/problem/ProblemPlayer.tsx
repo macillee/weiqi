@@ -15,7 +15,8 @@ import {
 } from "@/lib/multi-step-problem";
 import { playCorrect, playWrong } from "@/lib/audioFeedback";
 import { getRevealedHintCoordinates } from "@/lib/hintCoordinate";
-import { getLocalReview, type LocalReviewResult } from "@/lib/ai-review";
+import { getLocalReview, type LocalReviewResult, type EngineReviewSignalLike } from "@/lib/ai-review";
+import { requestEngineReview } from "@/lib/review-actions";
 
 type ProblemPlayerProps = {
   problem: Problem;
@@ -246,16 +247,41 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     setCoachReview(null);
   }, [isMultiStep, currentStep]);
 
-  const handleShowCoach = useCallback(() => {
+  const handleShowCoach = useCallback(async () => {
     if (!currentWrongMove) return;
-    const result = getLocalReview({
+    const localResult = getLocalReview({
       problem,
       attemptedMove: currentWrongMove,
       correctMove: currentAnswers[0],
       usedHint: currentHintIndex > 0,
     });
-    setCoachReview(result);
-  }, [problem, currentWrongMove, currentAnswers, currentHintIndex]);
+    setCoachReview(localResult);
+
+    try {
+      const signal = await requestEngineReview({
+        boardSize: problem.boardSize,
+        initialStones: boardStones.map((s) => ({ x: s.x, y: s.y, color: s.color })),
+        attemptedMove: currentWrongMove,
+        authoredAnswer: currentAnswers[0],
+        category: problem.category,
+      });
+      if (signal) {
+        const engineSignal: EngineReviewSignalLike = {
+          confidence: signal.confidence,
+          agreesWithAuthoredAnswer: signal.agreesWithAuthoredAnswer,
+        };
+        const engineResult = getLocalReview({
+          problem,
+          attemptedMove: currentWrongMove,
+          correctMove: currentAnswers[0],
+          usedHint: currentHintIndex > 0,
+        }, engineSignal);
+        setCoachReview(engineResult);
+      }
+    } catch {
+      // Engine unavailable — local review already shown
+    }
+  }, [problem, currentWrongMove, currentAnswers, currentHintIndex, boardStones]);
 
   // Handle next step (for multi-step problems)
   const handleNextStep = useCallback(() => {
@@ -399,6 +425,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
           showAnswer={showAnswer}
           onShowCoach={currentWrongMove && !coachReview ? handleShowCoach : undefined}
           coachMessage={coachReview?.message ?? null}
+          coachSource={coachReview?.source ?? null}
         />
       )}
     </div>

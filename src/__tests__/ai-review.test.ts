@@ -227,7 +227,7 @@ describe("validateReviewOutput", () => {
     expect(validateReviewOutput(result)).toBe(false);
   });
 
-  it("rejects output with non-rule-template source", () => {
+  it("rejects output with invalid source", () => {
     const result = {
       message: "test",
       concept: "test",
@@ -280,6 +280,15 @@ describe("validateReviewOutput", () => {
     };
     expect(validateReviewOutput(result)).toBe(true);
   });
+
+  it("accepts engine-assisted source", () => {
+    const result = {
+      message: "测试消息",
+      concept: "要点",
+      source: "engine-assisted" as const,
+    };
+    expect(validateReviewOutput(result)).toBe(true);
+  });
 });
 
 describe("all category outputs pass validation", () => {
@@ -313,6 +322,69 @@ describe("all category outputs pass validation", () => {
         usedHint: true,
       };
       const result = getLocalReview(input);
+      expect(validateReviewOutput(result)).toBe(true);
+    });
+  }
+});
+
+describe("engine-assisted review", () => {
+  const confidentSignal = { confidence: "high" as const, agreesWithAuthoredAnswer: true };
+  const mediumSignal = { confidence: "medium" as const, agreesWithAuthoredAnswer: true };
+  const lowSignal = { confidence: "low" as const, agreesWithAuthoredAnswer: true };
+  const disagreeSignal = { confidence: "high" as const, agreesWithAuthoredAnswer: false };
+
+  it("returns engine-assisted source when confident signal agrees", () => {
+    const result = getLocalReview(baseInput, confidentSignal);
+    expect(result.source).toBe("engine-assisted");
+  });
+
+  it("returns engine-assisted source for medium confidence", () => {
+    const result = getLocalReview(baseInput, mediumSignal);
+    expect(result.source).toBe("engine-assisted");
+  });
+
+  it("falls back to rule-template when signal confidence is low", () => {
+    const result = getLocalReview(baseInput, lowSignal);
+    expect(result.source).toBe("rule-template");
+  });
+
+  it("falls back to rule-template when signal disagrees with authored answer", () => {
+    const result = getLocalReview(baseInput, disagreeSignal);
+    expect(result.source).toBe("rule-template");
+  });
+
+  it("returns non-empty message for engine-assisted result", () => {
+    const result = getLocalReview(baseInput, confidentSignal);
+    expect(result.message.length).toBeGreaterThan(0);
+  });
+
+  it("engine-assisted message does not exceed 150 characters", () => {
+    const result = getLocalReview(baseInput, confidentSignal);
+    expect(result.message.length).toBeLessThanOrEqual(150);
+  });
+
+  it("uses hint-used messages when engine signal and usedHint=true", () => {
+    const input = { ...baseInput, usedHint: true };
+    const result = getLocalReview(input, confidentSignal);
+    expect(result.source).toBe("engine-assisted");
+    expect(result.message).toContain("用了提示也没关系");
+  });
+
+  it("engine-assisted output passes validation", () => {
+    const result = getLocalReview(baseInput, confidentSignal);
+    expect(validateReviewOutput(result)).toBe(true);
+  });
+
+  for (const cat of ["capture", "escape", "connect_cut", "life_death", "opening", "endgame", "mixed"] as const) {
+    it(`${cat} with engine signal passes validation`, () => {
+      const input = {
+        problem: makeProblem({ id: `EA-${cat}`, category: cat }),
+        attemptedMove: { x: 0, y: 0 },
+        correctMove: { x: 3, y: 3 },
+        usedHint: false,
+      };
+      const result = getLocalReview(input, confidentSignal);
+      expect(result.source).toBe("engine-assisted");
       expect(validateReviewOutput(result)).toBe(true);
     });
   }
