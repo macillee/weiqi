@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.12.0e intermediate content expansion delivered — 10 new human-reviewed intermediate problems (levels 3–5) across all categories, plus content pipeline document defining safe local-first authoring workflow. Next: v0.12.0f — v0.12 Stabilization / Release Notes / QA Checklist.
+v0.12 series complete — release notes and QA checklist published. Next: v0.13.0a — Local Go Engine Feasibility / KataGo Prototype Plan.
 
 Current strategy:
 
@@ -49,6 +49,9 @@ Current strategy:
    35. v0.12.0a next phase plan completed — primary direction: AI-first intermediate progression / AI coach & sparring
    36. v0.12.0b AI feasibility spike completed — recommended: local-first Go AI / rule-assisted coach with optional local LLM
    37. v0.12.0c level calibration completed — intermediate learners skip introductory content
+   38. v0.12.0d local rule-assisted review coach completed — deterministic offline Chinese feedback after wrong answers (PR #140)
+   39. v0.12.0e intermediate content expansion completed — 10 new human-reviewed level 3-5 problems + pipeline doc (PR #142)
+   40. v0.12 stabilization completed — release notes and QA checklist published (PR #143)
 ```
 
 ---
@@ -2194,6 +2197,24 @@ problem data, runtime, Supabase, or SQL behavior was modified.
 
 ---
 
+# Delivered: v0.12.0f — Stabilization / Release Notes / QA Checklist
+
+## What was done
+
+- `docs/RELEASE_NOTES_v0.12.md` — release notes for v0.12 AI-first intermediate progression series.
+- `docs/QA_CHECKLIST_v0.12.md` — manual QA checklist covering level calibration, local review coach, intermediate content, safety/privacy, Docker, and core regression.
+- `docs/TASKS.md` — marked v0.12.0f delivered, v0.12 series complete, next task set to v0.13.0a.
+
+## Validation
+
+Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, package files, SQL/Supabase, or AI integration code was modified. Validation commands not re-run per docs-only rationale.
+
+## Branch
+
+- `docs/v0.12.0f-stabilization-release-notes` → PR #143
+
+---
+
 # Future Roadmap
 
 ## v0.2.3 — Server Progress
@@ -2277,14 +2298,18 @@ problem data, runtime, Supabase, or SQL behavior was modified.
 - v0.11.0c: CI Docker build verification + deployment documentation refresh (completed)
 - v0.11.0d: stabilization / release notes (completed)
 
-## v0.12.0 — AI-First Intermediate Progression
+## v0.12.0 — AI-First Intermediate Progression ✅ COMPLETE
 
 - v0.12.0a: next phase plan (completed)
 - v0.12.0b: AI feasibility spike / architecture decision (completed)
 - v0.12.0c: level calibration / intermediate challenge entry (completed)
 - v0.12.0d: bounded local AI review / rule-assisted coach prototype (completed)
-- v0.12.0e: intermediate content expansion or AI-assisted problem pipeline (next)
-- v0.12.0f: stabilization / release notes
+- v0.12.0e: intermediate content expansion and human-reviewed pipeline (completed)
+- v0.12.0f: stabilization / release notes (completed)
+
+## v0.13.0 — Local Go Engine Feasibility / KataGo Prototype Plan (next)
+
+- v0.13.0a: next phase plan — evaluate local KataGo integration for move analysis without network dependency
 
 ---
 
