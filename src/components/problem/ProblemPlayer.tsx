@@ -54,6 +54,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     setHintIndex(0);
     setResult(null);
     setLastWrongMove(null);
+    setCoachReview(null);
     
     // Reset multi-step state
     setCurrentStep(1);
@@ -264,6 +265,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     }
 
     // Advance to next step
+    setCoachReview(null);
     setCurrentStep((prev) => prev + 1);
   }, [isMultiStep, currentStep, totalSteps, onNext]);
 
