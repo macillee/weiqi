@@ -177,46 +177,40 @@ export interface LocalGoEngineAdapter {
 
 ### macOS / Linux
 
+1. Download the CPU/Eigen binary and matching network weights from the [official KataGo releases page](https://github.com/lightvector/KataGo/releases). Choose the archive matching your platform (e.g. `katago-vX.Y.Z-ubuntu-x64.zip`, `katago-vX.Y.Z-macos-x64.zip`).
+2. Extract and place the binary somewhere persistent, e.g. `~/.katago/katago`.
+3. Download the recommended `.bin.gz` network weights file from the same release.
+4. Generate a default analysis config:
+
 ```bash
-# 1. Download and extract KataGo
-curl -L -o katago.zip https://github.com/lightvector/KataGo/releases/download/v1.15.3/katago-v1.15.3-ubuntu-x64.zip
-unzip katago.zip -d ~/.katago/
-chmod +x ~/.katago/katago
-
-# 2. Download network weights
-curl -L -o ~/.katago/kata1-b18c384nbt-s8711467072-d4665523374.bin.gz \
-  https://github.com/lightvector/KataGo/releases/download/v1.15.3/kata1-b18c384nbt-s8711467072-d4665523374.bin.gz
-
-# 3. Generate default analysis config
-~/.katago/katago genconfig -model ~/.katago/kata1-b18c384nbt-s8711467072-d4665523374.bin.gz -output ~/.katago/analysis_config.cfg
+/path/to/katago genconfig -model /path/to/network.bin.gz -output /path/to/analysis_config.cfg
 ```
 
 ### Windows PowerShell
 
-```powershell
-# 1. Download and extract KataGo
-# Download from: https://github.com/lightvector/KataGo/releases
-# Extract katago.exe to C:\Users\<you>\katago\
+1. Download the CPU/Eigen binary from the [official KataGo releases page](https://github.com/lightvector/KataGo/releases). Extract `katago.exe` to a persistent folder.
+2. Download the recommended `.bin.gz` network weights file from the same release.
+3. Generate a default analysis config:
 
-# 2. Generate default analysis config (adjust paths)
-.\katago.exe genconfig -model .\kata1-b18c384nbt-s8711467072-d4665523374.bin.gz -output .\analysis_config.cfg
+```powershell
+.\katago.exe genconfig -model .\network.bin.gz -output .\analysis_config.cfg
 ```
 
 ### Verify installation
 
 ```bash
-~/.katago/katago version
+katago version
 ```
 
 ### Configure the app
 
-Add to `.env.local`:
+Add to `.env.local`, adjusting paths to match your setup:
 
 ```env
 KATAGO_ENABLED=true
-KATAGO_BIN_PATH=/usr/local/bin/katago
-KATAGO_MODEL_PATH=~/.katago/kata1-b18c384nbt-s8711467072-d4665523374.bin.gz
-KATAGO_CONFIG_PATH=~/.katago/analysis_config.cfg
+KATAGO_BIN_PATH=/path/to/katago
+KATAGO_MODEL_PATH=/path/to/network.bin.gz
+KATAGO_CONFIG_PATH=/path/to/analysis_config.cfg
 KATAGO_VISITS=300
 KATAGO_TIMEOUT_MS=5000
 ```
