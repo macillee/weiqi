@@ -32,7 +32,7 @@ All AI features are local-first and privacy-first. No external AI service is req
   - LD-011 (life_death, L3), LD-012 (life_death, L4)
   - OP-010 (opening, L4)
   - END-009 (endgame, L3), END-010 (endgame, L4)
-- Content library grew from 77 to 87 problems (72 single-step + 9 multi-step + 6 new single-step from v0.12.0e).
+- Content library grew from 77 to 87 problems after v0.12.0e added 10 new single-step level 3–5 problems.
 
 ---
 
@@ -49,7 +49,7 @@ All AI features are local-first and privacy-first. No external AI service is req
 
 ## Validation Baseline
 
-All checks pass for the v0.12.0f release commit:
+Latest v0.12.0e implementation baseline (PR #142) passed all checks:
 
 | Check | Result |
 |---|---|
