@@ -2190,7 +2190,7 @@ problem data, runtime, Supabase, or SQL behavior was modified.
 
 ## Branch
 
-- `feat/v0.12.0d-local-rule-coach` → PR #?
+- `feat/v0.12.0d-local-rule-coach` → PR #140
 
 ---
 
