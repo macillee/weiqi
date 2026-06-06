@@ -3,12 +3,14 @@
 import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
-import { selectDailyProblems, type PracticeSession, createPracticeSession, recordResult, advancePracticeSession, getPracticeSummary } from "@/lib/practice";
+import { selectDailyProblems, calibrateEntryLevel, type PracticeSession, createPracticeSession, recordResult, advancePracticeSession, getPracticeSummary } from "@/lib/practice";
 import {
   loadProgress,
   saveProgress,
   type StudentProgress,
 } from "@/lib/progress";
+import { loadProblems } from "@/lib/problems";
+import { getAllProblemIds } from "@/lib/chapters";
 import { updateReviewSchedule } from "@/lib/spaced-review";
 import {
   recordAttemptWithSync,
@@ -43,6 +45,10 @@ export default function PracticePage() {
     setSyncResult(null);
     setProgress(loadProgress());
   }
+
+  const calibration = progress
+    ? calibrateEntryLevel(progress, loadProblems().filter((p) => getAllProblemIds().includes(p.id)))
+    : { minLevel: 1, isCalibrated: false };
 
   const handleAttempt = useCallback(
     async (x: number, y: number, isCorrect: boolean, usedHint: boolean) => {
@@ -119,6 +125,11 @@ export default function PracticePage() {
           <p className="text-amber-700">
             每天练一练，棋力天天涨！
           </p>
+          {calibration.isCalibrated && (
+            <p className="text-sm text-green-600 font-medium mt-1">
+              中级练习
+            </p>
+          )}
         </div>
 
         <button
