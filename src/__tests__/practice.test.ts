@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   selectDailyProblems,
+  calibrateEntryLevel,
   createPracticeSession,
   recordResult,
   advancePracticeSession,
@@ -1178,6 +1179,257 @@ describe("selectDailyProblems", () => {
 
     const selected = selectDailyProblems(progress, "2020-06-05");
     expect(selected.every((p) => !p.id.startsWith("MULTI-ALL-"))).toBe(true);
+  });
+});
+
+describe("calibrateEntryLevel", () => {
+  it("returns minLevel 1 with null progress", () => {
+    const result = calibrateEntryLevel(null, []);
+    expect(result).toEqual({ minLevel: 1, isCalibrated: false });
+  });
+
+  it("returns minLevel 1 with empty mastered IDs", () => {
+    const progress: StudentProgress = {
+      stars: 0, streakDays: 0,
+      completedProblemIds: [], masteredProblemIds: [],
+      wrongProblems: {}, attempts: [], achievements: [],
+      reviewSchedule: {},
+    };
+    const result = calibrateEntryLevel(progress, []);
+    expect(result).toEqual({ minLevel: 1, isCalibrated: false });
+  });
+
+  it("returns minLevel 1 when mastered IDs not in available", () => {
+    const problems = Array.from({ length: 10 }, (_, i) =>
+      makeProblem(`P-${i}`, { level: 1 }),
+    );
+    const progress: StudentProgress = {
+      stars: 5, streakDays: 1,
+      completedProblemIds: [], masteredProblemIds: ["OLD-001"],
+      wrongProblems: {}, attempts: [], achievements: [],
+      reviewSchedule: {},
+    };
+    const result = calibrateEntryLevel(progress, problems);
+    expect(result).toEqual({ minLevel: 1, isCalibrated: false });
+  });
+
+  it("returns minLevel 2 when 5+ level-1 problems mastered", () => {
+    const problems = Array.from({ length: 10 }, (_, i) =>
+      makeProblem(`P-${i}`, { level: 1 }),
+    );
+    const progress: StudentProgress = {
+      stars: 10, streakDays: 3,
+      completedProblemIds: ["P-0", "P-1", "P-2", "P-3", "P-4"],
+      masteredProblemIds: ["P-0", "P-1", "P-2", "P-3", "P-4"],
+      wrongProblems: {}, attempts: [], achievements: [],
+      reviewSchedule: {},
+    };
+    const result = calibrateEntryLevel(progress, problems);
+    expect(result).toEqual({ minLevel: 2, isCalibrated: true });
+  });
+
+  it("returns minLevel 3 when 5+ level-2 problems mastered", () => {
+    const problems = [
+      ...Array.from({ length: 5 }, (_, i) =>
+        makeProblem(`L1-${i}`, { level: 1 }),
+      ),
+      ...Array.from({ length: 6 }, (_, i) =>
+        makeProblem(`L2-${i}`, { level: 2 }),
+      ),
+    ];
+    const progress: StudentProgress = {
+      stars: 20, streakDays: 5,
+      completedProblemIds: ["L1-0", "L1-1", "L2-0", "L2-1", "L2-2", "L2-3", "L2-4"],
+      masteredProblemIds: ["L2-0", "L2-1", "L2-2", "L2-3", "L2-4"],
+      wrongProblems: {}, attempts: [], achievements: [],
+      reviewSchedule: {},
+    };
+    const result = calibrateEntryLevel(progress, problems);
+    expect(result).toEqual({ minLevel: 3, isCalibrated: true });
+  });
+
+  it("returns minLevel 1 when fewer than 5 level-1 problems mastered", () => {
+    const problems = Array.from({ length: 10 }, (_, i) =>
+      makeProblem(`P-${i}`, { level: 1 }),
+    );
+    const progress: StudentProgress = {
+      stars: 3, streakDays: 1,
+      completedProblemIds: ["P-0", "P-1", "P-2"],
+      masteredProblemIds: ["P-0", "P-1", "P-2"],
+      wrongProblems: {}, attempts: [], achievements: [],
+      reviewSchedule: {},
+    };
+    const result = calibrateEntryLevel(progress, problems);
+    expect(result).toEqual({ minLevel: 1, isCalibrated: false });
+  });
+});
+
+describe("selectDailyProblems with calibration", () => {
+  it("avoids level-1 problems when child has substantial level-1 mastery", () => {
+    const problems: Problem[] = [];
+    const categories = [
+      "capture", "escape", "connect_cut",
+      "life_death", "opening", "endgame",
+    ] as const;
+    let idx = 0;
+    for (const cat of categories) {
+      for (let lv = 1; lv <= 3; lv++) {
+        for (let n = 0; n < 3; n++) {
+          idx++;
+          problems.push(
+            makeProblem(`P-${String(idx).padStart(3, "0")}`, {
+              category: cat, level: lv as 1 | 2 | 3,
+            }),
+          );
+        }
+      }
+    }
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const masteredIds = problems
+      .filter((p) => p.level === 1)
+      .map((p) => p.id);
+    const progress: StudentProgress = {
+      stars: 30, streakDays: 10,
+      completedProblemIds: masteredIds,
+      masteredProblemIds: masteredIds,
+      wrongProblems: {}, attempts: [], achievements: [],
+      reviewSchedule: {},
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      expect(selected).toHaveLength(10);
+      expect(selected.every((p) => p.level >= 2)).toBe(true);
+    }
+  });
+
+  it("preserves due review priority regardless of calibration", () => {
+    const problems: Problem[] = [];
+    const categories = [
+      "capture", "escape", "connect_cut",
+      "life_death", "opening", "endgame",
+    ] as const;
+    let idx = 0;
+    for (const cat of categories) {
+      for (let lv = 1; lv <= 3; lv++) {
+        for (let n = 0; n < 3; n++) {
+          idx++;
+          problems.push(
+            makeProblem(`P-${String(idx).padStart(3, "0")}`, {
+              category: cat, level: lv as 1 | 2 | 3,
+            }),
+          );
+        }
+      }
+    }
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const masteredIds = problems
+      .filter((p) => p.level === 1)
+      .map((p) => p.id);
+    const level1Problem = problems.find((p) => p.level === 1)!;
+    const progress: StudentProgress = {
+      stars: 30, streakDays: 10,
+      completedProblemIds: masteredIds,
+      masteredProblemIds: masteredIds,
+      wrongProblems: {}, attempts: [], achievements: [],
+      reviewSchedule: {
+        [level1Problem.id]: {
+          problemId: level1Problem.id,
+          nextReviewAt: "2020-01-01",
+          intervalDays: 1,
+          lastResult: "failed",
+          lastReviewAt: "2019-12-31",
+        },
+      },
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      expect(selected.some((p) => p.id === level1Problem.id)).toBe(true);
+    }
+  });
+
+  it("preserves category balance with calibration", () => {
+    const problems: Problem[] = [];
+    const categories = [
+      "capture", "escape", "connect_cut",
+      "life_death", "opening", "endgame",
+    ] as const;
+    let idx = 0;
+    for (const cat of categories) {
+      for (let lv = 2; lv <= 3; lv++) {
+        for (let n = 0; n < 4; n++) {
+          idx++;
+          problems.push(
+            makeProblem(`P-${String(idx).padStart(3, "0")}`, {
+              category: cat, level: lv as 2 | 3,
+            }),
+          );
+        }
+      }
+    }
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const masteredIds = problems
+      .filter((p) => p.level <= 2)
+      .slice(0, 6)
+      .map((p) => p.id);
+    const progress: StudentProgress = {
+      stars: 30, streakDays: 10,
+      completedProblemIds: masteredIds,
+      masteredProblemIds: masteredIds,
+      wrongProblems: {}, attempts: [], achievements: [],
+      reviewSchedule: {},
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      expect(selected).toHaveLength(10);
+      const catCounts: Record<string, number> = {};
+      for (const p of selected) {
+        catCounts[p.category] = (catCounts[p.category] ?? 0) + 1;
+      }
+      for (const count of Object.values(catCounts)) {
+        expect(count).toBeLessThanOrEqual(3);
+      }
+    }
+  });
+
+  it("falls back when calibration filters too aggressively", () => {
+    const problems = [
+      ...Array.from({ length: 8 }, (_, i) =>
+        makeProblem(`L1-${i}`, { level: 1, category: "capture" }),
+      ),
+      ...Array.from({ length: 4 }, (_, i) =>
+        makeProblem(`L2-${i}`, { level: 2, category: "escape" }),
+      ),
+    ];
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const progress: StudentProgress = {
+      stars: 30, streakDays: 10,
+      completedProblemIds: ["L1-0", "L1-1", "L1-2", "L1-3", "L1-4"],
+      masteredProblemIds: ["L1-0", "L1-1", "L1-2", "L1-3", "L1-4"],
+      wrongProblems: {}, attempts: [], achievements: [],
+      reviewSchedule: {},
+    };
+
+    const selected = selectDailyProblems(progress, "2020-06-05");
+    expect(selected).toHaveLength(10);
   });
 });
 

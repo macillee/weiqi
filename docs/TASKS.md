@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.12.0b AI feasibility spike delivered — recommended: local-first Go AI / rule-assisted coach. Next: v0.12.0c level calibration.
+v0.12.0c level calibration delivered — intermediate learners skip introductory content in daily practice. Next: v0.12.0d bounded local AI review / rule-assisted coach prototype.
 
 Current strategy:
 
@@ -48,7 +48,7 @@ Current strategy:
   34. v0.11.0d stabilization completed — release notes and QA checklist published
   35. v0.12.0a next phase plan completed — primary direction: AI-first intermediate progression / AI coach & sparring
   36. v0.12.0b AI feasibility spike completed — recommended: local-first Go AI / rule-assisted coach with optional local LLM
-  37. Avoid AI/payment/teacher/leaderboard scope creep
+  37. v0.12.0c level calibration completed — intermediate learners skip introductory content
 ```
 
 ---
@@ -2090,36 +2090,71 @@ problem data, runtime, Supabase, or SQL behavior was modified.
 
 ---
 
-# Next Task: v0.12.0c — Level Calibration / Intermediate Challenge Entry
+# ✅ v0.12.0c — Level Calibration / Intermediate Challenge Entry — COMPLETED (2026-06-06)
+
+## Deliverables
+
+- `src/lib/practice.ts` — added `calibrateEntryLevel(progress, available)`
+  helper: returns `{ minLevel, isCalibrated }` based on mastered problem
+  level distribution; threshold of 5 mastered problems per level tier;
+  integrated into `selectDailyProblems` to filter out below-minLevel
+  candidates while preserving due review / wrong problem priority from
+  the full base candidate pool.
+- `src/app/practice/page.tsx` — shows `中级练习` label when calibration
+  raises the effective practice level above default.
+- `src/__tests__/practice.test.ts` — 11 new tests: 6 for
+  `calibrateEntryLevel` (null/empty progress, stale IDs, level-1
+  mastery → minLevel 2, level-2 mastery → minLevel 3, below threshold),
+  4 for selection with calibration (avoid level-1, preserve due review
+  priority, preserve category balance, aggressive filter fallback), 1
+  for determinism.
+- `docs/TASKS.md` — marked v0.12.0c delivered, next task → v0.12.0d.
+
+## Calibration Logic
+
+- 5+ mastered level-2 problems → `minLevel: 3, isCalibrated: true`
+- 5+ mastered level-1 problems → `minLevel: 2, isCalibrated: true`
+- Below threshold → `minLevel: 1, isCalibrated: false`
+- Calibration filters non-priority candidates; due review and wrong
+  problems are selected from the full base pool before calibration.
+- Falls back to uncalibrated pool if calibration leaves < 10 candidates.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 361 passed (21 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | 6 passed (4.8s) |
+
+## Branch
+
+- `feat/v0.12.0c-level-calibration` → PR #?
+
+---
+
+# Next Task: v0.12.0d — Bounded Local AI Review / Rule-Assisted Coach Prototype
 
 ## Goal
 
-Detect when a child has progressed beyond introductory levels and adjust
-the starting level for daily practice, avoiding default placement into
-level-1 content.
+Implement a local-first, rule/template-based Go review coach that
+provides basic move-quality feedback without requiring external AI
+services.
 
 ## Scope
 
-- `src/lib/practice.ts` — add level calibration logic based on existing
-  progress data (completed/mastered problem IDs, level distribution).
-- `src/app/practice/page.tsx` — surface level calibration result.
-- `src/__tests__/practice.test.ts` — tests for level calibration.
-
-## Acceptance Criteria
-
-- Practice page detects when the child has progressed beyond
-  introductory levels and adjusts selection accordingly.
-- Children with significant progress are not defaulted into level-1
-  content.
-- Existing selection behavior unchanged for introductory-level children.
-- `npm run test`, `npm run build` pass.
+- Rule/template coach baseline first
+- Optional local KataGo path later or behind configuration
+- Optional local LLM later
+- External LLM only opt-in, not default
 
 ## Non-goals
 
-- No AI integration (that comes in v0.12.0d).
-- No new pages or navigation.
+- No external AI API usage by default.
 - No changes to problem data or schemas.
-- No Supabase/server-side changes.
+- No new pages or navigation flows beyond practice integration.
 
 ---
 
@@ -2210,7 +2245,8 @@ level-1 content.
 
 - v0.12.0a: next phase plan (completed)
 - v0.12.0b: AI feasibility spike / architecture decision (completed)
-- v0.12.0c: level calibration / intermediate challenge entry
+- v0.12.0c: level calibration / intermediate challenge entry (completed)
+- v0.12.0d: bounded local AI review / rule-assisted coach prototype (next)
 - v0.12.0d: bounded AI review / AI coach prototype
 - v0.12.0e: intermediate content expansion or AI-assisted problem pipeline
 - v0.12.0f: stabilization / release notes

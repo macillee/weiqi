@@ -37,6 +37,38 @@ function deriveMaxLevel(
   return Math.max(...done.map((p) => p.level));
 }
 
+const MASTERY_THRESHOLD = 5;
+
+export type CalibrationResult = {
+  minLevel: number;
+  isCalibrated: boolean;
+};
+
+export function calibrateEntryLevel(
+  progress: StudentProgress | null | undefined,
+  available: Problem[],
+): CalibrationResult {
+  if (!progress) return { minLevel: 1, isCalibrated: false };
+  const masteredIds = new Set(progress.masteredProblemIds ?? []);
+  if (masteredIds.size === 0) return { minLevel: 1, isCalibrated: false };
+
+  const masteredProblems = available.filter((p) => masteredIds.has(p.id));
+  if (masteredProblems.length === 0) return { minLevel: 1, isCalibrated: false };
+
+  const byLevel: Record<number, number> = {};
+  for (const p of masteredProblems) {
+    byLevel[p.level] = (byLevel[p.level] ?? 0) + 1;
+  }
+
+  if ((byLevel[2] ?? 0) >= MASTERY_THRESHOLD) {
+    return { minLevel: 3, isCalibrated: true };
+  }
+  if ((byLevel[1] ?? 0) >= MASTERY_THRESHOLD) {
+    return { minLevel: 2, isCalibrated: true };
+  }
+  return { minLevel: 1, isCalibrated: false };
+}
+
 function hasUsableProgress(
   progress: StudentProgress | null | undefined,
   available: Problem[],
@@ -178,19 +210,33 @@ export function selectDailyProblems(
     ? levelFiltered
     : available;
 
-  const eligibleCandidates = baseCandidates.filter((p) =>
+  const calibration = calibrateEntryLevel(usableProgress, baseCandidates);
+  const calibrated = calibration.isCalibrated
+    ? baseCandidates.filter((p) => p.level >= calibration.minLevel)
+    : baseCandidates;
+  const calibratedCandidates = calibrated.length >= DAILY_PRACTICE_COUNT
+    ? calibrated
+    : baseCandidates;
+
+  const eligibleCandidates = calibratedCandidates.filter((p) =>
     isMultiStepEligible(p, usableProgress, allProblems)
   );
 
-  const candidates = eligibleCandidates;
+  const baseEligible = baseCandidates.filter((p) =>
+    isMultiStepEligible(p, usableProgress, allProblems)
+  );
 
   const now = today ?? todayString();
   const { problems: priority, usedCats } = getPriorityProblems(
     usableProgress,
-    candidates,
+    baseEligible,
     now,
   );
   const priorityIds = new Set(priority.map((p) => p.id));
+
+  const candidates = eligibleCandidates.filter(
+    (p) => !priorityIds.has(p.id),
+  );
 
   const byCat: Record<string, Problem[]> = {};
   const mixed: Problem[] = [];
