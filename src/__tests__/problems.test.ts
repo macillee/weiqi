@@ -160,8 +160,8 @@ describe("validateAllProblems", () => {
 describe("problem data quality", () => {
   const problems = loadProblems();
 
-  it("total problem count is 77", () => {
-    expect(problems).toHaveLength(77);
+  it("total problem count is 87", () => {
+    expect(problems).toHaveLength(87);
   });
 
   it("v0.1.2 added problem IDs exist", () => {

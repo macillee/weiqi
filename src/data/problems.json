@@ -4622,5 +4622,296 @@
     "explanation": "在圈中间下子,黑棋就做出了一个眼,棋子变安全了。",
     "successMessage": "好！你做出了眼！",
     "failureMessage": "看看圈的中间。"
+  },
+  {
+    "id": "CAP-019",
+    "boardSize": 9,
+    "category": "capture",
+    "level": 4,
+    "tags": ["capture", "atari", "liberty-counting"],
+    "toPlay": "black",
+    "title": "分出胜负",
+    "description": "两颗白棋，只有一颗可以被吃掉。黑棋怎么选？",
+    "initialStones": [
+      { "x": 3, "y": 3, "color": "white" },
+      { "x": 2, "y": 3, "color": "black" },
+      { "x": 3, "y": 2, "color": "black" },
+      { "x": 4, "y": 3, "color": "black" },
+      { "x": 6, "y": 6, "color": "white" },
+      { "x": 5, "y": 6, "color": "black" },
+      { "x": 6, "y": 5, "color": "black" }
+    ],
+    "answers": [{ "x": 3, "y": 4 }],
+    "hints": [
+      "有一颗白棋只剩一口气了，另一颗还有两口气。",
+      "看看哪颗白棋周围的空点最少。",
+      "下在 (3, 4) 吃掉被围紧的那颗白棋。"
+    ],
+    "explanation": "白棋在 (3, 3) 只剩一口气，另一颗白棋还有出路。先吃掉没有气的白棋！",
+    "successMessage": "好！你分出了胜负！",
+    "failureMessage": "看看哪颗白棋周围黑棋最多。",
+    "wrongMoves": [
+      { "x": 6, "y": 7, "message": "这颗白棋还有两口气，先吃更急的。" }
+    ]
+  },
+  {
+    "id": "CAP-020",
+    "boardSize": 9,
+    "category": "capture",
+    "level": 5,
+    "tags": ["capture", "atari", "multi-stone"],
+    "toPlay": "black",
+    "title": "两颗白棋一起抓",
+    "description": "两颗白棋连在一起，但它们只剩一口气了。黑棋怎么吃掉它们？",
+    "initialStones": [
+      { "x": 3, "y": 3, "color": "white" },
+      { "x": 4, "y": 3, "color": "white" },
+      { "x": 2, "y": 3, "color": "black" },
+      { "x": 3, "y": 2, "color": "black" },
+      { "x": 3, "y": 4, "color": "black" },
+      { "x": 4, "y": 2, "color": "black" },
+      { "x": 5, "y": 3, "color": "black" }
+    ],
+    "answers": [{ "x": 4, "y": 4 }],
+    "hints": [
+      "两颗白棋连在一起，但它们周围已经围了很多黑棋。",
+      "仔细数一数白棋周围还剩几个空点。",
+      "下在 (5, 4) 就能一口气吃掉两颗白棋。"
+    ],
+    "explanation": "两颗白棋连在一起，但只剩 (5, 4) 这一口气了。黑棋堵上就能提掉两颗白子。",
+    "successMessage": "太厉害了！两颗白棋一起抓住！",
+    "failureMessage": "看看连在一起的白棋还剩什么空。"
+  },
+  {
+    "id": "ESC-012",
+    "boardSize": 9,
+    "category": "escape",
+    "level": 5,
+    "tags": ["escape", "atari", "center"],
+    "toPlay": "black",
+    "title": "两边被围",
+    "description": "黑棋被白棋从两边压过来，怎么逃出去？",
+    "initialStones": [
+      { "x": 3, "y": 2, "color": "black" },
+      { "x": 2, "y": 2, "color": "white" },
+      { "x": 2, "y": 3, "color": "white" },
+      { "x": 3, "y": 3, "color": "white" },
+      { "x": 4, "y": 3, "color": "white" },
+      { "x": 4, "y": 2, "color": "white" },
+      { "x": 2, "y": 4, "color": "white" },
+      { "x": 3, "y": 4, "color": "white" },
+      { "x": 4, "y": 4, "color": "white" }
+    ],
+    "answers": [{ "x": 3, "y": 1 }],
+    "hints": [
+      "黑棋被围住了，上下和左右空点不多。",
+      "下面虽然有空，但跑下去可能被继续追。",
+      "往上跑出到 (3, 1) 才能获得更多空间。"
+    ],
+    "explanation": "黑棋往上跑出到 (3, 1) 可以走向棋盘中央，获得更多逃跑空间。",
+    "successMessage": "好！黑棋跑出去了！",
+    "failureMessage": "想想往哪个方向跑空间最大。"
+  },
+  {
+    "id": "CC-015",
+    "boardSize": 9,
+    "category": "connect_cut",
+    "level": 3,
+    "tags": ["connect_cut", "connect", "defend"],
+    "toPlay": "black",
+    "title": "连回黑棋",
+    "description": "黑棋两颗子快被白棋分开了，怎么把它们连起来？",
+    "initialStones": [
+      { "x": 2, "y": 3, "color": "black" },
+      { "x": 4, "y": 3, "color": "black" },
+      { "x": 3, "y": 2, "color": "white" },
+      { "x": 3, "y": 4, "color": "white" }
+    ],
+    "answers": [{ "x": 3, "y": 3 }],
+    "hints": [
+      "黑棋两颗子中间有一个空点。",
+      "白棋从上下两边压过来了。",
+      "下在 (3, 3) 就把黑棋连上了。"
+    ],
+    "explanation": "黑棋在中间 (3, 3) 下一子，就把两颗黑棋连成一块了。",
+    "successMessage": "好！黑棋连回来了！",
+    "failureMessage": "看看两颗黑棋中间的空点。"
+  },
+  {
+    "id": "CC-016",
+    "boardSize": 9,
+    "category": "connect_cut",
+    "level": 4,
+    "tags": ["connect_cut", "cut", "separate"],
+    "toPlay": "black",
+    "title": "切断的连接",
+    "description": "白棋看似连在一起，但有一个切断点。黑棋怎么切断它们？",
+    "initialStones": [
+      { "x": 2, "y": 3, "color": "white" },
+      { "x": 4, "y": 3, "color": "white" },
+      { "x": 2, "y": 2, "color": "black" },
+      { "x": 3, "y": 2, "color": "black" },
+      { "x": 4, "y": 2, "color": "black" }
+    ],
+    "answers": [{ "x": 3, "y": 3 }],
+    "hints": [
+      "两颗白棋看起来是连着的，但中间有一个缺口。",
+      "找到两颗白棋中间的空点。",
+      "下在 (3, 3) 就切断了白棋的连接。"
+    ],
+    "explanation": "白棋在 (2, 3) 和 (4, 3) 中间有一个缺口 (3, 3)，黑棋下在那里就切断了它们。",
+    "successMessage": "好！你找到了切断点！",
+    "failureMessage": "找找白棋中间哪里还有空。"
+  },
+  {
+    "id": "LD-011",
+    "boardSize": 9,
+    "category": "life_death",
+    "level": 3,
+    "tags": ["life_death", "eye", "two-eyes"],
+    "toPlay": "black",
+    "title": "做出两只眼",
+    "description": "黑棋被围住了，怎么做出两只眼活棋？",
+    "initialStones": [
+      { "x": 2, "y": 2, "color": "black" },
+      { "x": 2, "y": 3, "color": "black" },
+      { "x": 2, "y": 4, "color": "black" },
+      { "x": 2, "y": 5, "color": "black" },
+      { "x": 3, "y": 2, "color": "black" },
+      { "x": 3, "y": 5, "color": "black" },
+      { "x": 4, "y": 2, "color": "black" },
+      { "x": 4, "y": 5, "color": "black" },
+      { "x": 5, "y": 2, "color": "black" },
+      { "x": 5, "y": 3, "color": "black" },
+      { "x": 5, "y": 4, "color": "black" },
+      { "x": 5, "y": 5, "color": "black" },
+      { "x": 3, "y": 4, "color": "white" },
+      { "x": 4, "y": 4, "color": "white" },
+      { "x": 1, "y": 3, "color": "white" },
+      { "x": 6, "y": 3, "color": "white" }
+    ],
+    "answers": [{ "x": 3, "y": 3 }],
+    "hints": [
+      "黑棋围了一大块，但还没完全活。",
+      "中间有一个白棋还没连上的位置。",
+      "下在 (3, 3) 可以把白棋切开，做出两只眼。"
+    ],
+    "explanation": "黑棋下在 (3, 3) 切断白棋的连接，形成两个眼形，整块黑棋就活了。",
+    "successMessage": "太好了！黑棋活了！",
+    "failureMessage": "看看哪里能把空间分成两半。"
+  },
+  {
+    "id": "LD-012",
+    "boardSize": 9,
+    "category": "life_death",
+    "level": 4,
+    "tags": ["life_death", "kill", "placement"],
+    "toPlay": "black",
+    "title": "杀死白棋",
+    "description": "白棋围了一个空间，但还不是完整的眼。黑棋怎么杀死它？",
+    "initialStones": [
+      { "x": 2, "y": 2, "color": "white" },
+      { "x": 2, "y": 3, "color": "white" },
+      { "x": 2, "y": 4, "color": "white" },
+      { "x": 3, "y": 4, "color": "white" },
+      { "x": 4, "y": 4, "color": "white" },
+      { "x": 4, "y": 3, "color": "white" },
+      { "x": 4, "y": 2, "color": "white" },
+      { "x": 3, "y": 2, "color": "black" },
+      { "x": 1, "y": 3, "color": "black" },
+      { "x": 5, "y": 3, "color": "black" }
+    ],
+    "answers": [{ "x": 3, "y": 3 }],
+    "hints": [
+      "白棋围了一个空间，但中间还有问题。",
+      "找到白棋空间的关键点。",
+      "下在 (3, 3) 白棋就做不出两只眼了。"
+    ],
+    "explanation": "白棋围的空间里 (3, 3) 是急所，黑棋下在那里白棋就做不出两只眼，整块白棋会死。",
+    "successMessage": "太好了！你杀死了白棋！",
+    "failureMessage": "看看白棋空间中间的点。"
+  },
+  {
+    "id": "OP-010",
+    "boardSize": 9,
+    "category": "opening",
+    "level": 4,
+    "tags": ["opening", "corner", "approach"],
+    "toPlay": "black",
+    "title": "挂角的选择",
+    "description": "白棋在左下角守角了，黑棋怎么挂角？",
+    "initialStones": [
+      { "x": 0, "y": 8, "color": "white" },
+      { "x": 2, "y": 6, "color": "white" },
+      { "x": 0, "y": 0, "color": "black" },
+      { "x": 2, "y": 2, "color": "black" }
+    ],
+    "answers": [{ "x": 2, "y": 8 }],
+    "hints": [
+      "白棋在下边守角了。",
+      "黑棋在左上也有角。",
+      "从右上角 (2, 8) 挂角，和左上配合更好。"
+    ],
+    "explanation": "黑棋在 (2, 8) 挂角，是全局最大的地方，和左上角形成两翼展开的布局。",
+    "successMessage": "好！你选对了挂角位置！",
+    "failureMessage": "看看哪里是全盘最重要的位置。"
+  },
+  {
+    "id": "END-009",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 3,
+    "tags": ["endgame", "sente", "edge"],
+    "toPlay": "black",
+    "title": "先手收官",
+    "description": "黑棋先走，怎么在边上赚到最后的空？",
+    "initialStones": [
+      { "x": 2, "y": 0, "color": "black" },
+      { "x": 2, "y": 1, "color": "black" },
+      { "x": 3, "y": 1, "color": "white" },
+      { "x": 3, "y": 0, "color": "white" }
+    ],
+    "answers": [{ "x": 3, "y": 2 }],
+    "hints": [
+      "黑棋和白棋在边上交界。",
+      "这个官子是双方先手。",
+      "下在 (3, 2) 是官子好点。"
+    ],
+    "explanation": "黑棋下 (3, 2) 是官子好点，能守住自己的空，还能威胁白棋的空。",
+    "successMessage": "好！你抢到了官子！",
+    "failureMessage": "看看这个边界哪里最重要。"
+  },
+  {
+    "id": "END-010",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 4,
+    "tags": ["endgame", "gote", "big-point"],
+    "toPlay": "black",
+    "title": "最大的官子",
+    "description": "现在棋盘上有好几个官子，黑棋应该下在哪里？",
+    "initialStones": [
+      { "x": 2, "y": 2, "color": "black" },
+      { "x": 2, "y": 3, "color": "black" },
+      { "x": 2, "y": 4, "color": "black" },
+      { "x": 3, "y": 4, "color": "white" },
+      { "x": 4, "y": 4, "color": "white" },
+      { "x": 4, "y": 3, "color": "white" },
+      { "x": 4, "y": 2, "color": "white" },
+      { "x": 3, "y": 2, "color": "white" },
+      { "x": 6, "y": 0, "color": "black" },
+      { "x": 6, "y": 1, "color": "black" },
+      { "x": 7, "y": 1, "color": "white" },
+      { "x": 7, "y": 0, "color": "white" }
+    ],
+    "answers": [{ "x": 3, "y": 3 }],
+    "hints": [
+      "棋盘上有两个官子点，大小不一样。",
+      "中腹的官子比边上的更大。",
+      "下在 (3, 3) 是最大的官子。"
+    ],
+    "explanation": "(3, 3) 是中腹的官子，价值比边上的官子更大，黑棋应该先抢大的。",
+    "successMessage": "好！你抢到了最大的官子！",
+    "failureMessage": "比较一下两个官子哪个更大。"
   }
 ]
