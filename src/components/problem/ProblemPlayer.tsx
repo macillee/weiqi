@@ -15,6 +15,7 @@ import {
 } from "@/lib/multi-step-problem";
 import { playCorrect, playWrong } from "@/lib/audioFeedback";
 import { getRevealedHintCoordinates } from "@/lib/hintCoordinate";
+import { getLocalReview, type LocalReviewResult } from "@/lib/ai-review";
 
 type ProblemPlayerProps = {
   problem: Problem;
@@ -45,6 +46,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     y: number;
   } | null>(null);
   const [celebrateTrigger, setCelebrateTrigger] = useState(0);
+  const [coachReview, setCoachReview] = useState<LocalReviewResult | null>(null);
 
   /* eslint-disable react-hooks/set-state-in-effect -- reset state when problem changes */
   useEffect(() => {
@@ -240,7 +242,19 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
       setResult(null);
       setLastWrongMove(null);
     }
+    setCoachReview(null);
   }, [isMultiStep, currentStep]);
+
+  const handleShowCoach = useCallback(() => {
+    if (!currentWrongMove) return;
+    const result = getLocalReview({
+      problem,
+      attemptedMove: currentWrongMove,
+      correctMove: currentAnswers[0],
+      usedHint: currentHintIndex > 0,
+    });
+    setCoachReview(result);
+  }, [problem, currentWrongMove, currentAnswers, currentHintIndex]);
 
   // Handle next step (for multi-step problems)
   const handleNextStep = useCallback(() => {
@@ -381,6 +395,8 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
           onNext={showAnswer ? onNext : undefined}
           onTryAgain={showAnswer ? undefined : handleTryAgain}
           showAnswer={showAnswer}
+          onShowCoach={currentWrongMove && !coachReview ? handleShowCoach : undefined}
+          coachMessage={coachReview?.message ?? null}
         />
       )}
     </div>

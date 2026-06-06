@@ -9,6 +9,8 @@ type FeedbackDialogProps = {
   onNext?: () => void;
   onTryAgain?: () => void;
   showAnswer: boolean;
+  onShowCoach?: () => void;
+  coachMessage?: string | null;
 };
 
 const GO_LABELS = "ABCDEFGHJKLMNOPQRST";
@@ -28,6 +30,8 @@ export default function FeedbackDialog({
   onNext,
   onTryAgain,
   showAnswer,
+  onShowCoach,
+  coachMessage,
 }: FeedbackDialogProps) {
   return (
     <div
@@ -62,6 +66,19 @@ export default function FeedbackDialog({
                 <p className="text-sm text-red-500 mt-1">{explanation}</p>
               )}
             </div>
+          )}
+          {coachMessage && (
+            <div className="mt-2 rounded-lg bg-amber-50 border border-amber-200 p-2">
+              <p className="text-sm text-amber-800">{coachMessage}</p>
+            </div>
+          )}
+          {onShowCoach && !coachMessage && (
+            <button
+              onClick={onShowCoach}
+              className="mt-2 px-4 py-1.5 bg-amber-400 text-amber-900 rounded-full text-sm font-medium hover:bg-amber-500"
+            >
+              请老师帮忙
+            </button>
           )}
           {onTryAgain && !showAnswer && (
             <button
