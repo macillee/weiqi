@@ -27,6 +27,15 @@ docker compose up --build
 
 Docker Compose reads `.env.local` automatically via `env_file` (if present). Missing `.env.local` preserves local anonymous mode.
 
+## Optional Local KataGo Setup (v0.13)
+
+The app supports optional local KataGo engine integration for enhanced wrong-answer review. This is **completely optional** — the app works fully without it using the built-in rule/template coach.
+
+- Configure via `KATAGO_*` environment variables in `.env.local` (all commented out in `.env.example`).
+- KataGo runs on the host, not inside the Docker container.
+- Runtime integration is **not implemented yet** in v0.13.0b. This section only documents the env/config contract.
+- See `docs/ENGINE_ADAPTER_CONTRACT_v0.13.md` for the full adapter contract, setup guide, and next steps.
+
 ---
 
 # 2. Docker Compose
