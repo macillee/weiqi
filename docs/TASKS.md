@@ -57,7 +57,7 @@ Current strategy:
    41. v0.13.0a local engine feasibility plan completed — evaluates KataGo integration for local move analysis without network dependency (PR #145)
     42. v0.13.0b local engine adapter contract and sample config completed — adapter interface, config shape, setup guide, and fallback behavior defined (PR #147)
     43. v0.13.0c server-only engine adapter implementation completed — engine-config.ts, engine-adapter.ts, 20 tests, timeout fallback, injectable execFile/existsSync (PR #150)
-    44. v0.13.0d engine-assisted review behind feature flag completed — ai-review.ts enrichment with engine signal, server action bridge, FeedbackDialog label, 16 new tests (PR TBD)
+    44. v0.13.0d engine-assisted review behind feature flag completed — ai-review.ts enrichment with engine signal, server action bridge, FeedbackDialog label, 16 new tests (PR #152)
 ```
 
 ---
@@ -2364,7 +2364,7 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 ## Branch
 
 - `feat/v0.13.0d-engine-review-flag`
-- PR: TBD (closes #151)
+- PR #152 (closes #151)
 
 ---
 
