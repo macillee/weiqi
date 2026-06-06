@@ -211,12 +211,25 @@ export function selectDailyProblems(
     : available;
 
   const calibration = calibrateEntryLevel(usableProgress, baseCandidates);
-  const calibrated = calibration.isCalibrated
-    ? baseCandidates.filter((p) => p.level >= calibration.minLevel)
-    : baseCandidates;
-  const calibratedCandidates = calibrated.length >= DAILY_PRACTICE_COUNT
-    ? calibrated
-    : baseCandidates;
+
+  let calibratedCandidates: Problem[];
+  if (!calibration.isCalibrated) {
+    calibratedCandidates = baseCandidates;
+  } else {
+    const withinClamp = baseCandidates.filter(
+      (p) => p.level >= calibration.minLevel,
+    );
+    if (withinClamp.length >= DAILY_PRACTICE_COUNT) {
+      calibratedCandidates = withinClamp;
+    } else {
+      const aboveClamp = available.filter(
+        (p) => p.level >= calibration.minLevel,
+      );
+      calibratedCandidates = aboveClamp.length >= DAILY_PRACTICE_COUNT
+        ? aboveClamp
+        : baseCandidates;
+    }
+  }
 
   const eligibleCandidates = calibratedCandidates.filter((p) =>
     isMultiStepEligible(p, usableProgress, allProblems)

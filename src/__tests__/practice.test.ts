@@ -1431,6 +1431,49 @@ describe("selectDailyProblems with calibration", () => {
     const selected = selectDailyProblems(progress, "2020-06-05");
     expect(selected).toHaveLength(10);
   });
+
+  it("selects level-3+ problems when child has substantial level-2 mastery and no level-3 completions", () => {
+    const problems: Problem[] = [];
+    const categories = [
+      "capture", "escape", "connect_cut",
+      "life_death", "opening", "endgame",
+    ] as const;
+    let idx = 0;
+    for (const cat of categories) {
+      for (let lv = 1; lv <= 3; lv++) {
+        for (let n = 0; n < 3; n++) {
+          idx++;
+          problems.push(
+            makeProblem(`P-${String(idx).padStart(3, "0")}`, {
+              category: cat, level: lv as 1 | 2 | 3,
+            }),
+          );
+        }
+      }
+    }
+    vi.mocked(problemsModule.loadProblems).mockReturnValue(problems);
+    vi.mocked(chaptersModule.getAllProblemIds).mockReturnValue(
+      problems.map((p) => p.id),
+    );
+
+    const masteredIds = problems
+      .filter((p) => p.level === 2)
+      .slice(0, 6)
+      .map((p) => p.id);
+    const progress: StudentProgress = {
+      stars: 40, streakDays: 15,
+      completedProblemIds: masteredIds,
+      masteredProblemIds: masteredIds,
+      wrongProblems: {}, attempts: [], achievements: [],
+      reviewSchedule: {},
+    };
+
+    for (let i = 0; i < 20; i++) {
+      const selected = selectDailyProblems(progress, "2020-06-05");
+      expect(selected).toHaveLength(10);
+      expect(selected.every((p) => p.level >= 3)).toBe(true);
+    }
+  });
 });
 
 describe("practice session management", () => {

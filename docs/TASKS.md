@@ -2247,7 +2247,6 @@ services.
 - v0.12.0b: AI feasibility spike / architecture decision (completed)
 - v0.12.0c: level calibration / intermediate challenge entry (completed)
 - v0.12.0d: bounded local AI review / rule-assisted coach prototype (next)
-- v0.12.0d: bounded AI review / AI coach prototype
 - v0.12.0e: intermediate content expansion or AI-assisted problem pipeline
 - v0.12.0f: stabilization / release notes
 
