@@ -47,18 +47,20 @@
 
 ## 3. Engine Options
 
+> The resource and latency figures below are planning assumptions, not verified benchmarks. v0.13.0b/c must validate them on the target local machine before treating them as requirements.
+
 ### 3.1 KataGo CPU / Eigen
 
 | Factor | Assessment |
 |---|---|
 | Install complexity | Moderate — user downloads binary, unzips, places on PATH or in project dir. No build from source needed for common platforms. |
-| Model file size | ~40 MB (network weights). Downloaded once. |
-| CPU / RAM | ~1–2 GB RAM; runs on any modern CPU with Eigen backend. |
+| Model file size | Assumption: ~40 MB (network weights). Downloaded once. |
+| CPU / RAM | Assumption: ~1–2 GB RAM; runs on any modern CPU with Eigen backend. |
 | 9x9 support | Excellent — KataGo natively supports 9x9 with its own trained networks. |
 | Analysis API | GTP-compatible. `kata-analyze` command returns win-rate, visits, top moves. |
-| Expected latency | ~1–3 seconds with 200–600 visits on modern CPU. Acceptable for coach use. |
+| Expected latency | Assumption: ~1–3 seconds with 200–600 visits on modern CPU. Acceptable for coach use. Needs local benchmark. |
 | Platform support | Windows, macOS, Linux binaries available. |
-| Docker implications | Including KataGo in the Docker image adds ~60 MB. Not default for dev. |
+| Docker implications | Assumption: including KataGo in the Docker image adds ~60 MB. Not default for dev. |
 | Maintenance risk | Low — KataGo releases stable builds. Can pin a known version. |
 
 ### 3.2 KataGo OpenCL / GPU
@@ -66,7 +68,7 @@
 | Factor | Assessment |
 |---|---|
 | Install complexity | Higher — requires OpenCL runtime or CUDA. Many child laptops lack GPU. |
-| Performance | 5–20× faster than CPU for same visit count. |
+| Performance | Assumption: 5–20× faster than CPU for same visit count. Needs local benchmark. |
 | Recommendation | Support as optional config only. Default to CPU/Eigen. |
 
 ### 3.3 Other lightweight engines
@@ -206,7 +208,7 @@ v0.13.0e — QA / Stabilization / Release Notes                          (docs)
 - `docs/ENGINE_ADAPTER_CONTRACT_v0.13.md` — contract and setup guide.
 - `docs/TASKS.md` — mark v0.13.0b delivered, queue v0.13.0c.
 - `docs/DEPLOYMENT.md` — add optional KataGo setup section.
-- `docs/.env.example` — add commented `KATAGO_BIN_PATH` var if not present.
+- `.env.example` — add commented `KATAGO_BIN_PATH` var if not present.
 
 **Non-goals**:
 - No implementation of the adapter.
