@@ -1,5 +1,7 @@
 import { vi } from "vitest";
 
+vi.mock("server-only", () => ({}));
+
 const store = new Map<string, string>();
 
 const mockStorage: Storage = {
