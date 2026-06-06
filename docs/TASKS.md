@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.13.0a local engine feasibility plan delivered — evaluates KataGo integration for local move-analysis without network dependency. Next: v0.13.0b — Local Engine Adapter Contract / Sample Config.
+v0.13.0b local engine adapter contract and sample config delivered — defines adapter interface, config shape, setup guide, and fallback behavior. Next: v0.13.0c — Implement Server-Only Engine Adapter with Timeout Fallback.
 
 Current strategy:
 
@@ -53,6 +53,7 @@ Current strategy:
    39. v0.12.0e intermediate content expansion completed — 10 new human-reviewed level 3-5 problems + pipeline doc (PR #142)
    40. v0.12 stabilization completed — release notes and QA checklist published (PR #143)
    41. v0.13.0a local engine feasibility plan completed — evaluates KataGo integration for local move analysis without network dependency (PR #145)
+   42. v0.13.0b local engine adapter contract and sample config completed — adapter interface, config shape, setup guide, and fallback behavior defined (PR #147)
 ```
 
 ---
@@ -2233,6 +2234,25 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 ---
 
+# Delivered: v0.13.0b — Local Engine Adapter Contract / Sample Config
+
+## What was done
+
+- `docs/ENGINE_ADAPTER_CONTRACT_v0.13.md` — adapter TypeScript contract, config shape, fallback behavior, privacy contract, setup guide, benchmark plan, and v0.13.0c next-task definition.
+- `.env.example` — added commented optional `KATAGO_*` environment variables.
+- `docs/DEPLOYMENT.md` — added optional KataGo setup section under Deployment Models.
+- `docs/TASKS.md` — marked v0.13.0b delivered, next task set to v0.13.0c.
+
+## Validation
+
+Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, package files, SQL/Supabase, or AI integration code was modified. Validation commands not re-run per docs-only rationale.
+
+## Branch
+
+- `docs/v0.13.0b-engine-adapter-contract` → PR #147
+
+---
+
 # Future Roadmap
 
 ## v0.2.3 — Server Progress
@@ -2328,8 +2348,8 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 ## v0.13.0 — Local Go Engine Feasibility / KataGo Prototype Plan
 
 - v0.13.0a: local engine feasibility and KataGo prototype plan (completed)
-- v0.13.0b: local engine adapter contract / sample config (next)
-- v0.13.0c: implement server-only engine adapter with timeout fallback
+- v0.13.0b: local engine adapter contract / sample config (completed)
+- v0.13.0c: implement server-only engine adapter with timeout fallback (next)
 - v0.13.0d: integrate engine-assisted review behind feature flag
 - v0.13.0e: QA / stabilization / release notes
 
