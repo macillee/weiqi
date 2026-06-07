@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.14.0a–e delivered — UX evaluation plan, manual observation checklist, diagnostics contract, server-only diagnostics helper, and stabilization docs.
+v0.15.0a content quality / intermediate problem expansion plan delivered — defines quality dimensions, intermediate content targets, audit requirements, Pack A requirements, human review checklist, and v0.15 slice plan.
 
-v0.14 complete. Next: v0.15.0a — Content Quality / Intermediate Problem Expansion Plan.
+v0.15.0a delivered. Next: v0.15.0b — Content Inventory / Gap Audit for Level 3–5 Problems.
 
 Current strategy:
 
@@ -63,7 +63,8 @@ Current strategy:
     47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #158)
     48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
      49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
-    50. v0.14.0e v0.14 QA / stabilization / release notes completed — release notes, QA checklist, task queue update (PR #164)
+     50. v0.14.0e v0.14 QA / stabilization / release notes completed — release notes, QA checklist, task queue update (PR #164)
+    51. v0.15.0a content quality / intermediate problem expansion plan completed — plan targeting level 3–5, quality dimensions, audit requirements, Pack A requirements, human review checklist (PR #TBD)
 ```
 
 ---
@@ -2533,6 +2534,33 @@ npm run build     # compiled successfully
 
 ---
 
+# Delivered: v0.15.0a — Content Quality / Intermediate Problem Expansion Plan
+
+## What was done
+
+- `docs/CONTENT_QUALITY_PLAN_v0.15.md` — decision-grade content plan with:
+  - Goal and constraints (shift from engine/diagnostics to content quality)
+  - Current content baseline (77 + 10 problems across 7 categories)
+  - 12 content quality dimensions
+  - Intermediate learner content targets (level 3–5 capture race, escape, connect/cut, life/death shape, opening direction, endgame, mixed review)
+  - Proposed v0.15 slice plan (audit → Pack A → validation → stabilization)
+  - Content inventory / gap audit requirements for v0.15.0b
+  - Intermediate Problem Pack A requirements (12–16 problems, levels 3–5, category-balanced, human-reviewed)
+  - Human review checklist (12-item per-problem checklist)
+  - Risk and mitigation (9 risks)
+  - Next task definition (v0.15.0b)
+- `docs/TASKS.md` — marked v0.15.0a delivered, next task → v0.15.0b.
+
+## Validation
+
+Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, schema, SQL/Supabase, KataGo assets, Ollama/local LLM, external AI, settings page, diagnostics page, logging code, telemetry, API route, Server Action, or feature work was added. Validation commands not re-run per docs-only rationale.
+
+## Branch
+
+- `docs/v0.15.0a-content-quality-plan` → PR #TBD
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2639,9 +2667,10 @@ npm run build     # compiled successfully
 - v0.14.0d: optional developer diagnostics helper, local-only / server-only (completed)
 - v0.14.0e: v0.14 stabilization / release notes (completed)
 
-## v0.15.0 — Content Quality / Intermediate Problem Expansion (planning)
+## v0.15.0 — Content Quality / Intermediate Problem Expansion
 
-- v0.15.0a: content quality / intermediate problem expansion plan (next)
+- v0.15.0a: content quality / intermediate problem expansion plan (completed)
+- v0.15.0b: content inventory / gap audit for level 3–5 problems (next)
 
 ---
 
