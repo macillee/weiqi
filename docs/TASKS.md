@@ -2271,9 +2271,9 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
   - `buildAnalysisArgs(config, input)` — pure function building KataGo analysis command args (board size, initial stones, playout visits, model path, config path)
   - `parseAnalysisOutput(raw)` — parses KataGo JSONL analysis output into typed `MoveInfo[]`
   - `determineConfidence(topMoves)` — heuristic (low < 50 visits, medium 50–199, high ≥ 200)
-  - `analyzeWrongMove(input, config, execFileFn?, existsSync?)` — main analysis entry point: checks availability, runs subprocess with configurable timeout via injected `execFileFn`, parses output, returns typed `AnalysisResult`
+  - `analyzeWrongMove(input, config, execFileFn?, existsSync?)` — main analysis entry point: checks availability, runs subprocess with configurable timeout via injected `execFileFn`, parses output, returns `Promise<EngineReviewSignal | null>` — all expected failures (disabled, unavailable, timeout, non-zero exit, malformed output) return `null`
   - `defaultExecFile(command, args, options)` — real `child_process.execFile` wrapper with promise + timeout kill; never called in tests
-  - Types: `EngineReviewInput`, `MoveInfo`, `EngineReviewSignal`, `EngineAvailability`, `AnalysisResult`
+  - Types: `EngineReviewInput`, `MoveInfo`, `EngineReviewSignal`, `EngineAvailability`
 - `src/__mocks__/server-only.ts` — vitest mock for `server-only` module (build-time marker unavailable in test environment)
 - `src/types/server-only.d.ts` — ambient module declaration for TypeScript
 - `vitest.config.ts` — added resolve alias for `server-only`
@@ -2296,14 +2296,14 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 | Check | Result |
 |---|---|
 | `npm run lint` | Exit 0 |
-| `npm run typecheck` | Part of `next build` — passes |
-| `npm run test` | 436 passed (23 files) |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 436 passed (baseline; exact count grew with later slices) |
 | `npm run build` | Compiled successfully |
 
 ## Branch
 
 - `feat/v0.13.0c-server-engine-adapter`
-- PR: TBD (closes #149)
+- PR #150 (closes #149)
 
 ---
 
@@ -2323,10 +2323,12 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 - `src/components/problem/ProblemPlayer.tsx`:
   - `handleShowCoach` now async: shows rule/template message instantly, calls server action in background
   - Confident engine signal silently upgrades the coach message
+  - **Stale async guard**: `coachRequestId` useRef counter incremented on try-again, next-step, and problem change; engine response discarded when counter does not match the request ID
   - All existing reset behavior preserved
 - `src/components/problem/FeedbackDialog.tsx`:
   - `coachSource` prop — shows subtle `本地引擎辅助` label when `"engine-assisted"`
 - `src/__tests__/ai-review.test.ts` — 16 new tests: engine-assisted source, confidence thresholds, disagree fallback, hint-used path, validation, all categories pass
+- `src/__tests__/stale-engine-guard.test.tsx` — 3 new component-level stale async guard tests
 
 ## Feature flag / Fallback summary
 
@@ -2358,9 +2360,11 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 | Check | Result |
 |---|---|
 | `npm run lint` | Exit 0 |
-| `npm run typecheck` | Part of `next build` — passes |
-| `npm run test` | 457 passed (23 files) |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 460 passed (24 files) |
 | `npm run build` | Compiled successfully |
+| `npm run test:e2e` | 6 passed (CI only; baseline from merged PR #152) |
+| `docker compose build` | Exit 0 (CI only) |
 
 ## Branch
 
