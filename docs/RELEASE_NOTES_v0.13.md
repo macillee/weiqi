@@ -19,7 +19,7 @@ Key outcomes:
 | v0.13.0b | Local engine adapter contract and optional sample config | #147 |
 | v0.13.0c | Server-only engine adapter with timeout fallback | #150 |
 | v0.13.0d | Feature-flagged engine-assisted wrong-answer review | #152 |
-| v0.13.0e | Stabilization / release notes / QA checklist | #TBD |
+| v0.13.0e | Stabilization / release notes / QA checklist | #154 |
 
 ## 3. Product Behavior Changes
 

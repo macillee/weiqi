@@ -58,7 +58,7 @@ Current strategy:
     42. v0.13.0b local engine adapter contract and sample config completed — adapter interface, config shape, setup guide, and fallback behavior defined (PR #147)
     43. v0.13.0c server-only engine adapter implementation completed — engine-config.ts, engine-adapter.ts, 20 tests, timeout fallback, injectable execFile/existsSync (PR #150)
      44. v0.13.0d engine-assisted review behind feature flag completed — ai-review.ts enrichment with engine signal, server action bridge, FeedbackDialog label, 16 new tests, stale async guard (PR #152)
-    45. v0.13.0e v0.13 QA / stabilization / release notes completed — conflict marker cleanup, release notes, QA checklist (PR #TBD)
+    45. v0.13.0e v0.13 QA / stabilization / release notes completed — conflict marker cleanup, release notes, QA checklist (PR #154)
 ```
 
 ---
@@ -2389,7 +2389,7 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 ## Branch
 
-- `docs/v0.13.0e-stabilization-release-notes` → PR #TBD
+- `docs/v0.13.0e-stabilization-release-notes` → PR #154
 
 ---
 
