@@ -11,6 +11,7 @@ type FeedbackDialogProps = {
   showAnswer: boolean;
   onShowCoach?: () => void;
   coachMessage?: string | null;
+  coachSource?: "rule-template" | "engine-assisted" | null;
 };
 
 const GO_LABELS = "ABCDEFGHJKLMNOPQRST";
@@ -32,6 +33,7 @@ export default function FeedbackDialog({
   showAnswer,
   onShowCoach,
   coachMessage,
+  coachSource,
 }: FeedbackDialogProps) {
   return (
     <div
@@ -70,6 +72,9 @@ export default function FeedbackDialog({
           {coachMessage && (
             <div className="mt-2 rounded-lg bg-amber-50 border border-amber-200 p-2">
               <p className="text-sm text-amber-800">{coachMessage}</p>
+              {coachSource === "engine-assisted" && (
+                <p className="text-xs text-amber-400 mt-1">本地引擎辅助</p>
+              )}
             </div>
           )}
           {onShowCoach && !coachMessage && (

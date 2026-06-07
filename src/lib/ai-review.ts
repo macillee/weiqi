@@ -7,10 +7,15 @@ export type LocalReviewInput = {
   usedHint?: boolean;
 };
 
+export type EngineReviewSignalLike = {
+  confidence: "low" | "medium" | "high";
+  agreesWithAuthoredAnswer: boolean;
+};
+
 export type LocalReviewResult = {
   message: string;
   concept: string;
-  source: "rule-template";
+  source: "rule-template" | "engine-assisted";
 };
 
 const MAX_LENGTH = 150;
@@ -101,6 +106,49 @@ const HINT_USED_MESSAGES: Record<CategoryKey, string[]> = {
   fallback: ["用了提示也没关系，再仔细看看。"],
 };
 
+const ENGINE_ASSISTED_MESSAGES: Record<CategoryKey, string[]> = {
+  capture: [
+    "引擎分析确认这里是要收气的要点。",
+    "引擎也认为这是正确的一步。",
+    "引擎分析显示这步棋在正确的方向上。",
+  ],
+  escape: [
+    "引擎分析确认这里是逃跑的关键。",
+    "引擎也认为这是正确的方向。",
+    "引擎分析显示往这里走是好棋。",
+  ],
+  connect_cut: [
+    "引擎分析确认这里是关键的连接位置。",
+    "引擎也认为这是正确的切断点。",
+    "引擎分析显示这步棋很关键。",
+  ],
+  life_death: [
+    "引擎分析确认这里是做眼的关键。",
+    "引擎也认为这是正确的一步。",
+    "引擎分析显示这步棋很重要。",
+  ],
+  opening: [
+    "引擎分析确认这个方向是正确的。",
+    "引擎也认为这是好位置。",
+    "引擎分析显示这步棋符合开局原则。",
+  ],
+  endgame: [
+    "引擎分析确认这里是官子要点。",
+    "引擎也认为这是正确的一步。",
+    "引擎分析显示这步棋价值很大。",
+  ],
+  mixed: [
+    "引擎分析确认这里是关键。",
+    "引擎也认为这是好棋。",
+    "引擎分析显示这步棋值得考虑。",
+  ],
+  fallback: [
+    "引擎分析确认这里是关键。",
+    "引擎也认为这是好棋。",
+    "引擎分析显示这步棋值得考虑。",
+  ],
+};
+
 function hashInput(input: LocalReviewInput): number {
   const s = `${input.problem.id}:${input.attemptedMove.x},${input.attemptedMove.y}:${input.correctMove ? `${input.correctMove.x},${input.correctMove.y}` : ""}:${input.usedHint ? 1 : 0}`;
   let h = 0;
@@ -120,8 +168,24 @@ function clampMessage(msg: string): string {
   return msg.slice(0, MAX_LENGTH - 1) + "…";
 }
 
-export function getLocalReview(input: LocalReviewInput): LocalReviewResult {
+export function getLocalReview(
+  input: LocalReviewInput,
+  engineSignal?: EngineReviewSignalLike,
+): LocalReviewResult {
   const { problem, attemptedMove, correctMove, usedHint } = input;
+
+  if (engineSignal && engineSignal.confidence !== "low" && engineSignal.agreesWithAuthoredAnswer) {
+    const key = pickCategoryKey(problem.category);
+    const messages = usedHint ? HINT_USED_MESSAGES : ENGINE_ASSISTED_MESSAGES;
+    const msgPool = messages[key];
+    const idx = hashInput(input) % msgPool.length;
+    const concept = CATEGORY_CONCEPTS[key][idx % CATEGORY_CONCEPTS[key].length];
+    return {
+      message: clampMessage(msgPool[idx]),
+      concept,
+      source: "engine-assisted",
+    };
+  }
 
   const wrongMoveEntry = problem.wrongMoves?.find(
     (wm) => wm.x === attemptedMove.x && wm.y === attemptedMove.y,
@@ -174,7 +238,7 @@ function pickConceptForCategory(
 
 export function validateReviewOutput(result: LocalReviewResult): boolean {
   if (result.message.length > MAX_LENGTH) return false;
-  if (result.source !== "rule-template") return false;
+  if (result.source !== "rule-template" && result.source !== "engine-assisted") return false;
   for (const banned of BANNED_PHRASES) {
     if (result.message.includes(banned)) return false;
   }

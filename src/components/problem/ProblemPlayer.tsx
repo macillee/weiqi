@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import GoBoard from "@/components/board/GoBoard";
 import ProblemHeader from "@/components/problem/ProblemHeader";
 import HintPanel from "@/components/problem/HintPanel";
@@ -15,7 +15,8 @@ import {
 } from "@/lib/multi-step-problem";
 import { playCorrect, playWrong } from "@/lib/audioFeedback";
 import { getRevealedHintCoordinates } from "@/lib/hintCoordinate";
-import { getLocalReview, type LocalReviewResult } from "@/lib/ai-review";
+import { getLocalReview, type LocalReviewResult, type EngineReviewSignalLike } from "@/lib/ai-review";
+import { requestEngineReview } from "@/lib/review-actions";
 
 type ProblemPlayerProps = {
   problem: Problem;
@@ -47,6 +48,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
   } | null>(null);
   const [celebrateTrigger, setCelebrateTrigger] = useState(0);
   const [coachReview, setCoachReview] = useState<LocalReviewResult | null>(null);
+  const coachRequestId = useRef(0);
 
   /* eslint-disable react-hooks/set-state-in-effect -- reset state when problem changes */
   useEffect(() => {
@@ -55,7 +57,8 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     setResult(null);
     setLastWrongMove(null);
     setCoachReview(null);
-    
+    coachRequestId.current += 1;
+
     // Reset multi-step state
     setCurrentStep(1);
     setStepWrongAttempts([]);
@@ -244,18 +247,47 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
       setLastWrongMove(null);
     }
     setCoachReview(null);
+    coachRequestId.current += 1;
   }, [isMultiStep, currentStep]);
 
-  const handleShowCoach = useCallback(() => {
+  const handleShowCoach = useCallback(async () => {
     if (!currentWrongMove) return;
-    const result = getLocalReview({
+    const thisRequestId = ++coachRequestId.current;
+    const localResult = getLocalReview({
       problem,
       attemptedMove: currentWrongMove,
       correctMove: currentAnswers[0],
       usedHint: currentHintIndex > 0,
     });
-    setCoachReview(result);
-  }, [problem, currentWrongMove, currentAnswers, currentHintIndex]);
+    setCoachReview(localResult);
+
+    try {
+      const signal = await requestEngineReview({
+        boardSize: problem.boardSize,
+        initialStones: boardStones.map((s) => ({ x: s.x, y: s.y, color: s.color })),
+        attemptedMove: currentWrongMove,
+        authoredAnswer: currentAnswers[0],
+        category: problem.category,
+      });
+      if (coachRequestId.current !== thisRequestId) return;
+      if (signal) {
+        const engineSignal: EngineReviewSignalLike = {
+          confidence: signal.confidence,
+          agreesWithAuthoredAnswer: signal.agreesWithAuthoredAnswer,
+        };
+        const engineResult = getLocalReview({
+          problem,
+          attemptedMove: currentWrongMove,
+          correctMove: currentAnswers[0],
+          usedHint: currentHintIndex > 0,
+        }, engineSignal);
+        if (coachRequestId.current !== thisRequestId) return;
+        setCoachReview(engineResult);
+      }
+    } catch {
+      // Engine unavailable — local review already shown
+    }
+  }, [problem, currentWrongMove, currentAnswers, currentHintIndex, boardStones]);
 
   // Handle next step (for multi-step problems)
   const handleNextStep = useCallback(() => {
@@ -266,6 +298,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
 
     // Advance to next step
     setCoachReview(null);
+    coachRequestId.current += 1;
     setCurrentStep((prev) => prev + 1);
   }, [isMultiStep, currentStep, totalSteps, onNext]);
 
@@ -399,6 +432,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
           showAnswer={showAnswer}
           onShowCoach={currentWrongMove && !coachReview ? handleShowCoach : undefined}
           coachMessage={coachReview?.message ?? null}
+          coachSource={coachReview?.source ?? null}
         />
       )}
     </div>

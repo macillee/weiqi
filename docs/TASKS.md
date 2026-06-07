@@ -8,7 +8,8 @@
 # Current Phase
 
 v0.13.0b local engine adapter contract and sample config delivered — defines adapter interface, config shape, setup guide, and fallback behavior.
-v0.13.0c server-only engine adapter implementation delivered — `engine-config.ts` (env config reader), `engine-adapter.ts` (server-only adapter with timeout fallback), 20 tests. Next: v0.13.0d — Integrate Engine-Assisted Review Behind Feature Flag.
+v0.13.0c server-only engine adapter implementation delivered — `engine-config.ts` (env config reader), `engine-adapter.ts` (server-only adapter with timeout fallback), 20 tests.
+v0.13.0d engine-assisted review behind feature flag delivered — rule/template enrichment with engine signal, server action bridge, stale async guard, 3 component-level stale-guard tests, 16 engine-assisted tests (460 total). Next: v0.13.0e — v0.13 QA / Stabilization / Release Notes.
 
 Current strategy:
 
@@ -55,7 +56,12 @@ Current strategy:
    40. v0.12 stabilization completed — release notes and QA checklist published (PR #143)
    41. v0.13.0a local engine feasibility plan completed — evaluates KataGo integration for local move analysis without network dependency (PR #145)
     42. v0.13.0b local engine adapter contract and sample config completed — adapter interface, config shape, setup guide, and fallback behavior defined (PR #147)
+<<<<<<< HEAD
+    43. v0.13.0c server-only engine adapter implementation completed — engine-config.ts, engine-adapter.ts, 20 tests, timeout fallback, injectable execFile/existsSync (PR #150)
+    44. v0.13.0d engine-assisted review behind feature flag completed — ai-review.ts enrichment with engine signal, server action bridge, FeedbackDialog label, 16 new tests (PR #152)
+=======
     43. v0.13.0c server-only engine adapter implementation completed — engine-config.ts, engine-adapter.ts, 20 tests, timeout fallback, injectable execFile/existsSync (TBD PR)
+>>>>>>> origin/main
 ```
 
 ---
@@ -2303,6 +2309,71 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 - PR: TBD (closes #149)
 
 ---
+<<<<<<< HEAD
+
+# Delivered: v0.13.0d — Engine-Assisted Review Behind Feature Flag
+
+## What was done
+
+- `src/lib/ai-review.ts`:
+  - Added `EngineReviewSignalLike` type (client-safe subset of `EngineReviewSignal`)
+  - Extended `LocalReviewResult.source` to `"rule-template" | "engine-assisted"`
+  - Added `ENGINE_ASSISTED_MESSAGES` — 3 category-specific Chinese messages per category (≤150 chars)
+  - `getLocalReview(input, engineSignal?)` — when engine signal confident + agrees with authored answer, returns engine-assisted messages; otherwise rule/template fallback
+  - `validateReviewOutput` accepts both `"rule-template"` and `"engine-assisted"` sources
+- `src/lib/review-actions.ts` (new, `'use server'`):
+  - `requestEngineReview(input)` — parses `KATAGO_*` config, calls `analyzeWrongMove`, returns `EngineReviewSignal | null`
+  - Returns null when disabled/unavailable/errors (no subprocess spawned when disabled)
+- `src/components/problem/ProblemPlayer.tsx`:
+  - `handleShowCoach` now async: shows rule/template message instantly, calls server action in background
+  - Confident engine signal silently upgrades the coach message
+  - All existing reset behavior preserved
+- `src/components/problem/FeedbackDialog.tsx`:
+  - `coachSource` prop — shows subtle `本地引擎辅助` label when `"engine-assisted"`
+- `src/__tests__/ai-review.test.ts` — 16 new tests: engine-assisted source, confidence thresholds, disagree fallback, hint-used path, validation, all categories pass
+
+## Feature flag / Fallback summary
+
+| Scenario | Behavior |
+|---|---|
+| `KATAGO_ENABLED !== "true"` | Server action returns null; rule/template coach unchanged |
+| Engine disabled/unavailable/timeout/error | Server action returns null; rule/template coach unchanged |
+| Signal confident + agrees with answer | Engine-assisted messages used; `本地引擎辅助` label shown |
+| Signal low confidence or disagrees | Rule/template fallback; no label |
+
+## Server/Client boundary
+
+- `engine-adapter.ts` and `engine-config.ts` — `import "server-only"`, never imported by client
+- `review-actions.ts` — `'use server'`, client imports only action reference
+- `ai-review.ts` — client-safe, defines own `EngineReviewSignalLike` type
+
+## Explicitly NOT delivered
+
+- No KataGo binary, model file, or config committed
+- No `package.json` / `package-lock.json` changes
+- No problem data, schema, Supabase, or SQL changes
+- No Docker, CI, or E2E changes
+- No external dependencies
+- No settings page or diagnostics UI
+- No free-form chat, raw winrate/scoreLead, or LLM integration
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Part of `next build` — passes |
+| `npm run test` | 457 passed (23 files) |
+| `npm run build` | Compiled successfully |
+
+## Branch
+
+- `feat/v0.13.0d-engine-review-flag`
+- PR #152 (closes #151)
+
+---
+=======
+>>>>>>> origin/main
 
 ## v0.2.3 — Server Progress
 
@@ -2399,8 +2470,13 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 - v0.13.0a: local engine feasibility and KataGo prototype plan (completed)
 - v0.13.0b: local engine adapter contract / sample config (completed)
 - v0.13.0c: implement server-only engine adapter with timeout fallback (completed)
+<<<<<<< HEAD
+- v0.13.0d: integrate engine-assisted review behind feature flag (completed)
+- v0.13.0e: QA / stabilization / release notes (next)
+=======
 - v0.13.0d: integrate engine-assisted review behind feature flag
 - v0.13.0e: QA / stabilization / release notes
+>>>>>>> origin/main
 
 ---
 
