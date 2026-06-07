@@ -124,8 +124,8 @@ These explanations are short but grammatically complete Chinese sentences. They 
 
 ### Summary
 
-- **12 single-step + 2 multi-step = 14 total** (or 14 if multi-step are also counted as single-step with additional steps; the 3 multi-step target is included within the 14 count — 2 multi-step + 1 mixed multi-step).
-- **3 multi-step targets:** 1 capture (race reading), 1 connect_cut (deep reading), 1 mixed (cross-category review).
+- **11 single-step + 3 multi-step = 14 total**. The 3 multi-step problems are included within the 14-problem Pack A target.
+- **3 multi-step targets:** 1 capture race reading, 1 connect_cut deep reading, 1 mixed cross-category review.
 - **Emphasis on L4–5** where gaps are widest.
 - **Mixed category seeded** with 3 problems (L3, L4, L5) — critical for reviewing multiple skills.
 
