@@ -60,7 +60,7 @@ Current strategy:
      44. v0.13.0d engine-assisted review behind feature flag completed — ai-review.ts enrichment with engine signal, server action bridge, FeedbackDialog label, 16 new tests, stale async guard (PR #152)
     45. v0.13.0e v0.13 QA / stabilization / release notes completed — conflict marker cleanup, release notes, QA checklist (PR #154)
     46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #156)
-    47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #157)
+    47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #158)
 ```
 
 ---
@@ -2436,7 +2436,7 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 ## Branch
 
-- `docs/v0.14.0b-ux-observation-checklist` → PR #157
+- `docs/v0.14.0b-ux-observation-checklist` → PR #158
 
 ---
 

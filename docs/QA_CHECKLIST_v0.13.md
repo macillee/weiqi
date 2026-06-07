@@ -99,7 +99,7 @@ docker compose up --build
 | KataGo unavailable path checked | |
 | KataGo available path checked (optional) | |
 | Coach reset / async guard checked | |
-| Known issues |
+| Known issues | |
 
 ---
 
@@ -113,4 +113,4 @@ For manual UX evaluation of the engine-assisted review feature, see the separate
 - Includes per-problem and session-level observation templates.
 - Defines decision criteria for keep/improve/hide/diagnose/disable.
 - Does not replace this QA checklist — run this checklist first to confirm basic functionality, then use the observation checklist for UX evaluation.
-- No telemetry, analytics, or screenshots required. |
+- No telemetry, analytics, or screenshots required.
