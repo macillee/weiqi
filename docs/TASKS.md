@@ -64,7 +64,7 @@ Current strategy:
     48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
      49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
      50. v0.14.0e v0.14 QA / stabilization / release notes completed — release notes, QA checklist, task queue update (PR #164)
-    51. v0.15.0a content quality / intermediate problem expansion plan completed — plan targeting level 3–5, quality dimensions, audit requirements, Pack A requirements, human review checklist (PR #TBD)
+    51. v0.15.0a content quality / intermediate problem expansion plan completed — plan targeting level 3–5, quality dimensions, audit requirements, Pack A requirements, human review checklist (PR #166)
 ```
 
 ---
@@ -2557,7 +2557,7 @@ Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, 
 
 ## Branch
 
-- `docs/v0.15.0a-content-quality-plan` → PR #TBD
+- `docs/v0.15.0a-content-quality-plan` → PR #166
 
 ---
 
