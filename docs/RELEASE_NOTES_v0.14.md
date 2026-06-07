@@ -19,7 +19,7 @@ Key outcomes:
 | v0.14.0b | Manual UX observation checklist for engine-assisted review | #158 |
 | v0.14.0c | Local engine diagnostics contract, no UI | #160 |
 | v0.14.0d | Optional server-only diagnostics helper | #162 |
-| v0.14.0e | Stabilization / release notes / QA checklist | #TBD |
+| v0.14.0e | Stabilization / release notes / QA checklist | #164 |
 
 ## 3. Product Behavior Changes
 

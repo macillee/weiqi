@@ -63,7 +63,7 @@ Current strategy:
     47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #158)
     48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
      49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
-    50. v0.14.0e v0.14 QA / stabilization / release notes completed — release notes, QA checklist, task queue update (PR #TBD)
+    50. v0.14.0e v0.14 QA / stabilization / release notes completed — release notes, QA checklist, task queue update (PR #164)
 ```
 
 ---
@@ -2529,7 +2529,7 @@ npm run build     # compiled successfully
 
 ## Branch
 
-- `docs/v0.14.0e-stabilization-release-notes` → PR #TBD
+- `docs/v0.14.0e-stabilization-release-notes` → PR #164
 
 ---
 
