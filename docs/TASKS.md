@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.14.0a engine-assisted review UX evaluation and local diagnostics plan delivered — defines UX evaluation questions, manual observation protocol, diagnostics needs, privacy constraints, and conservative v0.14 slice plan.
+v0.14.0b manual UX observation checklist for engine-assisted review delivered — structured per-problem and session-level observation templates covering engine disabled, unavailable, and optional available states, with decision criteria for next steps.
 
-v0.14.0a complete. Next: v0.14.0b — Manual UX Evaluation Notes / QA Checklist Extension.
+v0.14.0b complete. Next: v0.14.0c — Local Engine Diagnostics Contract, no UI.
 
 Current strategy:
 
@@ -60,6 +60,7 @@ Current strategy:
      44. v0.13.0d engine-assisted review behind feature flag completed — ai-review.ts enrichment with engine signal, server action bridge, FeedbackDialog label, 16 new tests, stale async guard (PR #152)
     45. v0.13.0e v0.13 QA / stabilization / release notes completed — conflict marker cleanup, release notes, QA checklist (PR #154)
     46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #156)
+    47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #157)
 ```
 
 ---
@@ -2415,6 +2416,30 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 ---
 
+# Delivered: v0.14.0b — Manual UX Observation Checklist for Engine-Assisted Review
+
+## What was done
+
+- `docs/UX_OBSERVATION_CHECKLIST_v0.14.md` — structured manual observation checklist with:
+  - Three session setups (engine disabled, unavailable, optional available)
+  - Per-problem observation form
+  - Session summary form
+  - Decision criteria for keep/improve/hide/diagnose/disable
+  - Privacy/safety reminders
+  - Sign-off template
+- `docs/QA_CHECKLIST_v0.13.md` — added v0.14 observation addendum appendix pointing to the new checklist.
+- `docs/TASKS.md` — marked v0.14.0b delivered, next task set to v0.14.0c.
+
+## Validation
+
+Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, package files, SQL/Supabase, KataGo binary/model/config, or runtime app behavior was modified. Validation commands not re-run per docs-only rationale.
+
+## Branch
+
+- `docs/v0.14.0b-ux-observation-checklist` → PR #157
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2516,7 +2541,8 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 ## v0.14.0 — Engine-Assisted Review UX Evaluation (planning)
 
 - v0.14.0a: engine-assisted review UX evaluation / local engine diagnostics plan (completed)
-- v0.14.0b: manual UX evaluation notes / QA checklist extension (next)
+- v0.14.0b: manual UX evaluation notes / QA checklist extension (completed)
+- v0.14.0c: local engine diagnostics contract, no UI (next)
 
 ---
 
