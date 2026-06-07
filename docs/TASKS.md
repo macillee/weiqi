@@ -59,7 +59,7 @@ Current strategy:
     43. v0.13.0c server-only engine adapter implementation completed — engine-config.ts, engine-adapter.ts, 20 tests, timeout fallback, injectable execFile/existsSync (PR #150)
      44. v0.13.0d engine-assisted review behind feature flag completed — ai-review.ts enrichment with engine signal, server action bridge, FeedbackDialog label, 16 new tests, stale async guard (PR #152)
     45. v0.13.0e v0.13 QA / stabilization / release notes completed — conflict marker cleanup, release notes, QA checklist (PR #154)
-    46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #155)
+    46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #156)
 ```
 
 ---
@@ -2411,7 +2411,7 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 ## Branch
 
-- `docs/v0.14.0a-engine-review-ux-diagnostics-plan` → PR #155
+- `docs/v0.14.0a-engine-review-ux-diagnostics-plan` → PR #156
 
 ---
 

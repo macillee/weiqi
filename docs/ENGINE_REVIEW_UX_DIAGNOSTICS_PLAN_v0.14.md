@@ -161,12 +161,14 @@ Evaluate options. **None are implemented in v0.14.0a.**
 - Benefit: zero risk, zero maintenance
 - Risk: no automated insight, relies on parent diligence
 
-### Option 2: Developer console logging behind dev flag
+### Option 2: Developer console logging behind dev flag (server/local-only)
 
-- Log engine availability and analysis results to `console.debug` when `NEXT_PUBLIC_ENGINE_DEV_LOG=true`
+- Log engine availability and analysis results to server-side console when `ENGINE_DIAGNOSTICS_DEV_LOG=true`
+- Must be server-only / local-only — **not** `NEXT_PUBLIC_*` (public client env flags weaken the child-facing boundary)
 - Must avoid child-facing noise
 - Useful for local debugging
 - Risk: log output is ephemeral, no retained history
+- If client-side logging is ever proposed later, it must be explicitly justified and gated separately
 
 ### Option 3: Parent-facing local diagnostics panel
 
