@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useCallback, useEffect, useMemo, useRef } from "react";
 import GoBoard from "@/components/board/GoBoard";
 import ProblemHeader from "@/components/problem/ProblemHeader";
 import HintPanel from "@/components/problem/HintPanel";
@@ -48,6 +48,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
   } | null>(null);
   const [celebrateTrigger, setCelebrateTrigger] = useState(0);
   const [coachReview, setCoachReview] = useState<LocalReviewResult | null>(null);
+  const coachRequestId = useRef(0);
 
   /* eslint-disable react-hooks/set-state-in-effect -- reset state when problem changes */
   useEffect(() => {
@@ -56,7 +57,8 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     setResult(null);
     setLastWrongMove(null);
     setCoachReview(null);
-    
+    coachRequestId.current += 1;
+
     // Reset multi-step state
     setCurrentStep(1);
     setStepWrongAttempts([]);
@@ -245,10 +247,12 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
       setLastWrongMove(null);
     }
     setCoachReview(null);
+    coachRequestId.current += 1;
   }, [isMultiStep, currentStep]);
 
   const handleShowCoach = useCallback(async () => {
     if (!currentWrongMove) return;
+    const thisRequestId = ++coachRequestId.current;
     const localResult = getLocalReview({
       problem,
       attemptedMove: currentWrongMove,
@@ -265,6 +269,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
         authoredAnswer: currentAnswers[0],
         category: problem.category,
       });
+      if (coachRequestId.current !== thisRequestId) return;
       if (signal) {
         const engineSignal: EngineReviewSignalLike = {
           confidence: signal.confidence,
@@ -276,6 +281,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
           correctMove: currentAnswers[0],
           usedHint: currentHintIndex > 0,
         }, engineSignal);
+        if (coachRequestId.current !== thisRequestId) return;
         setCoachReview(engineResult);
       }
     } catch {
@@ -292,6 +298,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
 
     // Advance to next step
     setCoachReview(null);
+    coachRequestId.current += 1;
     setCurrentStep((prev) => prev + 1);
   }, [isMultiStep, currentStep, totalSteps, onNext]);
 
