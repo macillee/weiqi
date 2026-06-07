@@ -62,7 +62,7 @@ Current strategy:
     46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #156)
     47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #158)
     48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
-    49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #161)
+    49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
 ```
 
 ---
@@ -2503,7 +2503,7 @@ npm run build     # compiled successfully
 
 ## Branch
 
-- `feat/v0.14.0d-engine-diagnostics-helper` → PR #161
+- `feat/v0.14.0d-engine-diagnostics-helper` → PR #162
 
 ---
 
