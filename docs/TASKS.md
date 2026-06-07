@@ -61,7 +61,7 @@ Current strategy:
     45. v0.13.0e v0.13 QA / stabilization / release notes completed — conflict marker cleanup, release notes, QA checklist (PR #154)
     46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #156)
     47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #158)
-    48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #159)
+    48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
 ```
 
 ---
@@ -2461,7 +2461,7 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 ## Branch
 
-- `docs/v0.14.0c-local-engine-diagnostics-contract` → PR #159
+- `docs/v0.14.0c-local-engine-diagnostics-contract` → PR #160
 
 ---
 
