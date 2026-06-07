@@ -65,7 +65,7 @@ Current strategy:
      49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
      50. v0.14.0e v0.14 QA / stabilization / release notes completed — release notes, QA checklist, task queue update (PR #164)
     51. v0.15.0a content quality / intermediate problem expansion plan completed — plan targeting level 3–5, quality dimensions, audit requirements, Pack A requirements, human review checklist (PR #166)
-    52. v0.15.0b content inventory / gap audit for level 3–5 problems completed — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (PR #TBD)
+    52. v0.15.0b content inventory / gap audit for level 3–5 problems completed — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (PR #168)
 ```
 
 ---
@@ -2582,7 +2582,7 @@ Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, 
 
 ## Branch
 
-- `docs/v0.15.0b-content-inventory-audit` → PR #TBD
+- `docs/v0.15.0b-content-inventory-audit` → PR #168
 
 ---
 
