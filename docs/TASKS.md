@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.14.0d optional developer diagnostics helper delivered — server-only getLocalEngineDiagnostics() with sanitized config booleans, last-analysis lifecycle support, and 14 unit tests.
+v0.14.0a–e delivered — UX evaluation plan, manual observation checklist, diagnostics contract, server-only diagnostics helper, and stabilization docs.
 
-v0.14.0d complete. Next: v0.14.0e — v0.14 Stabilization / Release Notes.
+v0.14 complete. Next: v0.15.0a — Content Quality / Intermediate Problem Expansion Plan.
 
 Current strategy:
 
@@ -62,7 +62,8 @@ Current strategy:
     46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #156)
     47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #158)
     48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
-    49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
+     49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
+    50. v0.14.0e v0.14 QA / stabilization / release notes completed — release notes, QA checklist, task queue update (PR #164)
 ```
 
 ---
@@ -2507,6 +2508,31 @@ npm run build     # compiled successfully
 
 ---
 
+# Delivered: v0.14.0e — Stabilization / Release Notes / QA Checklist
+
+## Deliverables
+
+- `docs/RELEASE_NOTES_v0.14.md` — v0.14 release notes covering: UX evaluation, diagnostics contract and helper, non-goals, unchanged scope.
+- `docs/QA_CHECKLIST_v0.14.md` — manual QA checklist covering: environment setup, static validation, E2E/Docker, engine-assisted observation, diagnostics helper QA, privacy/safety, regression checks, sign-off.
+- `docs/TASKS.md` — marked v0.14.0e delivered, v0.14 complete, next task → v0.15.0a.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | All tests pass |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | Not re-run (no E2E tests modified; baseline from PR #162 CI: 6 passed) |
+| `docker compose build` | Not re-run (no Docker/CI changes; baseline from PR #162 CI: exit 0) |
+
+## Branch
+
+- `docs/v0.14.0e-stabilization-release-notes` → PR #164
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2605,13 +2631,17 @@ npm run build     # compiled successfully
 - v0.13.0d: integrate engine-assisted review behind feature flag (completed)
 - v0.13.0e: QA / stabilization / release notes (completed)
 
-## v0.14.0 — Engine-Assisted Review UX Evaluation (planning)
+## v0.14.0 — Engine-Assisted Review UX Evaluation — COMPLETE
 
 - v0.14.0a: engine-assisted review UX evaluation / local engine diagnostics plan (completed)
 - v0.14.0b: manual UX evaluation notes / QA checklist extension (completed)
 - v0.14.0c: local engine diagnostics contract, no UI (completed)
 - v0.14.0d: optional developer diagnostics helper, local-only / server-only (completed)
-- v0.14.0e: v0.14 stabilization / release notes (next)
+- v0.14.0e: v0.14 stabilization / release notes (completed)
+
+## v0.15.0 — Content Quality / Intermediate Problem Expansion (planning)
+
+- v0.15.0a: content quality / intermediate problem expansion plan (next)
 
 ---
 
