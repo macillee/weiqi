@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.13.0b–e delivered — local Go engine feasibility plan, adapter contract, server-only engine adapter, engine-assisted review behind feature flag, and stabilization docs.
+v0.14.0a engine-assisted review UX evaluation and local diagnostics plan delivered — defines UX evaluation questions, manual observation protocol, diagnostics needs, privacy constraints, and conservative v0.14 slice plan.
 
-v0.13 complete. Next: v0.14.0a — Engine-Assisted Review UX Evaluation / Local Engine Diagnostics Plan.
+v0.14.0a complete. Next: v0.14.0b — Manual UX Evaluation Notes / QA Checklist Extension.
 
 Current strategy:
 
@@ -59,6 +59,7 @@ Current strategy:
     43. v0.13.0c server-only engine adapter implementation completed — engine-config.ts, engine-adapter.ts, 20 tests, timeout fallback, injectable execFile/existsSync (PR #150)
      44. v0.13.0d engine-assisted review behind feature flag completed — ai-review.ts enrichment with engine signal, server action bridge, FeedbackDialog label, 16 new tests, stale async guard (PR #152)
     45. v0.13.0e v0.13 QA / stabilization / release notes completed — conflict marker cleanup, release notes, QA checklist (PR #154)
+    46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #155)
 ```
 
 ---
@@ -2397,6 +2398,23 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 ---
 
+# Delivered: v0.14.0a — Engine-Assisted Review UX Evaluation / Local Engine Diagnostics Plan
+
+## What was done
+
+- `docs/ENGINE_REVIEW_UX_DIAGNOSTICS_PLAN_v0.14.md` — planning document covering UX evaluation questions, manual observation protocol, local diagnostics needs, privacy constraints, candidate implementation options, conservative v0.14 slice plan (b–e), and v0.14.0b next-task definition.
+- `docs/TASKS.md` — marked v0.14.0a delivered, next task set to v0.14.0b.
+
+## Validation
+
+Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, package files, SQL/Supabase, KataGo binary/model/config, or runtime app behavior was modified. Validation commands not re-run per docs-only rationale.
+
+## Branch
+
+- `docs/v0.14.0a-engine-review-ux-diagnostics-plan` → PR #155
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2497,7 +2515,8 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 ## v0.14.0 — Engine-Assisted Review UX Evaluation (planning)
 
-- v0.14.0a: engine-assisted review UX evaluation / local engine diagnostics plan (next)
+- v0.14.0a: engine-assisted review UX evaluation / local engine diagnostics plan (completed)
+- v0.14.0b: manual UX evaluation notes / QA checklist extension (next)
 
 ---
 
