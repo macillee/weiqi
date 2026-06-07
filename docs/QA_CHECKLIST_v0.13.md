@@ -100,3 +100,17 @@ docker compose up --build
 | KataGo available path checked (optional) | |
 | Coach reset / async guard checked | |
 | Known issues | |
+
+---
+
+## Appendix: v0.14 Observation Addendum
+
+For manual UX evaluation of the engine-assisted review feature, see the separate observation checklist:
+
+[`docs/UX_OBSERVATION_CHECKLIST_v0.14.md`](./UX_OBSERVATION_CHECKLIST_v0.14.md)
+
+- Covers three session types: engine disabled, engine unavailable, and engine available (optional).
+- Includes per-problem and session-level observation templates.
+- Defines decision criteria for keep/improve/hide/diagnose/disable.
+- Does not replace this QA checklist — run this checklist first to confirm basic functionality, then use the observation checklist for UX evaluation.
+- No telemetry, analytics, or screenshots required.
