@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.14.0c local engine diagnostics contract delivered — defines TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target.
+v0.14.0d optional developer diagnostics helper delivered — server-only getLocalEngineDiagnostics() with sanitized config booleans, last-analysis lifecycle support, and 14 unit tests.
 
-v0.14.0c complete. Next: v0.14.0d — Optional Developer Diagnostics Helper, local-only / server-only.
+v0.14.0d complete. Next: v0.14.0e — v0.14 Stabilization / Release Notes.
 
 Current strategy:
 
@@ -62,6 +62,7 @@ Current strategy:
     46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #156)
     47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #158)
     48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
+    49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
 ```
 
 ---
@@ -2465,6 +2466,47 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 ---
 
+# Delivered: v0.14.0d — Optional Developer Diagnostics Helper, local-only / server-only
+
+## What was done
+
+- `src/lib/engine-diagnostics.ts` — server-only diagnostics helper with:
+  - `getLocalEngineDiagnostics()` returning `LocalEngineDiagnostics` with status, reasons, sanitized config booleans, and last-analysis state
+  - No raw file paths, child data, board positions, winrate, or scoreLead in output
+  - No `child_process` spawning or `analyzeWrongMove()` calls
+  - Injectability for config, availability, lastAnalysis, and clock for testing
+- `src/__tests__/engine-diagnostics.test.ts` — 14 unit tests covering:
+  - disabled config → status disabled
+  - enabled missing binary → enabled-unavailable with missing-binary reason
+  - enabled missing model → enabled-unavailable with missing-model reason
+  - enabled available → status available
+  - missing-config reason when configPath not set
+  - sanitized config exposes booleans only, never raw paths
+  - default lastAnalysis is not-run
+  - timeout → rule-template fallback
+  - malformed-output → rule-template fallback
+  - process-error → rule-template fallback
+  - successful analysis → engine-assisted source
+  - checkedAt deterministic with injected clock
+  - no raw engine output, winrate, scoreLead, or board position
+  - no child data or progress
+- `docs/TASKS.md` — marked v0.14.0d delivered, next task set to v0.14.0e.
+
+## Validation
+
+```bash
+npm run lint      # exit 0
+npm run typecheck # exit 0
+npm run test      # all tests pass
+npm run build     # compiled successfully
+```
+
+## Branch
+
+- `feat/v0.14.0d-engine-diagnostics-helper` → PR #162
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2568,7 +2610,8 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 - v0.14.0a: engine-assisted review UX evaluation / local engine diagnostics plan (completed)
 - v0.14.0b: manual UX evaluation notes / QA checklist extension (completed)
 - v0.14.0c: local engine diagnostics contract, no UI (completed)
-- v0.14.0d: optional developer diagnostics helper, local-only / server-only (next)
+- v0.14.0d: optional developer diagnostics helper, local-only / server-only (completed)
+- v0.14.0e: v0.14 stabilization / release notes (next)
 
 ---
 
