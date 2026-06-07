@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.13.0b local engine adapter contract and sample config delivered — defines adapter interface, config shape, setup guide, and fallback behavior.
-v0.13.0c server-only engine adapter implementation delivered — `engine-config.ts` (env config reader), `engine-adapter.ts` (server-only adapter with timeout fallback), 20 tests.
-v0.13.0d engine-assisted review behind feature flag delivered — rule/template enrichment with engine signal, server action bridge, stale async guard, 3 component-level stale-guard tests, 16 engine-assisted tests (460 total). Next: v0.13.0e — v0.13 QA / Stabilization / Release Notes.
+v0.13.0b–e delivered — local Go engine feasibility plan, adapter contract, server-only engine adapter, engine-assisted review behind feature flag, and stabilization docs.
+
+v0.13 complete. Next: v0.14.0a — Engine-Assisted Review UX Evaluation / Local Engine Diagnostics Plan.
 
 Current strategy:
 
@@ -56,12 +56,9 @@ Current strategy:
    40. v0.12 stabilization completed — release notes and QA checklist published (PR #143)
    41. v0.13.0a local engine feasibility plan completed — evaluates KataGo integration for local move analysis without network dependency (PR #145)
     42. v0.13.0b local engine adapter contract and sample config completed — adapter interface, config shape, setup guide, and fallback behavior defined (PR #147)
-<<<<<<< HEAD
     43. v0.13.0c server-only engine adapter implementation completed — engine-config.ts, engine-adapter.ts, 20 tests, timeout fallback, injectable execFile/existsSync (PR #150)
-    44. v0.13.0d engine-assisted review behind feature flag completed — ai-review.ts enrichment with engine signal, server action bridge, FeedbackDialog label, 16 new tests (PR #152)
-=======
-    43. v0.13.0c server-only engine adapter implementation completed — engine-config.ts, engine-adapter.ts, 20 tests, timeout fallback, injectable execFile/existsSync (TBD PR)
->>>>>>> origin/main
+     44. v0.13.0d engine-assisted review behind feature flag completed — ai-review.ts enrichment with engine signal, server action bridge, FeedbackDialog label, 16 new tests, stale async guard (PR #152)
+    45. v0.13.0e v0.13 QA / stabilization / release notes completed — conflict marker cleanup, release notes, QA checklist (PR #TBD)
 ```
 
 ---
@@ -2309,7 +2306,6 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 - PR: TBD (closes #149)
 
 ---
-<<<<<<< HEAD
 
 # Delivered: v0.13.0d — Engine-Assisted Review Behind Feature Flag
 
@@ -2372,8 +2368,30 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 - PR #152 (closes #151)
 
 ---
-=======
->>>>>>> origin/main
+
+# Delivered: v0.13.0e — Stabilization / Release Notes / QA Checklist
+
+## Deliverables
+
+- `docs/TASKS.md` — removed all conflict markers; preserved correct v0.13.0c (PR #150) and v0.13.0d (PR #152) history; marked v0.13.0e delivered, v0.13 complete, next task → v0.14.0a.
+- `docs/RELEASE_NOTES_v0.13.md` — v0.13 release notes covering: optional local Go engine path, engine-assisted review, stale async guard, non-goals.
+- `docs/QA_CHECKLIST_v0.13.md` — manual QA checklist covering: engine disabled, engine unavailable, engine-assisted with local KataGo, coach reset/async guard, safety/privacy, Docker, and validation.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 460 passed (24 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | Not re-run (no E2E tests modified) |
+
+## Branch
+
+- `docs/v0.13.0e-stabilization-release-notes` → PR #TBD
+
+---
 
 ## v0.2.3 — Server Progress
 
@@ -2465,18 +2483,17 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 - v0.12.0e: intermediate content expansion and human-reviewed pipeline (completed)
 - v0.12.0f: stabilization / release notes (completed)
 
-## v0.13.0 — Local Go Engine Feasibility / KataGo Prototype Plan
+## v0.13.0 — Local Go Engine Feasibility / KataGo Prototype Plan — COMPLETE
 
 - v0.13.0a: local engine feasibility and KataGo prototype plan (completed)
 - v0.13.0b: local engine adapter contract / sample config (completed)
 - v0.13.0c: implement server-only engine adapter with timeout fallback (completed)
-<<<<<<< HEAD
 - v0.13.0d: integrate engine-assisted review behind feature flag (completed)
-- v0.13.0e: QA / stabilization / release notes (next)
-=======
-- v0.13.0d: integrate engine-assisted review behind feature flag
-- v0.13.0e: QA / stabilization / release notes
->>>>>>> origin/main
+- v0.13.0e: QA / stabilization / release notes (completed)
+
+## v0.14.0 — Engine-Assisted Review UX Evaluation (planning)
+
+- v0.14.0a: engine-assisted review UX evaluation / local engine diagnostics plan (next)
 
 ---
 
