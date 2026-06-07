@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.14.0b manual UX observation checklist for engine-assisted review delivered — structured per-problem and session-level observation templates covering engine disabled, unavailable, and optional available states, with decision criteria for next steps.
+v0.14.0c local engine diagnostics contract delivered — defines TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target.
 
-v0.14.0b complete. Next: v0.14.0c — Local Engine Diagnostics Contract, no UI.
+v0.14.0c complete. Next: v0.14.0d — Optional Developer Diagnostics Helper, local-only / server-only.
 
 Current strategy:
 
@@ -61,6 +61,7 @@ Current strategy:
     45. v0.13.0e v0.13 QA / stabilization / release notes completed — conflict marker cleanup, release notes, QA checklist (PR #154)
     46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #156)
     47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #158)
+    48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #159)
 ```
 
 ---
@@ -2440,6 +2441,30 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 ---
 
+# Delivered: v0.14.0c — Local Engine Diagnostics Contract, no UI
+
+## What was done
+
+- `docs/LOCAL_ENGINE_DIAGNOSTICS_CONTRACT_v0.14.md` — diagnostics contract covering:
+  - TypeScript pseudo-contract with `LocalEngineDiagnostics`, `EngineLastAnalysisDiagnostics`, and typed status/reason/latency types
+  - Data minimization rules (booleans not raw paths, no child data)
+  - Server/client boundary (server-only, no `NEXT_PUBLIC_*`)
+  - Last-analysis lifecycle table for all engine states
+  - Parent/developer presentation principles
+  - Risks and mitigations
+  - v0.14.0d next-task definition
+- `docs/TASKS.md` — marked v0.14.0c delivered, next task set to v0.14.0d.
+
+## Validation
+
+Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, package files, SQL/Supabase, KataGo binary/model/config, or runtime app behavior was modified. Validation commands not re-run per docs-only rationale.
+
+## Branch
+
+- `docs/v0.14.0c-local-engine-diagnostics-contract` → PR #159
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2542,7 +2567,8 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 
 - v0.14.0a: engine-assisted review UX evaluation / local engine diagnostics plan (completed)
 - v0.14.0b: manual UX evaluation notes / QA checklist extension (completed)
-- v0.14.0c: local engine diagnostics contract, no UI (next)
+- v0.14.0c: local engine diagnostics contract, no UI (completed)
+- v0.14.0d: optional developer diagnostics helper, local-only / server-only (next)
 
 ---
 
