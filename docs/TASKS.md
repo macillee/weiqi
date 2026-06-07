@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.15.0a content quality / intermediate problem expansion plan delivered — defines quality dimensions, intermediate content targets, audit requirements, Pack A requirements, human review checklist, and v0.15 slice plan.
+v0.15.0b content inventory / gap audit for level 3–5 problems delivered — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (14 problems), and v0.15.0c scope definition.
 
-v0.15.0a delivered. Next: v0.15.0b — Content Inventory / Gap Audit for Level 3–5 Problems.
+v0.15.0b delivered. Next: v0.15.0c — Intermediate Problem Pack A.
 
 Current strategy:
 
@@ -65,6 +65,7 @@ Current strategy:
      49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
      50. v0.14.0e v0.14 QA / stabilization / release notes completed — release notes, QA checklist, task queue update (PR #164)
     51. v0.15.0a content quality / intermediate problem expansion plan completed — plan targeting level 3–5, quality dimensions, audit requirements, Pack A requirements, human review checklist (PR #166)
+    52. v0.15.0b content inventory / gap audit for level 3–5 problems completed — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (PR #168)
 ```
 
 ---
@@ -2561,6 +2562,30 @@ Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, 
 
 ---
 
+# Delivered: v0.15.0b — Content Inventory / Gap Audit for Level 3–5 Problems
+
+## What was done
+
+- `docs/CONTENT_INVENTORY_v0.15.md` — audit report with 8 sections:
+  - Category-by-level matrix (all 7 categories, levels 1–5, 87 problems)
+  - Intermediate coverage analysis (life_death strong, mixed missing, L4–5 thin)
+  - Multi-step audit (9 problems, only 3 at L3+, none above L2 outside life_death)
+  - Potential review candidates (10 problems with concise explanations, capture/esca pe/connect_cut L1–2 skew)
+  - Pack A target matrix: 14 problems, L3–5, all 7 categories, 3 multi-step targets
+  - v0.15.0c scope definition
+  - Risks and review notes
+- `docs/TASKS.md` — marked v0.15.0b delivered, next task → v0.15.0c.
+
+## Validation
+
+Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, schema, SQL/Supabase, KataGo assets, Ollama/local LLM, external AI, settings page, diagnostics page, logging code, telemetry, API route, Server Action, or feature work was added. Validation commands not re-run per docs-only rationale.
+
+## Branch
+
+- `docs/v0.15.0b-content-inventory-audit` → PR #168
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2670,7 +2695,8 @@ Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, 
 ## v0.15.0 — Content Quality / Intermediate Problem Expansion
 
 - v0.15.0a: content quality / intermediate problem expansion plan (completed)
-- v0.15.0b: content inventory / gap audit for level 3–5 problems (next)
+- v0.15.0b: content inventory / gap audit for level 3–5 problems (completed)
+- v0.15.0c: intermediate problem pack A, 12–16 problems, human-authored/reviewed (next)
 
 ---
 
