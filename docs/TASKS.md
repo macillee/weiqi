@@ -9,7 +9,7 @@
 
 v0.13.0b local engine adapter contract and sample config delivered — defines adapter interface, config shape, setup guide, and fallback behavior.
 v0.13.0c server-only engine adapter implementation delivered — `engine-config.ts` (env config reader), `engine-adapter.ts` (server-only adapter with timeout fallback), 20 tests.
-v0.13.0d engine-assisted review behind feature flag delivered — rule/template enrichment with engine signal, server action bridge, 16 new tests. Next: v0.13.0e — v0.13 QA / Stabilization / Release Notes.
+v0.13.0d engine-assisted review behind feature flag delivered — rule/template enrichment with engine signal, server action bridge, stale async guard, 3 component-level stale-guard tests, 16 engine-assisted tests (460 total). Next: v0.13.0e — v0.13 QA / Stabilization / Release Notes.
 
 Current strategy:
 
@@ -56,8 +56,12 @@ Current strategy:
    40. v0.12 stabilization completed — release notes and QA checklist published (PR #143)
    41. v0.13.0a local engine feasibility plan completed — evaluates KataGo integration for local move analysis without network dependency (PR #145)
     42. v0.13.0b local engine adapter contract and sample config completed — adapter interface, config shape, setup guide, and fallback behavior defined (PR #147)
+<<<<<<< HEAD
     43. v0.13.0c server-only engine adapter implementation completed — engine-config.ts, engine-adapter.ts, 20 tests, timeout fallback, injectable execFile/existsSync (PR #150)
     44. v0.13.0d engine-assisted review behind feature flag completed — ai-review.ts enrichment with engine signal, server action bridge, FeedbackDialog label, 16 new tests (PR #152)
+=======
+    43. v0.13.0c server-only engine adapter implementation completed — engine-config.ts, engine-adapter.ts, 20 tests, timeout fallback, injectable execFile/existsSync (TBD PR)
+>>>>>>> origin/main
 ```
 
 ---
@@ -2305,6 +2309,7 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 - PR: TBD (closes #149)
 
 ---
+<<<<<<< HEAD
 
 # Delivered: v0.13.0d — Engine-Assisted Review Behind Feature Flag
 
@@ -2367,6 +2372,8 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 - PR #152 (closes #151)
 
 ---
+=======
+>>>>>>> origin/main
 
 ## v0.2.3 — Server Progress
 
@@ -2463,8 +2470,13 @@ Docs-only change. No code, tests, E2E tests, CI, Docker, problem data, schema, p
 - v0.13.0a: local engine feasibility and KataGo prototype plan (completed)
 - v0.13.0b: local engine adapter contract / sample config (completed)
 - v0.13.0c: implement server-only engine adapter with timeout fallback (completed)
+<<<<<<< HEAD
 - v0.13.0d: integrate engine-assisted review behind feature flag (completed)
 - v0.13.0e: QA / stabilization / release notes (next)
+=======
+- v0.13.0d: integrate engine-assisted review behind feature flag
+- v0.13.0e: QA / stabilization / release notes
+>>>>>>> origin/main
 
 ---
 
