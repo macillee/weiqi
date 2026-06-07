@@ -37,7 +37,7 @@ Key outcomes:
   - `reasons`: array of `EngineDiagnosticsReason` strings
   - `config`: sanitized booleans only (never raw file paths)
   - `checkedAt`: ISO timestamp
-  - `lastAnalysis`: `EngineLastAnalysisDiagnostics` or `undefined` — maps to `not-run`, `rule-template` (timeout/malformed/process-error), or `engine-assisted` (success)
+  - `lastAnalysis`: `EngineLastAnalysisDiagnostics` — always present; defaults to `not-run`; maps to `rule-template` fallback for timeout/malformed/process-error, or `engine-assisted` on success
 - Output does **not** include raw local paths, child data, board positions, moves, raw engine output, winrate, or scoreLead.
 - The helper does **not** call `analyzeWrongMove()`, spawn KataGo, or use `child_process`.
 - Tests use mocks/injected config/availability/clock and do not require a real KataGo binary.

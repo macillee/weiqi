@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.14.0b–e delivered — UX observation checklist, diagnostics contract, server-only diagnostics helper, stabilization docs.
+v0.14.0a–e delivered — UX evaluation plan, manual observation checklist, diagnostics contract, server-only diagnostics helper, and stabilization docs.
 
 v0.14 complete. Next: v0.15.0a — Content Quality / Intermediate Problem Expansion Plan.
 
