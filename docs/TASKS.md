@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.16.0a Learning Session Review / Parent Progress Insight Plan delivered — planning document covering parent questions, safe signals, data boundaries, pseudo-contract, wording principles, slice plan, and risks.
+v0.16.0b Session Review Data Contract and Local Aggregation Plan delivered — contract document covering source data assumptions, data minimization rules, TypeScript pseudo-contract, aggregation algorithm, heuristics, parent note templates, privacy checklist, and v0.16.0c implementation guidance.
 
-v0.16.0a complete. Next: v0.16.0b — Session Review Data Contract and Local Aggregation Plan.
+v0.16.0b complete. Next: v0.16.0c — Parent Session Summary Helper, local-only / no UI.
 
 Current strategy:
 
@@ -69,7 +69,8 @@ Current strategy:
      53. v0.15.0c Intermediate Problem Pack A completed — 14 new level 3-5 problems, 3 multi-step, first mixed problems, 8 new tests (PR #170)
       54. v0.15.0d Pack A content validation and regression completed — validation report, 12 regression tests, matrix/schema/text verified, no data defects found (PR #172)
        55. v0.15.0e v0.15 stabilization / release notes / QA checklist completed — release notes, QA checklist, task queue update (PR #174)
-      56. v0.16.0a learning session review / parent progress insight plan completed — planning document covering parent questions, safe signals, data boundaries, pseudo-contract, wording principles, slice plan, and risks (PR #176)
+       56. v0.16.0a learning session review / parent progress insight plan completed — planning document covering parent questions, safe signals, data boundaries, pseudo-contract, wording principles, slice plan, and risks (PR #176)
+      57. v0.16.0b session review data contract and local aggregation plan completed — contract document covering source data assumptions, data minimization, TypeScript pseudo-contract, aggregation algorithm, heuristics, parent note templates, privacy checklist, and v0.16.0c guidance (PR #177)
 ```
 
 ---
@@ -2685,6 +2686,30 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ---
 
+# Delivered: v0.16.0b — Session Review Data Contract and Local Aggregation Plan
+
+## Deliverables
+
+- `docs/SESSION_REVIEW_CONTRACT_v0.16.md` — contract document with 10 sections: goal and boundary, source data assumptions, data minimization rules, TypeScript pseudo-contract, aggregation algorithm, heuristics for strengths/shaky concepts/next focus, parent note template rules, privacy and safety checklist, implementation guidance for v0.16.0c, next task definition.
+- `docs/TASKS.md` — marked v0.16.0b delivered, next task → v0.16.0c.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | All tests pass |
+| `npm run build` | Compiled successfully |
+
+Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, problem data, schema, SQL/Supabase, KataGo binary/model/config, Ollama/local LLM, external AI, settings page, diagnostics page, logging code, telemetry, analytics, API route, Server Action, UI, report UI, dashboard, persistence, or feature work was added.
+
+## Branch
+
+- `docs/v0.16.0b-session-review-contract` → PR (this PR, closes #177)
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2802,7 +2827,8 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 ## v0.16.0 — Learning Session Review / Parent Progress Insight Plan
 
 - v0.16.0a: learning session review / parent progress insight plan (completed)
-- v0.16.0b: session review data contract and local aggregation plan (next)
+- v0.16.0b: session review data contract and local aggregation plan (completed)
+- v0.16.0c: parent session summary helper, local-only / no UI (next)
 ---
 
 # Task Discipline
