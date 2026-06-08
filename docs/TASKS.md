@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.15.0d Pack A content validation and regression completed — 14 problems validated (schema, coordinate, text, multi-step), matrix verified, 12 new regression tests (101 total, 58 at L3-5), validation report published.
+v0.15.0e Stabilization / Release Notes / QA Checklist delivered — release notes and QA checklist published, v0.15 series complete.
 
-v0.15.0d complete. Next: v0.15.0e — v0.15 Stabilization / Release Notes.
+v0.15.0e complete. Next: v0.16.0a — Learning Session Review / Parent Progress Insight Plan.
 
 Current strategy:
 
@@ -67,7 +67,8 @@ Current strategy:
      51. v0.15.0a content quality / intermediate problem expansion plan completed — plan targeting level 3–5, quality dimensions, audit requirements, Pack A requirements, human review checklist (PR #166)
      52. v0.15.0b content inventory / gap audit for level 3–5 problems completed — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (PR #168)
      53. v0.15.0c Intermediate Problem Pack A completed — 14 new level 3-5 problems, 3 multi-step, first mixed problems, 8 new tests (PR #170)
-     54. v0.15.0d Pack A content validation and regression completed — validation report, 12 regression tests, matrix/schema/text verified, no data defects found (PR #172)
+      54. v0.15.0d Pack A content validation and regression completed — validation report, 12 regression tests, matrix/schema/text verified, no data defects found (PR #172)
+      55. v0.15.0e v0.15 stabilization / release notes / QA checklist completed — release notes, QA checklist, task queue update (PR #174)
 ```
 
 ---
@@ -2611,6 +2612,54 @@ Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, 
 
 ---
 
+# Delivered: v0.15.0d — Content Validation and Regression for Pack A
+
+## Deliverables
+
+- `docs/PACK_A_VALIDATION_v0.15.md` — full validation report with 8 sections: scope and method, matrix verification, schema/metadata validation, tactical/human review notes, multi-step regression review, regression checks, defects found (none), sign-off checklist.
+- `src/__tests__/problems.test.ts` — 12 new regression tests: total library count 101, L3-5 count 58, per-category/level matrix assertion, answer emptiness, duplicate coordinates, text bounds, failure message wording, multi-step fields, mixed category tag.
+- `docs/TASKS.md` — marked v0.15.0d delivered, next task → v0.15.0e.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | All 492 tests pass |
+| `npm run build` | Compiled successfully |
+
+## Branch
+
+- `test/v0.15.0d-pack-a-validation-regression` → PR #172 (closes #171)
+
+---
+
+# Delivered: v0.15.0e — Stabilization / Release Notes / QA Checklist
+
+## Deliverables
+
+- `docs/RELEASE_NOTES_v0.15.md` — v0.15 release notes covering: content quality focus, delivered slices, product behavior changes, Pack A content summary, validation baseline, non-goals, known limitations.
+- `docs/QA_CHECKLIST_v0.15.md` — manual QA checklist covering: environment setup, static validation, E2E/Docker, Pack A data QA, practice regression, privacy/safety, sign-off template.
+- `docs/TASKS.md` — marked v0.15.0e delivered, v0.15 series complete, next task → v0.16.0a.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | All tests pass |
+| `npm run build` | Compiled successfully |
+
+Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, schema, SQL/Supabase, KataGo binary/model/config, Ollama/local LLM, external AI, settings page, diagnostics page, logging code, telemetry, API route, Server Action, or feature work was added.
+
+## Branch
+
+- `docs/v0.15.0e-stabilization-release-notes` → PR #174 (closes #173)
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2717,12 +2766,17 @@ Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, 
 - v0.14.0d: optional developer diagnostics helper, local-only / server-only (completed)
 - v0.14.0e: v0.14 stabilization / release notes (completed)
 
-## v0.15.0 — Content Quality / Intermediate Problem Expansion
+## v0.15.0 — Content Quality / Intermediate Problem Expansion ✅ COMPLETE
 
 - v0.15.0a: content quality / intermediate problem expansion plan (completed)
 - v0.15.0b: content inventory / gap audit for level 3–5 problems (completed)
 - v0.15.0c: Intermediate Problem Pack A (completed)
-- v0.15.0d: content validation and regression for Pack A (next)
+- v0.15.0d: content validation and regression for Pack A (completed)
+- v0.15.0e: stabilization / release notes / QA checklist (completed)
+
+## v0.16.0 — Learning Session Review / Parent Progress Insight Plan
+
+- v0.16.0a: learning session review / parent progress insight plan (next)
 ---
 
 # Task Discipline
