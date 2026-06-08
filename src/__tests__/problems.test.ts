@@ -738,8 +738,8 @@ describe("problem data quality", () => {
       "END-011", "END-012",
       "MIX-001", "MIX-002", "MIX-003",
     ];
-    const singleStepIds = ["CAP-022", "ESC-013", "ESC-014", "CC-018", "LD-013", "OP-011", "OP-012", "END-011", "END-012", "MIX-002", "MIX-003"];
-    const multiStepIds = ["CAP-021", "CC-017", "MIX-001"];
+    const singleStepIds = ["CAP-021", "ESC-013", "ESC-014", "CC-017", "LD-013", "OP-011", "OP-012", "END-011", "END-012", "MIX-002", "MIX-003"];
+    const multiStepIds = ["CAP-022", "CC-018", "MIX-001"];
     const categories = ["capture", "escape", "connect_cut", "life_death", "opening", "endgame", "mixed"] as const;
 
     it("all 14 v0.15.0c problem IDs exist", () => {
