@@ -61,9 +61,12 @@ Current strategy:
     45. v0.13.0e v0.13 QA / stabilization / release notes completed — conflict marker cleanup, release notes, QA checklist (PR #154)
     46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #156)
     47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #158)
-    48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
-    49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
-    50. v0.15.0c Intermediate Problem Pack A completed — 14 new level 3-5 problems, 3 multi-step, first mixed problems, 8 new tests (PR #170)
+     48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
+     49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
+     50. v0.14.0e v0.14 QA / stabilization / release notes completed — release notes, QA checklist, task queue update (PR #164)
+     51. v0.15.0a content quality / intermediate problem expansion plan completed — plan targeting level 3–5, quality dimensions, audit requirements, Pack A requirements, human review checklist (PR #166)
+     52. v0.15.0b content inventory / gap audit for level 3–5 problems completed — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (PR #168)
+     53. v0.15.0c Intermediate Problem Pack A completed — 14 new level 3-5 problems, 3 multi-step, first mixed problems, 8 new tests (PR #170)
 ```
 
 ---
@@ -2508,6 +2511,105 @@ npm run build     # compiled successfully
 
 ---
 
+# Delivered: v0.14.0e — Stabilization / Release Notes / QA Checklist
+
+## Deliverables
+
+- `docs/RELEASE_NOTES_v0.14.md` — v0.14 release notes covering: UX evaluation, diagnostics contract and helper, non-goals, unchanged scope.
+- `docs/QA_CHECKLIST_v0.14.md` — manual QA checklist covering: environment setup, static validation, E2E/Docker, engine-assisted observation, diagnostics helper QA, privacy/safety, regression checks, sign-off.
+- `docs/TASKS.md` — marked v0.14.0e delivered, v0.14 complete, next task → v0.15.0a.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | All tests pass |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | Not re-run (no E2E tests modified; baseline from PR #162 CI: 6 passed) |
+| `docker compose build` | Not re-run (no Docker/CI changes; baseline from PR #162 CI: exit 0) |
+
+## Branch
+
+- `docs/v0.14.0e-stabilization-release-notes` → PR #164
+
+---
+
+# Delivered: v0.15.0a — Content Quality / Intermediate Problem Expansion Plan
+
+## What was done
+
+- `docs/CONTENT_QUALITY_PLAN_v0.15.md` — decision-grade content plan with:
+  - Goal and constraints (shift from engine/diagnostics to content quality)
+  - Current content baseline (77 + 10 problems across 7 categories)
+  - 12 content quality dimensions
+  - Intermediate learner content targets (level 3–5 capture race, escape, connect/cut, life/death shape, opening direction, endgame, mixed review)
+  - Proposed v0.15 slice plan (audit → Pack A → validation → stabilization)
+  - Content inventory / gap audit requirements for v0.15.0b
+  - Intermediate Problem Pack A requirements (12–16 problems, levels 3–5, category-balanced, human-reviewed)
+  - Human review checklist (12-item per-problem checklist)
+  - Risk and mitigation (9 risks)
+  - Next task definition (v0.15.0b)
+- `docs/TASKS.md` — marked v0.15.0a delivered, next task → v0.15.0b.
+
+## Validation
+
+Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, schema, SQL/Supabase, KataGo assets, Ollama/local LLM, external AI, settings page, diagnostics page, logging code, telemetry, API route, Server Action, or feature work was added. Validation commands not re-run per docs-only rationale.
+
+## Branch
+
+- `docs/v0.15.0a-content-quality-plan` → PR #166
+
+---
+
+# Delivered: v0.15.0b — Content Inventory / Gap Audit for Level 3–5 Problems
+
+## What was done
+
+- `docs/CONTENT_INVENTORY_v0.15.md` — audit report with 8 sections:
+  - Category-by-level matrix (all 7 categories, levels 1–5, 87 problems)
+  - Intermediate coverage analysis (life_death strong, mixed missing, L4–5 thin)
+  - Multi-step audit (9 problems, only 3 at L3+, none above L2 outside life_death)
+  - Potential review candidates (10 problems with concise explanations, capture/esca pe/connect_cut L1–2 skew)
+  - Pack A target matrix: 14 problems, L3–5, all 7 categories, 3 multi-step targets
+  - v0.15.0c scope definition
+  - Risks and review notes
+- `docs/TASKS.md` — marked v0.15.0b delivered, next task → v0.15.0c.
+
+## Validation
+
+Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, schema, SQL/Supabase, KataGo assets, Ollama/local LLM, external AI, settings page, diagnostics page, logging code, telemetry, API route, Server Action, or feature work was added. Validation commands not re-run per docs-only rationale.
+
+## Branch
+
+- `docs/v0.15.0b-content-inventory-audit` → PR #168
+
+---
+
+# Delivered: v0.15.0c — Intermediate Problem Pack A
+
+## Deliverables
+
+- `src/data/problems.json` — 14 new intermediate level 3-5 problems (101 total).
+- `src/__tests__/problems.test.ts` — added mixed category to validation, 8 new test assertions for Pack A.
+- `docs/TASKS.md` — marked v0.15.0c delivered, next task → v0.15.0d.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | All 482 tests pass |
+| `npm run build` | Compiled successfully |
+
+## Branch
+
+- `feat/v0.15.0c-intermediate-problem-pack-a` → PR #170
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2606,14 +2708,20 @@ npm run build     # compiled successfully
 - v0.13.0d: integrate engine-assisted review behind feature flag (completed)
 - v0.13.0e: QA / stabilization / release notes (completed)
 
-## v0.14.0 — Engine-Assisted Review UX Evaluation (planning)
+## v0.14.0 — Engine-Assisted Review UX Evaluation — COMPLETE
 
 - v0.14.0a: engine-assisted review UX evaluation / local engine diagnostics plan (completed)
 - v0.14.0b: manual UX evaluation notes / QA checklist extension (completed)
 - v0.14.0c: local engine diagnostics contract, no UI (completed)
 - v0.14.0d: optional developer diagnostics helper, local-only / server-only (completed)
-- v0.14.0e: v0.14 stabilization / release notes (next)
+- v0.14.0e: v0.14 stabilization / release notes (completed)
 
+## v0.15.0 — Content Quality / Intermediate Problem Expansion
+
+- v0.15.0a: content quality / intermediate problem expansion plan (completed)
+- v0.15.0b: content inventory / gap audit for level 3–5 problems (completed)
+- v0.15.0c: Intermediate Problem Pack A (completed)
+- v0.15.0d: content validation and regression for Pack A (next)
 ---
 
 # Task Discipline
