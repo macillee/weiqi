@@ -69,7 +69,7 @@ Current strategy:
      53. v0.15.0c Intermediate Problem Pack A completed — 14 new level 3-5 problems, 3 multi-step, first mixed problems, 8 new tests (PR #170)
       54. v0.15.0d Pack A content validation and regression completed — validation report, 12 regression tests, matrix/schema/text verified, no data defects found (PR #172)
        55. v0.15.0e v0.15 stabilization / release notes / QA checklist completed — release notes, QA checklist, task queue update (PR #174)
-      56. v0.16.0a learning session review / parent progress insight plan completed — planning document covering parent questions, safe signals, data boundaries, pseudo-contract, wording principles, slice plan, and risks (PR #175)
+      56. v0.16.0a learning session review / parent progress insight plan completed — planning document covering parent questions, safe signals, data boundaries, pseudo-contract, wording principles, slice plan, and risks (PR #176)
 ```
 
 ---
@@ -2681,7 +2681,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ## Branch
 
-- `docs/v0.16.0a-parent-progress-insight-plan` → PR (this PR, closes #175)
+- `docs/v0.16.0a-parent-progress-insight-plan` → PR #176 (closes #175)
 
 ---
 
