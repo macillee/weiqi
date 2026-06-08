@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.15.0b content inventory / gap audit for level 3–5 problems delivered — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (14 problems), and v0.15.0c scope definition.
+v0.15.0c Intermediate Problem Pack A delivered — 14 new human-reviewed level 3-5 problems (101 total, 58 at L3-5), 3 multi-step (capture race, connect_cut deep reading, mixed cross-category), 7 categories covered including first mixed problems, 8 new tests.
 
-v0.15.0b delivered. Next: v0.15.0c — Intermediate Problem Pack A.
+v0.15.0c complete. Next: v0.15.0d — Content Validation and Regression for Pack A.
 
 Current strategy:
 
@@ -61,11 +61,12 @@ Current strategy:
     45. v0.13.0e v0.13 QA / stabilization / release notes completed — conflict marker cleanup, release notes, QA checklist (PR #154)
     46. v0.14.0a engine-assisted review UX evaluation / local diagnostics plan completed — UX evaluation questions, manual observation protocol, diagnostics needs, and conservative v0.14 slice plan (PR #156)
     47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #158)
-    48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
+     48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
      49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
      50. v0.14.0e v0.14 QA / stabilization / release notes completed — release notes, QA checklist, task queue update (PR #164)
-    51. v0.15.0a content quality / intermediate problem expansion plan completed — plan targeting level 3–5, quality dimensions, audit requirements, Pack A requirements, human review checklist (PR #166)
-    52. v0.15.0b content inventory / gap audit for level 3–5 problems completed — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (PR #168)
+     51. v0.15.0a content quality / intermediate problem expansion plan completed — plan targeting level 3–5, quality dimensions, audit requirements, Pack A requirements, human review checklist (PR #166)
+     52. v0.15.0b content inventory / gap audit for level 3–5 problems completed — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (PR #168)
+     53. v0.15.0c Intermediate Problem Pack A completed — 14 new level 3-5 problems, 3 multi-step, first mixed problems, 8 new tests (PR #170)
 ```
 
 ---
@@ -2586,6 +2587,29 @@ Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, 
 
 ---
 
+# Delivered: v0.15.0c — Intermediate Problem Pack A
+
+## Deliverables
+
+- `src/data/problems.json` — 14 new intermediate level 3-5 problems (101 total).
+- `src/__tests__/problems.test.ts` — added mixed category to validation, 8 new test assertions for Pack A.
+- `docs/TASKS.md` — marked v0.15.0c delivered, next task → v0.15.0d.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | All 482 tests pass |
+| `npm run build` | Compiled successfully |
+
+## Branch
+
+- `feat/v0.15.0c-intermediate-problem-pack-a` → PR #170
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2696,8 +2720,8 @@ Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, 
 
 - v0.15.0a: content quality / intermediate problem expansion plan (completed)
 - v0.15.0b: content inventory / gap audit for level 3–5 problems (completed)
-- v0.15.0c: intermediate problem pack A, 12–16 problems, human-authored/reviewed (next)
-
+- v0.15.0c: Intermediate Problem Pack A (completed)
+- v0.15.0d: content validation and regression for Pack A (next)
 ---
 
 # Task Discipline
