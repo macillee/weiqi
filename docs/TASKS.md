@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.15.0e Stabilization / Release Notes / QA Checklist delivered — release notes and QA checklist published, v0.15 series complete.
+v0.16.0a Learning Session Review / Parent Progress Insight Plan delivered — planning document covering parent questions, safe signals, data boundaries, pseudo-contract, wording principles, slice plan, and risks.
 
-v0.15.0e complete. Next: v0.16.0a — Learning Session Review / Parent Progress Insight Plan.
+v0.16.0a complete. Next: v0.16.0b — Session Review Data Contract and Local Aggregation Plan.
 
 Current strategy:
 
@@ -68,7 +68,8 @@ Current strategy:
      52. v0.15.0b content inventory / gap audit for level 3–5 problems completed — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (PR #168)
      53. v0.15.0c Intermediate Problem Pack A completed — 14 new level 3-5 problems, 3 multi-step, first mixed problems, 8 new tests (PR #170)
       54. v0.15.0d Pack A content validation and regression completed — validation report, 12 regression tests, matrix/schema/text verified, no data defects found (PR #172)
-      55. v0.15.0e v0.15 stabilization / release notes / QA checklist completed — release notes, QA checklist, task queue update (PR #174)
+       55. v0.15.0e v0.15 stabilization / release notes / QA checklist completed — release notes, QA checklist, task queue update (PR #174)
+      56. v0.16.0a learning session review / parent progress insight plan completed — planning document covering parent questions, safe signals, data boundaries, pseudo-contract, wording principles, slice plan, and risks (PR #175)
 ```
 
 ---
@@ -2660,6 +2661,30 @@ Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, 
 
 ---
 
+# Delivered: v0.16.0a — Learning Session Review / Parent Progress Insight Plan
+
+## Deliverables
+
+- `docs/PARENT_PROGRESS_INSIGHT_PLAN_v0.16.md` — decision-grade planning document with 10 sections: goal and non-goals, parent questions, candidate insight signals, data source and local-first boundary, session review output model (pseudo-contract), parent wording principles, v0.16 slice plan, v0.16.0b next task definition, risks and mitigations, decision recommendation.
+- `docs/TASKS.md` — marked v0.16.0a delivered, next task → v0.16.0b.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | All tests pass |
+| `npm run build` | Compiled successfully |
+
+Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, problem data, schema, SQL/Supabase, KataGo binary/model/config, Ollama/local LLM, external AI, settings page, diagnostics page, logging code, telemetry, API route, Server Action, UI, report UI, dashboard, persistence, or feature work was added.
+
+## Branch
+
+- `docs/v0.16.0a-parent-progress-insight-plan` → PR (this PR, closes #175)
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2776,7 +2801,8 @@ Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, 
 
 ## v0.16.0 — Learning Session Review / Parent Progress Insight Plan
 
-- v0.16.0a: learning session review / parent progress insight plan (next)
+- v0.16.0a: learning session review / parent progress insight plan (completed)
+- v0.16.0b: session review data contract and local aggregation plan (next)
 ---
 
 # Task Discipline
