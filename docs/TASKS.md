@@ -7,6 +7,8 @@
 
 # Current Phase
 
+# Current Phase
+
 v0.15.0e Stabilization / Release Notes / QA Checklist delivered — release notes and QA checklist published, v0.15 series complete.
 
 v0.15.0e complete. Next: v0.16.0a — Learning Session Review / Parent Progress Insight Plan.
@@ -67,6 +69,8 @@ Current strategy:
      51. v0.15.0a content quality / intermediate problem expansion plan completed — plan targeting level 3–5, quality dimensions, audit requirements, Pack A requirements, human review checklist (PR #166)
      52. v0.15.0b content inventory / gap audit for level 3–5 problems completed — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (PR #168)
      53. v0.15.0c Intermediate Problem Pack A completed — 14 new level 3-5 problems, 3 multi-step, first mixed problems, 8 new tests (PR #170)
+      54. v0.15.0d Pack A content validation and regression completed — validation report, 12 regression tests, matrix/schema/text verified, no data defects found (PR #172)
+      55. v0.15.0e v0.15 stabilization / release notes / QA checklist completed — release notes, QA checklist, task queue update (PR #174)
 ```
 
 ---

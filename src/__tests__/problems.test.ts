@@ -815,6 +815,107 @@ describe("problem data quality", () => {
     });
   });
 
+  describe("v0.15.0d Pack A content validation and regression", () => {
+    const packAIds = [
+      "CAP-021", "CAP-022",
+      "ESC-013", "ESC-014",
+      "CC-017", "CC-018",
+      "LD-013",
+      "OP-011", "OP-012",
+      "END-011", "END-012",
+      "MIX-001", "MIX-002", "MIX-003",
+    ];
+    const packProblems = problems.filter((p) => packAIds.includes(p.id));
+
+    it("total library count is 101", () => {
+      expect(problems.length).toBe(101);
+    });
+
+    it("total L3-5 count is 58", () => {
+      expect(problems.filter((p) => p.level >= 3 && p.level <= 5).length).toBe(58);
+    });
+
+    it("exact Pack A category/level matrix matches target", () => {
+      const matrix: Record<string, number[]> = {};
+      for (const p of packProblems) {
+        if (!matrix[p.category]) matrix[p.category] = [0, 0, 0, 0, 0, 0];
+        matrix[p.category][p.level]++;
+      }
+      expect(matrix.capture[4]).toBe(1);
+      expect(matrix.capture[5]).toBe(1);
+      expect(matrix.escape[4]).toBe(1);
+      expect(matrix.escape[5]).toBe(1);
+      expect(matrix.connect_cut[4]).toBe(1);
+      expect(matrix.connect_cut[5]).toBe(1);
+      expect(matrix.life_death[4]).toBe(1);
+      expect(matrix.opening[3]).toBe(1);
+      expect(matrix.opening[4]).toBe(1);
+      expect(matrix.endgame[3]).toBe(1);
+      expect(matrix.endgame[4]).toBe(1);
+      expect(matrix.mixed[3]).toBe(1);
+      expect(matrix.mixed[4]).toBe(1);
+      expect(matrix.mixed[5]).toBe(1);
+    });
+
+    it("all Pack A answer points are empty in initial board", () => {
+      for (const p of packProblems) {
+        for (const ans of p.answers) {
+          const occupied = p.initialStones.some((s) => s.x === ans.x && s.y === ans.y);
+          expect(occupied).toBe(false);
+        }
+      }
+    });
+
+    it("all Pack A initial stones have no coordinate duplicates", () => {
+      for (const p of packProblems) {
+        const coords = new Set(p.initialStones.map((s) => `${s.x},${s.y}`));
+        expect(coords.size).toBe(p.initialStones.length);
+      }
+    });
+
+    it("all Pack A descriptions are within reasonable length", () => {
+      for (const p of packProblems) {
+        expect(p.description.length).toBeLessThanOrEqual(80);
+      }
+    });
+
+    it("all Pack A explanations are within reasonable length", () => {
+      for (const p of packProblems) {
+        expect(p.explanation.length).toBeLessThanOrEqual(80);
+      }
+    });
+
+    it("all Pack A failure messages are child-friendly", () => {
+      const harshPatterns = /笨蛋|错误|失败|不对|错/;
+      for (const p of packProblems) {
+        expect(p.failureMessage).not.toMatch(harshPatterns);
+        expect(p.failureMessage.startsWith("想") || p.failureMessage.startsWith("看看")).toBe(true);
+      }
+    });
+
+    it("all Pack A multi-step problems have valid step count and required fields", () => {
+      for (const p of packProblems) {
+        if (!p.steps) continue;
+        expect(p.totalSteps).toBe(p.steps.length);
+        expect(p.totalSteps).toBeGreaterThanOrEqual(2);
+        for (const step of p.steps) {
+          expect(step.answers.length).toBeGreaterThanOrEqual(1);
+          expect(step.hints.length).toBeGreaterThanOrEqual(1);
+          expect(step.explanation.length).toBeGreaterThanOrEqual(1);
+          expect(step.successMessage.length).toBeGreaterThanOrEqual(1);
+          expect(step.failureMessage.length).toBeGreaterThanOrEqual(1);
+        }
+      }
+    });
+
+    it("mixed category problems have 'mixed' tag", () => {
+      const mixedPack = packProblems.filter((p) => p.category === "mixed");
+      for (const p of mixedPack) {
+        expect(p.tags).toContain("mixed");
+      }
+    });
+  });
+
   describe("multi-step problem validation", () => {
     it("validates a valid multi-step problem", () => {
       const multiStepProblem: Problem = {
