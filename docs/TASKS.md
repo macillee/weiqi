@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.15.0c Intermediate Problem Pack A delivered — 14 new human-reviewed level 3-5 problems (101 total, 58 at L3-5), 3 multi-step (capture race, connect_cut deep reading, mixed cross-category), 7 categories covered including first mixed problems, 8 new tests.
+v0.15.0d Pack A content validation and regression completed — 14 problems validated (schema, coordinate, text, multi-step), matrix verified, 12 new regression tests (101 total, 58 at L3-5), validation report published.
 
-v0.15.0c complete. Next: v0.15.0d — Content Validation and Regression for Pack A.
+v0.15.0d complete. Next: v0.15.0e — v0.15 Stabilization / Release Notes.
 
 Current strategy:
 
@@ -67,6 +67,7 @@ Current strategy:
      51. v0.15.0a content quality / intermediate problem expansion plan completed — plan targeting level 3–5, quality dimensions, audit requirements, Pack A requirements, human review checklist (PR #166)
      52. v0.15.0b content inventory / gap audit for level 3–5 problems completed — category-by-level matrix, intermediate coverage analysis, multi-step audit, Pack A target matrix (PR #168)
      53. v0.15.0c Intermediate Problem Pack A completed — 14 new level 3-5 problems, 3 multi-step, first mixed problems, 8 new tests (PR #170)
+     54. v0.15.0d Pack A content validation and regression completed — validation report, 12 regression tests, matrix/schema/text verified, no data defects found (PR #171)
 ```
 
 ---
