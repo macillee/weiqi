@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.14.0d optional developer diagnostics helper delivered — server-only getLocalEngineDiagnostics() with sanitized config booleans, last-analysis lifecycle support, and 14 unit tests.
+v0.15.0c Intermediate Problem Pack A delivered — 14 new human-reviewed level 3-5 problems (101 total, 44 at L3-5), 3 multi-step (capture race, connect_cut deep reading, mixed cross-category), 7 categories covered including first mixed problems, 8 new tests.
 
-v0.14.0d complete. Next: v0.14.0e — v0.14 Stabilization / Release Notes.
+v0.15.0c complete. Next: v0.15.0d — Content Validation and Regression for Pack A.
 
 Current strategy:
 
@@ -63,6 +63,7 @@ Current strategy:
     47. v0.14.0b manual UX observation checklist for engine-assisted review completed — structured per-problem and session-level templates, decision criteria, and QA addendum (PR #158)
     48. v0.14.0c local engine diagnostics contract completed — TypeScript pseudo-contract, data minimization, server/client boundary, last-analysis lifecycle, and v0.14.0d implementation target (PR #160)
     49. v0.14.0d optional developer diagnostics helper completed — server-only getLocalEngineDiagnostics(), sanitized booleans, last-analysis lifecycle, 14 tests (PR #162)
+    50. v0.15.0c Intermediate Problem Pack A completed — 14 new level 3-5 problems, 3 multi-step, first mixed problems, 8 new tests (PR #170)
 ```
 
 ---

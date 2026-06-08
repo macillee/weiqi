@@ -160,8 +160,8 @@ describe("validateAllProblems", () => {
 describe("problem data quality", () => {
   const problems = loadProblems();
 
-  it("total problem count is 87", () => {
-    expect(problems).toHaveLength(87);
+  it("total problem count is 101", () => {
+    expect(problems).toHaveLength(101);
   });
 
   it("v0.1.2 added problem IDs exist", () => {
@@ -279,6 +279,7 @@ describe("problem data quality", () => {
         life_death: ["life_death"],
         opening: ["opening"],
         endgame: ["endgame"],
+        mixed: ["mixed"],
       };
       for (const problem of problems) {
         const expected = catTagMap[problem.category] || [];
@@ -724,6 +725,93 @@ describe("problem data quality", () => {
           expect(p.answers.length).toBe(1);
         }
       });
+    });
+  });
+
+  describe("v0.15.0c Intermediate Problem Pack A validation", () => {
+    const newIds = [
+      "CAP-021", "CAP-022",
+      "ESC-013", "ESC-014",
+      "CC-017", "CC-018",
+      "LD-013",
+      "OP-011", "OP-012",
+      "END-011", "END-012",
+      "MIX-001", "MIX-002", "MIX-003",
+    ];
+    const singleStepIds = ["CAP-022", "ESC-013", "ESC-014", "CC-018", "LD-013", "OP-011", "OP-012", "END-011", "END-012", "MIX-002", "MIX-003"];
+    const multiStepIds = ["CAP-021", "CC-017", "MIX-001"];
+    const categories = ["capture", "escape", "connect_cut", "life_death", "opening", "endgame", "mixed"] as const;
+
+    it("all 14 v0.15.0c problem IDs exist", () => {
+      const ids = problems.map((p) => p.id);
+      for (const id of newIds) {
+        expect(ids).toContain(id);
+      }
+    });
+
+    it("v0.15.0c IDs are beyond previous ranges", () => {
+      const oldMax: Record<string, number> = {
+        CAP: 20, ESC: 12, CC: 16, LD: 12, OP: 10, END: 10,
+      };
+      for (const id of newIds) {
+        const match = id.match(/^([A-Z]+)-0*(\d+)$/);
+        if (!match) continue;
+        const prefix = match[1];
+        const num = parseInt(match[2], 10);
+        if (oldMax[prefix] !== undefined) {
+          expect(num).toBeGreaterThan(oldMax[prefix]);
+        }
+      }
+    });
+
+    it("exactly 3 level 3, 7 level 4, 4 level 5 problems added", () => {
+      const packProblems = problems.filter((p) => newIds.includes(p.id));
+      expect(packProblems.filter((p) => p.level === 3).length).toBe(3);
+      expect(packProblems.filter((p) => p.level === 4).length).toBe(7);
+      expect(packProblems.filter((p) => p.level === 5).length).toBe(4);
+    });
+
+    it("no level 1-2 problems in Pack A", () => {
+      const packProblems = problems.filter((p) => newIds.includes(p.id));
+      for (const p of packProblems) {
+        expect(p.level).toBeGreaterThanOrEqual(3);
+      }
+    });
+
+    it("every category is represented", () => {
+      const packProblems = problems.filter((p) => newIds.includes(p.id));
+      const cats = new Set(packProblems.map((p) => p.category));
+      for (const cat of categories) {
+        expect(cats.has(cat)).toBe(true);
+      }
+    });
+
+    it("exactly 3 multi-step problems: capture, connect_cut, mixed", () => {
+      const packProblems = problems.filter((p) => newIds.includes(p.id));
+      const ms = packProblems.filter((p) => p.steps && p.totalSteps && p.totalSteps > 1);
+      expect(ms.length).toBe(3);
+      expect(ms.map((p) => p.id).sort()).toEqual(multiStepIds.sort());
+    });
+
+    it("all 11 single-step problems are not multi-step", () => {
+      const packProblems = problems.filter((p) => newIds.includes(p.id));
+      for (const id of singleStepIds) {
+        const p = packProblems.find((x) => x.id === id)!;
+        expect(p.steps).toBeUndefined();
+      }
+    });
+
+    it("all multi-step problems have valid step data", () => {
+      const packProblems = problems.filter((p) => newIds.includes(p.id));
+      for (const p of packProblems) {
+        if (!p.steps) continue;
+        expect(p.totalSteps).toBeGreaterThan(0);
+        expect(p.steps.length).toBe(p.totalSteps);
+        for (const step of p.steps) {
+          expect(step.answers.length).toBeGreaterThanOrEqual(1);
+          expect(step.hints.length).toBeGreaterThanOrEqual(1);
+        }
+      }
     });
   });
 
