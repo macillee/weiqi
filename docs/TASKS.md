@@ -7,7 +7,7 @@
 
 # Current Phase
 
-v0.15.0c Intermediate Problem Pack A delivered — 14 new human-reviewed level 3-5 problems (101 total, 44 at L3-5), 3 multi-step (capture race, connect_cut deep reading, mixed cross-category), 7 categories covered including first mixed problems, 8 new tests.
+v0.15.0c Intermediate Problem Pack A delivered — 14 new human-reviewed level 3-5 problems (101 total, 58 at L3-5), 3 multi-step (capture race, connect_cut deep reading, mixed cross-category), 7 categories covered including first mixed problems, 8 new tests.
 
 v0.15.0c complete. Next: v0.15.0d — Content Validation and Regression for Pack A.
 
