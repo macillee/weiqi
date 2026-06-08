@@ -7,8 +7,6 @@
 
 # Current Phase
 
-# Current Phase
-
 v0.15.0e Stabilization / Release Notes / QA Checklist delivered — release notes and QA checklist published, v0.15 series complete.
 
 v0.15.0e complete. Next: v0.16.0a — Learning Session Review / Parent Progress Insight Plan.
@@ -2658,7 +2656,7 @@ Docs-only change. No code, tests, E2E, CI, Docker, package files, problem data, 
 
 ## Branch
 
-- `docs/v0.15.0e-stabilization-release-notes` → PR (this PR, closes #173)
+- `docs/v0.15.0e-stabilization-release-notes` → PR #174 (closes #173)
 
 ---
 
