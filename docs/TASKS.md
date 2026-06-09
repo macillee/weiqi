@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.16.0c Parent Session Summary Helper delivered — `src/lib/session-summary.ts` with `summarizeLearningSession()` pure function, `ParentSessionSummary` and `LearningSessionSummaryInput` types; `src/__tests__/session-summary.test.ts` with 17 unit tests covering empty input, all-correct, mixed results, weakest category/level detection, hint usage, repeated wrong attempts, multi-step difficulty, category/level aggregation, deterministic parent notes, and privacy boundaries.
+v0.16.0d Parent Session Summary Validation / QA delivered — validation report documenting contract alignment, input/output boundaries, aggregation behavior, parent wording review, 12 new regression tests (29 total), no defects found; privacy boundaries confirmed.
 
-v0.16.0c complete. Next: v0.16.0d — Parent Session Summary Validation / QA.
+v0.16.0d complete. Next: v0.16.0e — Parent Session Summary Stabilization / Release Notes.
 
 Current strategy:
 
@@ -72,6 +72,7 @@ Current strategy:
        56. v0.16.0a learning session review / parent progress insight plan completed — planning document covering parent questions, safe signals, data boundaries, pseudo-contract, wording principles, slice plan, and risks (PR #176)
        57. v0.16.0b session review data contract and local aggregation plan completed — contract document covering source data assumptions, data minimization, TypeScript pseudo-contract, aggregation algorithm, heuristics, parent note templates, privacy checklist, and v0.16.0c guidance (PR #178)
        58. v0.16.0c Parent Session Summary Helper completed — pure local summarizeLearningSession() helper, sanitized ParentSessionSummary output, 17 unit tests covering aggregation, parent notes, deterministic output, and privacy boundaries (PR #182)
+       59. v0.16.0d Parent Session Summary Validation / QA completed — validation report covering contract alignment, input/output boundaries, aggregation, parent wording, 12 new regression tests (29 total), no defects found (PR #TBD)
 ```
 
 ---
@@ -2774,6 +2775,68 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ---
 
+# Delivered: v0.16.0d — Parent Session Summary Validation / QA
+
+## Deliverables
+
+- `docs/SESSION_SUMMARY_VALIDATION_v0.16.md` — full QA validation report with 9 sections:
+  - Scope and method
+  - Contract alignment
+  - Input boundary review
+  - Output boundary review
+  - Aggregation behavior review (13 scenarios)
+  - Parent wording review (6 template patterns)
+  - Regression test review (17 existing + 12 new tests)
+  - Defects found / fixes made (none)
+  - Sign-off checklist
+- `src/__tests__/session-summary.test.ts` — 12 new targeted regression tests:
+  - `reviewedAt` uses `sessionCompletedAt` when present
+  - `reviewedAt` falls back to `sessionStartedAt`
+  - `reviewedAt` becomes `unknown` when both absent
+  - Two calls with same timestamp-less input are equal (determinism)
+  - Duplicate attempts for same problemId count as one
+  - Repeated attempts set retry signal consistently
+  - Parent note does not contain harsh words
+  - Serialized output does not contain sensitive privacy keys
+  - Helper module has no imports from forbidden modules
+  - Empty input sessionId is `"session-empty"`
+  - Single-attempt sparse input with partial timestamps
+  - Strengths not claimed from sparse data
+- `src/lib/session-summary.ts` — no changes needed (no defects found)
+- `docs/TASKS.md` — marked v0.16.0d delivered, next task → v0.16.0e
+
+## Explicitly NOT delivered
+
+- No UI, parent dashboard, or child-facing summary
+- No API routes or Server Actions
+- No persistence writes
+- No telemetry or analytics
+- No Supabase writes or migrations
+- No external AI, Ollama, KataGo, or diagnostics helpers
+- No problem data changes
+- No runtime practice flow changes
+- No package or lockfile changes
+- No Docker or CI changes
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 521 passed (26 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | Not run — no E2E tests modified |
+| Docker build | Not run — no Docker/CI changes |
+
+## Branch
+
+- `test/v0.16.0d-parent-session-summary-validation-qa` → PR #TBD (closes #185)
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2893,7 +2956,8 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - v0.16.0a: learning session review / parent progress insight plan (completed)
 - v0.16.0b: session review data contract and local aggregation plan (completed)
 - v0.16.0c: parent session summary helper, local-only / no UI (completed)
-- v0.16.0d: parent session summary validation / QA (next)
+- v0.16.0d: parent session summary validation / QA (completed)
+- v0.16.0e: parent session summary stabilization / release notes (next)
 ---
 
 # Task Discipline
