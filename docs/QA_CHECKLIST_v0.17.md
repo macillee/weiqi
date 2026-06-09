@@ -87,7 +87,15 @@
 - [ ] Session ID and generation timestamp displayed at bottom
 - [ ] Session ID does not contain problem IDs (starts with "session-" prefix)
 
-## 4. Privacy/data minimization checklist
+## 4. Scenario QA
+
+- [ ] Empty progress: no attempts, empty state appears, no summary cards/tables render
+- [ ] Sparse one-attempt progress: warning appears and wording avoids overclaiming
+- [ ] Mixed correct/wrong session: counts, category table, strengths/shaky concepts reflect mixed data
+- [ ] Hint-used / retried session: hints and retry counts render; wording remains non-judgmental
+- [ ] Multi-step attempted/completed session: multi-step attempted/completed counts and category multi-step column render correctly
+
+## 5. Privacy/data minimization checklist
 
 Confirm rendered page does **not** display:
 
@@ -109,7 +117,7 @@ Confirm rendered page **does** display only aggregated/sanitized data:
 - [ ] Chinese parent note
 - [ ] Developer warnings
 
-## 5. Chinese parent wording checklist
+## 6. Chinese parent wording checklist
 
 - [ ] All wording is concise (1–3 sentences)
 - [ ] Non-judgmental — no blame words, ranking, or labels that imply the child is weak/bad
@@ -119,7 +127,7 @@ Confirm rendered page **does** display only aggregated/sanitized data:
 - [ ] Actionable for the next practice
 - [ ] Encouraging tone (e.g., "遇到难题时会主动看提示，这是很好的学习习惯")
 
-## 6. Accessibility and layout checklist
+## 7. Accessibility and layout checklist
 
 - [ ] All sections use proper heading hierarchy (`<h2>`)
 - [ ] Tables have proper `<thead>` with `<th>` elements and readable labels
@@ -128,7 +136,7 @@ Confirm rendered page **does** display only aggregated/sanitized data:
 - [ ] Color contrast: sections are visually distinct (green/amber/blue/gray)
 - [ ] No visual-only information that would be missed without color perception
 
-## 7. Release sign-off
+## 8. Release sign-off
 
 - [ ] `docs/RELEASE_NOTES_v0.17.md` is complete and accurate
 - [ ] `docs/QA_CHECKLIST_v0.17.md` is complete

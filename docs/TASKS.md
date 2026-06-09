@@ -81,7 +81,7 @@ Current strategy:
         61. v0.17.0a Parent Review Integration Surface Plan completed — compares 4 candidate integration surfaces, recommends developer debug panel, defines session boundary, data flow, privacy review, UI/UX principles, and v0.17.0b acceptance criteria (PR #192)
          62. v0.17.0b Parent Review Debug Surface Prototype completed — developer debug page at /dev/session-summary, mapping helper buildSessionSummaryInput(), full ParentSessionSummary rendering, privacy boundary, 12 new tests (545 total across 28 files)
           63. v0.17.0c Parent Review Debug Surface QA / Wording Validation completed — QA report at docs/PARENT_REVIEW_DEBUG_QA_v0.17.md, 4 new regression tests, all Chinese wording reviewed (non-judgmental), no defects found (PR #196)
-          64. v0.17.0d v0.17 Stabilization / Release Notes completed — release notes and QA checklist for v0.17, v0.17 series complete, next: v0.18.0a planning (PR #197)
+          64. v0.17.0d v0.17 Stabilization / Release Notes completed — release notes and QA checklist for v0.17, v0.17 series complete, next: v0.18.0a planning (PR #198)
 ```
 
 ---
@@ -3130,7 +3130,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - v0.17.0c: parent review debug surface QA / wording validation (completed)
 - v0.17.0d: v0.17 stabilization / release notes (completed)
 
-## v0.18.0 — TBD (next)
+## v0.18.0 — Parent Review Next Phase Plan (next)
 
 - v0.18.0a: parent review next phase plan (next)
 ---
