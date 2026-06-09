@@ -2933,7 +2933,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ## Branch
 
-- `feat/v0.17.0b-parent-review-debug-surface` → PR #TBD (closes #193)
+- `feat/v0.17.0b-parent-review-debug-surface` → PR #194 (closes #193)
 
 ---
 
