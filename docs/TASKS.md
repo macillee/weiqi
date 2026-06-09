@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.16.0e Parent Session Summary Stabilization / Release Notes delivered — release notes documenting v0.16 slice summary, privacy and data minimization, testing/validation, known limitations, and recommended next phase (v0.17.0a). QA checklist covering scope, manual helper scenarios, privacy, wording, regression, and release readiness.
+v0.17.0a Parent Review Integration Surface Plan delivered — planning document covering goal/constraints, v0.16 assets, 4 candidate integration surfaces (recommended: developer debug panel), session boundary plan, data flow, privacy/safety review, UI/UX principles, slice plan (b–d), and v0.17.0b acceptance criteria.
 
-v0.16 series complete. Next: v0.17.0a — Parent Review Integration Surface Plan.
+v0.17.0a complete. Next: v0.17.0b — Parent Review Debug Surface Prototype, local-only / no persistence.
 
 Current strategy:
 
@@ -74,6 +74,7 @@ Current strategy:
        58. v0.16.0c Parent Session Summary Helper completed — pure local summarizeLearningSession() helper, sanitized ParentSessionSummary output, 17 unit tests covering aggregation, parent notes, deterministic output, and privacy boundaries (PR #182)
        59. v0.16.0d Parent Session Summary Validation / QA completed — validation report covering contract alignment, input/output boundaries, aggregation, parent wording, 12 new regression tests (29 total), no defects found (PR #186)
        60. v0.16.0e Parent Session Summary Stabilization / Release Notes completed — release notes and QA checklist for v0.16, v0.16 series complete, next: v0.17.0a planning (PR #189)
+       61. v0.17.0a Parent Review Integration Surface Plan completed — compares 4 candidate integration surfaces, recommends developer debug panel, defines session boundary, data flow, privacy review, UI/UX principles, and v0.17.0b acceptance criteria (PR #TBD)
 ```
 
 ---
@@ -2865,6 +2866,44 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ---
 
+# Delivered: v0.17.0a — Parent Review Integration Surface Plan
+
+## Deliverables
+
+- `docs/PARENT_REVIEW_INTEGRATION_PLAN_v0.17.md` — planning document with 10 sections:
+  - Goal and constraints
+  - Current assets from v0.16 (table)
+  - 4 candidate integration surfaces compared (dev debug panel, Settings panel, end-of-session modal, weekly report extension)
+  - Recommended first slice: developer/debug-only local review panel
+  - Session boundary plan (simple all-history aggregation)
+  - Data flow plan (local-only, no network/telemetry)
+  - Privacy and safety review (10 concerns with mitigations)
+  - UI/UX principles for future implementation
+  - Recommended v0.17 slice plan (b–d)
+  - Acceptance criteria for v0.17.0b
+- `docs/TASKS.md` — marked v0.17.0a delivered, queue v0.17.0b
+
+## Explicitly NOT delivered
+
+- No UI, parent dashboard, child-facing summary, runtime practice-flow change, API route, Server Action, telemetry, analytics, persistence, Supabase write/migration, external network call, external AI, Ollama/local LLM, KataGo behavior, diagnostics integration, schema/SQL migration, Docker/CI, package dependency, settings page, logging code, or unrelated feature work
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 521 passed (26 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | Passed in CI |
+| Docker build verification | Passed in CI |
+
+## Branch
+
+- `docs/v0.17.0a-parent-review-integration-plan` → PR #TBD (closes #191)
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2989,7 +3028,8 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ## v0.17.0 — Parent Review Integration Surface Plan
 
-- v0.17.0a: parent review integration surface plan (next)
+- v0.17.0a: parent review integration surface plan (completed)
+- v0.17.0b: parent review debug surface prototype, local-only / no persistence (next)
 ---
 
 # Task Discipline
