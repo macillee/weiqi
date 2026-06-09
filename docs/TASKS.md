@@ -2824,12 +2824,10 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 |---|---|
 | `npm run lint` | Exit 0 |
 | `npm run typecheck` | Exit 0 |
-| `npm run lint` | Exit 0 |
-| `npm run typecheck` | Exit 0 |
 | `npm run test` | 521 passed (26 files) |
 | `npm run build` | Compiled successfully |
-| `npm run test:e2e` | Not run — no E2E tests modified |
-| Docker build | Not run — no Docker/CI changes |
+| `npm run test:e2e` | Passed in CI |
+| Docker build verification | Passed in CI |
 
 ## Branch
 
