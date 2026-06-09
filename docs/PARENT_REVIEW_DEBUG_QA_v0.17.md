@@ -185,7 +185,7 @@ Four new tests were added to `session-summary-debug.test.tsx`:
 - [x] Rendered output sanitized: no raw move coordinates, board state, engine metrics, account/supabase IDs, child identity, stars/streaks/achievements, or raw review schedule internals
 - [x] Chinese parent wording reviewed: all strings are guidance-oriented, non-judgmental, low-pressure
 - [x] Empty, sparse, mixed, hint/retry, and multi-step scenarios either tested or documented
-- [x] Three new regression tests added for missing boundary coverage
+- [x] Four new regression tests added for missing boundary coverage
 - [x] `docs/TASKS.md` marks v0.17.0c delivered and queues v0.17.0d stabilization
 - [x] `npm run lint` — Exit 0
 - [x] `npm run typecheck` — Exit 0

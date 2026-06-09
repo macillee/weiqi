@@ -11,7 +11,7 @@ v0.17.0a Parent Review Integration Surface Plan delivered — planning document 
 
 v0.17.0b Parent Review Debug Surface Prototype delivered — local-only developer debug page at `/dev/session-summary`, mapping helper `src/lib/session-summary-input.ts`, full `ParentSessionSummary` rendering with category/level tables, strengths/shaky/next-focus sections, empty state, developer warning, privacy boundary, 12 new tests (545 total across 28 files).
 
-v0.17.0c Parent Review Debug Surface QA / Wording Validation delivered — QA validation report at `docs/PARENT_REVIEW_DEBUG_QA_v0.17.md`, 3 new regression tests covering problem-ID privacy, shaky concepts rendering, and suggested next focus rendering. All Chinese parent wording reviewed (non-judgmental, guidance-oriented). No functional, privacy, wording, or accessibility defects found.
+v0.17.0c Parent Review Debug Surface QA / Wording Validation delivered — QA validation report at `docs/PARENT_REVIEW_DEBUG_QA_v0.17.md`, 4 new regression tests covering problem-ID privacy, shaky concepts rendering, suggested next focus rendering, and multi-step count rendering. All Chinese parent wording reviewed (non-judgmental, guidance-oriented). No functional, privacy, wording, or accessibility defects found.
 
 v0.17.0c complete. Next: v0.17.0d — v0.17 Stabilization / Release Notes.
 
@@ -2947,7 +2947,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 ## What was done
 
 - `docs/PARENT_REVIEW_DEBUG_QA_v0.17.md`: QA validation report covering developer-only surface boundary, local-only/no-persistence boundary, privacy boundary (no raw coordinates, board state, engine metrics, account IDs, child identity, problem IDs), parent wording validation (all Chinese strings reviewed, non-judgmental), empty/sparse state QA, accessibility/layout review, and release-readiness checklist.
-- `src/__tests__/session-summary-debug.test.tsx`: 3 new rendering/QA regression tests — problem IDs not rendered, shaky concepts section renders when present, suggested next focus section renders when present.
+- `src/__tests__/session-summary-debug.test.tsx`: 4 new rendering/QA regression tests — problem IDs not rendered, shaky concepts section renders when present, suggested next focus section renders when present, multi-step attempt and completion counts rendered.
 - All QA boundaries pass. No functional, privacy, wording, or accessibility defects found.
 
 ## Explicitly NOT delivered
