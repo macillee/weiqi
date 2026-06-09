@@ -13,7 +13,7 @@ v0.17.0b Parent Review Debug Surface Prototype delivered — local-only develope
 
 v0.17.0c Parent Review Debug Surface QA / Wording Validation delivered — QA validation report at `docs/PARENT_REVIEW_DEBUG_QA_v0.17.md`, 4 new regression tests covering problem-ID privacy, shaky concepts rendering, suggested next focus rendering, and multi-step count rendering. All Chinese parent wording reviewed (non-judgmental, guidance-oriented). No functional, privacy, wording, or accessibility defects found.
 
-v0.17.0c complete. Next: v0.17.0d — v0.17 Stabilization / Release Notes.
+v0.17.0d v0.17 Stabilization / Release Notes delivered — release notes at `docs/RELEASE_NOTES_v0.17.md`, QA checklist at `docs/QA_CHECKLIST_v0.17.md`. v0.17 series complete. Next: v0.18.0a — Parent Review Next Phase Plan.
 
 Current strategy:
 
@@ -80,7 +80,8 @@ Current strategy:
        60. v0.16.0e Parent Session Summary Stabilization / Release Notes completed — release notes and QA checklist for v0.16, v0.16 series complete, next: v0.17.0a planning (PR #189)
         61. v0.17.0a Parent Review Integration Surface Plan completed — compares 4 candidate integration surfaces, recommends developer debug panel, defines session boundary, data flow, privacy review, UI/UX principles, and v0.17.0b acceptance criteria (PR #192)
          62. v0.17.0b Parent Review Debug Surface Prototype completed — developer debug page at /dev/session-summary, mapping helper buildSessionSummaryInput(), full ParentSessionSummary rendering, privacy boundary, 12 new tests (545 total across 28 files)
-         63. v0.17.0c Parent Review Debug Surface QA / Wording Validation completed — QA report at docs/PARENT_REVIEW_DEBUG_QA_v0.17.md, 4 new regression tests, all Chinese wording reviewed (non-judgmental), no defects found (PR #196)
+          63. v0.17.0c Parent Review Debug Surface QA / Wording Validation completed — QA report at docs/PARENT_REVIEW_DEBUG_QA_v0.17.md, 4 new regression tests, all Chinese wording reviewed (non-judgmental), no defects found (PR #196)
+          64. v0.17.0d v0.17 Stabilization / Release Notes completed — release notes and QA checklist for v0.17, v0.17 series complete, next: v0.18.0a planning (PR #198)
 ```
 
 ---
@@ -2971,6 +2972,35 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ---
 
+# ✅ v0.17.0d v0.17 Stabilization / Release Notes — COMPLETED (2026-06-09)
+
+## Deliverables
+
+- `docs/RELEASE_NOTES_v0.17.md` — release notes covering v0.17 goal, delivered slices (v0.17.0a–c), file inventory, what did not change, developer/debug-only route behavior, privacy and data minimization, testing and validation baseline (537 tests, 28 files), known limitations, recommended next phase (v0.18.0a planning).
+- `docs/QA_CHECKLIST_v0.17.md` — QA checklist with 7 sections: scope checklist, static validation, `/dev/session-summary` manual QA (developer surface, session overview, category table, level table, strengths, shaky concepts, suggested next focus, parent note, warnings, empty state, footer), privacy/data minimization checklist, Chinese parent wording checklist, accessibility/layout checklist, release sign-off template.
+- `docs/TASKS.md` — marked v0.17.0d delivered, v0.17 series complete, next task → v0.18.0a.
+
+## Explicitly NOT delivered
+
+- No parent dashboard, child-facing summary, normal navigation link, API route, Server Action, telemetry, analytics, persistence, Supabase write, external AI, engine/KataGo, diagnostics, runtime practice-flow changes, or unpinned dependencies.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 537 passed (28 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | Passed in CI |
+| Docker build verification | Passed in CI |
+
+## Branch
+
+- `docs/v0.17.0d-stabilization-release-notes` → PR #198 (closes #197)
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -3093,12 +3123,16 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - v0.16.0d: parent session summary validation / QA (completed)
 - v0.16.0e: parent session summary stabilization / release notes (completed)
 
-## v0.17.0 — Parent Review Integration Surface
+## v0.17.0 — Parent Review Integration Surface ✅ COMPLETE
 
 - v0.17.0a: parent review integration surface plan (completed)
 - v0.17.0b: parent review debug surface prototype, local-only / no persistence (completed)
 - v0.17.0c: parent review debug surface QA / wording validation (completed)
-- v0.17.0d: v0.17 stabilization / release notes (next)
+- v0.17.0d: v0.17 stabilization / release notes (completed)
+
+## v0.18.0 — Parent Review Next Phase Plan (next)
+
+- v0.18.0a: parent review next phase plan (next)
 ---
 
 # Task Discipline
