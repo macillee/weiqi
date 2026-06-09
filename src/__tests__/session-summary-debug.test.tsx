@@ -27,8 +27,8 @@ const mockSummary: ParentSessionSummary = {
     { problemId: "CAP-001", category: "capture", level: 1, result: "correct-first-try", hintsUsed: 0, multiStep: false },
   ],
   strengths: ["capture 表现不错"],
-  shakyConcepts: [],
-  suggestedNextFocus: ["建议明天多练capture的题目"],
+  shakyConcepts: ["escape 需要再练"],
+  suggestedNextFocus: ["建议明天多练escape的题目"],
   parentNote: "今天完成了5道题，3道一次做对。capture 表现不错。",
   warnings: [],
 };
@@ -177,5 +177,40 @@ describe("DevSessionSummaryPage", () => {
 
     await mountPage();
     expect(container!.textContent).toContain("数据较少");
+  });
+
+  it("does not render problem IDs", async () => {
+    const { summarizeLearningSession } = await import("@/lib/session-summary");
+    vi.mocked(summarizeLearningSession).mockReturnValue(mockSummary);
+
+    await mountPage();
+    expect(container!.textContent).not.toContain("CAP-001");
+  });
+
+  it("renders shaky concepts section when present", async () => {
+    const { summarizeLearningSession } = await import("@/lib/session-summary");
+    vi.mocked(summarizeLearningSession).mockReturnValue(mockSummary);
+
+    await mountPage();
+    expect(container!.textContent).toContain("可以继续巩固");
+    expect(container!.textContent).toContain("escape 需要再练");
+  });
+
+  it("renders suggested next focus section when present", async () => {
+    const { summarizeLearningSession } = await import("@/lib/session-summary");
+    vi.mocked(summarizeLearningSession).mockReturnValue(mockSummary);
+
+    await mountPage();
+    expect(container!.textContent).toContain("明日建议");
+    expect(container!.textContent).toContain("建议明天多练escape的题目");
+  });
+
+  it("renders multi-step attempt and completion counts", async () => {
+    const { summarizeLearningSession } = await import("@/lib/session-summary");
+    vi.mocked(summarizeLearningSession).mockReturnValue(mockSummary);
+
+    await mountPage();
+    expect(container!.textContent).toContain("多步题尝试");
+    expect(container!.textContent).toContain("多步题完成");
   });
 });
