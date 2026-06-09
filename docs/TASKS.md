@@ -11,7 +11,7 @@ v0.17.0a Parent Review Integration Surface Plan delivered — planning document 
 
 v0.17.0b Parent Review Debug Surface Prototype delivered — local-only developer debug page at `/dev/session-summary`, mapping helper `src/lib/session-summary-input.ts`, full `ParentSessionSummary` rendering with category/level tables, strengths/shaky/next-focus sections, empty state, developer warning, privacy boundary, 12 new tests (545 total across 28 files).
 
-v0.17.0b complete. Next: v0.17.0c — Parent Review Integration Surface (production-rendered summary with persistence).
+v0.17.0b complete. Next: v0.17.0c — Parent Review Debug Surface QA / Wording Validation.
 
 Current strategy:
 
@@ -2930,6 +2930,8 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 | `npm run typecheck` | Exit 0 |
 | `npm run test` | 545 passed (28 files) |
 | `npm run build` | Compiled successfully |
+| `npm run test:e2e` | Passed in CI |
+| Docker build verification | Passed in CI |
 
 ## Branch
 
@@ -3063,7 +3065,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 - v0.17.0a: parent review integration surface plan (completed)
 - v0.17.0b: parent review debug surface prototype, local-only / no persistence (completed)
-- v0.17.0c: parent review integration surface (production-rendered summary with persistence) (next)
+- v0.17.0c: parent review debug surface QA / wording validation (next)
 ---
 
 # Task Discipline
