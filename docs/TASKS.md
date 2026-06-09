@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.16.0b Session Review Data Contract and Local Aggregation Plan delivered — contract document covering source data assumptions, data minimization rules, TypeScript pseudo-contract, aggregation algorithm, heuristics, parent note templates, privacy checklist, and v0.16.0c implementation guidance.
+v0.16.0c Parent Session Summary Helper delivered — `src/lib/session-summary.ts` with `summarizeLearningSession()` pure function, `ParentSessionSummary` and `LearningSessionSummaryInput` types; `src/__tests__/session-summary.test.ts` with 17 unit tests covering empty input, all-correct, mixed results, weakest category/level detection, hint usage, repeated wrong attempts, multi-step difficulty, category/level aggregation, deterministic parent notes, and privacy boundaries.
 
-v0.16.0b complete. Next: v0.16.0c — Parent Session Summary Helper, local-only / no UI.
+v0.16.0c complete. Next: v0.16.0d — Parent Session Summary Validation / QA.
 
 Current strategy:
 
@@ -2710,6 +2710,69 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ---
 
+# Delivered: v0.16.0c — Parent Session Summary Helper, local-only / no UI
+
+## Deliverables
+
+- `src/lib/session-summary.ts` — pure local helper with:
+  - `summarizeLearningSession(input)` — deterministic, no network/persistence/AI/engine dependency
+  - Types: `LearningSessionSummaryInput`, `ParentSessionSummary`, `AttemptSummary`, `CategorySummary`, `LevelSummary`, `ProblemSummary`, `SignalQuality`
+  - Empty input → sparse summary with warning
+  - All-correct → positive parent note, strengths detection
+  - Mixed results → weakest category/level detection from errors
+  - Repeated wrong attempts → review-needed flag
+  - High hint usage → hints summary
+  - Multi-step difficulty → multi-step reading focus
+  - Category/level aggregation
+  - Chinese parent notes: non-judgmental, concise, data-driven
+  - Privacy boundary enforcement: no raw board/move/engine/account/child identifiers in output
+- `src/__tests__/session-summary.test.ts` — 17 unit tests covering:
+  - empty input returns sparse summary and warning
+  - all-correct session
+  - mixed correct/incorrect session
+  - weakest category detection
+  - weakest level detection
+  - high hint usage signal
+  - repeated wrong attempts signal
+  - multi-step difficulty signal
+  - category/level aggregation
+  - deterministic Chinese parent note for representative cases
+  - output does not include raw board/move/engine/account/child identifiers
+  - no dependency on Supabase, network, filesystem, AI, or engine modules
+  - partial data with warnings
+  - suggested next focus for weakest category
+  - mixed category exposure
+  - unknown category handling
+  - correct problem summary classification
+
+## Explicitly NOT delivered
+
+- No UI, parent dashboard, child-facing summary
+- No API routes or Server Actions
+- No persistence writes
+- No telemetry or analytics
+- No Supabase writes or migrations
+- No external AI, Ollama, KataGo, or diagnostics helpers
+- No problem data changes
+- No runtime practice flow changes
+- No package or lockfile changes
+- No Docker or CI changes
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 509 passed (26 files) |
+| `npm run build` | Compiled successfully |
+
+## Branch
+
+- `feat/v0.16.0c-parent-session-summary-helper` → PR #TBD (closes #180)
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2824,11 +2887,12 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - v0.15.0d: content validation and regression for Pack A (completed)
 - v0.15.0e: stabilization / release notes / QA checklist (completed)
 
-## v0.16.0 — Learning Session Review / Parent Progress Insight Plan
+## v0.16.0 — Learning Session Review / Parent Progress Insight
 
 - v0.16.0a: learning session review / parent progress insight plan (completed)
 - v0.16.0b: session review data contract and local aggregation plan (completed)
-- v0.16.0c: parent session summary helper, local-only / no UI (next)
+- v0.16.0c: parent session summary helper, local-only / no UI (completed)
+- v0.16.0d: parent session summary validation / QA (next)
 ---
 
 # Task Discipline
