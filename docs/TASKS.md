@@ -79,7 +79,8 @@ Current strategy:
        59. v0.16.0d Parent Session Summary Validation / QA completed — validation report covering contract alignment, input/output boundaries, aggregation, parent wording, 12 new regression tests (29 total), no defects found (PR #186)
        60. v0.16.0e Parent Session Summary Stabilization / Release Notes completed — release notes and QA checklist for v0.16, v0.16 series complete, next: v0.17.0a planning (PR #189)
         61. v0.17.0a Parent Review Integration Surface Plan completed — compares 4 candidate integration surfaces, recommends developer debug panel, defines session boundary, data flow, privacy review, UI/UX principles, and v0.17.0b acceptance criteria (PR #192)
-        62. v0.17.0b Parent Review Debug Surface Prototype completed — developer debug page at /dev/session-summary, mapping helper buildSessionSummaryInput(), full ParentSessionSummary rendering, privacy boundary, 12 new tests (545 total across 28 files)
+         62. v0.17.0b Parent Review Debug Surface Prototype completed — developer debug page at /dev/session-summary, mapping helper buildSessionSummaryInput(), full ParentSessionSummary rendering, privacy boundary, 12 new tests (545 total across 28 files)
+         63. v0.17.0c Parent Review Debug Surface QA / Wording Validation completed — QA report at docs/PARENT_REVIEW_DEBUG_QA_v0.17.md, 4 new regression tests, all Chinese wording reviewed (non-judgmental), no defects found (PR #196)
 ```
 
 ---
@@ -2959,14 +2960,14 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 |---|---|
 | `npm run lint` | Exit 0 |
 | `npm run typecheck` | Exit 0 |
-| `npm run test` | 536 passed (28 files) |
+| `npm run test` | 537 passed (28 files) |
 | `npm run build` | Compiled successfully |
 | `npm run test:e2e` | Passed in CI |
 | Docker build verification | Passed in CI |
 
 ## Branch
 
-- `test/v0.17.0c-parent-review-debug-qa` → PR TBD (closes #195)
+- `test/v0.17.0c-parent-review-debug-qa` → PR #196 (closes #195)
 
 ---
 

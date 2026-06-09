@@ -18,7 +18,7 @@ Validation baseline:
 |---|---|
 | `npm run lint` | Exit 0 |
 | `npm run typecheck` | Exit 0 |
-| `npm run test` | 545 passed (28 files) |
+| `npm run test` | 537 passed (28 files) |
 | `npm run build` | Compiled successfully |
 | `npm run test:e2e` | Passed in CI |
 | Docker build verification | Passed in CI |
@@ -133,7 +133,7 @@ Reviewed all Chinese strings in `page.tsx` and `session-summary.ts`:
 | Warnings from sparse data | Test: "renders warnings when present" | ✅ |
 | Shaky concepts rendering | New test added (see section 7) | ✅ |
 | Suggested next focus rendering | New test added (see section 7) | ✅ |
-| Multi-step summary rendering | New test added (see section 7) | ✅ |
+| Multi-step summary fields rendered | Test: "renders multi-step attempt and completion counts" | ✅ |
 
 ---
 
@@ -155,21 +155,23 @@ Reviewed all Chinese strings in `page.tsx` and `session-summary.ts`:
 
 ## 7. New Regression Tests Added
 
-Three new tests were added to `session-summary-debug.test.tsx`:
+Four new tests were added to `session-summary-debug.test.tsx`:
 
 1. **Problem IDs not rendered** — verifies that `CAP-001` (a mock problem ID) does not appear in rendered text output.
 2. **Shaky concepts section renders** — verifies "📝 可以继续巩固" heading and content are rendered.
 3. **Suggested next focus renders** — verifies "🎯 明日建议" heading and content are rendered.
+4. **Multi-step counts rendered** — verifies "多步题尝试" and "多步题完成" appear in the session overview.
 
 ---
 
 ## 8. Defects Found and Fixes Applied
 
-| Defect | Severity | Status |
+| Gap | Severity | Status |
 |---|---|---|
 | No problem ID privacy test | Low | Fixed — added regression test |
 | No shaky concepts rendering test | Low | Fixed — added regression test |
 | No suggested next focus rendering test | Low | Fixed — added regression test |
+| No multi-step count rendering test | Low | Fixed — added regression test |
 
 **No functional, privacy, wording, or accessibility defects found.**
 

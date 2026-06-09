@@ -204,4 +204,13 @@ describe("DevSessionSummaryPage", () => {
     expect(container!.textContent).toContain("明日建议");
     expect(container!.textContent).toContain("建议明天多练escape的题目");
   });
+
+  it("renders multi-step attempt and completion counts", async () => {
+    const { summarizeLearningSession } = await import("@/lib/session-summary");
+    vi.mocked(summarizeLearningSession).mockReturnValue(mockSummary);
+
+    await mountPage();
+    expect(container!.textContent).toContain("多步题尝试");
+    expect(container!.textContent).toContain("多步题完成");
+  });
 });
