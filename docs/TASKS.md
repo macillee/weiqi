@@ -9,7 +9,9 @@
 
 v0.17.0a Parent Review Integration Surface Plan delivered — planning document covering goal/constraints, v0.16 assets, 4 candidate integration surfaces (recommended: developer debug panel), session boundary plan, data flow, privacy/safety review, UI/UX principles, slice plan (b–d), and v0.17.0b acceptance criteria.
 
-v0.17.0a complete. Next: v0.17.0b — Parent Review Debug Surface Prototype, local-only / no persistence.
+v0.17.0b Parent Review Debug Surface Prototype delivered — local-only developer debug page at `/dev/session-summary`, mapping helper `src/lib/session-summary-input.ts`, full `ParentSessionSummary` rendering with category/level tables, strengths/shaky/next-focus sections, empty state, developer warning, privacy boundary, 12 new tests (545 total across 28 files).
+
+v0.17.0b complete. Next: v0.17.0c — Parent Review Integration Surface (production-rendered summary with persistence).
 
 Current strategy:
 
@@ -74,7 +76,8 @@ Current strategy:
        58. v0.16.0c Parent Session Summary Helper completed — pure local summarizeLearningSession() helper, sanitized ParentSessionSummary output, 17 unit tests covering aggregation, parent notes, deterministic output, and privacy boundaries (PR #182)
        59. v0.16.0d Parent Session Summary Validation / QA completed — validation report covering contract alignment, input/output boundaries, aggregation, parent wording, 12 new regression tests (29 total), no defects found (PR #186)
        60. v0.16.0e Parent Session Summary Stabilization / Release Notes completed — release notes and QA checklist for v0.16, v0.16 series complete, next: v0.17.0a planning (PR #189)
-       61. v0.17.0a Parent Review Integration Surface Plan completed — compares 4 candidate integration surfaces, recommends developer debug panel, defines session boundary, data flow, privacy review, UI/UX principles, and v0.17.0b acceptance criteria (PR #192)
+        61. v0.17.0a Parent Review Integration Surface Plan completed — compares 4 candidate integration surfaces, recommends developer debug panel, defines session boundary, data flow, privacy review, UI/UX principles, and v0.17.0b acceptance criteria (PR #192)
+        62. v0.17.0b Parent Review Debug Surface Prototype completed — developer debug page at /dev/session-summary, mapping helper buildSessionSummaryInput(), full ParentSessionSummary rendering, privacy boundary, 12 new tests (545 total across 28 files)
 ```
 
 ---
@@ -2904,6 +2907,36 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ---
 
+# ✅ v0.17.0b Parent Review Debug Surface Prototype — COMPLETED (2026-06-09)
+
+## What was done
+
+- `src/lib/session-summary-input.ts`: `buildSessionSummaryInput()` mapping helper reads `StudentProgress`, resolves problem category/level via `getProblemById()`, builds `AttemptSummary[]` with monotonic attemptCount per problemId, derives timestamps from first/last attempt `createdAt`.
+- `src/app/dev/session-summary/page.tsx`: debug page (client component) that calls `loadProgress()` → `buildSessionSummaryInput()` → `summarizeLearningSession()` in `useEffect`, renders full `ParentSessionSummary`: signal quality/totals banner, category table, level table, strengths (green), shaky concepts (amber), next focus (blue), parent note (green), warnings, empty state with link to `/practice`, developer warning banner, session ID/timestamp footer.
+- `src/__tests__/session-summary-input.test.ts`: 5 unit tests for mapping helper — empty progress, attempt metadata, monotonic attemptCount, timestamps, unknown category.
+- `src/__tests__/session-summary-debug.test.tsx`: 6 rendering tests — empty state, debug copy, local-only disclaimer, sanitized fields, privacy boundary (forbidden keys absent), strengths section, warnings.
+- All 533 existing tests continue to pass (28 files).
+- Lint, typecheck, build all pass.
+
+## Explicitly NOT delivered
+
+- No UI parent dashboard, child-facing summary, normal navigation link, API route, Server Action, telemetry, analytics, persistence, Supabase write, external AI, engine/KataGo, diagnostics, runtime practice-flow changes, or unpinned dependencies.
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 545 passed (28 files) |
+| `npm run build` | Compiled successfully |
+
+## Branch
+
+- `feat/v0.17.0b-parent-review-debug-surface` → PR #TBD (closes #193)
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -3026,10 +3059,11 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - v0.16.0d: parent session summary validation / QA (completed)
 - v0.16.0e: parent session summary stabilization / release notes (completed)
 
-## v0.17.0 — Parent Review Integration Surface Plan
+## v0.17.0 — Parent Review Integration Surface
 
 - v0.17.0a: parent review integration surface plan (completed)
-- v0.17.0b: parent review debug surface prototype, local-only / no persistence (next)
+- v0.17.0b: parent review debug surface prototype, local-only / no persistence (completed)
+- v0.17.0c: parent review integration surface (production-rendered summary with persistence) (next)
 ---
 
 # Task Discipline
