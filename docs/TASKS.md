@@ -72,7 +72,7 @@ Current strategy:
        56. v0.16.0a learning session review / parent progress insight plan completed — planning document covering parent questions, safe signals, data boundaries, pseudo-contract, wording principles, slice plan, and risks (PR #176)
        57. v0.16.0b session review data contract and local aggregation plan completed — contract document covering source data assumptions, data minimization, TypeScript pseudo-contract, aggregation algorithm, heuristics, parent note templates, privacy checklist, and v0.16.0c guidance (PR #178)
        58. v0.16.0c Parent Session Summary Helper completed — pure local summarizeLearningSession() helper, sanitized ParentSessionSummary output, 17 unit tests covering aggregation, parent notes, deterministic output, and privacy boundaries (PR #182)
-       59. v0.16.0d Parent Session Summary Validation / QA completed — validation report covering contract alignment, input/output boundaries, aggregation, parent wording, 12 new regression tests (29 total), no defects found (PR #TBD)
+       59. v0.16.0d Parent Session Summary Validation / QA completed — validation report covering contract alignment, input/output boundaries, aggregation, parent wording, 12 new regression tests (29 total), no defects found (PR #186)
 ```
 
 ---
@@ -2833,7 +2833,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ## Branch
 
-- `test/v0.16.0d-parent-session-summary-validation-qa` → PR #TBD (closes #185)
+- `test/v0.16.0d-parent-session-summary-validation-qa` → PR #186 (closes #185)
 
 ---
 
