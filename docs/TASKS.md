@@ -7,9 +7,9 @@
 
 # Current Phase
 
-v0.16.0d Parent Session Summary Validation / QA delivered — validation report documenting contract alignment, input/output boundaries, aggregation behavior, parent wording review, 12 new regression tests (29 total), no defects found; privacy boundaries confirmed.
+v0.16.0e Parent Session Summary Stabilization / Release Notes delivered — release notes documenting v0.16 slice summary, privacy and data minimization, testing/validation, known limitations, and recommended next phase (v0.17.0a). QA checklist covering scope, manual helper scenarios, privacy, wording, regression, and release readiness.
 
-v0.16.0d complete. Next: v0.16.0e — Parent Session Summary Stabilization / Release Notes.
+v0.16 series complete. Next: v0.17.0a — Parent Review Integration Surface Plan.
 
 Current strategy:
 
@@ -73,6 +73,7 @@ Current strategy:
        57. v0.16.0b session review data contract and local aggregation plan completed — contract document covering source data assumptions, data minimization, TypeScript pseudo-contract, aggregation algorithm, heuristics, parent note templates, privacy checklist, and v0.16.0c guidance (PR #178)
        58. v0.16.0c Parent Session Summary Helper completed — pure local summarizeLearningSession() helper, sanitized ParentSessionSummary output, 17 unit tests covering aggregation, parent notes, deterministic output, and privacy boundaries (PR #182)
        59. v0.16.0d Parent Session Summary Validation / QA completed — validation report covering contract alignment, input/output boundaries, aggregation, parent wording, 12 new regression tests (29 total), no defects found (PR #186)
+       60. v0.16.0e Parent Session Summary Stabilization / Release Notes completed — release notes and QA checklist for v0.16, v0.16 series complete, next: v0.17.0a planning (PR #TBD)
 ```
 
 ---
@@ -2835,6 +2836,35 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ---
 
+# Delivered: v0.16.0e — Parent Session Summary Stabilization / Release Notes
+
+## Deliverables
+
+- `docs/RELEASE_NOTES_v0.16.md` — v0.16 release notes with 7 sections: summary, what changed (a–d), what did not change, privacy and data minimization, testing and validation, known limitations, recommended next phase (v0.17.0a planning)
+- `docs/QA_CHECKLIST_v0.16.md` — QA checklist with 6 sections: scope checklist, manual helper behavior (10 scenarios), privacy checklist, wording checklist, regression checklist, release readiness checklist
+- `docs/TASKS.md` — marked v0.16.0e delivered, v0.16 series complete, next task → v0.17.0a
+
+## Explicitly NOT delivered
+
+- No UI, parent dashboard, child-facing summary, runtime practice-flow change, API route, Server Action, telemetry, analytics, persistence, Supabase write/migration, external network call, external AI, Ollama/local LLM, KataGo behavior, diagnostics integration, schema/SQL migration, Docker/CI, package dependency, settings page, logging code, or unrelated feature work was added
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 521 passed (26 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | Passed in CI |
+| Docker build verification | Passed in CI |
+
+## Branch
+
+- `docs/v0.16.0e-parent-session-summary-stabilization` → PR #TBD (closes #188)
+
+---
+
 ## v0.2.3 — Server Progress
 
 - Save attempts to Supabase.
@@ -2949,13 +2979,17 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - v0.15.0d: content validation and regression for Pack A (completed)
 - v0.15.0e: stabilization / release notes / QA checklist (completed)
 
-## v0.16.0 — Learning Session Review / Parent Progress Insight
+## v0.16.0 — Learning Session Review / Parent Progress Insight ✅ COMPLETE
 
 - v0.16.0a: learning session review / parent progress insight plan (completed)
 - v0.16.0b: session review data contract and local aggregation plan (completed)
 - v0.16.0c: parent session summary helper, local-only / no UI (completed)
 - v0.16.0d: parent session summary validation / QA (completed)
-- v0.16.0e: parent session summary stabilization / release notes (next)
+- v0.16.0e: parent session summary stabilization / release notes (completed)
+
+## v0.17.0 — Parent Review Integration Surface Plan
+
+- v0.17.0a: parent review integration surface plan (next)
 ---
 
 # Task Discipline
