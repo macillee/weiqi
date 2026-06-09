@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import {
   summarizeLearningSession,
   type AttemptSummary,
@@ -30,14 +30,6 @@ function makeInput(
 }
 
 describe("summarizeLearningSession", () => {
-  beforeEach(() => {
-    vi.useFakeTimers();
-    vi.setSystemTime(new Date("2026-06-09T12:00:00.000Z"));
-  });
-
-  afterEach(() => {
-    vi.useRealTimers();
-  });
 
   it("empty input returns sparse summary and warning", () => {
     const result = summarizeLearningSession(makeInput([]));
@@ -179,7 +171,7 @@ describe("summarizeLearningSession", () => {
     expect(level1!.attempted).toBe(2);
   });
 
-  it("deterministic Chinese parent note for all-correct session", () => {
+  it("deterministic output for same input", () => {
     const attempts = [
       makeAttempt({ problemId: "CAP-001", category: "capture", level: 1 }),
       makeAttempt({ problemId: "CAP-002", category: "capture", level: 1 }),
@@ -187,11 +179,13 @@ describe("summarizeLearningSession", () => {
       makeAttempt({ problemId: "ESC-001", category: "escape", level: 2 }),
       makeAttempt({ problemId: "ESC-002", category: "escape", level: 2 }),
     ];
-    const result1 = summarizeLearningSession(makeInput(attempts));
-    const result2 = summarizeLearningSession(makeInput(attempts));
+    const input = makeInput(attempts);
+    const result1 = summarizeLearningSession(input);
+    const result2 = summarizeLearningSession(input);
 
-    expect(result1.parentNote).toBe(result2.parentNote);
+    expect(result1).toEqual(result2);
     expect(result1.parentNote).toContain("今天表现稳定");
+    expect(result1.reviewedAt).not.toBe("");
   });
 
   it("output does not include raw board/move/engine/account/child identifiers", () => {

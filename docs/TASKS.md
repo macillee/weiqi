@@ -2769,7 +2769,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ## Branch
 
-- `feat/v0.16.0c-parent-session-summary-helper` → PR #TBD (closes #180)
+- `feat/v0.16.0c-parent-session-summary-helper` → PR #182 (closes #180)
 
 ---
 

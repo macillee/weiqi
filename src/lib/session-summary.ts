@@ -345,10 +345,12 @@ export function summarizeLearningSession(
   const warnings: string[] = [];
   const attempts = input.attempts || [];
 
+  const determinedAt = input.sessionCompletedAt ?? input.sessionStartedAt ?? "unknown";
+
   if (attempts.length === 0) {
     return {
       sessionId: generateSessionId([], input.sessionStartedAt),
-      reviewedAt: new Date().toISOString(),
+      reviewedAt: determinedAt,
       signalQuality: "empty",
       totalAttempted: 0,
       totalCorrectFirstTry: 0,
@@ -447,7 +449,7 @@ export function summarizeLearningSession(
 
   return {
     sessionId: generateSessionId(attempts, input.sessionStartedAt),
-    reviewedAt: new Date().toISOString(),
+    reviewedAt: determinedAt,
     signalQuality,
     totalAttempted,
     totalCorrectFirstTry,
