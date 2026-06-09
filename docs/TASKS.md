@@ -70,7 +70,8 @@ Current strategy:
       54. v0.15.0d Pack A content validation and regression completed — validation report, 12 regression tests, matrix/schema/text verified, no data defects found (PR #172)
        55. v0.15.0e v0.15 stabilization / release notes / QA checklist completed — release notes, QA checklist, task queue update (PR #174)
        56. v0.16.0a learning session review / parent progress insight plan completed — planning document covering parent questions, safe signals, data boundaries, pseudo-contract, wording principles, slice plan, and risks (PR #176)
-      57. v0.16.0b session review data contract and local aggregation plan completed — contract document covering source data assumptions, data minimization, TypeScript pseudo-contract, aggregation algorithm, heuristics, parent note templates, privacy checklist, and v0.16.0c guidance (PR #178)
+       57. v0.16.0b session review data contract and local aggregation plan completed — contract document covering source data assumptions, data minimization, TypeScript pseudo-contract, aggregation algorithm, heuristics, parent note templates, privacy checklist, and v0.16.0c guidance (PR #178)
+       58. v0.16.0c Parent Session Summary Helper completed — pure local summarizeLearningSession() helper, sanitized ParentSessionSummary output, 17 unit tests covering aggregation, parent notes, deterministic output, and privacy boundaries (PR #182)
 ```
 
 ---
