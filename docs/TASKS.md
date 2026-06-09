@@ -2997,7 +2997,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ## Branch
 
-- `docs/v0.17.0d-stabilization-release-notes` → PR TBD (closes #197)
+- `docs/v0.17.0d-stabilization-release-notes` → PR #198 (closes #197)
 
 ---
 
