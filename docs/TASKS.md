@@ -74,7 +74,7 @@ Current strategy:
        58. v0.16.0c Parent Session Summary Helper completed — pure local summarizeLearningSession() helper, sanitized ParentSessionSummary output, 17 unit tests covering aggregation, parent notes, deterministic output, and privacy boundaries (PR #182)
        59. v0.16.0d Parent Session Summary Validation / QA completed — validation report covering contract alignment, input/output boundaries, aggregation, parent wording, 12 new regression tests (29 total), no defects found (PR #186)
        60. v0.16.0e Parent Session Summary Stabilization / Release Notes completed — release notes and QA checklist for v0.16, v0.16 series complete, next: v0.17.0a planning (PR #189)
-       61. v0.17.0a Parent Review Integration Surface Plan completed — compares 4 candidate integration surfaces, recommends developer debug panel, defines session boundary, data flow, privacy review, UI/UX principles, and v0.17.0b acceptance criteria (PR #TBD)
+       61. v0.17.0a Parent Review Integration Surface Plan completed — compares 4 candidate integration surfaces, recommends developer debug panel, defines session boundary, data flow, privacy review, UI/UX principles, and v0.17.0b acceptance criteria (PR #192)
 ```
 
 ---
@@ -2900,7 +2900,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ## Branch
 
-- `docs/v0.17.0a-parent-review-integration-plan` → PR #TBD (closes #191)
+- `docs/v0.17.0a-parent-review-integration-plan` → PR #192 (closes #191)
 
 ---
 
