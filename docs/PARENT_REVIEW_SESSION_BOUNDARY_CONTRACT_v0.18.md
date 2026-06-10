@@ -268,15 +268,16 @@ The contract explicitly forbids:
 
 # 7. Parent Gate Requirements
 
-## What gate is required before any parent-facing UI
+## Minimum local parent gate for v0.18
 
-Any parent-facing UI surface requires **at minimum** the following gate:
+Any parent-facing UI surface added in v0.18 must satisfy **at minimum** the following local-first gate — no server, Supabase, or account required:
 
-1. **Auth gate**: The parent must be authenticated (Supabase or equivalent)
-2. **Child-selection gate**: A child profile must be selected
-3. **Opt-in gate**: The parent must explicitly enable parent review via settings
-4. **Privacy notice gate**: The parent must acknowledge a privacy notice explaining what data is and is not shared
-5. **Session-boundary validation gate**: The parent review must operate on `ParentSessionSummary` only, not on raw `StudentProgress`
+1. **Local parent-only entry or confirmation gate** — A simple confirmation step (tap "我是家长" or "家长查看") before entering any parent review UI. No password required.
+2. **Explicit "parent review / guardian only" wording** — The entry point must be clearly labeled for parents only, with a brief note explaining the content is for guardians.
+3. **Privacy notice** — A short local notice explaining what data is shown and what is never shown (no raw answers, no coordinates, no problem IDs). The notice must be acknowledged before first use.
+4. **No child-facing navigation** — The parent review entry must not appear in the child's normal navigation flow. It may appear as a small, unobtrusive link (e.g. at the bottom of `/report` or `/settings`) or be gated behind a long-press / secret-tap pattern.
+5. **No server / account / Supabase requirement** — The gate must work fully offline, in anonymous local mode, with zero server dependencies.
+6. **Only consumes parent-review-safe aggregate** — The parent UI must consume `ParentSessionSummary` (via `summarizeLearningSession()`), never raw `StudentProgress` or `localStorage` directly.
 
 ## Why current v0.18 cannot directly add report / dashboard / settings entry
 
@@ -284,8 +285,7 @@ The following preconditions are not yet satisfied:
 
 | Precondition | Status | Notes |
 |---|---|---|
-| Auth gate infrastructure | 🟡 Partial | Supabase auth exists but optional; parent-gate needs hardening |
-| Child profile selection | 🟡 Partial | Exists but not integrated with parent-review flow |
+| Local parent gate | ❌ Missing | No parent-only entry or confirmation gate implemented |
 | Privacy notice | ❌ Missing | No privacy notice component exists |
 | Session-boundary contract | ✅ This document | Now defined; implementation pending |
 | Time-windowing algorithm | ❌ Missing | No stale-history filtering; parent signals would be inaccurate |
@@ -297,15 +297,19 @@ Adding a report / dashboard / settings entry before these preconditions are met 
 - Violate privacy boundaries (no notice, no opt-in)
 - Bypass the session boundary contract this document defines
 
+## Hosted / multi-user optional note
+
+If the app later supports hosted multi-user mode (Supabase, auth, child profile selection), additional gates may become required — including authentication, child profile selection, and server-side privacy enforcement. **That is out of scope for v0.18 local-only parent review.** The local-first gates defined above are sufficient for the current MVP architecture.
+
 ## What UI requires a separate future issue
 
 Each of the following parent-facing features requires its own issue with explicit acceptance criteria:
 
 | UI Feature | Required Precondition |
 |---|---|
-| Parent settings toggle (`/settings`) | Auth gate, privacy notice, opt-in gate |
-| Parent summary on `/report` | Session-boundary contract implemented, time-windowing |
-| Parent dashboard (`/parent`) | Above + full auth integration |
+| Parent settings toggle (`/settings`) | Local parent gate, privacy notice, opt-in |
+| Parent summary on `/report` | Session-boundary contract implementation, time-windowing |
+| Parent dashboard (`/parent`) | Above + full local parent gate |
 | Weekly parent summary | Time-windowing, history modeling |
 | End-of-session parent card | Session boundary detection, current-session isolation |
 
