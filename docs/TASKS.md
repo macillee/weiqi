@@ -19,7 +19,7 @@ v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 delivered — planning document cov
 
 v0.18.0b PARENT_REVIEW_SESSION_BOUNDARY_CONTRACT_v0.18 delivered — session boundary vocabulary, current-session vs daily vs historical summary definitions, reset/retention behavior, sparse/empty/mixed result handling, local-only assumptions, privacy/data minimization rules, parent gate requirements, future testing requirements, and v0.18.0c recommendation (PR #204).
 
-v0.18.0c Minimal Local Session History Model and Contract Validation delivered — pure TS helpers (`parent-review-session-history.ts`), contract validation (`validateSessionContract`), privacy boundary enforcement (`toParentReviewSafeAggregate`, `checkPrivacyBoundary`), 35 new tests (572 total across 29 files) (PR #206).
+v0.18.0c Minimal Local Session History Model and Contract Validation delivered — pure TS helpers (`parent-review-session-history.ts`), contract validation (`validateSessionContract`), privacy boundary enforcement (`toParentReviewSafeAggregate`, `checkPrivacyBoundary`), 35 new tests (572 total across 29 files) (PR #206). Next: v0.18.0d — parent review session history QA and stabilization.
 
 Current strategy:
 
@@ -90,7 +90,7 @@ Current strategy:
            64. v0.17.0d v0.17 Stabilization / Release Notes completed — release notes and QA checklist for v0.17, v0.17 series complete, next: v0.18.0a planning (PR #198)
 65. v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 completed — conservative session boundary/history modeling approach (PR #202)
 66. v0.18.0b PARENT_REVIEW_SESSION_BOUNDARY_CONTRACT_v0.18 completed — session boundary vocabulary, privacy/data minimization rules, parent gate requirements, future testing requirements (PR #204)
-67. v0.18.0c Minimal Local Session History Model and Contract Validation completed — pure TS helpers (EnrichedAttempt, CurrentSessionState, CompletedSession, DailySummary, HistoricalSummary, ParentReviewSafeSession), contract validation (validateSessionContract), privacy boundary enforcement (toParentReviewSafeAggregate, checkPrivacyBoundary), 35 new tests (572 total across 29 files) (PR #206)
+67. v0.18.0c Minimal Local Session History Model and Contract Validation completed — pure TS helpers (EnrichedAttempt, CurrentSessionState, CompletedSession, DailySummary, HistoricalSummary, ParentReviewSafeSession), contract validation (validateSessionContract), privacy boundary enforcement (toParentReviewSafeAggregate, checkPrivacyBoundary), 35 new tests (572 total across 29 files) (PR #206). Next: v0.18.0d — parent review session history QA and stabilization.
 ```
 
 ---
@@ -3002,7 +3002,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
   - Privacy / data minimization rules (14 excluded fields)
   - Parent gate requirements (5 gates, 5 preconditions, 5 future UI issues)
   - Future testing requirements (data scenarios, privacy, storage, UI)
-  - Recommendation: v0.18.0c mini local session history model
+  - Recommendation: v0.18.0c mini local session history model (delivered PR #206)
 - `docs/TASKS.md`: updated to mark v0.18.0b delivered, queue v0.18.0c
 
 ## Explicitly NOT delivered
@@ -3222,7 +3222,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - v0.18.0a: parent review next phase plan (completed)
 - v0.18.0b: session boundary/history modeling contract (completed)
 - v0.18.0c: minimal local session history model / contract validation (completed — PR #206)
-- v0.18.0d: TBD (next slice from parent review plan)
+- v0.18.0d: parent review session history QA and stabilization (next)
 
 ---
 
