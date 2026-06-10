@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import type { StudentProgress, AttemptRecord } from "@/lib/progress";
+import type { StudentProgress } from "@/lib/progress";
 import type {
   AttemptSummary,
   LearningSessionSummaryInput,
@@ -17,7 +17,6 @@ import {
   toParentReviewSafeAggregate,
   checkPrivacyBoundary,
 } from "@/lib/parent-review-session-history";
-import type { EnrichedAttempt, CurrentSessionState } from "@/lib/parent-review-session-history";
 
 beforeEach(() => {
   vi.useFakeTimers();
@@ -460,6 +459,18 @@ describe("checkPrivacyBoundary", () => {
       problemId: "CAP-001",
     });
     expect(violations.some((v) => v.field === "problemId")).toBe(true);
+  });
+
+  it("detects sensitive field after fifth array item", () => {
+    const items = Array.from({ length: 6 }, (_, i) => ({
+      id: i,
+      label: `item-${i}`,
+    }));
+    items[5] = { id: 5, problemId: "CAP-001", selectedX: 3 };
+    const violations = checkPrivacyBoundary({ items });
+    expect(violations.some((v) => v.field === "problemId")).toBe(true);
+    expect(violations.some((v) => v.field === "selectedX")).toBe(true);
+    expect(violations.length).toBe(2);
   });
 });
 

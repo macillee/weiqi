@@ -2,11 +2,8 @@ import type { StudentProgress, AttemptRecord } from "@/lib/progress";
 import type { ProblemCategory } from "@/lib/problems";
 import { loadProblems, getProblemById } from "@/lib/problems";
 import type {
-  AttemptSummary,
   LearningSessionSummaryInput,
   ParentSessionSummary,
-  CategorySummary,
-  LevelSummary,
   ProblemSummaryResult,
 } from "@/lib/session-summary";
 
@@ -363,10 +360,24 @@ export function toParentReviewSafeAggregate(
     }),
   );
 
-  const { problems: _removed, ...rest } = summary;
   return {
-    ...rest,
+    sessionId: summary.sessionId,
+    reviewedAt: summary.reviewedAt,
+    signalQuality: summary.signalQuality,
+    totalAttempted: summary.totalAttempted,
+    totalCorrectFirstTry: summary.totalCorrectFirstTry,
+    totalRetried: summary.totalRetried,
+    totalHintsUsed: summary.totalHintsUsed,
+    multiStepAttempted: summary.multiStepAttempted,
+    multiStepCompleted: summary.multiStepCompleted,
+    categories: summary.categories,
+    levels: summary.levels,
     problems: safeProblems,
+    strengths: summary.strengths,
+    shakyConcepts: summary.shakyConcepts,
+    suggestedNextFocus: summary.suggestedNextFocus,
+    parentNote: summary.parentNote,
+    warnings: summary.warnings,
   };
 }
 
@@ -380,7 +391,7 @@ export function checkPrivacyBoundary(
     if (obj === null || obj === undefined) return;
     if (typeof obj !== "object") return;
     if (Array.isArray(obj)) {
-      for (let i = 0; i < Math.min(obj.length, 5); i++) {
+      for (let i = 0; i < obj.length; i++) {
         collectKeys(obj[i], `${prefix}[${i}].`);
       }
       return;
