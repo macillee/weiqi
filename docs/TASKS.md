@@ -15,6 +15,8 @@ v0.17.0c Parent Review Debug Surface QA / Wording Validation delivered — QA va
 
 v0.17.0d v0.17 Stabilization / Release Notes delivered — release notes at `docs/RELEASE_NOTES_v0.17.md`, QA checklist at `docs/QA_CHECKLIST_v0.17.md`. v0.17 series complete. Next: v0.18.0a — Parent Review Next Phase Plan.
 
+v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 delivered — planning document covering goal/constraints, v0.17 assets, conservative session boundary/history modeling directions, and v0.18.0b acceptance criteria.
+
 Current strategy:
 
 ```text
@@ -78,10 +80,11 @@ Current strategy:
        58. v0.16.0c Parent Session Summary Helper completed — pure local summarizeLearningSession() helper, sanitized ParentSessionSummary output, 17 unit tests covering aggregation, parent notes, deterministic output, and privacy boundaries (PR #182)
        59. v0.16.0d Parent Session Summary Validation / QA completed — validation report covering contract alignment, input/output boundaries, aggregation, parent wording, 12 new regression tests (29 total), no defects found (PR #186)
        60. v0.16.0e Parent Session Summary Stabilization / Release Notes completed — release notes and QA checklist for v0.16, v0.16 series complete, next: v0.17.0a planning (PR #189)
-        61. v0.17.0a Parent Review Integration Surface Plan completed — compares 4 candidate integration surfaces, recommends developer debug panel, defines session boundary, data flow, privacy review, UI/UX principles, and v0.17.0b acceptance criteria (PR #192)
-         62. v0.17.0b Parent Review Debug Surface Prototype completed — developer debug page at /dev/session-summary, mapping helper buildSessionSummaryInput(), full ParentSessionSummary rendering, privacy boundary, 12 new tests (545 total across 28 files)
-          63. v0.17.0c Parent Review Debug Surface QA / Wording Validation completed — QA report at docs/PARENT_REVIEW_DEBUG_QA_v0.17.md, 4 new regression tests, all Chinese wording reviewed (non-judgmental), no defects found (PR #196)
-          64. v0.17.0d v0.17 Stabilization / Release Notes completed — release notes and QA checklist for v0.17, v0.17 series complete, next: v0.18.0a planning (PR #198)
+61. v0.17.0a Parent Review Integration Surface Plan completed — compares 4 candidate integration surfaces, recommends developer debug panel, defines session boundary, data flow, privacy review, UI/UX principles, and v0.17.0b acceptance criteria (PR #192)
+          62. v0.17.0b Parent Review Debug Surface Prototype completed — developer debug page at /dev/session-summary, mapping helper buildSessionSummaryInput(), full ParentSessionSummary rendering, privacy boundary, 12 new tests (545 total across 28 files)
+           63. v0.17.0c Parent Review Debug Surface QA / Wording Validation completed — QA report at docs/PARENT_REVIEW_DEBUG_QA_v0.17.md, 4 new regression tests, all Chinese wording reviewed (non-judgmental), no defects found (PR #196)
+           64. v0.17.0d v0.17 Stabilization / Release Notes completed — release notes and QA checklist for v0.17, v0.17 series complete, next: v0.18.0a planning (PR #198)
+65. v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 completed — conservative session boundary/history modeling approach (PR #202)
 ```
 
 ---
@@ -2937,6 +2940,49 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 | `npm run test:e2e` | Passed in CI |
 | Docker build verification | Passed in CI |
 
+---
+
+# ✅ v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 — COMPLETED (2026-06-10)
+
+## What was done
+
+- `docs/PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18.md`: conservative session boundary/history modeling planning document with:
+  - Goal/constraints and v0.17 assets
+  - 7 candidate integration directions (session boundary first)
+  - Privacy-first design and conservative approach
+  - Slice plan (a–d) for v0.18.0a–b
+  - Clear guidance for next phase: session boundary/history modeling
+
+- `docs/TASKS.md`: updated task queue:
+  - v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 delivered
+  - v0.18.0b planned for session boundary/history contract
+  - Current strategy entry 65 (PR #202)
+
+## Explicitly NOT delivered
+
+- No parent UI components
+- No session boundary implementation
+- No history modeling algorithms
+- No API routes or Server Actions
+- No runtime changes
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 545 passed (28 files) |
+| `npm run build` | Compiled successfully |
+| `npm run test:e2e` | Passed in CI |
+| Docker build verification | Passed in CI |
+
+## Branch
+
+- `docs/v0.18.0a-parent-review-next-phase-plan` → PR #202
+
+---
+
 ## Branch
 
 - `feat/v0.17.0b-parent-review-debug-surface` → PR #194 (closes #193)
@@ -2979,6 +3025,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - `docs/RELEASE_NOTES_v0.17.md` — release notes covering v0.17 goal, delivered slices (v0.17.0a–c), file inventory, what did not change, developer/debug-only route behavior, privacy and data minimization, testing and validation baseline (537 tests, 28 files), known limitations, recommended next phase (v0.18.0a planning).
 - `docs/QA_CHECKLIST_v0.17.md` — QA checklist with 7 sections: scope checklist, static validation, `/dev/session-summary` manual QA (developer surface, session overview, category table, level table, strengths, shaky concepts, suggested next focus, parent note, warnings, empty state, footer), privacy/data minimization checklist, Chinese parent wording checklist, accessibility/layout checklist, release sign-off template.
 - `docs/TASKS.md` — marked v0.17.0d delivered, v0.17 series complete, next task → v0.18.0a.
+- `docs/TASKS.md` — marked v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 delivered, next task → v0.18.0b: session boundary/history modeling contract.
 
 ## Explicitly NOT delivered
 
@@ -3130,9 +3177,10 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - v0.17.0c: parent review debug surface QA / wording validation (completed)
 - v0.17.0d: v0.17 stabilization / release notes (completed)
 
-## v0.18.0 — Parent Review Next Phase Plan (next)
+## v0.18.0 — Parent Review Next Phase Plan
 
-- v0.18.0a: parent review next phase plan (next)
+- v0.18.0a: parent review next phase plan (completed)
+- v0.18.0b: session boundary/history modeling contract (next)
 ---
 
 # Task Discipline
