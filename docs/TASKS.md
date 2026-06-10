@@ -15,6 +15,8 @@ v0.17.0c Parent Review Debug Surface QA / Wording Validation delivered — QA va
 
 v0.17.0d v0.17 Stabilization / Release Notes delivered — release notes at `docs/RELEASE_NOTES_v0.17.md`, QA checklist at `docs/QA_CHECKLIST_v0.17.md`. v0.17 series complete. Next: v0.18.0a — Parent Review Next Phase Plan.
 
+v0.18.0a Parent Review Next Phase Plan delivered — planning document covering goal/constraints, v0.17 assets, 4 candidate integration surfaces (recommended: parent-facing learning report integration), session boundary plan, data flow, privacy/safety review, UI/UX principles, slice plan (a–d), and v0.18.0b acceptance criteria.
+
 Current strategy:
 
 ```text
