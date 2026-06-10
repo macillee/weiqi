@@ -17,6 +17,8 @@ v0.17.0d v0.17 Stabilization / Release Notes delivered — release notes at `doc
 
 v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 delivered — planning document covering goal/constraints, v0.17 assets, conservative session boundary/history modeling directions, and v0.18.0b acceptance criteria.
 
+v0.18.0b PARENT_REVIEW_SESSION_BOUNDARY_CONTRACT_v0.18 delivered — session boundary vocabulary, current-session vs daily vs historical summary definitions, reset/retention behavior, sparse/empty/mixed result handling, local-only assumptions, privacy/data minimization rules, parent gate requirements, future testing requirements, and v0.18.0c recommendation (PR #204).
+
 Current strategy:
 
 ```text
@@ -85,6 +87,7 @@ Current strategy:
            63. v0.17.0c Parent Review Debug Surface QA / Wording Validation completed — QA report at docs/PARENT_REVIEW_DEBUG_QA_v0.17.md, 4 new regression tests, all Chinese wording reviewed (non-judgmental), no defects found (PR #196)
            64. v0.17.0d v0.17 Stabilization / Release Notes completed — release notes and QA checklist for v0.17, v0.17 series complete, next: v0.18.0a planning (PR #198)
 65. v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 completed — conservative session boundary/history modeling approach (PR #202)
+66. v0.18.0b PARENT_REVIEW_SESSION_BOUNDARY_CONTRACT_v0.18 completed — session boundary vocabulary, privacy/data minimization rules, parent gate requirements, future testing requirements (PR #204)
 ```
 
 ---
@@ -2983,9 +2986,43 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 ---
 
+# ✅ v0.18.0b PARENT_REVIEW_SESSION_BOUNDARY_CONTRACT_v0.18 — COMPLETED (2026-06-10)
+
+## What was done
+
+- `docs/PARENT_REVIEW_SESSION_BOUNDARY_CONTRACT_v0.18.md`: comprehensive session boundary and history modeling contract with:
+  - Session boundary vocabulary (6 canonical terms)
+  - Current-session vs daily vs historical summary definitions
+  - Reset / retention behavior table (10 actions)
+  - Sparse / empty / mixed result behavior (8 data scenarios)
+  - Local-only assumptions (9 guaranteed invariants)
+  - Privacy / data minimization rules (14 excluded fields)
+  - Parent gate requirements (5 gates, 5 preconditions, 5 future UI issues)
+  - Future testing requirements (data scenarios, privacy, storage, UI)
+  - Recommendation: v0.18.0c mini local session history model
+- `docs/TASKS.md`: updated to mark v0.18.0b delivered, queue v0.18.0c
+
+## Explicitly NOT delivered
+
+- No parent-facing UI components
+- No session boundary implementation
+- No history modeling algorithms
+- No storage schema changes
+- No API routes or Server Actions
+- No runtime code changes
+
+## Validation
+
+| Check | Result |
+|---|---|
+| `npm run lint` | Exit 0 |
+| `npm run typecheck` | Exit 0 |
+| `npm run test` | 537 passed (28 files) |
+| `npm run build` | Compiled successfully |
+
 ## Branch
 
-- `feat/v0.17.0b-parent-review-debug-surface` → PR #194 (closes #193)
+- `docs/v0.18.0b-parent-review-session-boundary-contract` → PR #204
 
 ---
 
@@ -3180,7 +3217,9 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 ## v0.18.0 — Parent Review Next Phase Plan
 
 - v0.18.0a: parent review next phase plan (completed)
-- v0.18.0b: session boundary/history modeling contract (next)
+- v0.18.0b: session boundary/history modeling contract (completed)
+- v0.18.0c: minimal local session history model / contract validation (next)
+
 ---
 
 # Task Discipline
