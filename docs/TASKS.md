@@ -90,7 +90,7 @@ Current strategy:
            64. v0.17.0d v0.17 Stabilization / Release Notes completed — release notes and QA checklist for v0.17, v0.17 series complete, next: v0.18.0a planning (PR #198)
 65. v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 completed — conservative session boundary/history modeling approach (PR #202)
 66. v0.18.0b PARENT_REVIEW_SESSION_BOUNDARY_CONTRACT_v0.18 completed — session boundary vocabulary, privacy/data minimization rules, parent gate requirements, future testing requirements (PR #204)
-67. v0.18.0c Minimal Local Session History Model and Contract Validation completed — pure TS helpers (EnrichedAttempt, CurrentSessionState, CompletedSession, DailySummary, HistoricalSummary, ParentReviewSafeSession), contract validation (validateSessionContract), privacy boundary enforcement (toParentReviewSafeAggregate, checkPrivacyBoundary), 35 new tests (572 total across 29 files) (PR #206). Next: v0.18.0d — parent review session history QA and stabilization.
+67. v0.18.0c Minimal Local Session History Model and Contract Validation completed — pure TS helpers (`EnrichedAttempt`, `CurrentSessionState`, `CompletedSession`, `DailySummary`, `HistoricalSummary`, `ParentReviewSafeSession`), contract validation (`validateSessionContract`), privacy boundary enforcement (`toParentReviewSafeAggregate`, `checkPrivacyBoundary`), 35 new tests (572 total across 29 files) (PR #206). Next: v0.18.0d — parent review session history QA and stabilization.
 ```
 
 ---
