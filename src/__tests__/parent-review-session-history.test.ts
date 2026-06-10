@@ -462,10 +462,10 @@ describe("checkPrivacyBoundary", () => {
   });
 
   it("detects sensitive field after fifth array item", () => {
-    const items = Array.from({ length: 6 }, (_, i) => ({
-      id: i,
-      label: `item-${i}`,
-    }));
+    const items: Record<string, unknown>[] = [];
+    for (let i = 0; i < 6; i++) {
+      items.push({ id: i, label: `item-${i}` });
+    }
     items[5] = { id: 5, problemId: "CAP-001", selectedX: 3 };
     const violations = checkPrivacyBoundary({ items });
     expect(violations.some((v) => v.field === "problemId")).toBe(true);

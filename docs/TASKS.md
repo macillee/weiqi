@@ -3221,7 +3221,8 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 - v0.18.0a: parent review next phase plan (completed)
 - v0.18.0b: session boundary/history modeling contract (completed)
-- v0.18.0c: minimal local session history model / contract validation (next)
+- v0.18.0c: minimal local session history model / contract validation (completed — PR #206)
+- v0.18.0d: TBD (next slice from parent review plan)
 
 ---
 
