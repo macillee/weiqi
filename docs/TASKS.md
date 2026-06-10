@@ -3177,9 +3177,10 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - v0.17.0c: parent review debug surface QA / wording validation (completed)
 - v0.17.0d: v0.17 stabilization / release notes (completed)
 
-## v0.18.0 — Parent Review Next Phase Plan (next)
+## v0.18.0 — Parent Review Next Phase Plan ✅ COMPLETE
 
-- v0.18.0a: parent review next phase plan (next)
+- v0.18.0a: parent review next phase plan (completed)
+- v0.18.0b: session boundary/history modeling contract (next)
 ---
 
 # Task Discipline
