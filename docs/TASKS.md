@@ -2948,7 +2948,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 
 - `docs/PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18.md`: conservative session boundary/history modeling planning document with:
   - Goal/constraints and v0.17 assets
-  - 9 candidate integration directions (session boundary first)
+  - 7 candidate integration directions (session boundary first)
   - Privacy-first design and conservative approach
   - Slice plan (a–d) for v0.18.0a–b
   - Clear guidance for next phase: session boundary/history modeling
@@ -3025,7 +3025,7 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - `docs/RELEASE_NOTES_v0.17.md` — release notes covering v0.17 goal, delivered slices (v0.17.0a–c), file inventory, what did not change, developer/debug-only route behavior, privacy and data minimization, testing and validation baseline (537 tests, 28 files), known limitations, recommended next phase (v0.18.0a planning).
 - `docs/QA_CHECKLIST_v0.17.md` — QA checklist with 7 sections: scope checklist, static validation, `/dev/session-summary` manual QA (developer surface, session overview, category table, level table, strengths, shaky concepts, suggested next focus, parent note, warnings, empty state, footer), privacy/data minimization checklist, Chinese parent wording checklist, accessibility/layout checklist, release sign-off template.
 - `docs/TASKS.md` — marked v0.17.0d delivered, v0.17 series complete, next task → v0.18.0a.
-- `docs/TASKS.md` — marked v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 delivered, next task → v0.18.0b.
+- `docs/TASKS.md` — marked v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 delivered, next task → v0.18.0b: session boundary/history modeling contract.
 
 ## Explicitly NOT delivered
 

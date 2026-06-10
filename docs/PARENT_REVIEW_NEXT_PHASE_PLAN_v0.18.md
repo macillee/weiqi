@@ -1,6 +1,6 @@
 # PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18
 
-> Planning document covering goal/constraints, v0.17 assets, candidate integration directions, session boundary contract, and v0.18.0b acceptance criteria.
+> Conservative planning document — session boundary and history modeling before any parent-facing UI.
 
 ---
 
@@ -8,159 +8,151 @@
 
 ## Goal
 
-Develop a parent review integration surface that preserves the existing v0.17 parent review debug surface while exploring safe, conservative approaches to providing insights to parents about their child's learning progress.
+Define a safe, conservative next phase for the parent review surface. **Do not jump to parent dashboard, report UI, or any parent-facing integration.** Instead, focus on session boundary modeling and history contracts that enable safe parent insight delivery in the future.
 
-### Conservative Approach
+### Key Constraints
 
-1. **Preserve Existing Assets**: Build upon v0.17.0b debug surface without breaking changes
-2. **Session Boundary First**: Focus on session summary and history modeling before parent UI
-3. **Privacy-First**: Maintain strict data minimization and privacy boundaries
-4. **Gradual Enhancement**: Defer parent-facing features until session boundaries are solid
-5. **Backwards Compatible**: No impact on existing local anonymous mode
+1. **No Parent-Facing UI Yet**: Do not build parent dashboard, report page, or any UI for parents in this phase
+2. **Session Boundary First**: Must understand session structure and history before any insight surface
+3. **Privacy-First**: Maintain strict data minimization and boundary enforcement
+4. **Backwards Compatible**: Zero impact on existing local anonymous mode
+5. **Preserve v0.17 Assets**: Build upon existing debug surface without breaking it
 
 ### v0.17 Assets to Build Upon
 
-- `/dev/session-summary` - Parent session summary debug page
-- `src/lib/session-summary-input.ts` - Input type for session summary
-- `src/lib/session-summary.ts` - Session summary aggregation logic
-- `ParentSessionSummary` - Structured output with category/level tables
-- 12 new tests (545 total across 28 files)
+- `/dev/session-summary` — existing developer-only debug page
+- `src/lib/session-summary-input.ts` — `buildSessionSummaryInput()` mapping helper
+- `src/lib/session-summary.ts` — `summarizeLearningSession()` aggregation logic
+- `ParentSessionSummary` — structured output with category/level tables
+- 12 tests targeting session-summary behavior
 
-## Candidate Integration Directions
+---
 
-### Priority 1: Session Boundary and History Modeling
+# Candidate Integration Directions
 
-1. **Session Boundary Contract** - Define session-to-session comparison protocol
-2. **History Modeling** - Build algorithms for tracking learning progress over time
-3. **Progress Signals** - Identify safe, aggregate signals for parent insight
-4. **Temporal Analysis** - Analyze trends in correctness, difficulty, timing
+The following are **candidate directions for consideration**. None are recommended for immediate implementation. The recommended next step (v0.18.0b) is at the bottom.
 
-### Priority 2: Safe Parent Access
+### Candidate A: Keep Developer Debug-Only Surface, Defer All Parent-Facing UI
+Continue using v0.17.0b `/dev/session-summary` as the only review surface. No parent-facing UI. All energy goes to session boundary and history modeling contracts.
 
-5. **Guarded Parent Settings Entry** - Optional, auth-required parent access to insights
-6. **End-of-Session Review Summary** - Lightweight summary shown at session completion
-7. **Existing Page Extensions** - Enhanced parent insights within current UI pages
-8. **Weekly/Monthly Summaries** - Periodic aggregated progress reports
-9. **Developer Debug-Only Surface** - Continue using v0.17.0b debug surface for development
+### Candidate B: Guarded Parent-Only Settings Entry (Later)
+Add an optional, auth-gated settings panel where a parent can opt in to view summary data. Pure settings — no dashboard, no report page changes.
 
-### Priority 3: Future Enhancements
+### Candidate C: End-of-Session Review Summary (Later)
+After a practice session completes, show a lightweight one-screen summary of what was practiced. No persistent dashboard or parent portal.
 
-10. **Full Parent Portal** - Comprehensive parent dashboard (deferred)
-11. **Advanced Analytics** - Complex pattern analysis (deferred)
-12. **AI-Enhanced Insights** - Machine learning for personalized recommendations (deferred)
+### Candidate D: Existing Report / Progress Page Extension (Later)
+Add a toggleable "parent view" section on the existing `/report` page. Extends current functionality without new routes.
 
-## Session Boundary and History Modeling
+### Candidate E: Weekly / Monthly Parent Summary (Later)
+Generate periodic aggregated progress summaries (stars earned, problems completed, categories practiced). Delivered via simple page — no email, no dashboard.
 
-### Data Flow
+### Candidate F: Do Nothing — Stay on Developer Debug Surface Indefinitely
+Accept the v0.17.0b debug surface as sufficient for internal use. Do not invest in parent-facing UI until product validation demands it.
+
+### Candidate G: Defer All UI, Improve Session Boundary and History Modeling First ◆ RECOMMENDED
+**Do not implement any parent-facing UI.** Instead, invest in:
+- Session boundary contract (start/end, continuity, resumption)
+- History modeling algorithms (aggregation across sessions)
+- Safe parent signal definitions (what signals are safe to expose)
+- Temporal analysis infrastructure (performance trends over time)
+
+---
+
+# v0.18.0b Recommended Direction: Session Boundary / History Modeling Contract
+
+**The immediate next slice (v0.18.0b) should be a documentation and contract slice that defines:**
+
+1. **Session Boundary Protocol** — what constitutes a session, how sessions relate, how to handle interrupted sessions, overlap detection
+2. **History Modeling Algorithms** — how to aggregate session summaries into trend data, how to compute progress signals
+3. **Safe Signal Registry** — documented list of signals safe for eventual parent exposure (accuracy, category distribution, streak data, etc.)
+4. **Privacy Boundary Checklist** — what data must never cross into any parent surface
+5. **Exclusion List** — explicit list of what not to build yet (parent dashboard, report page, email summaries, push notifications)
+
+**Parent-facing UI is explicitly excluded from v0.18.0b.** No dashboard, no report page changes, no parent settings, no weekly email. Focus purely on contracts and modeling.
+
+---
+
+# Data Flow
 
 ```
-Child Practices → localStorage (Progress, Attempts)
-                    ↓
-Session Summary Aggregation → Progress Modeling
-                    ↓
-Session Boundary Contract → Safe Signals
-                    ↓
-Parent Insights (guarded access)
+Child Practice Sessions
+      ↓
+localStorage Progress + Attempts
+      ↓
+summarizeLearningSession() (src/lib/session-summary.ts)
+      ↓
+ParentSessionSummary (aggregated, sanitized)
+      ↓
+History Modeling Contract (v0.18.0b target)
+      ↓
+Safe Signals → eventual guarded parent access (future slice)
 ```
 
-### Session Boundary Contract
+---
 
-- **Session Definition**: Complete learning sessions with clear start/end
-- **Session Boundaries**: Clear separation between practice sessions
-- **State Preservation**: Session state preserved across app restarts
-- **Progress Tracking**: Cumulative progress across sessions
+# Privacy and Safety Design
 
-### History Modeling
+1. **Data Minimization**: Only aggregate insights transmitted to any surface
+2. **No Raw Answers**: Parent surface must never show specific correct/incorrect answers
+3. **Consent Gate**: Any parent surface must be opt-in, auth-gated
+4. **Guardrails**: Safe signal thresholds and validation before any exposure
 
-- **Temporal Analysis**: Track performance over time
-- **Progress Signals**: Safe, aggregate indicators of learning
-- **Trend Detection**: Identify patterns in learning behavior
-- **Benchmarking**: Compare current performance to historical data
+---
 
-### Privacy and Safety Design
+# Acceptance Criteria
 
-1. **Data Minimization**: Only aggregate insights, no raw data
-2. **Consent Requirements**: Optional parent access, auth-gated
-3. **Guardrails**: Safe signal thresholds and validation
-4. **Transparency**: Clear explanation of what signals mean
+## Functional
 
-## Acceptance Criteria
+1. Session boundary protocol documented with clear start/end semantics
+2. History modeling algorithms defined with pseudocode
+3. Safe signal registry published (at least 5 safe signals)
+4. Privacy boundary checklist complete
+5. Explicit non-goals list documented
 
-### Functional Requirements
+## Quality
 
-1. **Session Boundary Contract** - Well-defined session-to-session comparison protocol
-2. **History Modeling** - Algorithms for tracking learning progress over time
-3. **Safe Signals** - Aggregate indicators that provide useful parent insights
-4. **Privacy Compliance** - No exposure of child's raw data or individual answers
-5. **Backwards Compatibility** - No breaking changes to existing app functionality
+1. Conservative: no parent-facing UI recommended for immediate implementation
+2. Privacy-first: data minimization enforced at contract level
+3. Testable: contracts should be verifiable via unit tests
 
-### Quality Requirements
-
-1. **Conservative Design** - Focus on boundaries before parent UI
-2. **Privacy-First** - Data minimization and strict access controls
-3. **Test Coverage** - Comprehensive testing of session boundary logic
-4. **Performance** - Efficient algorithms that don't impact app speed
-5. **Documentation** - Clear documentation of contracts and boundaries
-
-### Non-Delivered in This Phase
+## Explicitly NOT Delivered in v0.18
 
 - No parent-facing UI components
-- No real-time parent notifications
-- No AI-enhanced insights
-- No advanced analytics
-- No parental account management
+- No parent dashboard
+- No report page changes
+- No weekly/monthly parent summary UI
+- No end-of-session review UI
+- No settings entry for parent features
+- No analytics or telemetry
 
-## Deliverables
+---
 
-### Immediate (v0.18.0a)
+# Risks and Mitigation
 
-1. **Session Boundary Contract** - Well-defined session structure and boundaries
-2. **History Modeling** - Algorithms for tracking learning progress
-3. **Safe Signals** - Aggregate indicators for parent insights
-4. **Privacy Guidelines** - Guidelines for parent access and data use
-5. **Testing** - Comprehensive test suite for session boundary logic
+| Risk | Mitigation |
+|---|---|
+| Too conservative | Define "safe enough" criteria for eventual parent signals |
+| Session boundary ambiguity | Start with simple, deterministic session rules |
+| Privacy misstep | Privacy boundary checklist and mandatory review gate |
+| Scope creep to parent UI | Explicit exclusion list; block any parent-facing UI in v0.18 |
 
-### Future (v0.18.0b+)
+---
 
-1. **Guarded Parent Settings** - Optional parent access interface
-2. **End-of-Session Summary** - Lightweight progress summaries
-3. **Enhanced Reporting** - Weekly/monthly parent summaries
-4. **Parent Portal** - Comprehensive parent dashboard
-5. **Analytics** - Advanced progress analysis
-
-## Risks and Mitigation
-
-### Risk: Too Conservative
-- **Mitigation**: Clear definition of "safe enough" parent insights
-- **Validation**: Parent testing with real users
-
-### Risk: Session Boundary Complexity
-- **Mitigation**: Start with simple, well-defined contracts
-- **Validation**: Edge case testing for session boundaries
-
-### Risk: Privacy Concerns
-- **Mitigation**: Strict data minimization and access controls
-- **Validation**: Privacy impact assessment with stakeholders
-
-### Risk: Technical Debt
-- **Mitigation**: Clean architecture with clear interfaces
-- **Validation**: Code reviews and comprehensive testing
-
-## Dependencies
+# Dependencies
 
 ### Required
-- v0.17.0b Parent Review Debug Surface (existing)
-- v0.17.0c QA validation report (existing)
-- v0.16.0c Parent Session Summary Helper (existing)
+- v0.17.0b (`/dev/session-summary`, `src/lib/session-summary-input.ts`, `src/lib/session-summary.ts`)
+- v0.17.0c QA validation report
 
 ### Optional
-- v0.14.0c Local Engine Diagnostics (if needed for testing)
-- v0.12.0d Local Rule-Assisted Review Coach (if integrated)
+- v0.16.0c session summary helper (as reference)
 
-## References
+---
+
+# References
 
 - v0.17.0a: `docs/PARENT_REVIEW_INTEGRATION_PLAN_v0.17.md`
-- v0.17.0b: `/dev/session-summary` prototype
+- v0.17.0b: `/dev/session-summary`, `src/lib/session-summary-input.ts`, `src/lib/session-summary.ts`
 - v0.17.0c: `docs/PARENT_REVIEW_DEBUG_QA_v0.17.md`
-- v0.16.0c: `src/lib/session-summary-helper.ts`
 - v0.17.0d: `docs/RELEASE_NOTES_v0.17.md`
