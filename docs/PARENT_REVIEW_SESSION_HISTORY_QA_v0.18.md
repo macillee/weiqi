@@ -4,7 +4,7 @@
 
 Validation scope covers the v0.18.0c pure TS helper module `src/lib/parent-review-session-history.ts`:
 
-- 8 exported functions: `createEmptyProgress`, `enrichAttempt`, `startSession`, `recordAttemptInSession`, `closeSession`, `buildDailySummary`, `buildHistoricalSummary`, `validateSessionContract`, `toParentReviewSafeAggregate`, `checkPrivacyBoundary`
+- 10 exported functions: `createEmptyProgress`, `enrichAttempt`, `startSession`, `recordAttemptInSession`, `closeSession`, `buildDailySummary`, `buildHistoricalSummary`, `validateSessionContract`, `toParentReviewSafeAggregate`, `checkPrivacyBoundary`
 - `src/lib/session-summary.ts` — existing types reused (`ParentSessionSummary`, `AttemptSummary`, `LearningSessionSummaryInput`)
 - `src/__tests__/parent-review-session-history.test.ts` — existing 36 tests + 10 new tests (46 total)
 
