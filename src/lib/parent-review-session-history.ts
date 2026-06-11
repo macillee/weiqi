@@ -238,8 +238,9 @@ export function buildDailySummary(
 export function buildHistoricalSummary(
   progress: StudentProgress,
 ): HistoricalSummary {
+  const attempts = progress.attempts || [];
   const dayMap = new Map<string, AttemptRecord[]>();
-  for (const a of progress.attempts) {
+  for (const a of attempts) {
     const day = toDateString(a.createdAt);
     if (!dayMap.has(day)) dayMap.set(day, []);
     dayMap.get(day)!.push(a);

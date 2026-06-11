@@ -673,12 +673,224 @@ describe("scenario: stale history (cross-day)", () => {
   });
 });
 
-/* ───── Scenario: localStorage clear/missing ───── */
+/* ───── Scenario: one attempt ───── */
 
-describe("scenario: localStorage clear / missing", () => {
-  it("createEmptyProgress returns safe defaults", () => {
-    const p = createEmptyProgress();
-    expect(p.stars).toBe(0);
-    expect(p.attempts).toEqual([]);
+describe("scenario: one attempt", () => {
+  it("single correct attempt, no hint", () => {
+    const s = startSession();
+    const r = recordAttemptInSession(s, {
+      problemId: "CAP-001",
+      isCorrect: true,
+      usedHint: false,
+      multiStep: false,
+    });
+    const closed = closeSession(r);
+    expect(closed.totalAttempts).toBe(1);
+    expect(closed.totalCorrect).toBe(1);
+    expect(closed.totalHintUsed).toBe(0);
+    expect(closed.categoryBreakdown.capture.attempted).toBe(1);
+    expect(closed.categoryBreakdown.capture.correct).toBe(1);
+    expect(closed.attempts[0].attemptCount).toBe(1);
+    expect(closed.attempts[0].category).toBe("capture");
+    expect(closed.attempts[0].level).toBe(1);
+  });
+});
+
+/* ───── Scenario: invalid local data ───── */
+
+describe("scenario: invalid local data", () => {
+  it("handles empty attempts array gracefully", () => {
+    const p: StudentProgress = createEmptyProgress();
+    const hs = buildHistoricalSummary(p);
+    expect(hs.dailySummaries).toEqual([]);
+    expect(hs.totalAttempts).toBe(0);
+    expect(hs.totalCorrect).toBe(0);
+    expect(hs.totalHintUsed).toBe(0);
+  });
+
+  it("handles progress with no attempts field (cast)", () => {
+    const raw = { stars: 5 } as unknown as StudentProgress;
+    const hs = buildHistoricalSummary(raw);
+    expect(hs.dailySummaries).toEqual([]);
+    expect(hs.totalAttempts).toBe(0);
+  });
+});
+
+/* ───── Scenario: retained history ordering ───── */
+
+describe("scenario: retained history ordering", () => {
+  it("dailySummaries sorted chronologically ascending", () => {
+    const p: StudentProgress = {
+      ...createEmptyProgress(),
+      attempts: [
+        {
+          problemId: "CAP-003",
+          selectedX: 0,
+          selectedY: 0,
+          isCorrect: true,
+          usedHint: false,
+          timeSpentSeconds: 5,
+          createdAt: "2025-06-10T12:00:00.000Z",
+        },
+        {
+          problemId: "CAP-002",
+          selectedX: 1,
+          selectedY: 1,
+          isCorrect: false,
+          usedHint: true,
+          timeSpentSeconds: 10,
+          createdAt: "2025-06-08T12:00:00.000Z",
+        },
+        {
+          problemId: "CAP-001",
+          selectedX: 2,
+          selectedY: 2,
+          isCorrect: true,
+          usedHint: false,
+          timeSpentSeconds: 8,
+          createdAt: "2025-06-09T12:00:00.000Z",
+        },
+      ],
+    };
+    const hs = buildHistoricalSummary(p);
+    expect(hs.dailySummaries[0].date).toBe("2025-06-08");
+    expect(hs.dailySummaries[1].date).toBe("2025-06-09");
+    expect(hs.dailySummaries[2].date).toBe("2025-06-10");
+  });
+});
+
+/* ───── Scenario: same-day ordering ───── */
+
+describe("scenario: same-day ordering", () => {
+  it("preserves attempt order within the same day", () => {
+    const p: StudentProgress = {
+      ...createEmptyProgress(),
+      attempts: [
+        {
+          problemId: "CAP-001",
+          selectedX: 0,
+          selectedY: 0,
+          isCorrect: false,
+          usedHint: false,
+          timeSpentSeconds: 5,
+          createdAt: "2025-06-10T09:00:00.000Z",
+        },
+        {
+          problemId: "CAP-002",
+          selectedX: 1,
+          selectedY: 1,
+          isCorrect: true,
+          usedHint: false,
+          timeSpentSeconds: 10,
+          createdAt: "2025-06-10T10:00:00.000Z",
+        },
+        {
+          problemId: "CAP-003",
+          selectedX: 2,
+          selectedY: 2,
+          isCorrect: true,
+          usedHint: false,
+          timeSpentSeconds: 8,
+          createdAt: "2025-06-10T11:00:00.000Z",
+        },
+      ],
+    };
+    const hs = buildHistoricalSummary(p);
+    expect(hs.dailySummaries).toHaveLength(1);
+    expect(hs.dailySummaries[0].totalAttempts).toBe(3);
+    expect(hs.dailySummaries[0].totalCorrect).toBe(2);
+  });
+});
+
+/* ───── Parent-review-safe aggregate consistency ───── */
+
+describe("scenario: parent-review-safe aggregate consistency", () => {
+  it("preserves all top-level fields and removes problemId from problems", () => {
+    const summary: ParentSessionSummary = {
+      sessionId: "session-123",
+      reviewedAt: "2025-06-10T12:00:00.000Z",
+      signalQuality: "complete",
+      totalAttempted: 3,
+      totalCorrectFirstTry: 2,
+      totalRetried: 1,
+      totalHintsUsed: 0,
+      multiStepAttempted: 0,
+      multiStepCompleted: 0,
+      categories: [{ category: "capture", attempted: 3, correctFirstTry: 2, retried: 1, hintsUsed: 0, multiStepAttempted: 0, multiStepCompleted: 0 }],
+      levels: [{ level: 1, attempted: 3, correctFirstTry: 2, hintsUsed: 0 }],
+      problems: [
+        { problemId: "CAP-001", category: "capture", level: 1, result: "correct-first-try", hintsUsed: 0, multiStep: false },
+        { problemId: "CAP-002", category: "capture", level: 1, result: "correct-after-retry", hintsUsed: 0, multiStep: false },
+        { problemId: "CAP-003", category: "capture", level: 1, result: "incomplete", hintsUsed: 0, multiStep: false },
+      ],
+      strengths: ["capture 表现不错"],
+      shakyConcepts: [],
+      suggestedNextFocus: [],
+      parentNote: "今天表现稳定！",
+      warnings: [],
+    };
+    const safe = toParentReviewSafeAggregate(summary);
+    expect(safe.sessionId).toBe("session-123");
+    expect(safe.signalQuality).toBe("complete");
+    expect(safe.totalAttempted).toBe(3);
+    expect(safe.totalCorrectFirstTry).toBe(2);
+    expect(safe.totalRetried).toBe(1);
+    expect(safe.totalHintsUsed).toBe(0);
+    expect(safe.multiStepAttempted).toBe(0);
+    expect(safe.multiStepCompleted).toBe(0);
+    expect(safe.categories).toHaveLength(1);
+    expect(safe.levels).toHaveLength(1);
+    expect(safe.problems).toHaveLength(3);
+    for (const p of safe.problems) {
+      expect("problemId" in p).toBe(false);
+    }
+    expect(safe.strengths).toEqual(["capture 表现不错"]);
+    expect(safe.parentNote).toBe("今天表现稳定！");
+  });
+});
+
+/* ───── Privacy: boardState / identity / telemetry ───── */
+
+describe("privacy: forbidden fields detection", () => {
+  it("detects boardState", () => {
+    const violations = checkPrivacyBoundary({ boardState: "..." });
+    expect(violations.some((v) => v.field === "boardState")).toBe(true);
+  });
+
+  it("detects identity", () => {
+    const violations = checkPrivacyBoundary({ identity: "child-123" });
+    expect(violations.some((v) => v.field === "identity")).toBe(true);
+  });
+
+  it("detects telemetry", () => {
+    const violations = checkPrivacyBoundary({ telemetry: { event: "click" } });
+    expect(violations.some((v) => v.field === "telemetry")).toBe(true);
+  });
+
+  it("detects deeply nested forbidden fields in objects", () => {
+    const data = {
+      summary: {
+        stats: {
+          inner: { problemId: "CAP-001", stars: 10 },
+        },
+      },
+    };
+    const violations = checkPrivacyBoundary(data);
+    expect(violations.some((v) => v.field === "problemId")).toBe(true);
+    expect(violations.some((v) => v.field === "stars")).toBe(true);
+    expect(violations.length).toBe(2);
+  });
+});
+
+/* ───── Scenario: closeSession with no attempts ───── */
+
+describe("closeSession: empty session", () => {
+  it("returns zero totals for empty session", () => {
+    const s = startSession();
+    const closed = closeSession(s);
+    expect(closed.totalAttempts).toBe(0);
+    expect(closed.totalCorrect).toBe(0);
+    expect(closed.totalHintUsed).toBe(0);
+    expect(closed.categoryBreakdown).toEqual({});
   });
 });
