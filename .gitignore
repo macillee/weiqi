@@ -35,6 +35,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# personal opencode config (contains API keys)
+opencode.json
+
 # vercel
 .vercel
 

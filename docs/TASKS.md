@@ -19,9 +19,7 @@ v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 delivered — planning document cov
 
 v0.18.0b PARENT_REVIEW_SESSION_BOUNDARY_CONTRACT_v0.18 delivered — session boundary vocabulary, current-session vs daily vs historical summary definitions, reset/retention behavior, sparse/empty/mixed result handling, local-only assumptions, privacy/data minimization rules, parent gate requirements, future testing requirements, and v0.18.0c recommendation (PR #204).
 
-v0.18.0c Minimal Local Session History Model and Contract Validation delivered — pure TS helpers (`parent-review-session-history.ts`), contract validation (`validateSessionContract`), privacy boundary enforcement (`toParentReviewSafeAggregate`, `checkPrivacyBoundary`), 36 new tests (573 total across 29 files) (PR #206).
-
-v0.18.0d Parent Review Session History QA and Stabilization delivered — comprehensive QA covering 16 data scenarios, 13 forbidden-field privacy boundary, 9 privacy guarantees, consistency validation, and 10 new edge-case tests (583 total across 29 files). `buildHistoricalSummary` hardened against null/undefined attempts (PR #207). Next: v0.18.0e — v0.18 release notes and QA checklist.
+v0.18.0c Minimal Local Session History Model and Contract Validation delivered — pure TS helpers (`parent-review-session-history.ts`), contract validation (`validateSessionContract`), privacy boundary enforcement (`toParentReviewSafeAggregate`, `checkPrivacyBoundary`), 36 new tests (573 total across 29 files) (PR #206). Next: v0.18.0d — parent review session history QA and stabilization.
 
 Current strategy:
 
@@ -92,8 +90,8 @@ Current strategy:
            64. v0.17.0d v0.17 Stabilization / Release Notes completed — release notes and QA checklist for v0.17, v0.17 series complete, next: v0.18.0a planning (PR #198)
 65. v0.18.0a PARENT_REVIEW_NEXT_PHASE_PLAN_v0.18 completed — conservative session boundary/history modeling approach (PR #202)
 66. v0.18.0b PARENT_REVIEW_SESSION_BOUNDARY_CONTRACT_v0.18 completed — session boundary vocabulary, privacy/data minimization rules, parent gate requirements, future testing requirements (PR #204)
-67. v0.18.0c Minimal Local Session History Model and Contract Validation completed — pure TS helpers (EnrichedAttempt, CurrentSessionState, CompletedSession, DailySummary, HistoricalSummary, ParentReviewSafeSession), contract validation (validateSessionContract), privacy boundary enforcement (toParentReviewSafeAggregate, checkPrivacyBoundary), 36 new tests (573 total across 29 files) (PR #206).
-68. v0.18.0d Parent Review Session History QA and Stabilization completed — 16 data scenarios, 13 forbidden-field privacy boundary, 9 privacy guarantees, 10 new tests (583 total across 29 files), `buildHistoricalSummary` hardened (PR #207). Next: v0.18.0e — v0.18 release notes and QA checklist.
+67. v0.18.0c Minimal Local Session History Model and Contract Validation completed — pure TS helpers (`EnrichedAttempt`, `CurrentSessionState`, `CompletedSession`, `DailySummary`, `HistoricalSummary`, `ParentReviewSafeSession`), contract validation (`validateSessionContract`), privacy boundary enforcement (`toParentReviewSafeAggregate`, `checkPrivacyBoundary`), 36 new tests (573 total across 29 files) (PR #206).
+68. v0.18.0d Parent Review Session History QA / Stabilization completed — boundary edge-case test expansion (10 new tests, 583 total across 29 files), null/undefined guard fix for `buildHistoricalSummary`, QA report at `docs/PARENT_REVIEW_SESSION_HISTORY_QA_v0.18.md`. Next: v0.18.0e — v0.18 release notes / QA checklist.
 ```
 
 ---
@@ -3220,15 +3218,13 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - v0.17.0c: parent review debug surface QA / wording validation (completed)
 - v0.17.0d: v0.17 stabilization / release notes (completed)
 
-## v0.18.0 — Parent Review Next Phase Plan
+## v0.18.0 — Parent Review Next Phase Plan ✅ COMPLETE
 
 - v0.18.0a: parent review next phase plan (completed)
 - v0.18.0b: session boundary/history modeling contract (completed)
 - v0.18.0c: minimal local session history model / contract validation (completed — PR #206)
-- v0.18.0d: parent review session history QA and stabilization (completed — PR #207)
-- v0.18.0e: v0.18 release notes and QA checklist (next)
-
----
+- v0.18.0d: parent review session history QA and stabilization (completed)
+- v0.18.0e: v0.18 release notes / QA checklist (next)
 
 # Task Discipline
 

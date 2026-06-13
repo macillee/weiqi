@@ -894,3 +894,141 @@ describe("closeSession: empty session", () => {
     expect(closed.categoryBreakdown).toEqual({});
   });
 });
+
+/* ───── Edge cases ───── */
+
+describe("buildHistoricalSummary edge cases", () => {
+  it("handles null/undefined attempts via nullish guard", () => {
+    const p1 = { ...createEmptyProgress(), attempts: null as unknown as [] };
+    const hs1 = buildHistoricalSummary(p1);
+    expect(hs1.dailySummaries).toEqual([]);
+    expect(hs1.totalAttempts).toBe(0);
+
+    const p2 = { ...createEmptyProgress() };
+    delete (p2 as { attempts?: unknown }).attempts;
+    const hs2 = buildHistoricalSummary(p2);
+    expect(hs2.dailySummaries).toEqual([]);
+    expect(hs2.totalAttempts).toBe(0);
+  });
+
+  it("collapses multiple same-day attempts into one daily summary", () => {
+    const p: StudentProgress = {
+      ...createEmptyProgress(),
+      attempts: [
+        {
+          problemId: "CAP-001", selectedX: 0, selectedY: 0,
+          isCorrect: true, usedHint: false, timeSpentSeconds: 5,
+          createdAt: "2025-06-10T10:00:00.000Z",
+        },
+        {
+          problemId: "CAP-002", selectedX: 1, selectedY: 1,
+          isCorrect: false, usedHint: true, timeSpentSeconds: 10,
+          createdAt: "2025-06-10T11:00:00.000Z",
+        },
+        {
+          problemId: "CAP-003", selectedX: 2, selectedY: 2,
+          isCorrect: true, usedHint: false, timeSpentSeconds: 8,
+          createdAt: "2025-06-10T12:00:00.000Z",
+        },
+      ],
+    };
+    const hs = buildHistoricalSummary(p);
+    expect(hs.dailySummaries).toHaveLength(1);
+    expect(hs.dailySummaries[0].date).toBe("2025-06-10");
+    expect(hs.totalAttempts).toBe(3);
+    expect(hs.totalCorrect).toBe(2);
+  });
+
+  it("handles a single attempt", () => {
+    const p: StudentProgress = {
+      ...createEmptyProgress(),
+      attempts: [
+        {
+          problemId: "CAP-001", selectedX: 0, selectedY: 0,
+          isCorrect: true, usedHint: false, timeSpentSeconds: 5,
+          createdAt: "2025-06-10T10:00:00.000Z",
+        },
+      ],
+    };
+    const hs = buildHistoricalSummary(p);
+    expect(hs.dailySummaries).toHaveLength(1);
+    expect(hs.dailySummaries[0].totalAttempts).toBe(1);
+    expect(hs.totalCorrect).toBe(1);
+  });
+});
+
+describe("closeSession edge cases", () => {
+  it("closes an empty session with zero totals", () => {
+    const s = startSession();
+    const closed = closeSession(s);
+    expect(closed.totalAttempts).toBe(0);
+    expect(closed.totalCorrect).toBe(0);
+    expect(closed.totalHintUsed).toBe(0);
+    expect(closed.categoryBreakdown).toEqual({});
+  });
+});
+
+describe("buildDailySummary edge cases", () => {
+  it("returns zero summary for no sessions", () => {
+    const ds = buildDailySummary([], "2025-06-10");
+    expect(ds.date).toBe("2025-06-10");
+    expect(ds.sessions).toHaveLength(0);
+    expect(ds.totalAttempts).toBe(0);
+    expect(ds.totalCorrect).toBe(0);
+    expect(ds.categoryBreakdown).toEqual({});
+  });
+});
+
+describe("toParentReviewSafeAggregate edge cases", () => {
+  it("handles empty problems array", () => {
+    const summary: ParentSessionSummary = {
+      sessionId: "session-test",
+      reviewedAt: "2025-06-10T12:00:00.000Z",
+      signalQuality: "empty",
+      totalAttempted: 0, totalCorrectFirstTry: 0, totalRetried: 0,
+      totalHintsUsed: 0, multiStepAttempted: 0, multiStepCompleted: 0,
+      categories: [], levels: [], problems: [],
+      strengths: [], shakyConcepts: [], suggestedNextFocus: [],
+      parentNote: "", warnings: [],
+    };
+    const safe = toParentReviewSafeAggregate(summary);
+    expect(safe.problems).toEqual([]);
+    expect(safe.totalAttempted).toBe(0);
+  });
+});
+
+describe("checkPrivacyBoundary edge cases", () => {
+  it("passes empty object", () => {
+    const violations = checkPrivacyBoundary({});
+    expect(violations).toEqual([]);
+  });
+
+  it("handles null values in nested objects without crashing", () => {
+    const violations = checkPrivacyBoundary({
+      items: [{ id: 1, label: null }, null, undefined],
+    });
+    expect(violations).toEqual([]);
+  });
+});
+
+describe("validateSessionContract edge cases", () => {
+  it("passes when sessionStartedAt is missing", () => {
+    const input: LearningSessionSummaryInput = {
+      sessionStartedAt: "",
+      sessionCompletedAt: new Date(10000).toISOString(),
+      attempts: [makeAttempt()],
+    };
+    const result = validateSessionContract(input);
+    expect(result.valid).toBe(true);
+  });
+
+  it("passes when sessionCompletedAt is missing", () => {
+    const input: LearningSessionSummaryInput = {
+      sessionStartedAt: new Date(0).toISOString(),
+      sessionCompletedAt: "",
+      attempts: [makeAttempt()],
+    };
+    const result = validateSessionContract(input);
+    expect(result.valid).toBe(true);
+  });
+});
