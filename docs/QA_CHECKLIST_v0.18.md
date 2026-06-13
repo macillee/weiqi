@@ -108,8 +108,8 @@ Confirm `checkPrivacyBoundary` handles edge cases:
 
 ## 7. Cross-cutting checks
 
-- [x] `docs/TASKS.md` marks v0.18.0a–v0.18.0d delivered and v0.18.0e (this slice) queued
-- [x] `docs/TASKS.md` strategy section increments to the new high-water mark (v0.18.0d → 583 tests)
+- [x] `docs/TASKS.md` marks v0.18.0a–v0.18.0e delivered and queues v0.19.0a
+- [x] `docs/TASKS.md` strategy section increments to the new high-water mark (v0.18.0e, 583 tests)
 - [x] Release notes PR references are correct (#202 / #204 / #206 / #207)
 - [x] No migration required for downstream consumers (v0.18 module is additive; no other module imports it yet)
 - [x] No conflict markers left in any of the merged files
