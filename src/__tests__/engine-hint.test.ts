@@ -57,11 +57,47 @@ describe("engine-hint feature flag", () => {
     expect(flag.source).toBe("default");
   });
 
-  it("runtime setter overrides default", () => {
+  it("runtime setter overrides default when env is unset", () => {
     setEngineHintProjectionEnabled(true);
     const flag = getEngineHintProjectionFlag();
     expect(flag.enabled).toBe(true);
     expect(flag.source).toBe("runtime");
+  });
+
+  it("env wins over runtime setter (env=true, runtime=false → enabled=true, source=env)", () => {
+    const previousEnv = process.env.ENGINE_HINT_PROJECTION;
+    process.env.ENGINE_HINT_PROJECTION = "true";
+    setEngineHintProjectionEnabled(false);
+    try {
+      const flag = getEngineHintProjectionFlag();
+      expect(flag.enabled).toBe(true);
+      expect(flag.source).toBe("env");
+    } finally {
+      if (previousEnv === undefined) {
+        delete process.env.ENGINE_HINT_PROJECTION;
+      } else {
+        process.env.ENGINE_HINT_PROJECTION = previousEnv;
+      }
+      setEngineHintProjectionEnabled(undefined);
+    }
+  });
+
+  it("env wins over runtime setter (env=false, runtime=true → enabled=false, source=env)", () => {
+    const previousEnv = process.env.ENGINE_HINT_PROJECTION;
+    process.env.ENGINE_HINT_PROJECTION = "false";
+    setEngineHintProjectionEnabled(true);
+    try {
+      const flag = getEngineHintProjectionFlag();
+      expect(flag.enabled).toBe(false);
+      expect(flag.source).toBe("env");
+    } finally {
+      if (previousEnv === undefined) {
+        delete process.env.ENGINE_HINT_PROJECTION;
+      } else {
+        process.env.ENGINE_HINT_PROJECTION = previousEnv;
+      }
+      setEngineHintProjectionEnabled(undefined);
+    }
   });
 });
 

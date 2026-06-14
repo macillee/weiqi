@@ -55,12 +55,12 @@ function readEnvFlag(): boolean | undefined {
 }
 
 export function getEngineHintProjectionFlag(): EngineHintFlagState {
-  if (runtimeFlag !== undefined) {
-    return { enabled: runtimeFlag, source: "runtime" };
-  }
   const fromEnv = readEnvFlag();
   if (fromEnv !== undefined) {
     return { enabled: fromEnv, source: "env" };
+  }
+  if (runtimeFlag !== undefined) {
+    return { enabled: runtimeFlag, source: "runtime" };
   }
   return { enabled: false, source: "default" };
 }
@@ -78,7 +78,6 @@ const BANNED_PHRASES = [
   "你的水平",
   "胜率",
   "winrate",
-  "胜率",
   "rating",
 ];
 
