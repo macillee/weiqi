@@ -27,6 +27,8 @@ v0.18.0e v0.18 Stabilization / Release Notes delivered — `docs/RELEASE_NOTES_v
 
 v0.19.0a Local AI / Engine UX Next-Phase Plan delivered — `docs/AI_ENGINE_UX_PLAN_v0.19.md` re-anchors v0.13 / v0.14 engine assets, evaluates 4 UX directions, and scopes v0.19.0b / v0.19.0c to **pure helpers, contracts, tests, and feature-flag contracts**. Component / page / `ProblemPlayer` integration is named as a gated follow-up, not part of v0.19.0b/0c. v0.19.0d closes the v0.19 series with engine privacy boundary hardening, release notes, and QA checklist. v0.1 boundary respected; planning-only slice, no code change. Next: v0.19.0b — engine hint projection pure helper.
 
+v0.19.0b Engine Hint Projection Pure Helper delivered — `src/lib/engine-hint.ts` exposes pure `buildEngineHint(input)` returning `{ kind: "no-hint", reason }` or `{ kind: "hint", point, reason }`; feature-flag contract `ENGINE_HINT_PROJECTION` defaults off via `getEngineHintProjectionFlag()` (env → runtime setter → default resolution, env wins), off-state is byte-identical to v0.18; **15 new tests** cover flag off / default / runtime-over-default / env-over-runtime (both directions), low-confidence, no top moves, single top move, second-move-equals-attempted / -authored, malformed coordinates, occupied intersection, child-friendly reason rules (≤150 chars, no banned phrases, no winrate / rank / rating), determinism, and multi-step input. **No component / page / `ProblemPlayer` change in this slice** — helper is the deliverable, consumer wiring is a gated follow-up. Next: v0.19.0c — wrong-move engine explanation for multi-step pure helper.
+
 Current strategy:
 
 ```text
@@ -100,6 +102,7 @@ Current strategy:
 68. v0.18.0d Parent Review Session History QA / Stabilization completed — boundary edge-case test expansion (10 new tests, 583 total across 29 files), null/undefined guard fix for `buildHistoricalSummary`, QA report at `docs/PARENT_REVIEW_SESSION_HISTORY_QA_v0.18.md`. Next: v0.18.0e — v0.18 release notes / QA checklist.
 69. v0.18.0e v0.18 Stabilization / Release Notes completed — `docs/RELEASE_NOTES_v0.18.md`, `docs/QA_CHECKLIST_v0.18.md`, v0.18 series complete. Next: v0.19.0a — Local AI/Engine UX Next-Phase Plan (PR #208).
 70. v0.19.0a Local AI / Engine UX Next-Phase Plan completed — `docs/AI_ENGINE_UX_PLAN_v0.19.md` re-anchors v0.13 / v0.14 engine assets, evaluates 4 UX directions, scopes v0.19.0b / v0.19.0c to pure helpers / contracts / tests / feature-flag contracts. Component / page / `ProblemPlayer` integration is a gated follow-up, not part of 0b/0c. v0.1 boundary respected; planning-only slice. Next: v0.19.0b — engine hint projection pure helper.
+71. v0.19.0b Engine Hint Projection Pure Helper completed — `src/lib/engine-hint.ts` (pure `buildEngineHint()`), feature-flag contract `ENGINE_HINT_PROJECTION` (env → runtime → default; env wins; off by default), **15 new tests** covering flag off / default / runtime-over-default / env-over-runtime (both directions) / low-confidence / no / single top move / second-move equals attempted or authored / malformed / occupied / determinism / multi-step. **No component / page / `ProblemPlayer` change in this slice**; consumer wiring is a gated follow-up. Next: v0.19.0c — wrong-move engine explanation for multi-step pure helper.
 ```
 
 ---
