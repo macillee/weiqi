@@ -474,6 +474,102 @@ describe("checkPrivacyBoundary", () => {
   });
 });
 
+/* ───── v0.19 engine privacy boundary ───── */
+
+describe("checkPrivacyBoundary: v0.19 engine field extensions", () => {
+  it("rejects topMoves at the top level", () => {
+    const violations = checkPrivacyBoundary({
+      topMoves: [{ x: 1, y: 1, visits: 200, scoreLead: 0.5, winrate: 0.7 }],
+    });
+    expect(violations.some((v) => v.field === "topMoves")).toBe(true);
+  });
+
+  it("rejects visits / scoreLead / winrate / playouts at the top level", () => {
+    const violations = checkPrivacyBoundary({
+      visits: 200,
+      scoreLead: 0.5,
+      winrate: 0.7,
+      playouts: 300,
+    });
+    expect(violations.some((v) => v.field === "visits")).toBe(true);
+    expect(violations.some((v) => v.field === "scoreLead")).toBe(true);
+    expect(violations.some((v) => v.field === "winrate")).toBe(true);
+    expect(violations.some((v) => v.field === "playouts")).toBe(true);
+    expect(violations.length).toBe(4);
+  });
+
+  it("rejects engineHint / engineReview / engineSignal / engineAssisted", () => {
+    const violations = checkPrivacyBoundary({
+      // No raw x/y in the payload — only engine-shaped keys. The engineHint
+      // shape from src/lib/engine-hint.ts uses `point: { x, y }` so an
+      // engineHint reaching a parent path would also trigger the v0.18
+      // x/y rule; we test the engine-specific keys here in isolation.
+      engineHint: { reason: "引擎也考虑了这里" },
+      engineReview: { confidence: "high" },
+      engineSignal: { confidence: "high", agreesWithAuthoredAnswer: true },
+      engineAssisted: true,
+    });
+    expect(violations.some((v) => v.field === "engineHint")).toBe(true);
+    expect(violations.some((v) => v.field === "engineReview")).toBe(true);
+    expect(violations.some((v) => v.field === "engineSignal")).toBe(true);
+    expect(violations.some((v) => v.field === "engineAssisted")).toBe(true);
+    expect(violations.length).toBe(4);
+  });
+
+  it("rejects engineConfidence / agreedWithAuthoredAnswer / authoredAnswerRank / attemptedMoveRank", () => {
+    const violations = checkPrivacyBoundary({
+      engineConfidence: "high",
+      agreedWithAuthoredAnswer: true,
+      authoredAnswerRank: 1,
+      attemptedMoveRank: 5,
+    });
+    expect(violations.some((v) => v.field === "engineConfidence")).toBe(true);
+    expect(violations.some((v) => v.field === "agreedWithAuthoredAnswer")).toBe(true);
+    expect(violations.some((v) => v.field === "authoredAnswerRank")).toBe(true);
+    expect(violations.some((v) => v.field === "attemptedMoveRank")).toBe(true);
+    expect(violations.length).toBe(4);
+  });
+
+  it("rejects engineLatency / engineDiagnostics / lastAnalysis", () => {
+    const violations = checkPrivacyBoundary({
+      engineLatency: "1-3s",
+      engineDiagnostics: { status: "available" },
+      lastAnalysis: { attempted: true, result: "success" },
+    });
+    expect(violations.some((v) => v.field === "engineLatency")).toBe(true);
+    expect(violations.some((v) => v.field === "engineDiagnostics")).toBe(true);
+    expect(violations.some((v) => v.field === "lastAnalysis")).toBe(true);
+    expect(violations.length).toBe(3);
+  });
+
+  it("rejects engine fields nested under allowed parent shapes (e.g. inside an array)", () => {
+    const violations = checkPrivacyBoundary({
+      attempts: [
+        { problemId: "CAP-001", engineSignal: { confidence: "high" } },
+      ],
+    });
+    expect(violations.some((v) => v.field === "problemId")).toBe(true);
+    expect(violations.some((v) => v.field === "engineSignal")).toBe(true);
+    expect(violations.length).toBe(2);
+  });
+
+  it("does not false-positive on legitimate aggregate fields (category / level / attempts / completedAt)", () => {
+    const violations = checkPrivacyBoundary({
+      sessionId: "session-1",
+      reviewedAt: "2026-06-14T00:00:00.000Z",
+      totalAttempted: 10,
+      totalCorrectFirstTry: 7,
+      categories: [{ name: "capture", attempted: 5, correct: 4 }],
+      levels: [{ level: 2, attempted: 6, correct: 4 }],
+      attempts: [
+        { problemId: "CAP-001", category: "capture", level: 1, isCorrect: true },
+      ],
+    });
+    expect(violations.length).toBe(1);
+    expect(violations[0].field).toBe("problemId");
+  });
+});
+
 /* ───── Scenario: all attempts correct ───── */
 
 describe("scenario: all correct", () => {
