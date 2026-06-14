@@ -214,7 +214,7 @@ describe("explainChildEngine", () => {
     expect(result.message.length).toBeGreaterThan(0);
   });
 
-  it("falls back to rule-template for unknown category without throwing", () => {
+  it("uses fallback category for unknown category without throwing", () => {
     const result = explainChildEngine({
       ...baseInput,
       problem: makeProblem({
@@ -284,6 +284,27 @@ describe("validateChildEngineExplain", () => {
     expect(v).not.toBe(true);
     if (v !== true) {
       expect(v.reason).toBe("bad-source");
+    }
+  });
+
+  // Case-insensitive variants of the engine-specific banned phrases.
+  // The validator lower-cases both sides, so any casing is caught.
+  it.each([
+    ["WinRate", "引擎分析：当前 WinRate 偏低。"],
+    ["WIN RATE", "ENGINE: WIN RATE dropped this turn."],
+    ["SCORE", "Engine: SCORE after the move is unstable."],
+    ["Rating", "Engine reports a lower Rating here."],
+    ["Visits", "Engine: Visits are too low to be confident."],
+  ])("rejects case-insensitive banned phrase: %s", (_label, message) => {
+    const result: LocalReviewResult = {
+      message,
+      concept: "气",
+      source: "engine-assisted",
+    };
+    const v = validateChildEngineExplain(result);
+    expect(v).not.toBe(true);
+    if (v !== true) {
+      expect(v.reason).toBe("banned");
     }
   });
 });

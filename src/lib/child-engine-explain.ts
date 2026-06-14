@@ -29,6 +29,10 @@ const BANNED_PHRASES = [
   "playouts",
 ];
 
+// Lower-cased once at module load; comparison is case-insensitive
+// so WinRate / WIN RATE / SCORE / Rating / Visits are all caught.
+const BANNED_PHRASES_LOWER = BANNED_PHRASES.map((p) => p.toLowerCase());
+
 export type ValidationFailure = { reason: "too-long" | "empty" | "banned" | "bad-source"; detail: string };
 
 export function validateChildEngineExplain(result: LocalReviewResult): true | ValidationFailure {
@@ -41,9 +45,10 @@ export function validateChildEngineExplain(result: LocalReviewResult): true | Va
   if (result.source !== "rule-template" && result.source !== "engine-assisted") {
     return { reason: "bad-source", detail: `unknown source: ${String(result.source)}` };
   }
-  for (const banned of BANNED_PHRASES) {
-    if (result.message.includes(banned)) {
-      return { reason: "banned", detail: `message contains banned phrase: ${banned}` };
+  const messageLower = result.message.toLowerCase();
+  for (let i = 0; i < BANNED_PHRASES_LOWER.length; i++) {
+    if (messageLower.includes(BANNED_PHRASES_LOWER[i])) {
+      return { reason: "banned", detail: `message contains banned phrase: ${BANNED_PHRASES[i]}` };
     }
   }
   if (typeof result.concept !== "string" || result.concept.length === 0) {
