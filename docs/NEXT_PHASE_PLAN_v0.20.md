@@ -33,7 +33,7 @@ This slice is planning only. No code change in v0.20.0a.
 
 | Asset | File | State |
 |---|---|---|
-| `FORBIDDEN_PARENT_FIELDS` extended with 16 engine / KataGo keys | `src/lib/parent-review-session-history.ts` | Active in PR #212; will be on `main` once #212 merges |
+| `FORBIDDEN_PARENT_FIELDS` extended with 16 engine / KataGo keys | `src/lib/parent-review-session-history.ts` | Merged in PR #212 (v0.19.0d) |
 | `checkPrivacyBoundary()` regression tests | `parent-review-session-history.test.ts` | 63 tests in file (7 new in v0.19.0d) |
 | `toParentReviewSafeAggregate()` | same | Allowlist projection, no engine field on output shape |
 
