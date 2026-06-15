@@ -298,10 +298,19 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
   // Gated by `CHILD_ENGINE_EXPLAIN` flag (default off) and by
   // `isMultiStepProblem(problem)`. When the flag is on and the current
   // attempt is multi-step, this callback is used in place of
-  // `handleShowCoach` so the engine-aware wording is produced locally
-  // without a server-action round trip. No engine signal is requested;
-  // the helper's own gate (signal confidence / agree) governs the
-  // `engine-assisted` vs `rule-template` source flag.
+  // `handleShowCoach` so the rule-template wording is produced locally
+  // without a server-action round trip.
+  //
+  // IMPORTANT: we do NOT have a real engine signal here (the server-action
+  // path is bypassed). The v0.19.0c `source` enum is part of the engine
+  // privacy boundary, so we MUST NOT synthesize an `engine-assisted`
+  // source by constructing a `medium / agree` signal — that would
+  // misrepresent a rule-template outcome as engine-aware wording.
+  // Instead we pass an honest low-confidence signal so the helper
+  // falls through to the `rule-template` source. The `engine-assisted`
+  // caption in `FeedbackDialog` is therefore NOT shown on this path;
+  // it stays reserved for the v0.13 / v0.19 server-action path where a
+  // real engine signal exists.
   const handleShowChildCoach = useCallback(() => {
     if (!currentWrongMove) return;
     const thisRequestId = ++coachRequestId.current;
@@ -310,12 +319,10 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
       attemptedMove: currentWrongMove,
       authoredAnswer: currentAnswers[0],
       usedHint: currentHintIndex > 0,
-      // Multi-step wiring: we do not have a real engine signal here
-      // (the server-action path is bypassed). Use a deterministic
-      // medium / agree signal so the helper's `source` gate renders
-      // `engine-assisted` and the existing `FeedbackDialog` caption
-      // is reused. `explainChildEngine` is pure and side-effect free.
-      signal: { confidence: "medium", agreesWithAuthoredAnswer: true },
+      // Honest low-confidence signal: there is no real engine review on
+      // this path. The helper's source gate renders `rule-template`,
+      // matching the v0.19 local-review path for a missing engine.
+      signal: { confidence: "low", agreesWithAuthoredAnswer: true },
     });
     // Defense in depth: validate the helper output before showing it.
     // The helper is unit-tested to produce valid output, but the

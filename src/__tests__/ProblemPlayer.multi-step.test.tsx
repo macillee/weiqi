@@ -3,6 +3,12 @@ import { act } from "react";
 import { createRoot } from "react-dom/client";
 import type { Root } from "react-dom/client";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
+
+// Mock the server action bridge so handleShowCoach() resolves
+// deterministically with null (engine unavailable in tests).
+vi.mock("@/lib/review-actions", () => ({
+  requestEngineReview: vi.fn(async () => null),
+}));
 import type { Problem } from "@/lib/problems";
 import {
   setChildEngineExplainEnabled,
@@ -98,6 +104,7 @@ vi.mock("@/components/problem/FeedbackDialog", () => ({
     showAnswer,
     onShowCoach,
     coachMessage,
+    coachSource,
   }: {
     isCorrect: boolean;
     successMessage: string;
@@ -108,18 +115,23 @@ vi.mock("@/components/problem/FeedbackDialog", () => ({
     showAnswer: boolean;
     onShowCoach?: () => void;
     coachMessage?: string | null;
+    coachSource?: "rule-template" | "engine-assisted" | null;
   }) => (
     <div
       data-testid="feedback-dialog"
       data-correct={isCorrect}
       data-show-answer={showAnswer}
       data-coach-message={coachMessage ?? ""}
+      data-coach-source={coachSource ?? ""}
       data-has-on-show-coach={onShowCoach ? "true" : "false"}
     >
       <p data-testid="feedback-message">{isCorrect ? successMessage : failureMessage}</p>
       {explanation && <p data-testid="feedback-explanation">{explanation}</p>}
       {coachMessage && (
         <p data-testid="coach-message">{coachMessage}</p>
+      )}
+      {coachSource === "engine-assisted" && (
+        <p data-testid="coach-source-engine-assisted">本地引擎辅助</p>
       )}
       {onShowCoach && !coachMessage && (
         <button data-testid="show-coach-btn" onClick={onShowCoach}>
@@ -665,29 +677,49 @@ describe("ProblemPlayer - v0.20.0b child engine explain wiring", () => {
     setChildEngineExplainEnabled(undefined);
   });
 
-  it("single-step problem: flag on does NOT route to child coach (off-state is single-step + flag-off path)", () => {
+  it("single-step + flag on: shouldUseChildEngineExplain is false; coach button uses server-action path (handleShowCoach); no source/caption regression", () => {
     setChildEngineExplainEnabled(true);
     renderComponent(<ProblemPlayer problem={createSingleStepProblem()} />);
-
-    // Wrong move on single-step
     click("point-0-0");
-    // The show-coach button is still rendered
+
+    // Button rendered
     const btn = container?.querySelector('[data-testid="show-coach-btn"]');
     expect(btn).not.toBeNull();
+
+    // Click it: handleShowCoach path runs, mocked requestEngineReview
+    // resolves to null, so coachReview remains the initial
+    // rule-template local result. The point is: the v0.20.0b child
+    // coach path is NOT taken on single-step.
+    click("show-coach-btn");
+    const fb = container?.querySelector('[data-testid="feedback-dialog"]');
+    const coachMessage = fb?.getAttribute("data-coach-message") ?? "";
+    expect(coachMessage.length).toBeGreaterThan(0);
+    // source must be rule-template (server-action path returned null
+    // so getLocalReview kept its initial rule-template source).
+    expect(fb?.getAttribute("data-coach-source")).toBe("rule-template");
+    // engine-assisted caption must NOT appear.
+    expect(
+      container?.querySelector('[data-testid="coach-source-engine-assisted"]'),
+    ).toBeNull();
   });
 
-  it("multi-step problem: flag off -> clicking show-coach does not set coach message (server action path; we only assert no crash)", () => {
+  it("multi-step + flag off: shouldUseChildEngineExplain is false; clicking show-coach uses server-action path; source remains rule-template", () => {
     renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
     click("point-0-0");
-    // Server action path is fire-and-forget; we only assert the
-    // wiring shape: button exists, no coach message before click.
     const btn = container?.querySelector('[data-testid="show-coach-btn"]');
     expect(btn).not.toBeNull();
+
+    click("show-coach-btn");
     const fb = container?.querySelector('[data-testid="feedback-dialog"]');
-    expect(fb?.getAttribute("data-coach-message")).toBe("");
+    const coachMessage = fb?.getAttribute("data-coach-message") ?? "";
+    expect(coachMessage.length).toBeGreaterThan(0);
+    expect(fb?.getAttribute("data-coach-source")).toBe("rule-template");
+    expect(
+      container?.querySelector('[data-testid="coach-source-engine-assisted"]'),
+    ).toBeNull();
   });
 
-  it("multi-step problem: flag on -> clicking show-coach sets a non-empty coach message", () => {
+  it("multi-step + flag on: clicking show-coach routes to handleShowChildCoach; coach message is non-empty", () => {
     setChildEngineExplainEnabled(true);
     renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
 
@@ -701,7 +733,26 @@ describe("ProblemPlayer - v0.20.0b child engine explain wiring", () => {
     expect(coachMessage.length).toBeGreaterThan(0);
   });
 
-  it("multi-step problem: flag on -> coach message passes validateChildEngineExplain (length, no banned phrase, source enum)", () => {
+  it("multi-step + flag on: source is rule-template (NOT engine-assisted) — no real engine signal exists on this path", () => {
+    // The v0.20.0b wiring passes a low-confidence signal so the
+    // helper's source gate renders `rule-template`. This is the
+    // critical source-semantics test: we must not synthesize
+    // `engine-assisted` on a path that has no real engine review.
+    setChildEngineExplainEnabled(true);
+    renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
+
+    click("point-0-0");
+    click("show-coach-btn");
+
+    const fb = container?.querySelector('[data-testid="feedback-dialog"]');
+    expect(fb?.getAttribute("data-coach-source")).toBe("rule-template");
+    // engine-assisted caption must NOT appear.
+    expect(
+      container?.querySelector('[data-testid="coach-source-engine-assisted"]'),
+    ).toBeNull();
+  });
+
+  it("multi-step + flag on: coach message passes validateChildEngineExplain (length, no banned phrase, source enum)", () => {
     setChildEngineExplainEnabled(true);
     renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
 
@@ -711,19 +762,18 @@ describe("ProblemPlayer - v0.20.0b child engine explain wiring", () => {
     const fb = container?.querySelector('[data-testid="feedback-dialog"]');
     const message = fb?.getAttribute("data-coach-message") ?? "";
 
-    // Build a synthetic LocalReviewResult from the rendered text;
-    // the wiring does not expose `source` via the test mock, so we
-    // assert the helper contract directly via the validator.
+    // Build a synthetic LocalReviewResult matching the rendered
+    // source (`rule-template`) and assert the helper contract.
     const result: LocalReviewResult = {
       message,
       concept: "气",
-      source: "engine-assisted",
+      source: "rule-template",
     };
     const v = validateChildEngineExplain(result);
     expect(v).toBe(true);
   });
 
-  it("multi-step problem: flag on -> coach button is removed after click (single-fire per attempt)", () => {
+  it("multi-step + flag on: coach button is removed after click (single-fire per attempt)", () => {
     setChildEngineExplainEnabled(true);
     renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
 
@@ -734,39 +784,30 @@ describe("ProblemPlayer - v0.20.0b child engine explain wiring", () => {
     expect(btn).toBeNull();
   });
 
-  it("multi-step problem: flag on -> coach state clears on try-again (re-armable)", () => {
+  it("multi-step + flag on: try-again resets the step result to null; feedback dialog is removed; coach state is no longer rendered", () => {
+    // On try-again, the multi-step path resets the step result to
+    // null, which removes the feedback dialog. There must NOT be a
+    // stale coach message left over.
     setChildEngineExplainEnabled(true);
     renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
 
     click("point-0-0");
     click("show-coach-btn");
     const fb1 = container?.querySelector('[data-testid="feedback-dialog"]');
+    expect(fb1).not.toBeNull();
     expect((fb1?.getAttribute("data-coach-message") ?? "").length).toBeGreaterThan(0);
 
-    // On try-again, the multi-step path resets the step result to null,
-    // which removes the feedback dialog (back to the answering state).
-    // Either path is acceptable as long as the coach message is no
-    // longer rendered with non-empty content.
     click("try-again-btn");
+
     const fb2 = container?.querySelector('[data-testid="feedback-dialog"]');
-    if (fb2) {
-      expect(fb2.getAttribute("data-coach-message")).toBe("");
-    } else {
-      // Feedback dialog is gone (back to answering state). That is
-      // itself proof that the coach state was cleared.
-      expect(fb2).toBeNull();
-    }
-    // Either the button re-appears (re-armed) or the dialog is gone
-    // (back to answering state). Both are valid.
-    const btn = container?.querySelector('[data-testid="show-coach-btn"]');
-    if (btn) {
-      expect(btn).not.toBeNull();
-    } else {
-      expect(btn).toBeNull();
-    }
+    expect(fb2).toBeNull();
+    // The coach-source-engine-assisted caption (if any) must also be gone.
+    expect(
+      container?.querySelector('[data-testid="coach-source-engine-assisted"]'),
+    ).toBeNull();
   });
 
-  it("multi-step problem: flag on -> coach message does not contain any v0.19.0d forbidden engine field (privacy boundary regression)", () => {
+  it("multi-step + flag on: coach message does not contain any v0.19.0d forbidden engine field (privacy boundary regression)", () => {
     setChildEngineExplainEnabled(true);
     renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
 
