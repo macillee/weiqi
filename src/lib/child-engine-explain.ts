@@ -266,3 +266,81 @@ export function explainChildEngine(input: ChildEngineExplainInput): ChildEngineE
     source: "rule-template",
   };
 }
+
+/* ───── Feature flag contract (consumer wiring gate) ───── */
+
+/**
+ * `CHILD_ENGINE_EXPLAIN` feature flag — gates the v0.20.0b consumer
+ * wiring of `explainChildEngine()` into `ProblemPlayer` for multi-step
+ * wrong attempts.
+ *
+ * Default: OFF. The helper itself does not read this flag — the flag is
+ * a consumer-side gate. When the flag is off, `ProblemPlayer` continues
+ * to use the v0.13 / v0.19 server-action `handleShowCoach` path; the
+ * helper is unreachable. Off-state is byte-identical to v0.19.
+ *
+ * Resolution order (first non-undefined wins):
+ *   1. `CHILD_ENGINE_EXPLAIN` env var
+ *      (Node: `process.env`; Next.js: `import.meta.env`)
+ *   2. `setChildEngineExplainEnabled()` runtime override (tests / dev)
+ *   3. Default: `false`
+ *
+ * Env wins over runtime, matching the `ENGINE_HINT_PROJECTION` contract.
+ */
+export type ChildEngineExplainFlagSource = "env" | "runtime" | "default";
+
+export type ChildEngineExplainFlagState = {
+  enabled: boolean;
+  source: ChildEngineExplainFlagSource;
+};
+
+let childEngineExplainRuntimeFlag: boolean | undefined = undefined;
+
+export function setChildEngineExplainEnabled(value: boolean | undefined): void {
+  childEngineExplainRuntimeFlag = value;
+}
+
+function readChildEngineExplainEnv(): boolean | undefined {
+  if (typeof process !== "undefined" && process.env) {
+    const raw = process.env.CHILD_ENGINE_EXPLAIN;
+    if (raw === "true" || raw === "1") return true;
+    if (raw === "false" || raw === "0") return false;
+  }
+  try {
+    const meta = (import.meta as unknown as { env?: Record<string, string> }).env;
+    if (meta && typeof meta === "object") {
+      const raw = meta.CHILD_ENGINE_EXPLAIN;
+      if (raw === "true" || raw === "1") return true;
+      if (raw === "false" || raw === "0") return false;
+    }
+  } catch {
+    // import.meta.env not available
+  }
+  return undefined;
+}
+
+export function getChildEngineExplainFlag(): ChildEngineExplainFlagState {
+  const fromEnv = readChildEngineExplainEnv();
+  if (fromEnv !== undefined) {
+    return { enabled: fromEnv, source: "env" };
+  }
+  if (childEngineExplainRuntimeFlag !== undefined) {
+    return { enabled: childEngineExplainRuntimeFlag, source: "runtime" };
+  }
+  return { enabled: false, source: "default" };
+}
+
+/**
+ * Helper that the consumer (`ProblemPlayer`) uses to decide whether to
+ * route the multi-step wrong-attempt "请老师帮忙" button to the v0.20.0b
+ * local-only `handleShowChildCoach` path (which calls
+ * `explainChildEngine()`) instead of the v0.13 / v0.19 server-action
+ * `handleShowCoach` path.
+ *
+ * The wiring is a *replacement* of the multi-step branch only; the
+ * single-step branch and the multi-step+flag-off branch are unaffected.
+ */
+export function shouldUseChildEngineExplain(isMultiStep: boolean): boolean {
+  if (!isMultiStep) return false;
+  return getChildEngineExplainFlag().enabled;
+}

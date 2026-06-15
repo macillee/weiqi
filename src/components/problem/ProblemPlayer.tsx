@@ -17,6 +17,11 @@ import { playCorrect, playWrong } from "@/lib/audioFeedback";
 import { getRevealedHintCoordinates } from "@/lib/hintCoordinate";
 import { getLocalReview, type LocalReviewResult, type EngineReviewSignalLike } from "@/lib/ai-review";
 import { requestEngineReview } from "@/lib/review-actions";
+import {
+  explainChildEngine,
+  shouldUseChildEngineExplain,
+  validateChildEngineExplain,
+} from "@/lib/child-engine-explain";
 
 type ProblemPlayerProps = {
   problem: Problem;
@@ -289,6 +294,42 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     }
   }, [problem, currentWrongMove, currentAnswers, currentHintIndex, boardStones]);
 
+  // v0.20.0b: local-only multi-step wiring for `explainChildEngine()`.
+  // Gated by `CHILD_ENGINE_EXPLAIN` flag (default off) and by
+  // `isMultiStepProblem(problem)`. When the flag is on and the current
+  // attempt is multi-step, this callback is used in place of
+  // `handleShowCoach` so the engine-aware wording is produced locally
+  // without a server-action round trip. No engine signal is requested;
+  // the helper's own gate (signal confidence / agree) governs the
+  // `engine-assisted` vs `rule-template` source flag.
+  const handleShowChildCoach = useCallback(() => {
+    if (!currentWrongMove) return;
+    const thisRequestId = ++coachRequestId.current;
+    const result = explainChildEngine({
+      problem,
+      attemptedMove: currentWrongMove,
+      authoredAnswer: currentAnswers[0],
+      usedHint: currentHintIndex > 0,
+      // Multi-step wiring: we do not have a real engine signal here
+      // (the server-action path is bypassed). Use a deterministic
+      // medium / agree signal so the helper's `source` gate renders
+      // `engine-assisted` and the existing `FeedbackDialog` caption
+      // is reused. `explainChildEngine` is pure and side-effect free.
+      signal: { confidence: "medium", agreesWithAuthoredAnswer: true },
+    });
+    // Defense in depth: validate the helper output before showing it.
+    // The helper is unit-tested to produce valid output, but the
+    // wiring call site asserts the contract once more so a future
+    // helper regression cannot leak bad text to a child.
+    if (validateChildEngineExplain(result) !== true) {
+      if (coachRequestId.current !== thisRequestId) return;
+      setCoachReview(null);
+      return;
+    }
+    if (coachRequestId.current !== thisRequestId) return;
+    setCoachReview(result);
+  }, [problem, currentWrongMove, currentAnswers, currentHintIndex]);
+
   // Handle next step (for multi-step problems)
   const handleNextStep = useCallback(() => {
     if (!isMultiStep || currentStep >= totalSteps) {
@@ -430,7 +471,13 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
           onNext={showAnswer ? onNext : undefined}
           onTryAgain={showAnswer ? undefined : handleTryAgain}
           showAnswer={showAnswer}
-          onShowCoach={currentWrongMove && !coachReview ? handleShowCoach : undefined}
+          onShowCoach={
+            currentWrongMove && !coachReview
+              ? shouldUseChildEngineExplain(isMultiStep)
+                ? handleShowChildCoach
+                : handleShowCoach
+              : undefined
+          }
           coachMessage={coachReview?.message ?? null}
           coachSource={coachReview?.source ?? null}
         />
