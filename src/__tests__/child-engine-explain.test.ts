@@ -1,7 +1,10 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import {
   explainChildEngine,
   validateChildEngineExplain,
+  setChildEngineExplainEnabled,
+  getChildEngineExplainFlag,
+  shouldUseChildEngineExplain,
   type ChildEngineExplainInput,
 } from "@/lib/child-engine-explain";
 import type { Problem } from "@/lib/problems";
@@ -305,6 +308,106 @@ describe("validateChildEngineExplain", () => {
     expect(v).not.toBe(true);
     if (v !== true) {
       expect(v.reason).toBe("banned");
+    }
+  });
+});
+
+/* ───── v0.20.0b feature flag contract ───── */
+
+describe("CHILD_ENGINE_EXPLAIN feature flag", () => {
+  beforeEach(() => {
+    setChildEngineExplainEnabled(undefined);
+  });
+  afterEach(() => {
+    setChildEngineExplainEnabled(undefined);
+  });
+
+  it("defaults to off (source = default)", () => {
+    const flag = getChildEngineExplainFlag();
+    expect(flag.enabled).toBe(false);
+    expect(flag.source).toBe("default");
+  });
+
+  it("runtime setter overrides default when env is unset", () => {
+    setChildEngineExplainEnabled(true);
+    const flag = getChildEngineExplainFlag();
+    expect(flag.enabled).toBe(true);
+    expect(flag.source).toBe("runtime");
+  });
+
+  it("env wins over runtime setter (env=true, runtime=false -> enabled=true, source=env)", () => {
+    const previousEnv = process.env.CHILD_ENGINE_EXPLAIN;
+    process.env.CHILD_ENGINE_EXPLAIN = "true";
+    setChildEngineExplainEnabled(false);
+    try {
+      const flag = getChildEngineExplainFlag();
+      expect(flag.enabled).toBe(true);
+      expect(flag.source).toBe("env");
+    } finally {
+      if (previousEnv === undefined) {
+        delete process.env.CHILD_ENGINE_EXPLAIN;
+      } else {
+        process.env.CHILD_ENGINE_EXPLAIN = previousEnv;
+      }
+      setChildEngineExplainEnabled(undefined);
+    }
+  });
+
+  it("env wins over runtime setter (env=false, runtime=true -> enabled=false, source=env)", () => {
+    const previousEnv = process.env.CHILD_ENGINE_EXPLAIN;
+    process.env.CHILD_ENGINE_EXPLAIN = "false";
+    setChildEngineExplainEnabled(true);
+    try {
+      const flag = getChildEngineExplainFlag();
+      expect(flag.enabled).toBe(false);
+      expect(flag.source).toBe("env");
+    } finally {
+      if (previousEnv === undefined) {
+        delete process.env.CHILD_ENGINE_EXPLAIN;
+      } else {
+        process.env.CHILD_ENGINE_EXPLAIN = previousEnv;
+      }
+      setChildEngineExplainEnabled(undefined);
+    }
+  });
+});
+
+/* ───── v0.20.0b consumer wiring gate ───── */
+
+describe("shouldUseChildEngineExplain", () => {
+  beforeEach(() => {
+    setChildEngineExplainEnabled(undefined);
+  });
+  afterEach(() => {
+    setChildEngineExplainEnabled(undefined);
+  });
+
+  it("returns false on single-step problems regardless of flag", () => {
+    setChildEngineExplainEnabled(true);
+    expect(shouldUseChildEngineExplain(false)).toBe(false);
+  });
+
+  it("returns false on multi-step when flag is off", () => {
+    expect(shouldUseChildEngineExplain(true)).toBe(false);
+  });
+
+  it("returns true on multi-step when flag is on", () => {
+    setChildEngineExplainEnabled(true);
+    expect(shouldUseChildEngineExplain(true)).toBe(true);
+  });
+
+  it("returns true on multi-step when env is true and runtime unset", () => {
+    const previousEnv = process.env.CHILD_ENGINE_EXPLAIN;
+    process.env.CHILD_ENGINE_EXPLAIN = "true";
+    try {
+      expect(shouldUseChildEngineExplain(true)).toBe(true);
+      expect(shouldUseChildEngineExplain(false)).toBe(false);
+    } finally {
+      if (previousEnv === undefined) {
+        delete process.env.CHILD_ENGINE_EXPLAIN;
+      } else {
+        process.env.CHILD_ENGINE_EXPLAIN = previousEnv;
+      }
     }
   });
 });
