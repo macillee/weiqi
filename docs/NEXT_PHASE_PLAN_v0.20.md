@@ -9,7 +9,7 @@ This slice is planning only. No code change in v0.20.0a.
 ## 2. Constraints (carry-over from v0.18 / v0.19)
 
 - v0.1 boundary: no login / DB / payment / online / teacher backend.
-- v0.19.0d extended `FORBIDDEN_PARENT_FIELDS` (v0.18 14 keys + 12 engine / KataGo keys) — boundary is the v0.19 stable baseline.
+- v0.19.0d extended `FORBIDDEN_PARENT_FIELDS` (v0.18 14 keys + 16 engine / KataGo keys) — boundary is the v0.19 stable baseline.
 - v0.19 helpers are pure, off by default, not yet wired into any consumer:
   - `src/lib/engine-hint.ts` — `buildEngineHint()` + `ENGINE_HINT_PROJECTION` feature flag (env → runtime → default, env wins, off by default)
   - `src/lib/child-engine-explain.ts` — `explainChildEngine()` + `validateChildEngineExplain()` (case-insensitive banned-phrase sweep)
@@ -33,7 +33,7 @@ This slice is planning only. No code change in v0.20.0a.
 
 | Asset | File | State |
 |---|---|---|
-| `FORBIDDEN_PARENT_FIELDS` extended with 12 engine / KataGo keys | `src/lib/parent-review-session-history.ts` | Active in PR #212; will be on `main` once #212 merges |
+| `FORBIDDEN_PARENT_FIELDS` extended with 16 engine / KataGo keys | `src/lib/parent-review-session-history.ts` | Active in PR #212; will be on `main` once #212 merges |
 | `checkPrivacyBoundary()` regression tests | `parent-review-session-history.test.ts` | 63 tests in file (7 new in v0.19.0d) |
 | `toParentReviewSafeAggregate()` | same | Allowlist projection, no engine field on output shape |
 
@@ -185,7 +185,7 @@ Total cadence: ~3 weeks at one slice/week.
 
 | Risk | Trigger | Mitigation |
 |---|---|---|
-| Helper output misroutes to parent path | Wiring accidentally exposes `topMoves` / engine field in `ProblemPlayer` state | v0.19.0d `checkPrivacyBoundary` extended with 12 engine keys; a new privacy regression test in v0.20.0b asserts no engine field on the wired output shape |
+| Helper output misroutes to parent path | Wiring accidentally exposes `topMoves` / engine field in `ProblemPlayer` state | v0.19.0d `checkPrivacyBoundary` extended with 16 engine keys; a new privacy regression test in v0.20.0b asserts no engine field on the wired output shape |
 | Feature flag never enabled in QA | Both flags default off; nobody tests on-path | v0.20.0b / 0c each ship a manual QA checklist for both flag states; CI does not enable them |
 | Stale engine signal overwrites a newer local review | v0.20.0b shares the `coachRequestId` ref pattern with v0.13d | Reuse the existing `coachRequestId.current` guard; add a regression test for it |
 | Hint projection on every wrong attempt | 0c accidentally renders a hint on the second attempt | Single-attempt gate at the consumer; explicit test pins the invariant |
