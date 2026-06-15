@@ -10,7 +10,7 @@
 - [x] `src/__tests__/engine-hint.test.ts` exists — 15 tests
 - [x] `src/lib/child-engine-explain.ts` exists — pure `explainChildEngine()` + extended `validateChildEngineExplain()`
 - [x] `src/__tests__/child-engine-explain.test.ts` exists — 23 tests
-- [x] `src/lib/parent-review-session-history.ts` `FORBIDDEN_PARENT_FIELDS` extended with 12 engine / KataGo keys
+- [x] `src/lib/parent-review-session-history.ts` `FORBIDDEN_PARENT_FIELDS` extended with 16 engine / KataGo keys
 - [x] `src/__tests__/parent-review-session-history.test.ts` includes 7 new engine boundary regression tests
 - [x] No parent dashboard, child-facing summary, navigation link, end-of-session modal, history/report view, persistence, API route, Server Action, telemetry, Supabase write, external AI, new KataGo integration, or diagnostics integration was added
 - [x] No new component, no `ProblemPlayer` change, no `FeedbackDialog` change, no route change, no problem content change, no selection logic change, no recommendation algorithm change, no practice flow change, no wrong-book change, no report change, no level progression change, no child-facing UI change
@@ -140,7 +140,7 @@ Confirm the v0.19 series does **not**:
 
 Confirm the v0.19 series does:
 
-- [x] Enforce the v0.18 forbidden-field list extended with 12 engine / KataGo keys
+- [x] Enforce the v0.18 forbidden-field list extended with 16 engine / KataGo keys
 - [x] Produce only safe-shape outputs (`{ kind, reason, point? }` from `buildEngineHint`, `{ message, concept, source }` from `explainChildEngine`, `{ enabled, source }` from the flag getter)
 - [x] Keep every helper pure, deterministic, side-effect-free
 

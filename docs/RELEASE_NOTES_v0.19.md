@@ -8,7 +8,7 @@ Key principles carried through v0.19:
 
 - **Pure helpers, no consumer wiring.** v0.19.0b and v0.19.0c ship only `buildEngineHint()` and `explainChildEngine()` plus their validators, types, and tests. Component / page / `ProblemPlayer` / `FeedbackDialog` integration is a named gated follow-up, not part of v0.19.
 - **Local-only, optional, off by default.** The new `ENGINE_HINT_PROJECTION` feature flag defaults off via env → runtime → default resolution; off-state is byte-identical to v0.18.
-- **Privacy by construction.** v0.18's `FORBIDDEN_PARENT_FIELDS` is extended with 12 engine / KataGo keys; 7 new regression tests pin the boundary.
+- **Privacy by construction.** v0.18's `FORBIDDEN_PARENT_FIELDS` is extended with 16 engine / KataGo keys; 7 new regression tests pin the boundary.
 - **No parent-visible engine output.** No new route, no new page, no new prop, no persistence, no telemetry. The `/dev/session-summary` page is unchanged.
 
 ## 2. What changed
@@ -18,7 +18,7 @@ Key principles carried through v0.19:
 | v0.19.0a | `docs/AI_ENGINE_UX_PLAN_v0.19.md` — re-anchors v0.13 / v0.14 engine assets, evaluates 4 UX directions, scopes v0.19.0b / v0.19.0c to pure helpers / contracts / tests / feature-flag contracts. Component / page / `ProblemPlayer` integration is a named gated follow-up. v0.1 boundary respected; planning-only slice, no code change. | #209 |
 | v0.19.0b | `src/lib/engine-hint.ts` — pure `buildEngineHint(input)` returning `{ kind: "no-hint", reason }` or `{ kind: "hint", point, reason }`. Feature-flag contract `ENGINE_HINT_PROJECTION` resolves env → runtime → default (env wins), off by default. 15 new tests in `src/__tests__/engine-hint.test.ts`. | #210 |
 | v0.19.0c | `src/lib/child-engine-explain.ts` — pure `explainChildEngine(input)` returning a `LocalReviewResult`-shaped object. `source` is `"engine-assisted"` only when signal agrees with authored answer AND confidence is `medium` or `high` (otherwise `"rule-template"`). Rank-aware refinement. Extended `validateChildEngineExplain()` with case-insensitive banned-phrase matching. 23 new tests in `src/__tests__/child-engine-explain.test.ts`. | #211 |
-| v0.19.0d | `docs/AI_ENGINE_BOUNDARY_QA_v0.19.md` — `FORBIDDEN_PARENT_FIELDS` extended with 12 engine / KataGo keys, 7 new boundary regression tests, cross-surface boundary inspection confirming no engine field can reach a parent-visible path. | this PR |
+| v0.19.0d | `docs/AI_ENGINE_BOUNDARY_QA_v0.19.md` — `FORBIDDEN_PARENT_FIELDS` extended with 16 engine / KataGo keys, 7 new boundary regression tests, cross-surface boundary inspection confirming no engine field can reach a parent-visible path. | this PR |
 
 ### File inventory
 
@@ -35,7 +35,7 @@ New files added in v0.19.0a–0d:
 
 Modified files:
 
-- `src/lib/parent-review-session-history.ts` — `FORBIDDEN_PARENT_FIELDS` extended with 12 engine / KataGo keys
+- `src/lib/parent-review-session-history.ts` — `FORBIDDEN_PARENT_FIELDS` extended with 16 engine / KataGo keys
 - `src/__tests__/parent-review-session-history.test.ts` — 7 new boundary regression tests
 - `docs/TASKS.md` — current phase and strategy entries updated for v0.19.0a–0d
 
@@ -100,7 +100,7 @@ validateChildEngineExplain(result: LocalReviewResult): true | ValidationFailure;
 
 ## 5. Privacy and data minimization
 
-- v0.18's `FORBIDDEN_PARENT_FIELDS` extended with 12 engine / KataGo keys: `topMoves | visits | scoreLead | winrate | playouts | engineHint | engineReview | engineSignal | engineAssisted | engineConfidence | agreedWithAuthoredAnswer | authoredAnswerRank | attemptedMoveRank | engineLatency | engineDiagnostics | lastAnalysis`.
+- v0.18's `FORBIDDEN_PARENT_FIELDS` extended with 16 engine / KataGo keys: `topMoves | visits | scoreLead | winrate | playouts | engineHint | engineReview | engineSignal | engineAssisted | engineConfidence | agreedWithAuthoredAnswer | authoredAnswerRank | attemptedMoveRank | engineLatency | engineDiagnostics | lastAnalysis`.
 - `checkPrivacyBoundary()` already recurses into nested objects and arrays; the new keys are detected at any depth.
 - 7 new boundary regression tests in `parent-review-session-history.test.ts` (63 total in file). All pass.
 - v0.19 helpers produce no engine-shaped output that reaches a parent-visible surface:

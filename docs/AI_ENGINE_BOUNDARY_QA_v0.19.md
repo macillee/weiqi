@@ -6,7 +6,7 @@ Validation scope covers the v0.19 series (v0.19.0a–v0.19.0d):
 
 - `src/lib/engine-hint.ts` — pure `buildEngineHint()`, feature-flag `ENGINE_HINT_PROJECTION`
 - `src/lib/child-engine-explain.ts` — pure `explainChildEngine()`, extended `validateChildEngineExplain()`
-- `src/lib/parent-review-session-history.ts` — `FORBIDDEN_PARENT_FIELDS` extended with 12 engine / KataGo surface keys
+- `src/lib/parent-review-session-history.ts` — `FORBIDDEN_PARENT_FIELDS` extended with 16 engine / KataGo surface keys
 - `src/__tests__/parent-review-session-history.test.ts` — **7 new regression tests** for the v0.19 engine boundary extensions
 - `src/__tests__/engine-hint.test.ts` — 15 tests (v0.19.0b)
 - `src/__tests__/child-engine-explain.test.ts` — 23 tests (v0.19.0c)
@@ -49,7 +49,7 @@ New keys (v0.19.0d):
 | `engineDiagnostics` | `LocalEngineDiagnostics` wrapper |
 | `lastAnalysis` | engine last-analysis lifecycle |
 
-Result: **12 new keys** added (16 total lines in the table; the original 14 v0.18 keys are unchanged). `checkPrivacyBoundary()` already recurses into nested objects and arrays, so the new keys are detected at any depth.
+Result: **16 new keys** added (30 total lines in the table; the original 14 v0.18 keys are unchanged). `checkPrivacyBoundary()` already recurses into nested objects and arrays, so the new keys are detected at any depth.
 
 ---
 
@@ -80,7 +80,7 @@ Manual review of every surface that could plausibly receive engine data:
 | `summarizeLearningSession()` (`src/lib/session-summary.ts`) | Pure function over `LearningSessionSummaryInput`; no engine imports. | ✅ |
 | `buildHistoricalSummary()` (`src/lib/parent-review-session-history.ts`) | Iterates `progress.attempts` only; engine module is not imported. | ✅ |
 | `toParentReviewSafeAggregate()` | Explicit allowlist of safe fields; no engine key on the output shape. | ✅ |
-| `checkPrivacyBoundary()` | Extended with 12 new forbidden keys; covers v0.19.0b/0c helper outputs. | ✅ |
+| `checkPrivacyBoundary()` | Extended with 16 new forbidden keys; covers v0.19.0b/0c helper outputs. | ✅ |
 | `/dev/session-summary` page | Reads `loadProgress()` only; does not import engine modules. | ✅ |
 | `/report` page | Aggregates from `StudentProgress`; no engine field. | ✅ |
 | `/wrong-book` page | Aggregates from `StudentProgress`; no engine field. | ✅ |
@@ -130,7 +130,7 @@ Result: all v0.19 helper outputs are confirmed safe for the parent-review bounda
 
 ## 6. Release-Readiness Checklist
 
-- [x] `FORBIDDEN_PARENT_FIELDS` extended with 12 engine / KataGo keys
+- [x] `FORBIDDEN_PARENT_FIELDS` extended with 16 engine / KataGo keys
 - [x] 7 new boundary regression tests added (63 total in `parent-review-session-history.test.ts`)
 - [x] All 638 tests pass (31 files)
 - [x] `npm run lint` — Exit 0
