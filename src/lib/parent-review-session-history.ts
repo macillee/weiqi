@@ -115,6 +115,23 @@ const FORBIDDEN_PARENT_FIELDS = [
   "boardState",
   "identity",
   "telemetry",
+  // v0.19: engine / KataGo surface — never reach any parent-visible path
+  "topMoves",
+  "visits",
+  "scoreLead",
+  "winrate",
+  "playouts",
+  "engineHint",
+  "engineReview",
+  "engineSignal",
+  "engineAssisted",
+  "engineConfidence",
+  "agreedWithAuthoredAnswer",
+  "authoredAnswerRank",
+  "attemptedMoveRank",
+  "engineLatency",
+  "engineDiagnostics",
+  "lastAnalysis",
 ];
 
 function generateId(): string {
