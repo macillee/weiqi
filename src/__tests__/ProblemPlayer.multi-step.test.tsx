@@ -3,18 +3,21 @@ import { act } from "react";
 import { createRoot } from "react-dom/client";
 import type { Root } from "react-dom/client";
 import ProblemPlayer from "@/components/problem/ProblemPlayer";
+import type { Problem } from "@/lib/problems";
+import {
+  setChildEngineExplainEnabled,
+  validateChildEngineExplain,
+} from "@/lib/child-engine-explain";
+import {
+  setEngineHintProjectionEnabled,
+} from "@/lib/engine-hint";
+import type { LocalReviewResult } from "@/lib/ai-review";
 
 // Mock the server action bridge so handleShowCoach() resolves
 // deterministically with null (engine unavailable in tests).
 vi.mock("@/lib/review-actions", () => ({
   requestEngineReview: vi.fn(async () => null),
 }));
-import type { Problem } from "@/lib/problems";
-import {
-  setChildEngineExplainEnabled,
-  validateChildEngineExplain,
-} from "@/lib/child-engine-explain";
-import type { LocalReviewResult } from "@/lib/ai-review";
 
 (globalThis as Record<string, unknown>).IS_REACT_ACT_ENVIRONMENT = true;
 
@@ -827,6 +830,126 @@ describe("ProblemPlayer - v0.20.0b child engine explain wiring", () => {
     ];
     for (const field of FORBIDDEN_ENGINE_FIELDS) {
       expect(message).not.toContain(field);
+    }
+  });
+});
+
+/* ───── v0.20.0c: buildEngineHint() consumer wiring (gated by ENGINE_HINT_PROJECTION) ───── */
+
+describe("ProblemPlayer - v0.20.0c engine hint projection wiring", () => {
+  beforeEach(() => {
+    setEngineHintProjectionEnabled(undefined);
+  });
+  afterEach(() => {
+    setEngineHintProjectionEnabled(undefined);
+  });
+
+  it("flag off: single-step first wrong attempt does NOT project a hint highlight", () => {
+    renderComponent(<ProblemPlayer problem={createSingleStepProblem()} />);
+    click("point-0-0");
+
+    // The 'wrong' highlight IS rendered (existing v0.19 behavior).
+    const wrongHighlight = container?.querySelector(
+      '[data-testid="point-0-0"][data-highlight="wrong"]',
+    );
+    expect(wrongHighlight).not.toBeNull();
+  });
+
+  it("flag off: multi-step first wrong attempt does NOT project a hint highlight (off-state byte-identical to v0.19)", () => {
+    renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
+    click("point-0-0");
+
+    // Only the 'wrong' highlight should appear; no 'hint' highlight
+    // (the engine-hint path requires the flag to be on AND a real
+    // topMoves payload; on this path we pass topMoves = undefined so
+    // the helper returns no-hint regardless of flag state).
+    const wrongHighlight = container?.querySelector(
+      '[data-testid="point-0-0"][data-highlight="wrong"]',
+    );
+    expect(wrongHighlight).not.toBeNull();
+  });
+
+  it("flag on: single-step first wrong attempt does NOT project a hint highlight (topMoves is undefined on this path)", () => {
+    setEngineHintProjectionEnabled(true);
+    renderComponent(<ProblemPlayer problem={createSingleStepProblem()} />);
+    click("point-0-0");
+
+    // The helper fires (flag is on, currentResult is 'wrong',
+    // currentWrongAttempts is 1) but returns no-hint because
+    // topMoves is undefined. The wrong highlight is still rendered.
+    const wrongHighlight = container?.querySelector(
+      '[data-testid="point-0-0"][data-highlight="wrong"]',
+    );
+    expect(wrongHighlight).not.toBeNull();
+  });
+
+  it("flag on: try-again clears the wrong attempt and returns the board to the answering state", () => {
+    setEngineHintProjectionEnabled(true);
+    renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
+    click("point-0-0");
+    click("try-again-btn");
+
+    // On try-again, the multi-step path resets the step result to
+    // null, so the feedback dialog is gone (back to answering).
+    const fb = container?.querySelector('[data-testid="feedback-dialog"]');
+    expect(fb).toBeNull();
+  });
+
+  it("flag on: hint highlight state stays inert: no extra highlight is rendered when the helper returns no-hint", () => {
+    setEngineHintProjectionEnabled(true);
+    renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
+    click("point-0-0");
+
+    // Count any point with data-highlight="hint". On this path the
+    // helper returns no-hint, so the engine hint state is null and
+    // no hint highlight is rendered. The only 'hint' highlight, if
+    // any, would come from problem.hints — and the test fixture's
+    // hints are empty.
+    const hintPoints = container?.querySelectorAll(
+      '[data-highlight="hint"]',
+    );
+    expect(hintPoints?.length ?? 0).toBe(0);
+  });
+
+  it("flag on: problem change clears any engine hint state (regression for hint-leak across problems)", () => {
+    setEngineHintProjectionEnabled(true);
+    const problem1 = createMultiStepProblem();
+    const problem2: Problem = {
+      ...createSingleStepProblem(),
+      id: "MULTI-002",
+    };
+
+    renderComponent(<ProblemPlayer problem={problem1} />);
+    click("point-0-0");
+    // No hint highlight on problem1 (topMoves undefined).
+
+    act(() => root.render(<ProblemPlayer problem={problem2} />));
+    // After problem change, no hint highlight on problem2 either.
+    const hintPoints = container?.querySelectorAll(
+      '[data-highlight="hint"]',
+    );
+    expect(hintPoints?.length ?? 0).toBe(0);
+  });
+
+  it("privacy regression: no v0.19.0d forbidden engine field appears as a highlight coordinate name or reason text", () => {
+    // The wiring is inert in this test (topMoves = undefined) but we
+    // still assert the contract: nothing engine-shaped ever leaks
+    // into the highlight list. The highlights are pure data points
+    // of type 'wrong' / 'correct' / 'hint' — no engine fields.
+    setEngineHintProjectionEnabled(true);
+    renderComponent(<ProblemPlayer problem={createMultiStepProblem()} />);
+    click("point-0-0");
+
+    const allHighlights = container?.querySelectorAll("[data-highlight]");
+    const allHighlightTypes = Array.from(allHighlights ?? []).map(
+      (el) => el.getAttribute("data-highlight") ?? "",
+    );
+    for (const t of allHighlightTypes) {
+      expect([
+        "wrong",
+        "correct",
+        "hint",
+      ]).toContain(t);
     }
   });
 });

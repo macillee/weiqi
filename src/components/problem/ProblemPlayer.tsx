@@ -22,6 +22,11 @@ import {
   shouldUseChildEngineExplain,
   validateChildEngineExplain,
 } from "@/lib/child-engine-explain";
+import {
+  buildEngineHint,
+  getEngineHintProjectionFlag,
+  type EngineHintOutput,
+} from "@/lib/engine-hint";
 
 type ProblemPlayerProps = {
   problem: Problem;
@@ -53,6 +58,11 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
   } | null>(null);
   const [celebrateTrigger, setCelebrateTrigger] = useState(0);
   const [coachReview, setCoachReview] = useState<LocalReviewResult | null>(null);
+  // v0.20.0c: engine hint projection state. Holds a single point
+  // (and reason text) when the projection is active, null otherwise.
+  // The hint is a board-level UI artifact, not a coach review, so it
+  // is kept in its own state slot.
+  const [engineHint, setEngineHint] = useState<EngineHintOutput | null>(null);
   const coachRequestId = useRef(0);
 
   /* eslint-disable react-hooks/set-state-in-effect -- reset state when problem changes */
@@ -62,6 +72,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     setResult(null);
     setLastWrongMove(null);
     setCoachReview(null);
+    setEngineHint(null);
     coachRequestId.current += 1;
 
     // Reset multi-step state
@@ -252,6 +263,7 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
       setLastWrongMove(null);
     }
     setCoachReview(null);
+    setEngineHint(null);
     coachRequestId.current += 1;
   }, [isMultiStep, currentStep]);
 
@@ -337,6 +349,66 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     setCoachReview(result);
   }, [problem, currentWrongMove, currentAnswers, currentHintIndex]);
 
+  // v0.20.0c: engine hint projection (single Highlight of type 'hint').
+  // Gated by `ENGINE_HINT_PROJECTION` flag (default off). When the
+  // flag is on and the current attempt just became the FIRST wrong
+  // attempt on the current problem/step, we call `buildEngineHint()`
+  // locally (no server action) and project a single `hint` highlight
+  // on the board. The hint is not a coach review (no message dialog,
+  // no source enum) — it is purely a board-level mark.
+  //
+  // Off-state: flag off, or any non-first wrong attempt, or a correct
+  // answer, or the helper returning `no-hint`. All of these resolve
+  // to either not firing the effect or producing a `null` state, so
+  // the rendered highlights are byte-identical to v0.19.
+  //
+  // We do NOT have a real engine review on this path either
+  // (the server-action bridge stays on the v0.13 / v0.19
+  // `handleShowCoach` path; the v0.20.0b child-coach path bypasses
+  // it as well). `buildEngineHint()` takes a topMoves input — we
+  // pass `undefined` here so the helper's no-hint gates
+  // (no-top-moves / single-top-move) fire and render no overlay
+  // unless a real topMoves payload is provided by a future
+  // engine-adjacent slice. This keeps the path inert until
+  // someone explicitly opts in to feeding a real `topMoves` list.
+  /* eslint-disable react-hooks/set-state-in-effect -- engine hint projection is a side effect of the first wrong attempt */
+  useEffect(() => {
+    if (!getEngineHintProjectionFlag().enabled) return;
+    if (currentResult !== "wrong") return;
+    if (currentWrongAttempts !== 1) return;
+    if (!currentWrongMove) return;
+    if (!isMultiStep && !currentAnswers[0]) return;
+
+    const result = buildEngineHint({
+      problem,
+      attemptedMove: currentWrongMove,
+      authoredAnswer: currentAnswers[0] ?? { x: 0, y: 0 },
+      // No real engine signal on this path. Pass a low-confidence
+      // signal so the helper's `low-confidence` gate fires and
+      // returns `no-hint` unless a future slice supplies a real
+      // topMoves payload (which would still need a real engine
+      // signal to satisfy the `low-confidence` gate).
+      signal: { confidence: "low", agreesWithAuthoredAnswer: true },
+      // topMoves intentionally undefined: until a real engine
+      // signal is wired in, the helper's no-top-moves gate renders
+      // `no-hint` and the highlight is not projected.
+      topMoves: undefined,
+    });
+    if (result.kind === "hint") {
+      setEngineHint(result);
+    } else {
+      setEngineHint(null);
+    }
+  }, [
+    currentResult,
+    currentWrongAttempts,
+    currentWrongMove,
+    currentAnswers,
+    problem,
+    isMultiStep,
+  ]);
+  /* eslint-enable react-hooks/set-state-in-effect */
+
   // Handle next step (for multi-step problems)
   const handleNextStep = useCallback(() => {
     if (!isMultiStep || currentStep >= totalSteps) {
@@ -381,6 +453,26 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
       }
     }
 
+    // v0.20.0c: engine hint projection. When `buildEngineHint()`
+    // returned a usable `{ kind: "hint", point, reason }`, project
+    // a single `hint` highlight on the board. The hint is gated to
+    // the first wrong attempt via the projection effect, and cleared
+    // on try-again / problem change / correct answer (the helper
+    // itself is pure and side-effect free; the gate lives at the
+    // consumer).
+    if (
+      currentResult === "wrong" &&
+      currentWrongAttempts === 1 &&
+      engineHint &&
+      engineHint.kind === "hint"
+    ) {
+      h.push({
+        x: engineHint.point.x,
+        y: engineHint.point.y,
+        type: "hint",
+      });
+    }
+
     return h;
   }, [
     currentWrongMove,
@@ -390,6 +482,8 @@ export default function ProblemPlayer({ problem, onNext, onAttempt, onResult }: 
     currentHints,
     currentHintIndex,
     problem.boardSize,
+    currentWrongAttempts,
+    engineHint,
   ]);
 
   const isDisabled = currentResult !== null;
