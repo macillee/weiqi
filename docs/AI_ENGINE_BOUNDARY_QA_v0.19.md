@@ -26,7 +26,7 @@ Validation baseline:
 
 ## 1. Forbidden-Field Boundary Extension
 
-The v0.18 `FORBIDDEN_PARENT_FIELDS` list was extended with 12 new keys covering the v0.13 / v0.14 / v0.19 engine surface. Any payload that contains these keys — at any depth — is now rejected by `checkPrivacyBoundary()`.
+The v0.18 `FORBIDDEN_PARENT_FIELDS` list was extended with 16 new keys covering the v0.13 / v0.14 / v0.19 engine surface. Any payload that contains these keys — at any depth — is now rejected by `checkPrivacyBoundary()`.
 
 New keys (v0.19.0d):
 
@@ -49,7 +49,7 @@ New keys (v0.19.0d):
 | `engineDiagnostics` | `LocalEngineDiagnostics` wrapper |
 | `lastAnalysis` | engine last-analysis lifecycle |
 
-Result: **16 new keys** added (30 total lines in the table; the original 14 v0.18 keys are unchanged). `checkPrivacyBoundary()` already recurses into nested objects and arrays, so the new keys are detected at any depth.
+Result: **16 new keys** added; the original v0.18 forbidden fields are unchanged. `checkPrivacyBoundary()` already recurses into nested objects and arrays, so the new keys are detected at any depth.
 
 ---
 
