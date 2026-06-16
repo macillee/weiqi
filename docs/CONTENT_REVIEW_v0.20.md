@@ -42,9 +42,9 @@
 |---|---:|---:|---:|
 | L1 | 10 | 10 | 0 |
 | L2 | 33 | 33 | 0 |
-| L3 | 26 | 27 | +1 (END-013, MIX-004 minus the implicit baseline shift) |
-| L4 | 19 | 21 | +2 (END-014, END-015, MIX-005, MIX-006) |
-| L5 | 13 | 15 | +2 (END-016, MIX-007, MIX-008) |
+| L3 | 26 | 28 | +2 (END-013, MIX-004) |
+| L4 | 19 | 23 | +4 (END-014, END-015, MIX-005, MIX-006) |
+| L5 | 13 | 16 | +3 (END-016, MIX-007, MIX-008) |
 | **Total** | **101** | **110** | **+9** |
 
 > Note: the v0.20.0d pilot targets the lowest-coverage categories (endgame 12 → 16, mixed 3 → 8) per the v0.15.0b content inventory audit. The deliberate choice was to keep all 9 new problems at L3–L5 to reinforce the mid-tier / upper-tier practice space; the lower-tier density (L1 = 10, L2 = 33) is already at the v0.4 / v0.5 saturation point and was not the v0.20.0d scope.

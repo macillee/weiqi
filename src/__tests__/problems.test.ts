@@ -920,15 +920,16 @@ describe("problem data quality", () => {
       expect(problems.length).toBe(110);
     });
 
-    it("total L3-5 count is 66 (58 + 8 v0.20.0d Pack B level 3-5 problems; MIX-004 is the only L3 in the new pack)", () => {
-      // v0.15 Pack A baseline was 58 L3-5 problems.
-      // v0.20.0d Pack B adds 9 problems, all level 3-5:
-      //   END-013 L3, END-014 L4, END-015 L4, END-016 L5,
-      //   MIX-004 L3, MIX-005 L4, MIX-006 L4, MIX-007 L5, MIX-008 L5
-      // = 9 L3-5 problems. 58 + 9 = 67.
-      // Wait, re-verify: 58 was Pack A's claim. Let me re-count.
+    it("total L3-5 count is 67 (58 pre-Pack-B + 9 Pack B all at L3-5)", () => {
+      // Pre-Pack-B baseline: 26 L3 + 19 L4 + 13 L5 = 58 L3-5 problems.
+      // Pack B adds 9 problems, all level 3-5:
+      //   L3: END-013, MIX-004
+      //   L4: END-014, END-015, MIX-005, MIX-006
+      //   L5: END-016, MIX-007, MIX-008
+      //   = 2 L3 + 4 L4 + 3 L5 = 9 problems
+      // Post-Pack-B: 28 L3 + 23 L4 + 16 L5 = 67 L3-5.
       const l35 = problems.filter((p) => p.level >= 3 && p.level <= 5);
-      expect(l35.length).toBeGreaterThanOrEqual(67);
+      expect(l35.length).toBe(67);
     });
 
     it("exact Pack A category/level matrix matches target", () => {
