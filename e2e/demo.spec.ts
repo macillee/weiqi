@@ -5,7 +5,8 @@ test.describe("Demo page smoke", () => {
     await page.goto("/demo");
 
     await expect(page.locator("text=返回")).toBeVisible();
-    await expect(page.locator("text=第 1 / 101 题")).toBeVisible();
+    // v0.20.0d: Pack B pilot expanded the library from 101 to 110.
+    await expect(page.locator("text=第 1 / 110 题")).toBeVisible();
 
     await expect(page.getByText("CAP-001")).toBeVisible();
     await expect(page.getByRole("img", { name: "9x9 Go board" })).toBeVisible();
