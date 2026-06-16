@@ -83,11 +83,11 @@
 - **Why it's the right answer:** (4, 2) bridges the middle group to (5, 2), giving both groups shared liberties and a much safer position. Escaping outward would leave the group atari-prone.
 - **Copy:** 3 hints, "数一数黑棋还剩几口气" makes the reading concrete.
 
-### MIX-005 — 吃还是断 (level 4)
-- **Initial board:** 6 white stones forming a 2×3 block (3,3)/(3,4)/(4,3)/(4,4)/(5,3)/(5,4), 2 black at (2,2)/(2,5).
-- **Answer:** (4, 2) — capture the low-liberty white stone at (3, 4)... wait, that's a liberty for the white group. Let me re-check.
-- **Why it's the right answer:** (4, 2) sits on top of the white block. (3, 4) at this point has 2 liberties (left at (3, 3) and (3, 5)). Wait — (3, 4) is a white stone, but the answer is (4, 2) at the top. The black capture happens because (3, 4) and (4, 4) and (5, 4) all share a single column of liberties that (4, 2) takes the last liberty of. Hmm — let me re-examine. Actually this problem reads as "take white's last liberty at (4, 2) to capture the 3-stone row at row 4". After playing (4, 2), white at (3, 4)/(4, 4)/(5, 4) has no liberties left (top is taken, bottom is the edge, sides are other white stones). The capture is valid. The original spec said answer captures (3, 4) but the correct capture is the row at y=4.
-- **Copy:** 3 hints, "数一数白棋哪里气最少" leads the child to the right read.
+### MIX-005 — 断还是连 (level 4)
+- **Initial board:** 2 white stones at (3,2) and (5,2) (a two-stone pair on the top row, separated by an empty (4,2)). 2 black stones at (2,2) and (2,5).
+- **Answer:** (4, 2) — cut between the two white stones.
+- **Why it's the right answer:** (4, 2) sits between (3, 2) and (5, 2) and separates them into two single-stone groups. The two white stones are no longer adjacent and cannot connect. The other reasonable cuts in the area (e.g. (4, 3)) are not on the line between the two white stones and would not actually prevent the connection.
+- **Copy:** 3 hints, "在 (4,2) 落子可以把白棋左右分开" makes the cut reasoning concrete and child-friendly.
 
 ### MIX-006 — 活还是占 (level 4)
 - **Initial board:** 4 black stones forming a 2×2 block at (4,4)/(5,4)/(4,5)/(5,5), 4 white stones at the corners (3,3)/(6,3)/(3,6)/(6,6) with the mid-edges implied. The black block has 4 liberties on its outer edge.

@@ -7106,40 +7106,20 @@
     "level": 4,
     "tags": [
       "mixed",
-      "capture-or-cut",
+      "cut",
       "reading"
     ],
     "toPlay": "black",
-    "description": "白棋两块棋快连上了，黑棋是先吃还是先断？",
+    "description": "白棋两块棋快连起来了，黑棋是先吃还是先断？",
     "initialStones": [
       {
         "x": 3,
-        "y": 3,
-        "color": "white"
-      },
-      {
-        "x": 3,
-        "y": 4,
-        "color": "white"
-      },
-      {
-        "x": 4,
-        "y": 3,
-        "color": "white"
-      },
-      {
-        "x": 4,
-        "y": 4,
+        "y": 2,
         "color": "white"
       },
       {
         "x": 5,
-        "y": 3,
-        "color": "white"
-      },
-      {
-        "x": 5,
-        "y": 4,
+        "y": 2,
         "color": "white"
       },
       {
@@ -7160,14 +7140,14 @@
       }
     ],
     "hints": [
-      "白棋的棋围成了一块。",
-      "白棋 (3, 4) 只有两口气。",
-      "先吃白棋比断它更直接。"
+      "看看白棋的棋在 (3,2) 和 (5,2)。",
+      "白棋想从 (3,2) 跳到 (5,2)。",
+      "在 (4,2) 落子可以把白棋左右分开。"
     ],
-    "explanation": "黑棋在 (4, 2) 提掉白棋 (3, 4)，白棋被吃不能连上。",
-    "successMessage": "正确！吃子更有效！",
-    "failureMessage": "数一数白棋哪里气最少。",
-    "title": "吃还是断"
+    "explanation": "黑棋在 (4, 2) 落子，把白棋左右两块棋彻底分开，白棋连不起来。",
+    "successMessage": "正确！切断白棋最有效！",
+    "failureMessage": "想一想白棋想连到哪里。",
+    "title": "断还是连"
   },
   {
     "id": "MIX-006",
