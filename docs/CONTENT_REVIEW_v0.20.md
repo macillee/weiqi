@@ -19,7 +19,7 @@
 | END-016 | endgame | 5 | endgame, territory, reading | Compare three empty areas (two corners + center) and take the largest by territory |
 | MIX-004 | mixed | 3 | mixed, escape-or-connect, reading | Connect a surrounded middle pair to a friendly right-side stone via (5, 3) rather than escape outward |
 | MIX-005 | mixed | 4 | mixed, cut, reading | Cut between two single white stones on the top row at (4, 2) to prevent connection |
-| MIX-006 | mixed | 4 | mixed, life-or-territory, reading | Extend outward from a 2×2 black block to gain a safe extension, choosing life over territory |
+| MIX-006 | mixed | 4 | mixed, life-or-territory, reading | Extend a 2×2 black block from either top liberty ((4, 3) or (5, 3)) to gain a safe extension, choosing extension over outside territory |
 | MIX-007 | mixed | 5 | mixed, attack-or-defend, reading | Attack the weaker side — black (0, 6) takes white's last column liberty, forcing white to defend |
 | MIX-008 | mixed | 5 | mixed, endgame-or-safety, reading | Block white's connection between (4, 3) and (4, 5) by playing (4, 4), choosing safety over outside territory |
 
@@ -69,7 +69,7 @@
 - **Initial board:** 4 black stones in a + pattern at (4,3)/(4,5)/(3,4)/(5,4) — the 4 cross arms are NOT connected to each other (each is a single-stone group). 6 white stones at the outer corners (3,3)/(5,3)/(3,5)/(5,5) and the upper/lower edges (4,2)/(4,6). The center (4,4) is empty.
 - **Answer:** (4, 4) — connect the 4 black cross arms into a single 5-stone group.
 - **Why it's the right answer:** playing at (4, 4) is adjacent to all 4 cross arms and joins them into a single 5-stone group. Without (4, 4), the 4 cross arms are 4 separate single-stone groups.
-- **Copy:** 3 hints, "四颗黑棋 (4,3)(4,5)(3,4)(5,4) 是分开的" / "中间是 (4, 4)，可以连上四颗棋" walks the child through the connect-the-cross reasoning.
+- **Copy:** successMessage "正确！连起来更稳！" and failureMessage "想一想怎么把四颗棋连起来。" both match the connect-the-cross theme. The earlier "眼是关键" / "黑棋被围住时怎么活" wording was removed because one eye is not alive in Go — that copy would have taught the child a false rule.
 
 ### END-016 — 最大地盘 (level 5)
 - **Initial board:** 3 black stones at (0,0)/(1,0)/(0,1) (upper-left corner), 3 white stones at (8,0)/(7,0)/(8,1) (upper-right corner), 1 black at (4,4), 2 white at (3,4)/(5,4). The central area (4,5) and (5,5) and (3,5) is mostly empty.
@@ -89,11 +89,11 @@
 - **Why it's the right answer:** (4, 2) sits between (3, 2) and (5, 2) and separates them into two single-stone groups. The two white stones are no longer adjacent and cannot connect. The other reasonable cuts in the area (e.g. (4, 3)) are not on the line between the two white stones and would not actually prevent the connection.
 - **Copy:** 3 hints, "在 (4,2) 落子可以把白棋左右分开" makes the cut reasoning concrete and child-friendly.
 
-### MIX-006 — 活还是占 (level 4)
-- **Initial board:** 4 black stones forming a 2×2 block at (4,4)/(5,4)/(4,5)/(5,5), 4 white stones at the outer corners (3,3)/(6,3)/(3,6)/(6,6). The black block has 4 outer-edge liberties.
-- **Answer:** (4, 3) — extend outward from the top-center of the block.
-- **Why it's the right answer:** (4, 3) is the central top liberty that connects the block to a safe extension. The other top-edge move (5, 3) is also a valid answer per the same logic.
-- **Copy:** 3 hints, "想一想黑棋还剩几口气" frames the survival decision.
+### MIX-006 — 连还是占 (level 4)
+- **Initial board:** 4 black stones forming a 2×2 block at (4,4)/(5,4)/(4,5)/(5,5), 4 white stones at the outer corners (3,3)/(6,3)/(3,6)/(6,6). The black block has 4 outer-edge liberties at (4,3)/(5,3)/(4,6)/(5,6); the question is about the top side.
+- **Answers:** (4, 3) **and** (5, 3) — both top-edge liberties are equivalent extensions of the 2×2 block. The data accepts both.
+- **Why either is right:** (4, 3) extends the 2×2 block to the left, (5, 3) extends it to the right. The other two top-side moves (4, 6) and (5, 6) extend downward and are not on the same axis.
+- **Copy:** 3 hints, "上方是 (4,3) 和 (5,3) 两个空位" / "在 (4,3) 或 (5,3) 落子都可以把黑棋连起来" tells the child that both moves are correct. The earlier wording ("黑棋的一块棋快被围死了 / 活棋最关键") was removed because the actual board does not show a 2×2 block in atari; the lesson is about choosing an extension, not about survival.
 
 ### MIX-007 — 攻还是守 (level 5)
 - **Initial board:** 3 black stones at (1,1)/(2,1)/(1,2) (upper-left L), 3 white stones at (7,7)/(8,7)/(7,8) (lower-right L), 2 white stones at (0,7)/(0,8) (lower-left corner). The black corner is safe; the white corner at (0,7)/(0,8) has only 2 liberties at (0,6) and (1,7).
