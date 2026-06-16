@@ -15,13 +15,13 @@
 |---|---|---|---|---|
 | END-013 | endgame | 3 | endgame, edge, big-point | Block a white intrusion on the edge by filling the last entry point before white can come in |
 | END-014 | endgame | 4 | endgame, corner, sente | Take a sente move in the corner to prevent white from connecting through the corner extension |
-| END-015 | endgame | 4 | endgame, center, eye | Fill the center of a black + shape with the last eye-making move to save the group |
+| END-015 | endgame | 4 | endgame, center, connect | Connect a 4-stone black + shape by filling the center to make a single 5-stone group |
 | END-016 | endgame | 5 | endgame, territory, reading | Compare three empty areas (two corners + center) and take the largest by territory |
 | MIX-004 | mixed | 3 | mixed, escape-or-connect, reading | Connect a surrounded middle pair to a friendly right-side stone via (5, 3) rather than escape outward |
 | MIX-005 | mixed | 4 | mixed, cut, reading | Cut between two single white stones on the top row at (4, 2) to prevent connection |
 | MIX-006 | mixed | 4 | mixed, life-or-territory, reading | Extend outward from a 2×2 black block to gain a safe extension, choosing life over territory |
 | MIX-007 | mixed | 5 | mixed, attack-or-defend, reading | Attack the weaker side — black (0, 6) takes white's last column liberty, forcing white to defend |
-| MIX-008 | mixed | 5 | mixed, endgame-or-safety, reading | Block white's connection between (4, 3) and (4, 5) by playing (3, 4), choosing safety over outside territory |
+| MIX-008 | mixed | 5 | mixed, endgame-or-safety, reading | Block white's connection between (4, 3) and (4, 5) by playing (4, 4), choosing safety over outside territory |
 
 ### Category Distribution After Addition
 
@@ -65,11 +65,11 @@
 - **Why it's the right answer:** (0, 2) is the sente point that prevents white from connecting (2, 0) — (2, 2) through the corner. Other reasonable moves like (1, 1) are also on the table, but (0, 2) is the textbook sente block.
 - **Copy:** 3 hints, "先堵住白棋，不让它连上" keeps the sente concept child-friendly.
 
-### END-015 — 中央做眼 (level 4)
-- **Initial board:** 4 black stones in a + pattern at (4,3)/(4,5)/(3,4)/(5,4). 6 white stones at the outer corners (3,3)/(5,3)/(3,5)/(5,5) and the upper/lower edges (4,2)/(4,6). The center (4,4) is empty.
-- **Answer:** (4, 4) — fill the center of the + to make a single eye.
-- **Why it's the right answer:** playing at (4, 4) connects the four black stones into a closed + with the center point as a one-space eye, saving the group.
-- **Copy:** 3 hints, "中间是 (4, 4)，是唯一的眼位" / "在 (4, 4) 落子把眼填上就活棋" walks the child through the eye-finding reasoning.
+### END-015 — 中央连棋 (level 4)
+- **Initial board:** 4 black stones in a + pattern at (4,3)/(4,5)/(3,4)/(5,4) — the 4 cross arms are NOT connected to each other (each is a single-stone group). 6 white stones at the outer corners (3,3)/(5,3)/(3,5)/(5,5) and the upper/lower edges (4,2)/(4,6). The center (4,4) is empty.
+- **Answer:** (4, 4) — connect the 4 black cross arms into a single 5-stone group.
+- **Why it's the right answer:** playing at (4, 4) is adjacent to all 4 cross arms and joins them into a single 5-stone group. Without (4, 4), the 4 cross arms are 4 separate single-stone groups.
+- **Copy:** 3 hints, "四颗黑棋 (4,3)(4,5)(3,4)(5,4) 是分开的" / "中间是 (4, 4)，可以连上四颗棋" walks the child through the connect-the-cross reasoning.
 
 ### END-016 — 最大地盘 (level 5)
 - **Initial board:** 3 black stones at (0,0)/(1,0)/(0,1) (upper-left corner), 3 white stones at (8,0)/(7,0)/(8,1) (upper-right corner), 1 black at (4,4), 2 white at (3,4)/(5,4). The central area (4,5) and (5,5) and (3,5) is mostly empty.
@@ -103,9 +103,9 @@
 
 ### MIX-008 — 防还是占 (level 5)
 - **Initial board:** 2 white stones at (4,3) and (4,5) (two separate white stones on column 4, with a one-space gap at (4,4)). 3 black stones forming a vertical wall at (2,3)/(2,4)/(2,5).
-- **Answer:** (3, 4) — block white's connection between (4,3) and (4,5).
-- **Why it's the right answer:** (3, 4) sits between the two white stones (offset by one column to the left), and combined with the existing black wall at column 2 it forms a continuous block that prevents white from connecting upward or downward. The two white stones end up as two single-stone groups.
-- **Copy:** 3 hints, "白棋的 (4, 3) 和 (4, 5) 想连起来" / "中间是 (3, 4)" / "在 (3, 4) 落子把白棋分开" frames the defensive priority.
+- **Answer:** (4, 4) — block white's connection between (4,3) and (4,5).
+- **Why it's the right answer:** (4, 4) sits directly between the two white stones on the column-4 line. After black (4, 4), the two white stones (4, 3) and (4, 5) each become single-stone groups with no shared liberty — they cannot connect. The earlier wrong design used (3, 4) which left (4, 4) empty and let white connect through it.
+- **Copy:** 3 hints, "白棋的 (4, 3) 和 (4, 5) 在一条线上想连起来" / "中间是 (4, 4)" / "在 (4, 4) 落子把白棋左右分开" frames the defensive priority.
 
 ---
 
