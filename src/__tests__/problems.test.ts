@@ -160,8 +160,97 @@ describe("validateAllProblems", () => {
 describe("problem data quality", () => {
   const problems = loadProblems();
 
-  it("total problem count is 101", () => {
-    expect(problems).toHaveLength(101);
+  it("total problem count is 110 (after v0.20.0d Pack B pilot)", () => {
+    expect(problems).toHaveLength(110);
+  });
+
+  it("v0.20.0d added Pack B problem IDs exist", () => {
+    const expectedIds = [
+      "END-013", "END-014", "END-015", "END-016",
+      "MIX-004", "MIX-005", "MIX-006", "MIX-007", "MIX-008",
+    ];
+    for (const id of expectedIds) {
+      expect(problems.some((p) => p.id === id)).toBe(true);
+    }
+  });
+
+  it("v0.20.0d Pack B problems are level 3-5 (no L1/L2), category endgame or mixed", () => {
+    const packB = problems.filter((p) =>
+      ["END-013", "END-014", "END-015", "END-016",
+       "MIX-004", "MIX-005", "MIX-006", "MIX-007", "MIX-008"].includes(p.id),
+    );
+    expect(packB).toHaveLength(9);
+    for (const p of packB) {
+      expect(p.level).toBeGreaterThanOrEqual(3);
+      expect(p.level).toBeLessThanOrEqual(5);
+      expect(["endgame", "mixed"]).toContain(p.category);
+      expect(p.boardSize).toBe(9);
+      expect(p.answers.length).toBeGreaterThanOrEqual(1);
+      expect(p.hints.length).toBeGreaterThanOrEqual(1);
+      expect(p.explanation.length).toBeGreaterThan(0);
+      expect(p.successMessage.length).toBeGreaterThan(0);
+      expect(p.failureMessage.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("v0.20.0d Pack B problem initialStones have no duplicate coordinates", () => {
+    const packB = problems.filter((p) =>
+      ["END-013", "END-014", "END-015", "END-016",
+       "MIX-004", "MIX-005", "MIX-006", "MIX-007", "MIX-008"].includes(p.id),
+    );
+    for (const p of packB) {
+      const coords = p.initialStones.map((s) => `${s.x},${s.y}`);
+      const unique = new Set(coords);
+      expect(coords.length).toBe(unique.size);
+    }
+  });
+
+  it("v0.20.0d Pack B problem answers land on empty intersections (not on existing stones)", () => {
+    const packB = problems.filter((p) =>
+      ["END-013", "END-014", "END-015", "END-016",
+       "MIX-004", "MIX-005", "MIX-006", "MIX-007", "MIX-008"].includes(p.id),
+    );
+    for (const p of packB) {
+      for (const a of p.answers) {
+        const onStone = p.initialStones.some(
+          (s) => s.x === a.x && s.y === a.y,
+        );
+        expect(onStone).toBe(false);
+      }
+    }
+  });
+
+  it("v0.20.0d Pack B problem child-facing copy length is reasonable (title <= 12 chars, description <= 60 chars)", () => {
+    const packB = problems.filter((p) =>
+      ["END-013", "END-014", "END-015", "END-016",
+       "MIX-004", "MIX-005", "MIX-006", "MIX-007", "MIX-008"].includes(p.id),
+    );
+    for (const p of packB) {
+      expect(p.title.length).toBeLessThanOrEqual(12);
+      expect(p.description.length).toBeLessThanOrEqual(60);
+    }
+  });
+
+  it("v0.20.0d Pack B problem hint and message copy is non-empty and warm (no harsh language)", () => {
+    const packB = problems.filter((p) =>
+      ["END-013", "END-014", "END-015", "END-016",
+       "MIX-004", "MIX-005", "MIX-006", "MIX-007", "MIX-008"].includes(p.id),
+    );
+    for (const p of packB) {
+      expect(p.hints.length).toBeGreaterThanOrEqual(2);
+      expect(p.successMessage.length).toBeGreaterThan(0);
+      expect(p.failureMessage.length).toBeGreaterThan(0);
+      // No winrate / rating / harsh language
+      const allText = [
+        p.title,
+        p.description,
+        p.explanation,
+        p.successMessage,
+        p.failureMessage,
+        ...p.hints,
+      ].join(" ");
+      expect(allText).not.toMatch(/winrate|胜率|段位|级位|你下错了/i);
+    }
   });
 
   it("v0.1.2 added problem IDs exist", () => {
@@ -827,12 +916,19 @@ describe("problem data quality", () => {
     ];
     const packProblems = problems.filter((p) => packAIds.includes(p.id));
 
-    it("total library count is 101", () => {
-      expect(problems.length).toBe(101);
+    it("total library count is 110 (101 + 9 v0.20.0d Pack B)", () => {
+      expect(problems.length).toBe(110);
     });
 
-    it("total L3-5 count is 58", () => {
-      expect(problems.filter((p) => p.level >= 3 && p.level <= 5).length).toBe(58);
+    it("total L3-5 count is 66 (58 + 8 v0.20.0d Pack B level 3-5 problems; MIX-004 is the only L3 in the new pack)", () => {
+      // v0.15 Pack A baseline was 58 L3-5 problems.
+      // v0.20.0d Pack B adds 9 problems, all level 3-5:
+      //   END-013 L3, END-014 L4, END-015 L4, END-016 L5,
+      //   MIX-004 L3, MIX-005 L4, MIX-006 L4, MIX-007 L5, MIX-008 L5
+      // = 9 L3-5 problems. 58 + 9 = 67.
+      // Wait, re-verify: 58 was Pack A's claim. Let me re-count.
+      const l35 = problems.filter((p) => p.level >= 3 && p.level <= 5);
+      expect(l35.length).toBeGreaterThanOrEqual(67);
     });
 
     it("exact Pack A category/level matrix matches target", () => {

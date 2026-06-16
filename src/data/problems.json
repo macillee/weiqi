@@ -6723,5 +6723,655 @@
     "explanation": "黑棋补好角上的缺口，巩固了地盘，比去占别处更大。",
     "successMessage": "正确！防守比进攻更重要！",
     "failureMessage": "想一想哪里需要补棋。"
+  },
+  {
+    "id": "END-013",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 3,
+    "tags": [
+      "endgame",
+      "edge",
+      "big-point"
+    ],
+    "toPlay": "black",
+    "title": "边线官子",
+    "description": "黑棋在边上围了一些空地，白棋想进来破坏。黑棋先走哪里守住？",
+    "initialStones": [
+      {
+        "x": 1,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 1,
+        "y": 0
+      }
+    ],
+    "hints": [
+      "数一数黑棋边上有几个空位。",
+      "白棋想从边线下方钻进来。",
+      "封住下面的入口才是最大的。"
+    ],
+    "explanation": "黑棋在 (1, 0) 封住白棋的入侵路线，保住边上的地盘。",
+    "successMessage": "正确！堵住入口比占别处更大！",
+    "failureMessage": "想一想白棋会从哪里钻进来。"
+  },
+  {
+    "id": "END-014",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 4,
+    "tags": [
+      "endgame",
+      "corner",
+      "sente"
+    ],
+    "toPlay": "black",
+    "title": "角上先手",
+    "description": "角上有一个空位，白棋下一步能进去。黑棋先走哪里抢到先手？",
+    "initialStones": [
+      {
+        "x": 0,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 0,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 0,
+        "y": 2
+      }
+    ],
+    "hints": [
+      "数一数角上现在有几个气。",
+      "白棋还没连起来。",
+      "先堵住白棋，不让它连上。"
+    ],
+    "explanation": "黑棋在 (0, 2) 堵住白棋，让白棋不能连回角上。",
+    "successMessage": "正确！先手官子很重要！",
+    "failureMessage": "想一想白棋下一步想做什么。"
+  },
+  {
+    "id": "END-015",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 4,
+    "tags": [
+      "endgame",
+      "center",
+      "eye"
+    ],
+    "toPlay": "black",
+    "title": "中央做眼",
+    "description": "黑棋在中央被围住，只剩一口气了。怎样才能做出眼来？",
+    "initialStones": [
+      {
+        "x": 4,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 5,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 4,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "黑棋被围在中间了。",
+      "白棋的棋把黑棋分成了两块。",
+      "连起来再做一个眼就活了。"
+    ],
+    "explanation": "黑棋在 (4, 4) 落子，与四周黑子形成一只眼，活棋。",
+    "successMessage": "正确！眼是关键！",
+    "failureMessage": "想一想黑棋被围住时怎么活。"
+  },
+  {
+    "id": "END-016",
+    "boardSize": 9,
+    "category": "endgame",
+    "level": 5,
+    "tags": [
+      "endgame",
+      "territory",
+      "reading"
+    ],
+    "toPlay": "black",
+    "title": "最大地盘",
+    "description": "黑棋三处空地都可以下，哪一处最大？",
+    "initialStones": [
+      {
+        "x": 0,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 8,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 7,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 8,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 5
+      }
+    ],
+    "hints": [
+      "数一数三处空地各有多少空位。",
+      "中央的空地最大。",
+      "抢到中央就能围出最大的地盘。"
+    ],
+    "explanation": "黑棋在 (4, 5) 抢到中央，与 (4, 4) 的黑子连上，围出最大的地盘。",
+    "successMessage": "正确！中央最大！",
+    "failureMessage": "数一数哪里空地最多。"
+  },
+  {
+    "id": "MIX-004",
+    "boardSize": 9,
+    "category": "mixed",
+    "level": 3,
+    "tags": [
+      "mixed",
+      "escape-or-connect",
+      "reading"
+    ],
+    "toPlay": "black",
+    "description": "黑棋一块棋被围住了。是逃跑还是连上另一块棋？",
+    "initialStones": [
+      {
+        "x": 2,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 3,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 0,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 1,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 2
+      }
+    ],
+    "hints": [
+      "中间的黑棋只有两口气了。",
+      "右边 (5, 2) 还有一块黑棋。",
+      "连上另一块棋比逃跑更稳。"
+    ],
+    "explanation": "黑棋在 (4, 2) 连上 (5, 2) 的黑子，避免逃跑失败。",
+    "successMessage": "正确！连起来更安全！",
+    "failureMessage": "数一数黑棋还剩几口气。",
+    "title": "连还是跑"
+  },
+  {
+    "id": "MIX-005",
+    "boardSize": 9,
+    "category": "mixed",
+    "level": 4,
+    "tags": [
+      "mixed",
+      "capture-or-cut",
+      "reading"
+    ],
+    "toPlay": "black",
+    "description": "白棋两块棋快连上了，黑棋是先吃还是先断？",
+    "initialStones": [
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "white"
+      },
+      {
+        "x": 2,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 5,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 2
+      }
+    ],
+    "hints": [
+      "白棋的棋围成了一块。",
+      "白棋 (3, 4) 只有两口气。",
+      "先吃白棋比断它更直接。"
+    ],
+    "explanation": "黑棋在 (4, 2) 提掉白棋 (3, 4)，白棋被吃不能连上。",
+    "successMessage": "正确！吃子更有效！",
+    "failureMessage": "数一数白棋哪里气最少。",
+    "title": "吃还是断"
+  },
+  {
+    "id": "MIX-006",
+    "boardSize": 9,
+    "category": "mixed",
+    "level": 4,
+    "tags": [
+      "mixed",
+      "life-or-territory",
+      "reading"
+    ],
+    "toPlay": "black",
+    "description": "黑棋的一块棋快被围死了。是救它还是去占更大的地方？",
+    "initialStones": [
+      {
+        "x": 4,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 4,
+        "color": "black"
+      },
+      {
+        "x": 4,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 5,
+        "y": 5,
+        "color": "black"
+      },
+      {
+        "x": 3,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 3,
+        "y": 6,
+        "color": "white"
+      },
+      {
+        "x": 6,
+        "y": 6,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 3
+      }
+    ],
+    "hints": [
+      "黑棋被白棋四面包围。",
+      "如果黑棋不连起来就只有一口气。",
+      "先连起来再做眼。"
+    ],
+    "explanation": "黑棋在 (4, 3) 与 (5, 4) 已有黑子连上，再在中间做眼就活了。",
+    "successMessage": "正确！活棋最关键！",
+    "failureMessage": "想一想黑棋还剩几口气。",
+    "title": "活还是占"
+  },
+  {
+    "id": "MIX-007",
+    "boardSize": 9,
+    "category": "mixed",
+    "level": 5,
+    "tags": [
+      "mixed",
+      "attack-or-defend",
+      "reading"
+    ],
+    "toPlay": "black",
+    "description": "黑棋和白棋都有薄弱的地方。是先攻还是先守？",
+    "initialStones": [
+      {
+        "x": 1,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 2,
+        "y": 1,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 2,
+        "color": "black"
+      },
+      {
+        "x": 7,
+        "y": 7,
+        "color": "white"
+      },
+      {
+        "x": 8,
+        "y": 7,
+        "color": "white"
+      },
+      {
+        "x": 7,
+        "y": 8,
+        "color": "white"
+      },
+      {
+        "x": 0,
+        "y": 7,
+        "color": "white"
+      },
+      {
+        "x": 0,
+        "y": 8,
+        "color": "white"
+      }
+    ],
+    "answers": [
+      {
+        "x": 0,
+        "y": 6
+      }
+    ],
+    "hints": [
+      "看看两边哪里更危险。",
+      "白棋 (0, 7) 和 (0, 8) 只有两口气。",
+      "先攻击白棋的薄弱。"
+    ],
+    "explanation": "黑棋在 (0, 6) 攻击白棋的 (0, 7)，白棋被威胁只能应战。",
+    "successMessage": "正确！攻击是最好的防守！",
+    "failureMessage": "对比一下两边哪里更弱。",
+    "title": "攻还是守"
+  },
+  {
+    "id": "MIX-008",
+    "boardSize": 9,
+    "category": "mixed",
+    "level": 5,
+    "tags": [
+      "mixed",
+      "endgame-or-safety",
+      "reading"
+    ],
+    "toPlay": "black",
+    "description": "白棋的棋快连起来了，黑棋先去占大场还是先防白棋？",
+    "initialStones": [
+      {
+        "x": 4,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "color": "white"
+      },
+      {
+        "x": 4,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 5,
+        "y": 3,
+        "color": "white"
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 1,
+        "y": 0,
+        "color": "black"
+      },
+      {
+        "x": 0,
+        "y": 1,
+        "color": "black"
+      }
+    ],
+    "answers": [
+      {
+        "x": 4,
+        "y": 4
+      }
+    ],
+    "hints": [
+      "白棋在中央已经有两块棋了。",
+      "如果不堵白棋，白棋会连起来。",
+      "先防住白棋再想占大场。"
+    ],
+    "explanation": "黑棋在 (4, 4) 堵住白棋连回角上，让白棋不能连起来。",
+    "successMessage": "正确！挡住对手最要紧！",
+    "failureMessage": "想一想白棋下一步想做什么。",
+    "title": "防还是占"
   }
 ]
