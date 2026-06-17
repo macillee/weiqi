@@ -43,6 +43,8 @@ v0.20.0d Content-Only Pack B Pilot delivered — `src/data/problems.json` extend
 
 v0.20.0e v0.20 Stabilization / Release Notes delivered — `docs/RELEASE_NOTES_v0.20.md` (v0.20.0a–v0.20.0d) and `docs/QA_CHECKLIST_v0.20.md`. v0.20 series complete (667 tests across 31 files). Next: v0.21.0a — Next-Phase Plan (planning-only).
 
+v0.21.0a Next-Phase Plan delivered — `docs/NEXT_PHASE_PLAN_v0.21.md` re-anchors v0.20 gated consumer wiring + Pack B content, evaluates 4 candidate directions (Pack B wiring, flag enablement/QA, infrastructure, parent review), recommends Pack B chapter/daily-practice wiring as the primary v0.21 path. v0.1 boundary respected; planning-only slice, no code change. Next: v0.21.0b — Pack B chapter/daily-practice wiring.
+
 Current strategy:
 
 ```text
