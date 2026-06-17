@@ -104,6 +104,32 @@ export const chapters: Chapter[] = [
       { id: "endgame-2", title: "第 2 关", problemIds: ["END-005", "END-003", "END-006", "END-009"] },
       { id: "endgame-3", title: "第 3 关", problemIds: ["END-007", "END-008"] },
       { id: "endgame-4", title: "第 4 关", problemIds: ["END-010"] },
+      // v0.21.0b: wire v0.20.0d Pack B endgame problems (END-013..016,
+      // level 3-5) into the chapter so they appear in chapter
+      // navigation and the daily-practice pool. Inserted as a new
+      // endgame-5 level at the end of the chapter; the existing
+      // level ids (endgame-1..endgame-4) are preserved for
+      // backward compatibility with saved progress and
+      // chapter-by-id links.
+      { id: "endgame-5", title: "第 5 关", problemIds: ["END-013", "END-014", "END-015", "END-016"] },
+    ],
+  },
+  // v0.21.0b: new mixed chapter. The v0.20.0d Pack B pilot added
+  // MIX-004..008, but the existing chapters.ts had no mixed
+  // category chapter at all, so MIX-001..003 (added in v0.4.0b)
+  // and MIX-004..008 (Pack B) were unreachable from chapter
+  // navigation and the daily-practice pool. This chapter wires
+  // all 8 mixed problems in level order.
+  {
+    id: "mixed",
+    title: "综合擂台",
+    emoji: "🏟️",
+    description: "多种功夫都用上",
+    levels: [
+      { id: "mixed-1", title: "第 1 关", problemIds: ["MIX-001", "MIX-002"] },
+      { id: "mixed-2", title: "第 2 关", problemIds: ["MIX-003", "MIX-004"] },
+      { id: "mixed-3", title: "第 3 关", problemIds: ["MIX-005", "MIX-006"] },
+      { id: "mixed-4", title: "第 4 关", problemIds: ["MIX-007", "MIX-008"] },
     ],
   },
 ];
