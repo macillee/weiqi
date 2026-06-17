@@ -41,6 +41,8 @@ v0.20.0c `buildEngineHint()` Consumer Wiring for Single Highlight delivered — 
 
 v0.20.0d Content-Only Pack B Pilot delivered — `src/data/problems.json` extended with 9 new problems (END-013..016 level 3–5 endgame + MIX-004..008 level 3–5 mixed), library 101 → 110; per-problem review in `docs/CONTENT_REVIEW_v0.20.md` covers initial board, answer reasoning, copy review, and validation; 7 new tests in `problems.test.ts` (library count 110, ID existence, level 3–5 + category constraint, no duplicate coordinates, answers on empty intersections, copy length, warm-copy no-banned-phrase regression). Content-only slice: no algorithm change, no UI change, no route / persistence / telemetry change, v0.1 boundary preserved end-to-end. v0.20.0d closes the v0.20 series on the content axis. Next: v0.20.0e — v0.20 release notes / QA checklist / stabilization.
 
+v0.20.0e v0.20 Stabilization / Release Notes delivered — `docs/RELEASE_NOTES_v0.20.md` (v0.20.0a–v0.20.0d) and `docs/QA_CHECKLIST_v0.20.md`. v0.20 series complete (667 tests across 31 files). Next: v0.21.0a — Next-Phase Plan (planning-only).
+
 Current strategy:
 
 ```text
@@ -121,6 +123,7 @@ Current strategy:
 75. v0.20.0b `explainChildEngine()` Consumer Wiring for Multi-Step completed — `src/lib/child-engine-explain.ts` extended with `CHILD_ENGINE_EXPLAIN` feature flag contract (env → runtime → default, env wins, off by default) and `shouldUseChildEngineExplain(isMultiStep)` consumer gate; `src/components/problem/ProblemPlayer.tsx` adds `handleShowChildCoach()` (pure local `explainChildEngine()` path with an **honest low-confidence signal** so the helper's `source` gate renders `rule-template`, `coachRequestId` stale guard, `validateChildEngineExplain` defense-in-depth) and routes the "请老师帮忙" button through it instead of `handleShowCoach` when the gate is on. Off-state: single-step + multi-step + flag-off both byte-identical to v0.19. **16 new tests** (8 flag contract + 8 wiring + privacy regression in `ProblemPlayer.multi-step.test.tsx` including a critical `source = rule-template` regression that proves no `engine-assisted` caption is rendered without a real engine review). v0.19.0d `FORBIDDEN_PARENT_FIELDS` privacy boundary preserved end-to-end. Next: v0.20.0c — `buildEngineHint()` consumer wiring for single `Highlight` projection.
 76. v0.20.0c `buildEngineHint()` Consumer Wiring for Single Highlight completed — `src/components/problem/ProblemPlayer.tsx` adds an `engineHint` state slot, a projection effect that fires `buildEngineHint()` on the first wrong attempt when the `ENGINE_HINT_PROJECTION` flag is on, and merges the resulting `point` into the existing `GoBoard` `highlights` prop as a single `hint` highlight. Off-state: flag off / non-first attempt / no-hint from helper all resolve to either not firing or producing a `null` state. **7 new tests** covering flag off (single-step + multi-step), flag on (no hint rendered on this path because `topMoves: undefined` + low-confidence signal make the helper return `no-hint`), try-again reset, problem-change clear, and highlight-type allowlist regression. v0.19.0d `FORBIDDEN_PARENT_FIELDS` privacy boundary preserved end-to-end. Next: v0.20.0d — content-only Pack B pilot (4 endgame + 5 mixed problems).
 77. v0.20.0d Content-Only Pack B Pilot completed — `src/data/problems.json` extended with 9 new problems (END-013..016 level 3–5 endgame + MIX-004..008 level 3–5 mixed), library 101 → 110; `docs/CONTENT_REVIEW_v0.20.md` covers initial board, answer reasoning, copy review, and validation; 7 new tests in `problems.test.ts` (library count 110, ID existence, level 3–5 + category constraint, no duplicate coordinates, answers on empty intersections, copy length, warm-copy no-banned-phrase regression). Content-only slice: no algorithm change, no UI change, no route / persistence / telemetry change, v0.1 boundary preserved end-to-end. Next: v0.20.0e — v0.20 release notes / QA checklist / stabilization.
+78. v0.20.0e v0.20 Stabilization / Release Notes completed — `docs/RELEASE_NOTES_v0.20.md` (v0.20.0a–v0.20.0d) and `docs/QA_CHECKLIST_v0.20.md`. v0.20 series complete (667 tests across 31 files). Next: v0.21.0a — Next-Phase Plan (planning-only).
 ```
 
 ---
@@ -3253,7 +3256,22 @@ Docs-only change. No runtime code, tests, E2E, CI, Docker, package files, proble
 - v0.18.0b: session boundary/history modeling contract (completed)
 - v0.18.0c: minimal local session history model / contract validation (completed — PR #206)
 - v0.18.0d: parent review session history QA and stabilization (completed)
-- v0.18.0e: v0.18 release notes / QA checklist (next)
+- v0.18.0e: v0.18 release notes / QA checklist (completed)
+
+## v0.19.0 — Local AI / Engine UX (Pure Helpers + Boundary Hardening) ✅ COMPLETE
+
+- v0.19.0a: local AI / engine UX next-phase plan (completed)
+- v0.19.0b: engine hint projection pure helper (completed)
+- v0.19.0c: wrong-move engine explanation pure helper (completed)
+- v0.19.0d: engine privacy boundary hardening / release notes (completed)
+
+## v0.20.0 — Gated Consumer Wiring + Content Pack B ✅ COMPLETE
+
+- v0.20.0a: next-phase plan (completed)
+- v0.20.0b: explainChildEngine() consumer wiring for multi-step (completed)
+- v0.20.0c: buildEngineHint() consumer wiring for single highlight (completed)
+- v0.20.0d: content-only Pack B pilot (completed)
+- v0.20.0e: v0.20 release notes / QA checklist / stabilization (completed)
 
 # Task Discipline
 
