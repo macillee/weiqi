@@ -43,6 +43,8 @@ v0.20.0d Content-Only Pack B Pilot delivered — `src/data/problems.json` extend
 
 v0.20.0e v0.20 Stabilization / Release Notes delivered — `docs/RELEASE_NOTES_v0.20.md` (v0.20.0a–v0.20.0d) and `docs/QA_CHECKLIST_v0.20.md`. v0.20 series complete (667 tests across 31 files). Next: v0.21.0a — Next-Phase Plan (planning-only).
 
+v0.21.0a Next-Phase Plan delivered — `docs/NEXT_PHASE_PLAN_v0.21.md` re-anchors v0.20 gated consumer wiring + Pack B content, evaluates 4 candidate directions (Pack B wiring, flag enablement/QA, infrastructure, parent review), recommends Pack B chapter/daily-practice wiring as the primary v0.21 path. v0.1 boundary respected; planning-only slice, no code change. Next: v0.21.0b — Pack B chapter/daily-practice wiring.
+
 Current strategy:
 
 ```text
@@ -124,6 +126,7 @@ Current strategy:
 76. v0.20.0c `buildEngineHint()` Consumer Wiring for Single Highlight completed — `src/components/problem/ProblemPlayer.tsx` adds an `engineHint` state slot, a projection effect that fires `buildEngineHint()` on the first wrong attempt when the `ENGINE_HINT_PROJECTION` flag is on, and merges the resulting `point` into the existing `GoBoard` `highlights` prop as a single `hint` highlight. Off-state: flag off / non-first attempt / no-hint from helper all resolve to either not firing or producing a `null` state. **7 new tests** covering flag off (single-step + multi-step), flag on (no hint rendered on this path because `topMoves: undefined` + low-confidence signal make the helper return `no-hint`), try-again reset, problem-change clear, and highlight-type allowlist regression. v0.19.0d `FORBIDDEN_PARENT_FIELDS` privacy boundary preserved end-to-end. Next: v0.20.0d — content-only Pack B pilot (4 endgame + 5 mixed problems).
 77. v0.20.0d Content-Only Pack B Pilot completed — `src/data/problems.json` extended with 9 new problems (END-013..016 level 3–5 endgame + MIX-004..008 level 3–5 mixed), library 101 → 110; `docs/CONTENT_REVIEW_v0.20.md` covers initial board, answer reasoning, copy review, and validation; 7 new tests in `problems.test.ts` (library count 110, ID existence, level 3–5 + category constraint, no duplicate coordinates, answers on empty intersections, copy length, warm-copy no-banned-phrase regression). Content-only slice: no algorithm change, no UI change, no route / persistence / telemetry change, v0.1 boundary preserved end-to-end. Next: v0.20.0e — v0.20 release notes / QA checklist / stabilization.
 78. v0.20.0e v0.20 Stabilization / Release Notes completed — `docs/RELEASE_NOTES_v0.20.md` (v0.20.0a–v0.20.0d) and `docs/QA_CHECKLIST_v0.20.md`. v0.20 series complete (667 tests across 31 files). Next: v0.21.0a — Next-Phase Plan (planning-only).
+79. v0.21.0a Next-Phase Plan completed — `docs/NEXT_PHASE_PLAN_v0.21.md` re-anchors v0.20 gated consumer wiring + Pack B content, evaluates 4 candidate directions (Pack B wiring, flag enablement/QA, infrastructure, parent review), recommends Pack B chapter/daily-practice wiring as the primary v0.21 path. Parent review surface deferred to v0.22+ (requires re-opening v0.17/v0.18 "no parent UI, no parent gate" stance). v0.1 boundary preserved; planning-only slice. Next: v0.21.0b — Pack B chapter/daily-practice wiring.
 ```
 
 ---
