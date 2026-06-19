@@ -91,6 +91,28 @@ describe("v0.21.0b — Pack B wiring", () => {
     expect(categoryLabels.mixed).toBeDefined();
     expect(typeof categoryLabels.mixed).toBe("string");
   });
+
+  it("every Pack B ID appears exactly once across all chapters (exact-once duplicate protection)", () => {
+    const packBIds = [
+      "END-013", "END-014", "END-015", "END-016",
+      "MIX-004", "MIX-005", "MIX-006", "MIX-007", "MIX-008",
+    ];
+    const allProblemIds = getAllProblemIds();
+    for (const id of packBIds) {
+      const count = allProblemIds.filter((pid) => pid === id).length;
+      expect(count, `Pack B ID ${id} appears ${count} times, expected exactly 1`).toBe(1);
+    }
+  });
+
+  it("no duplicated problemId exists globally across all chapters", () => {
+    const allProblemIds = getAllProblemIds();
+    const seen = new Map<string, number>();
+    for (const id of allProblemIds) {
+      seen.set(id, (seen.get(id) ?? 0) + 1);
+    }
+    const duplicates = [...seen.entries()].filter(([, count]) => count > 1);
+    expect(duplicates, `duplicated problemIds found: ${duplicates.map(([id, count]) => `${id}(${count}x)`).join(", ")}`).toHaveLength(0);
+  });
 });
 
 describe("v0.21.0b — getAllProblemIds daily rotation pool", () => {
