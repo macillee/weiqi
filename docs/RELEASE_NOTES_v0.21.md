@@ -124,7 +124,7 @@ All checks pass on CI:
 
 ## 8. Recommended next phase
 
-**v0.21.0c — v0.21 release notes / QA checklist / stabilization** (this slice, or one that supersedes it).
+**v0.22.0a — Next-Phase Plan (planning-only slice)**
 
 The v0.21 series is intentionally small: one planning slice (0a), one wiring slice (0b), one stabilization slice (0c). Candidates for v0.22+:
 
