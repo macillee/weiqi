@@ -101,7 +101,7 @@
 - [x] `docs/RELEASE_NOTES_v0.21.md` is complete and accurate
 - [x] `docs/QA_CHECKLIST_v0.21.md` is complete (this file)
 - [x] `docs/NEXT_PHASE_PLAN_v0.21.md` exists and is current
-- [x] `docs/TASKS.md` marks v0.21.0a–v0.21.0b delivered and v0.21.0c (this slice) queued
+- [x] `docs/TASKS.md` marks v0.21.0a–v0.21.0c delivered and v0.22.0a queued
 - [x] All static validation passes
 - [x] No open blockers from v0.21 QA
 - [x] All docs are internally consistent

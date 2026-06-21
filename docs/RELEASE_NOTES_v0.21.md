@@ -2,7 +2,7 @@
 
 ## 1. Summary
 
-v0.21 is the conservative low-risk first slice of the v0.21 series: it wires the 9 v0.20.0d Pack B problems (4 endgame + 5 mixed) into the existing chapter navigation and daily-practice rotation, and fills the missing `mixed` category chapter that the v0.4.0b through v0.7.0b slices never added. No algorithm, no UI, no schema change — the wiring only touches `src/lib/chapters.ts`.
+v0.21 is the conservative low-risk first implementation slice of the v0.21 series: it wires the 9 v0.20.0d Pack B problems (4 endgame + 5 mixed) into the existing chapter navigation and daily-practice rotation, and fills the missing `mixed` category chapter that the v0.4.0b through v0.7.0b slices never added. No algorithm, no UI, no schema change — the wiring only touches `src/lib/chapters.ts`.
 
 Key principles carried through v0.21:
 
@@ -118,7 +118,7 @@ All checks pass on CI:
 ## 7. Known limitations
 
 - The 4 unwired v0.7.0b additions (END-011, END-012, CAP-022, CC-018) remain in `problems.json` but are not reachable from chapter navigation or daily-practice rotation. Wiring these is a follow-up slice, deferred from v0.21.0b per the v0.21.0a plan.
-- v0.20.0b / v0.20.0c feature flags remain default off. v0.21 does not enable them; enablement is a v0.21.0c+ follow-up candidate.
+- v0.20.0b / v0.20.0c feature flags remain default off. v0.21 does not enable them; enablement is a v0.22+ follow-up candidate.
 - No pre-warming, no success-path engine reasoning — all deferred to v0.22+.
 - No parent review surface re-opening — deferred to v0.22+ per the v0.21.0a plan.
 
