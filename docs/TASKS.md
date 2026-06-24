@@ -49,6 +49,8 @@ v0.21.0b Pack B Chapter/Daily-Practice Wiring delivered — `src/lib/chapters.ts
 
 v0.21.0c v0.21 Stabilization / Release Notes delivered — `docs/RELEASE_NOTES_v0.21.md` (v0.21.0a–v0.21.0b) and `docs/QA_CHECKLIST_v0.21.md`. v0.21 series complete (682 tests across 32 files). Next: v0.22.0a — Next-Phase Plan (planning-only).
 
+v0.22.0a Next-Phase Plan delivered — `docs/NEXT_PHASE_PLAN_v0.22.md` re-anchors v0.21 baseline (110 problems, 99 wired IDs, 7 chapters, 682 tests / 32 files, default-off flags, deferred 4 unwired IDs), evaluates 5 candidate directions (wire remaining problems, feature flag enablement/QA, infrastructure hardening, parent review surface, documentation refresh), recommends wiring the 4 deferred v0.7.0b problems (END-011, END-012, CAP-022, CC-018) as the primary v0.22 path. v0.1 boundary respected; planning-only slice, no code change. Next: v0.22.0b — Wire remaining 4 unwired problems.
+
 Current strategy:
 
 ```text
@@ -133,6 +135,7 @@ Current strategy:
 79. v0.21.0a Next-Phase Plan completed — `docs/NEXT_PHASE_PLAN_v0.21.md` re-anchors v0.20 gated consumer wiring + Pack B content, evaluates 4 candidate directions (Pack B wiring, flag enablement/QA, infrastructure, parent review), recommends Pack B chapter/daily-practice wiring as the primary v0.21 path. Parent review surface deferred to v0.22+ (requires re-opening v0.17/v0.18 "no parent UI, no parent gate" stance). v0.1 boundary preserved; planning-only slice. Next: v0.21.0b — Pack B chapter/daily-practice wiring.
 80. v0.21.0b Pack B Chapter/Daily-Practice Wiring completed — `src/lib/chapters.ts` extended with new `endgame-5` level (END-013..016) and new `mixed` chapter "综合擂台" with 4 levels (mixed-1..mixed-4) covering all 8 mixed problems. `getAllProblemIds()` covers 99 problems (was 87); daily-practice pool automatically samples the newly-wired problems with no selection-algorithm change. **15 new tests** in `src/__tests__/chapters.test.ts`. No algorithm / UI / route change. END-011/012/CAP-022/CC-018 remain unwired (deferred to a follow-up slice, not in v0.21.0b scope). Next: v0.21.0c — v0.21 release notes / QA checklist / stabilization.
 81. v0.21.0c v0.21 Stabilization / Release Notes completed — `docs/RELEASE_NOTES_v0.21.md` (v0.21.0a–v0.21.0b) and `docs/QA_CHECKLIST_v0.21.md`. v0.21 series complete (682 tests across 32 files). Next: v0.22.0a — Next-Phase Plan (planning-only).
+82. v0.22.0a Next-Phase Plan completed — `docs/NEXT_PHASE_PLAN_v0.22.md` re-anchors v0.21 baseline (110 problems, 99 wired IDs, 7 chapters, 682 tests / 32 files), evaluates 5 candidate directions, recommends wiring the 4 deferred v0.7.0b problems (END-011, END-012, CAP-022, CC-018) as the primary v0.22 path. v0.1 boundary preserved; planning-only slice. Next: v0.22.0b — Wire remaining 4 unwired problems.
 ```
 
 ---
