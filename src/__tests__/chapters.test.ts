@@ -130,25 +130,78 @@ describe("v0.21.0b — getAllProblemIds daily rotation pool", () => {
     }
   });
 
-  it("v0.21.0b out of scope: END-011/012, CAP-022, CC-018 are not in the daily pool yet (deferred to a later slice)", () => {
-    const allIds = new Set(getAllProblemIds());
-    // END-011/012 are v0.7.0b endgame problems that were added to
-    // problems.json but never wired. CAP-022 and CC-018 are likewise
-    // v0.7.0b additions that were never wired. v0.21.0b is scoped to
-    // Pack B wiring only; wiring these is a follow-up slice.
-    // (Note: MULTI-008 and MULTI-009 ARE in the daily pool because
-    // they were wired in v0.8 wiring.)
-    const out_of_scope = ["END-011", "END-012", "CAP-022", "CC-018"];
-    for (const id of out_of_scope) {
-      expect(allIds.has(id), `v0.21.0b OUT-OF-SCOPE: ${id} unexpectedly in daily pool`).toBe(false);
-    }
-  });
-
   it("v0.20.0d Pack B problems appear in their correct chapters", () => {
     expect(getChapterById("endgame")!.levels.find((l) => l.id === "endgame-5")!.problemIds)
       .toEqual(expect.arrayContaining(["END-013", "END-014", "END-015", "END-016"]));
     const mixedIds = getAllProblemIdsInChapter("mixed");
     expect(mixedIds)
       .toEqual(expect.arrayContaining(["MIX-001", "MIX-002", "MIX-003", "MIX-004", "MIX-005", "MIX-006", "MIX-007", "MIX-008"]));
+  });
+});
+
+describe("v0.22.0b — Wire remaining 4 unwired v0.7.0b problems", () => {
+  it("getAllProblemIds count moves from 99 to 103", () => {
+    const allIds = getAllProblemIds();
+    expect(allIds.length).toBe(103);
+  });
+
+  it("END-011 and END-012 are wired in the endgame chapter", () => {
+    const endgameIds = getAllProblemIdsInChapter("endgame");
+    expect(endgameIds, "endgame missing END-011").toContain("END-011");
+    expect(endgameIds, "endgame missing END-012").toContain("END-012");
+  });
+
+  it("endgame-6 level exists and contains END-011 and END-012", () => {
+    const level = getLevelById("endgame-6");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(expect.arrayContaining(["END-011", "END-012"]));
+  });
+
+  it("CAP-022 is wired in the capture chapter", () => {
+    const captureIds = getAllProblemIdsInChapter("capture");
+    expect(captureIds, "capture missing CAP-022").toContain("CAP-022");
+  });
+
+  it("capture-13 level exists and contains CAP-022", () => {
+    const level = getLevelById("capture-13");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(["CAP-022"]);
+  });
+
+  it("CC-018 is wired in the connect_cut chapter", () => {
+    const ccIds = getAllProblemIdsInChapter("connect_cut");
+    expect(ccIds, "connect_cut missing CC-018").toContain("CC-018");
+  });
+
+  it("connect-cut-9 level exists and contains CC-018", () => {
+    const level = getLevelById("connect-cut-9");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(["CC-018"]);
+  });
+
+  it("each of the 4 target IDs appears exactly once across all chapters", () => {
+    const targetIds = ["END-011", "END-012", "CAP-022", "CC-018"];
+    const allProblemIds = getAllProblemIds();
+    for (const id of targetIds) {
+      const count = allProblemIds.filter((pid) => pid === id).length;
+      expect(count, `${id} appears ${count} times, expected exactly 1`).toBe(1);
+    }
+  });
+
+  it("no duplicated problemId exists globally across all chapters", () => {
+    const allProblemIds = getAllProblemIds();
+    const seen = new Map<string, number>();
+    for (const id of allProblemIds) {
+      seen.set(id, (seen.get(id) ?? 0) + 1);
+    }
+    const duplicates = [...seen.entries()].filter(([, count]) => count > 1);
+    expect(duplicates, `duplicated problemIds found: ${duplicates.map(([id, count]) => `${id}(${count}x)`).join(", ")}`).toHaveLength(0);
+  });
+
+  it("existing v0.21.0b Pack B wiring remains unchanged", () => {
+    const endgame5 = getLevelById("endgame-5");
+    expect(endgame5?.problemIds).toEqual(expect.arrayContaining(["END-013", "END-014", "END-015", "END-016"]));
+    const mixedIds = getAllProblemIdsInChapter("mixed");
+    expect(mixedIds).toEqual(expect.arrayContaining(["MIX-001", "MIX-002", "MIX-003", "MIX-004", "MIX-005", "MIX-006", "MIX-007", "MIX-008"]));
   });
 });

@@ -33,6 +33,8 @@ export const chapters: Chapter[] = [
       { id: "capture-10", title: "第 10 关", problemIds: ["CAP-019"] },
       { id: "capture-11", title: "第 11 关", problemIds: ["CAP-020"] },
       { id: "capture-12", title: "第 12 关", problemIds: ["MULTI-001", "MULTI-004", "MULTI-005"] },
+      // v0.22.0b: wire deferred v0.7.0b capture problem
+      { id: "capture-13", title: "第 13 关", problemIds: ["CAP-022"] },
     ],
   },
   {
@@ -65,6 +67,8 @@ export const chapters: Chapter[] = [
       { id: "connect-cut-6", title: "第 6 关", problemIds: ["CC-012", "CC-013"] },
       { id: "connect-cut-7", title: "第 7 关", problemIds: ["CC-016"] },
       { id: "connect-cut-8", title: "第 8 关", problemIds: ["MULTI-003", "MULTI-008"] },
+      // v0.22.0b: wire deferred v0.7.0b connect_cut problem
+      { id: "connect-cut-9", title: "第 9 关", problemIds: ["CC-018"] },
     ],
   },
   {
@@ -112,6 +116,8 @@ export const chapters: Chapter[] = [
       // backward compatibility with saved progress and
       // chapter-by-id links.
       { id: "endgame-5", title: "第 5 关", problemIds: ["END-013", "END-014", "END-015", "END-016"] },
+      // v0.22.0b: wire deferred v0.7.0b endgame problems
+      { id: "endgame-6", title: "第 6 关", problemIds: ["END-011", "END-012"] },
     ],
   },
   // v0.21.0b: new mixed chapter. The v0.20.0d Pack B pilot added
