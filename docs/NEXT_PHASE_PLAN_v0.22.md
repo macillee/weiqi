@@ -34,7 +34,7 @@ Create the v0.22 next-phase planning document after the completed v0.21 series. 
 
 **Concerns:** These 4 problems were explicitly deferred in v0.21.0b as "out of scope". They remain valid content but were not wired because the chapter/level structure did not have a natural slot. Wiring them now may require adding new level nodes or inserting into existing levels.
 
-**Coverage note:** Wiring these 4 IDs moves the reachable pool from 99 to 103. The remaining 7 IDs (110 − 103 = 7) are accounted for by: the 4 deferred IDs themselves (now being wired) plus the 3 pre-existing mixed problems (MIX-001..003) that are already wired. The 110 total includes all problem data in `problems.json`; the 99-to-103 reachable pool is the subset accessible through chapter navigation and daily practice. After wiring these 4, the remaining 7 unreachable IDs would be those not assigned to any chapter level — a separate follow-up could address full coverage if desired.
+**Coverage note:** v0.22.0b would move the reachable pool from 99 to 103. Full 110-problem chapter/daily-practice coverage remains out of scope until a separate coverage audit identifies and plans the remaining 7 currently-unwired problem IDs.
 
 ### 3.2 Feature flag enablement / real engine QA
 
@@ -107,7 +107,6 @@ Create the v0.22 next-phase planning document after the completed v0.21 series. 
 
 ### Non-Goals
 
-- No runtime code change.
 - No feature flag enablement.
 - No engine/KataGo integration.
 - No parent review surface.
@@ -117,13 +116,14 @@ Create the v0.22 next-phase planning document after the completed v0.21 series. 
 
 ## 5. Forbidden Scope (v0.22.0b)
 
-- No runtime code change.
 - No problem data change (problems already exist in `problems.json`).
 - No chapter wiring beyond the 4 deferred IDs.
 - No UI, route, schema, API, persistence, telemetry, parent surface, engine, package, Docker, CI, or selection algorithm change.
 - No feature flag enablement.
 - No new AI/Ollama/KataGo integration.
 - No README rewrite.
+
+**Note:** v0.22.0b is a narrow chapter-wiring slice. It will touch `src/lib/chapters.ts` and `src/__tests__/chapters.test.ts` to add the 4 deferred problem IDs to chapter levels. All other runtime, build, and config files remain unchanged.
 
 ## 6. Acceptance Criteria
 
@@ -133,4 +133,4 @@ Create the v0.22 next-phase planning document after the completed v0.21 series. 
 - One primary v0.22.0b path is selected with clear justification.
 - Non-goals and forbidden changes are explicit.
 - `docs/TASKS.md` is updated in both Current Phase and Current strategy sections.
-- No runtime/test/build/package/config files are changed.
+- Only `docs/NEXT_PHASE_PLAN_v0.22.md` and `docs/TASKS.md` are changed in this PR.
