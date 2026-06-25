@@ -12,7 +12,7 @@
 - [x] No `StudentProgress` schema change, no persistence change
 - [x] No new component, no new flag, no new helper, no new problem data
 - [x] No package, Docker, CI, or build config change
-- [x] No telemetry, no analytics, no Supabase, no parent UI, no engine, no AI
+- [x] No telemetry, no analytics, no Supabase change, no parent UI, no engine change, no AI change
 
 ## 2. Static validation
 
@@ -96,7 +96,7 @@
 ## 8. Privacy and out-of-scope
 
 - [x] No engine data is touched by v0.22
-- [x] No telemetry, no Supabase, no parent UI, no parent gate change
+- [x] No telemetry, no Supabase change, no parent UI, no parent gate change
 - [x] No `StudentProgress` schema change
 - [x] No new problem data added to `problems.json` (all wired problems already existed in v0.7.0b)
 - [x] No Docker, package, CI, or build config change
@@ -111,4 +111,4 @@
 - [x] All static validation passes
 - [x] No open blockers from v0.22 QA
 - [x] All docs are internally consistent
-- [x] v0.1 scope respected: local-only, no parent UI, no persistence, no auth, no external AI, no Supabase
+- [x] v0.1 scope respected: local-first child-facing flow preserved; no parent UI, no persistence/auth/Supabase/engine/AI changes introduced by v0.22

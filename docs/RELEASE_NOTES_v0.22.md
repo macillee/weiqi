@@ -39,7 +39,7 @@ Modified files:
 - No new route, no navigation link, no end-of-session modal, no report page change
 - No persistence change
 - No `StudentProgress` schema change
-- No Supabase, no auth
+- No Supabase change, no auth change
 - No API route, Server Action change, telemetry, analytics, or external service call
 - No new AI / Ollama / KataGo integration
 - No package, Docker, CI, or build config change
