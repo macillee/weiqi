@@ -322,9 +322,9 @@ describe("CHILD_ENGINE_EXPLAIN feature flag", () => {
     setChildEngineExplainEnabled(undefined);
   });
 
-  it("defaults to off (source = default)", () => {
+  it("defaults to on (source = default)", () => {
     const flag = getChildEngineExplainFlag();
-    expect(flag.enabled).toBe(false);
+    expect(flag.enabled).toBe(true);
     expect(flag.source).toBe("default");
   });
 
@@ -388,6 +388,7 @@ describe("shouldUseChildEngineExplain", () => {
   });
 
   it("returns false on multi-step when flag is off", () => {
+    setChildEngineExplainEnabled(false);
     expect(shouldUseChildEngineExplain(true)).toBe(false);
   });
 

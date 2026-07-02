@@ -51,9 +51,9 @@ describe("engine-hint feature flag", () => {
     setEngineHintProjectionEnabled(undefined);
   });
 
-  it("defaults to off", () => {
+  it("defaults to on", () => {
     const flag = getEngineHintProjectionFlag();
-    expect(flag.enabled).toBe(false);
+    expect(flag.enabled).toBe(true);
     expect(flag.source).toBe("default");
   });
 

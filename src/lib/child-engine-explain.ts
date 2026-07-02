@@ -274,16 +274,15 @@ export function explainChildEngine(input: ChildEngineExplainInput): ChildEngineE
  * wiring of `explainChildEngine()` into `ProblemPlayer` for multi-step
  * wrong attempts.
  *
- * Default: OFF. The helper itself does not read this flag — the flag is
- * a consumer-side gate. When the flag is off, `ProblemPlayer` continues
- * to use the v0.13 / v0.19 server-action `handleShowCoach` path; the
- * helper is unreachable. Off-state is byte-identical to v0.19.
+ * Default: ON. When the flag is on, `ProblemPlayer` uses the v0.20.0b
+ * local-only `handleShowChildCoach` path for multi-step wrong attempts
+ * instead of the v0.13 / v0.19 server-action `handleShowCoach` path.
  *
  * Resolution order (first non-undefined wins):
  *   1. `CHILD_ENGINE_EXPLAIN` env var
  *      (Node: `process.env`; Next.js: `import.meta.env`)
  *   2. `setChildEngineExplainEnabled()` runtime override (tests / dev)
- *   3. Default: `false`
+ *   3. Default: `true`
  *
  * Env wins over runtime, matching the `ENGINE_HINT_PROJECTION` contract.
  */
@@ -327,7 +326,7 @@ export function getChildEngineExplainFlag(): ChildEngineExplainFlagState {
   if (childEngineExplainRuntimeFlag !== undefined) {
     return { enabled: childEngineExplainRuntimeFlag, source: "runtime" };
   }
-  return { enabled: false, source: "default" };
+  return { enabled: true, source: "default" };
 }
 
 /**

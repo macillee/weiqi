@@ -6,9 +6,9 @@ import type { EngineReviewSignalLike } from "@/lib/ai-review";
 /**
  * Engine hint projection feature flag.
  *
- * Default: OFF. The helper treats the off state as "no hint", so a consumer
- * wired with the flag off is byte-identical to the v0.18 behavior — no hint
- * ever appears, no engine signal is ever projected onto the board.
+ * Default: ON. When the flag is on and the consumer wires the hint
+ * projection, a single `hint` highlight is projected on the board
+ * after the first wrong attempt.
  *
  * Resolution order (first non-undefined wins):
  *   1. `ENGINE_HINT_PROJECTION` env var (Node only — server runtime reads
@@ -16,7 +16,7 @@ import type { EngineReviewSignalLike } from "@/lib/ai-review";
  *      inlining and unit tests can flip the flag without a build step)
  *   2. Module-level `setEngineHintProjectionEnabled()` for runtime toggling
  *      in tests and dev tools
- *   3. Default: `false`
+ *   3. Default: `true`
  *
  * The flag is read once per `buildEngineHint()` call so that toggling it at
  * runtime takes effect immediately.
@@ -62,7 +62,7 @@ export function getEngineHintProjectionFlag(): EngineHintFlagState {
   if (runtimeFlag !== undefined) {
     return { enabled: runtimeFlag, source: "runtime" };
   }
-  return { enabled: false, source: "default" };
+  return { enabled: true, source: "default" };
 }
 
 /* ───── Banned phrases (mirrors ai-review.ts wording rules) ───── */
