@@ -55,6 +55,8 @@ v0.22.0b Wire Remaining 4 Unwired v0.7.0b Problems delivered — `src/lib/chapte
 
 v0.22.0c v0.22 Stabilization / Release Notes delivered — `docs/RELEASE_NOTES_v0.22.md` (v0.22.0a–v0.22.0b) and `docs/QA_CHECKLIST_v0.22.md`. v0.22 series complete (691 tests across 32 files). Next: v0.23.0a — Next-Phase Plan (planning-only).
 
+v0.23.0a Next-Phase Plan delivered — `docs/NEXT_PHASE_PLAN_v0.23.md` re-anchors v0.22 baseline (110 problems, 103 wired IDs, 7 remaining unwired IDs: CAP-021, CC-017, ESC-013, ESC-014, LD-013, OP-011, OP-012, 7 chapters, 691 tests / 32 files, default-off flags), evaluates 5 candidate directions (wire remaining problems, feature flag enablement/QA, infrastructure hardening, documentation refresh, parent review surface re-open), recommends wiring the 7 remaining unwired problems as the primary v0.23 path. v0.1 boundary respected; planning-only slice, no code change. Next: v0.23.0b — Wire remaining 7 unwired problems.
+
 Current strategy:
 
 ```text
