@@ -61,6 +61,8 @@ v0.23.0b Wire Remaining 7 Unwired v0.7.0b Problems delivered — `src/lib/chapte
 
 v0.23.0c v0.23 Stabilization / Release Notes delivered — `docs/RELEASE_NOTES_v0.23.md` (v0.23.0a–v0.23.0b) and `docs/QA_CHECKLIST_v0.23.md`. v0.23 series complete (705 tests across 32 files). Full 110-problem library now wired into chapter navigation and the daily-practice pool. Next: v0.24.0a — Next-Phase Plan (planning-only).
 
+v0.24.0a Next-Phase Plan delivered — `docs/NEXT_PHASE_PLAN_v0.24.md` re-anchors v0.23 baseline (110 problems, 110 wired IDs, 0 unwired, 7 chapters, 705 tests / 32 files, default-off flags), evaluates 5 candidate directions (intermediate content expansion, feature flag enablement/QA, infrastructure hardening, documentation refresh, parent review surface re-open), recommends Intermediate Content Expansion as the primary v0.24 path. v0.1 boundary respected; planning-only slice, no code change. Next: v0.24.0b — Intermediate content expansion (content-only).
+
 Current strategy:
 
 ```text
