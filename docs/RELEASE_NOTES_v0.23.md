@@ -16,8 +16,8 @@ Key principles carried through v0.23:
 
 | Slice | Deliverable | PR |
 |---|---|---|
-| v0.23.0a | `docs/NEXT_PHASE_PLAN_v0.23.md` — re-anchors v0.22 baseline, evaluates 5 candidate directions, recommends wiring the 7 remaining unwired problems as the primary v0.23 path. Planning-only, no code change. | pending |
-| v0.23.0b | `src/lib/chapters.ts` — 5 new level nodes: `capture-14` (CAP-021), `escape-9` (ESC-013, ESC-014), `connect-cut-10` (CC-017), `opening-6` (OP-011, OP-012), `life-death-7` (LD-013). `getAllProblemIds()` covers 110 problems (was 103). 14 new v0.23.0b tests added, 1 v0.22.0b count assertion relaxed to `>= 103` (net +14, 705 total across 32 files). | pending |
+| v0.23.0a | `docs/NEXT_PHASE_PLAN_v0.23.md` — re-anchors v0.22 baseline, evaluates 5 candidate directions, recommends wiring the 7 remaining unwired problems as the primary v0.23 path. Planning-only, no code change. | #231 |
+| v0.23.0b | `src/lib/chapters.ts` — 5 new level nodes: `capture-14` (CAP-021), `escape-9` (ESC-013, ESC-014), `connect-cut-10` (CC-017), `opening-6` (OP-011, OP-012), `life-death-7` (LD-013). `getAllProblemIds()` covers 110 problems (was 103). 14 new v0.23.0b tests added, 1 v0.22.0b count assertion relaxed to `>= 103` (net +14, 705 total across 32 files). | #232 |
 
 ### File inventory
 
@@ -116,7 +116,8 @@ None — all 110 problems in `problems.json` are now wired into chapter navigati
 
 | Area | Count | Scope |
 |---|---|---|
-| `chapters.test.ts` (v0.23.0b) | 25 | chapter structure (7 chapters, unique ids), level uniqueness, every problemId resolves, 5 new levels (capture-14 / escape-9 / connect-cut-10 / opening-6 / life-death-7), exact-once duplicate protection, global no-duplicate regression, existing v0.21.0b / v0.22.0b wiring preserved, daily pool scope assertion (110 total) |
+| `chapters.test.ts` (file total) | 38 | chapter structure, level uniqueness, every problemId resolves, v0.21.0b Pack B wiring, v0.22.0b wiring, v0.23.0b wiring (5 new levels), exact-once duplicate protection, global no-duplicate regression, daily pool scope assertion (110 total) |
+| `chapters.test.ts` (v0.23.0b added) | 14 | capture-14, escape-9, connect-cut-10, opening-6, life-death-7 levels; count assertion 110; exact-once duplicate protection; global no-duplicate regression; existing v0.21.0b / v0.22.0b wiring preserved |
 | **Total in project** | **705** | **32 test files** |
 
 All checks pass on CI:
