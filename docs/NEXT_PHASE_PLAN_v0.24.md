@@ -149,11 +149,11 @@ Measured from `src/data/problems.json` (110 problems):
 
 **Note:** v0.24.0b is a content-only expansion slice. It will touch `src/data/problems.json` (new problems) and `src/lib/chapters.ts` (new level nodes to expose them), plus extend `src/__tests__/problems.test.ts` and `src/__tests__/chapters.test.ts`. All other runtime, build, and config files remain unchanged.
 
-## 5. Proposed v0.24.0b Expansion Scope (capped)
+## 6. Proposed v0.24.0b Expansion Scope (capped)
 
 This section bounds the content expansion so implementation can be objectively judged against scope. All numbers below are the **target**; every individual problem still requires human board/answer reasoning review (recorded in `docs/CONTENT_REVIEW_v0.24.md`).
 
-### 5.1 Target totals
+### 6.1 Target totals
 
 | Metric | v0.23 baseline | v0.24.0b target |
 |---|---:|---:|
@@ -161,60 +161,58 @@ This section bounds the content expansion so implementation can be objectively j
 | L1–L2 count | 43 | 43 (unchanged — no new low-level problems) |
 | L3–L5 count | 67 | **79** (+12) |
 
-### 5.2 Category allocation and ID assignment
+### 6.2 Category allocation and ID assignment
 
 New problems continue existing namespaces; no new namespace is introduced.
 
 | Category | New IDs | Count | Resulting category total |
 |---|---|---:|---:|
-| opening | OP-013, OP-014, OP-015 | 3 | 12 → 15 |
-| mixed | MIX-009, MIX-010, MIX-011 | 3 | 8 → 11 |
+| opening | OP-013, OP-014, OP-015, OP-016 | 4 | 12 → 16 |
+| mixed | MIX-009, MIX-010, MIX-011, MIX-012 | 4 | 8 → 12 |
 | life_death | LD-014, LD-015 | 2 | 15 → 17 |
 | escape | ESC-015, ESC-016 | 2 | 15 → 17 |
-| connect_cut | CC-019, CC-020 | 2 | 19 → 21 |
+| connect_cut | — | 0 | 19 (unchanged) |
 | capture | — | 0 | 25 (unchanged) |
 | endgame | — | 0 | 16 (unchanged) |
 | **Total** | | **12** | **122** |
 
-Rationale: expansion targets the four thinnest categories (opening, mixed, life_death, escape); capture and endgame are left unchanged as the two densest/most-balanced categories.
+Rationale: expansion targets the four thinnest categories (opening 12, mixed 8, life_death 15, escape 15). `connect_cut` (19) and `capture` (25) are the two densest categories and are left unchanged; `endgame` (16) is also left unchanged to keep the slice focused on the genuinely thin categories. The 2 problems originally sketched under `connect_cut` have been reassigned to `opening` and `mixed` (the two thinnest), preserving the +12 total and the "thinnest categories only" rule.
 
-### 5.3 Level matrix (all new problems level 3–5)
+### 6.3 Level matrix (all new problems level 3–5)
 
 | Category | L3 | L4 | L5 | Sum |
 |---|---:|---:|---:|---:|
-| opening | 1 | 2 | 0 | 3 |
-| mixed | 1 | 1 | 1 | 3 |
+| opening | 2 | 2 | 0 | 4 |
+| mixed | 1 | 1 | 2 | 4 |
 | life_death | 1 | 0 | 1 | 2 |
 | escape | 1 | 1 | 0 | 2 |
-| connect_cut | 0 | 1 | 1 | 2 |
-| **Total** | **4** | **5** | **3** | **12** |
+| **Total** | **5** | **4** | **3** | **12** |
 
-### 5.4 `chapters.ts` wiring (append-only)
+### 6.4 `chapters.ts` wiring (append-only)
 
 New level nodes appended at the end of each affected chapter (existing level ids preserved):
 
 | Chapter | New level id | problemIds |
 |---|---|---|
-| opening | `opening-7` | OP-013, OP-014, OP-015 |
-| mixed | `mixed-5` | MIX-009, MIX-010, MIX-011 |
+| opening | `opening-7` | OP-013, OP-014, OP-015, OP-016 |
+| mixed | `mixed-5` | MIX-009, MIX-010, MIX-011, MIX-012 |
 | life_death | `life-death-8` | LD-014, LD-015 |
 | escape | `escape-10` | ESC-015, ESC-016 |
-| connect_cut | `connect-cut-11` | CC-019, CC-020 |
 
-### 5.5 Test extensions
+### 6.5 Test extensions
 
 - `src/__tests__/problems.test.ts`: library count assertion 110 → 122; level 3–5 + category constraint per new ID; no duplicate coordinates; answers on empty intersections; copy length; warm-copy banned-phrase regression.
 - `src/__tests__/chapters.test.ts`: 5 new level nodes exist; each new ID resolves; `getAllProblemIds()` = 122; exact-once duplicate protection; global no-duplicate regression; daily-pool scope assertion (122 total).
 
-### 5.6 Hard limits (out-of-scope if exceeded)
+### 6.6 Hard limits (out-of-scope if exceeded)
 
 - New problem count must be **exactly 12** (total 122).
-- No new namespace; only `OP / MIX / LD / ESC / CC` extensions above.
+- No new namespace; only `OP / MIX / LD / ESC` extensions above.
 - No L1 or L2 problems added.
 - No change to `capture` or `endgame` categories.
 - No runtime/algorithm/UI/route/persistence/engine/parent-surface change.
 
-## 6. Acceptance Criteria
+## 7. Acceptance Criteria
 
 - `docs/NEXT_PHASE_PLAN_v0.24.md` exists.
 - The document accurately summarizes the v0.23 baseline: 110 problems, 110 wired IDs, 0 unwired IDs, 7 chapters, 705 tests / 32 files, default-off flags.
