@@ -57,6 +57,10 @@ v0.22.0c v0.22 Stabilization / Release Notes delivered — `docs/RELEASE_NOTES_v
 
 v0.23.0a Next-Phase Plan delivered — `docs/NEXT_PHASE_PLAN_v0.23.md` re-anchors v0.22 baseline (110 problems, 103 wired IDs, 7 remaining unwired IDs: CAP-021, CC-017, ESC-013, ESC-014, LD-013, OP-011, OP-012, 7 chapters, 691 tests / 32 files, default-off flags), evaluates 5 candidate directions (wire remaining problems, feature flag enablement/QA, infrastructure hardening, documentation refresh, parent review surface re-open), recommends wiring the 7 remaining unwired problems as the primary v0.23 path. v0.1 boundary respected; planning-only slice, no code change. Next: v0.23.0b — Wire remaining 7 unwired problems.
 
+v0.23.0b Wire Remaining 7 Unwired v0.7.0b Problems delivered — `src/lib/chapters.ts` extended with 5 new level nodes: `capture-14` (CAP-021), `escape-9` (ESC-013, ESC-014), `connect-cut-10` (CC-017), `opening-6` (OP-011, OP-012), `life-death-7` (LD-013). `getAllProblemIds()` now covers 110 problem IDs (was 103), achieving full library coverage. **14 new v0.23.0b tests added, 1 v0.22.0b count assertion relaxed to `>= 103` (net +14, 705 total across 32 files)** in `src/__tests__/chapters.test.ts` (count assertion 110, each target ID in correct chapter, new level nodes exist, exact-once duplicate protection, global no-duplicate regression, existing v0.21.0b/v0.22.0b wiring preserved). No problem data change, no algorithm change, no UI change, no route / persistence / telemetry change. v0.1 boundary preserved. Next: v0.23.0c — v0.23 release notes / QA checklist / stabilization.
+
+v0.23.0c v0.23 Stabilization / Release Notes delivered — `docs/RELEASE_NOTES_v0.23.md` (v0.23.0a–v0.23.0b) and `docs/QA_CHECKLIST_v0.23.md`. v0.23 series complete (705 tests across 32 files). Full 110-problem library now wired into chapter navigation and the daily-practice pool. Next: v0.24.0a — Next-Phase Plan (planning-only).
+
 Current strategy:
 
 ```text

@@ -35,6 +35,8 @@ export const chapters: Chapter[] = [
       { id: "capture-12", title: "第 12 关", problemIds: ["MULTI-001", "MULTI-004", "MULTI-005"] },
       // v0.22.0b: wire deferred v0.7.0b capture problem
       { id: "capture-13", title: "第 13 关", problemIds: ["CAP-022"] },
+      // v0.23.0b: wire deferred v0.7.0b capture problem
+      { id: "capture-14", title: "第 14 关", problemIds: ["CAP-021"] },
     ],
   },
   {
@@ -51,6 +53,8 @@ export const chapters: Chapter[] = [
       { id: "escape-6", title: "第 6 关", problemIds: ["ESC-009", "ESC-010"] },
       { id: "escape-7", title: "第 7 关", problemIds: ["ESC-012"] },
       { id: "escape-8", title: "第 8 关", problemIds: ["MULTI-009"] },
+      // v0.23.0b: wire deferred v0.7.0b escape problems
+      { id: "escape-9", title: "第 9 关", problemIds: ["ESC-013", "ESC-014"] },
     ],
   },
   {
@@ -69,6 +73,8 @@ export const chapters: Chapter[] = [
       { id: "connect-cut-8", title: "第 8 关", problemIds: ["MULTI-003", "MULTI-008"] },
       // v0.22.0b: wire deferred v0.7.0b connect_cut problem
       { id: "connect-cut-9", title: "第 9 关", problemIds: ["CC-018"] },
+      // v0.23.0b: wire deferred v0.7.0b connect_cut problem
+      { id: "connect-cut-10", title: "第 10 关", problemIds: ["CC-017"] },
     ],
   },
   {
@@ -82,6 +88,8 @@ export const chapters: Chapter[] = [
       { id: "opening-3", title: "第 3 关", problemIds: ["OP-004", "OP-007", "OP-008"] },
       { id: "opening-4", title: "第 4 关", problemIds: ["OP-005", "OP-009", "OP-006"] },
       { id: "opening-5", title: "第 5 关", problemIds: ["OP-010"] },
+      // v0.23.0b: wire deferred v0.7.0b opening problems
+      { id: "opening-6", title: "第 6 关", problemIds: ["OP-011", "OP-012"] },
     ],
   },
   {
@@ -96,6 +104,8 @@ export const chapters: Chapter[] = [
       { id: "life-death-4", title: "第 4 关", problemIds: ["LD-008", "LD-009"] },
       { id: "life-death-5", title: "第 5 关", problemIds: ["LD-012"] },
       { id: "life-death-6", title: "第 6 关", problemIds: ["MULTI-002", "MULTI-006", "MULTI-007"] },
+      // v0.23.0b: wire deferred v0.7.0b life_death problem
+      { id: "life-death-7", title: "第 7 关", problemIds: ["LD-013"] },
     ],
   },
   {
