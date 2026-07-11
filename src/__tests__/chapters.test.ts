@@ -140,9 +140,9 @@ describe("v0.21.0b — getAllProblemIds daily rotation pool", () => {
 });
 
 describe("v0.22.0b — Wire remaining 4 unwired v0.7.0b problems", () => {
-  it("getAllProblemIds count moves from 99 to 103", () => {
+  it("getAllProblemIds count grew from 99 to at least 103 (v0.23.0b extends further)", () => {
     const allIds = getAllProblemIds();
-    expect(allIds.length).toBe(103);
+    expect(allIds.length).toBeGreaterThanOrEqual(103);
   });
 
   it("END-011 and END-012 are wired in the endgame chapter", () => {
@@ -203,5 +203,97 @@ describe("v0.22.0b — Wire remaining 4 unwired v0.7.0b problems", () => {
     expect(endgame5?.problemIds).toEqual(expect.arrayContaining(["END-013", "END-014", "END-015", "END-016"]));
     const mixedIds = getAllProblemIdsInChapter("mixed");
     expect(mixedIds).toEqual(expect.arrayContaining(["MIX-001", "MIX-002", "MIX-003", "MIX-004", "MIX-005", "MIX-006", "MIX-007", "MIX-008"]));
+  });
+});
+
+describe("v0.23.0b — Wire remaining 7 unwired v0.7.0b problems", () => {
+  it("getAllProblemIds count moves from 103 to 110 (full library coverage)", () => {
+    const allIds = getAllProblemIds();
+    expect(allIds.length).toBe(110);
+  });
+
+  it("CAP-021 is wired in the capture chapter", () => {
+    const captureIds = getAllProblemIdsInChapter("capture");
+    expect(captureIds, "capture missing CAP-021").toContain("CAP-021");
+  });
+
+  it("capture-14 level exists and contains CAP-021", () => {
+    const level = getLevelById("capture-14");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(["CAP-021"]);
+  });
+
+  it("ESC-013 and ESC-014 are wired in the escape chapter", () => {
+    const escapeIds = getAllProblemIdsInChapter("escape");
+    expect(escapeIds, "escape missing ESC-013").toContain("ESC-013");
+    expect(escapeIds, "escape missing ESC-014").toContain("ESC-014");
+  });
+
+  it("escape-9 level exists and contains ESC-013 and ESC-014", () => {
+    const level = getLevelById("escape-9");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(expect.arrayContaining(["ESC-013", "ESC-014"]));
+  });
+
+  it("CC-017 is wired in the connect_cut chapter", () => {
+    const ccIds = getAllProblemIdsInChapter("connect_cut");
+    expect(ccIds, "connect_cut missing CC-017").toContain("CC-017");
+  });
+
+  it("connect-cut-10 level exists and contains CC-017", () => {
+    const level = getLevelById("connect-cut-10");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(["CC-017"]);
+  });
+
+  it("OP-011 and OP-012 are wired in the opening chapter", () => {
+    const openingIds = getAllProblemIdsInChapter("opening");
+    expect(openingIds, "opening missing OP-011").toContain("OP-011");
+    expect(openingIds, "opening missing OP-012").toContain("OP-012");
+  });
+
+  it("opening-6 level exists and contains OP-011 and OP-012", () => {
+    const level = getLevelById("opening-6");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(expect.arrayContaining(["OP-011", "OP-012"]));
+  });
+
+  it("LD-013 is wired in the life_death chapter", () => {
+    const ldIds = getAllProblemIdsInChapter("life_death");
+    expect(ldIds, "life_death missing LD-013").toContain("LD-013");
+  });
+
+  it("life-death-7 level exists and contains LD-013", () => {
+    const level = getLevelById("life-death-7");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(["LD-013"]);
+  });
+
+  it("each of the 7 target IDs appears exactly once across all chapters", () => {
+    const targetIds = ["CAP-021", "CC-017", "ESC-013", "ESC-014", "LD-013", "OP-011", "OP-012"];
+    const allProblemIds = getAllProblemIds();
+    for (const id of targetIds) {
+      const count = allProblemIds.filter((pid) => pid === id).length;
+      expect(count, `${id} appears ${count} times, expected exactly 1`).toBe(1);
+    }
+  });
+
+  it("no duplicated problemId exists globally across all chapters", () => {
+    const allProblemIds = getAllProblemIds();
+    const seen = new Map<string, number>();
+    for (const id of allProblemIds) {
+      seen.set(id, (seen.get(id) ?? 0) + 1);
+    }
+    const duplicates = [...seen.entries()].filter(([, count]) => count > 1);
+    expect(duplicates, `duplicated problemIds found: ${duplicates.map(([id, count]) => `${id}(${count}x)`).join(", ")}`).toHaveLength(0);
+  });
+
+  it("existing v0.22.0b wiring remains unchanged", () => {
+    const capture13 = getLevelById("capture-13");
+    expect(capture13?.problemIds).toEqual(["CAP-022"]);
+    const endgame6 = getLevelById("endgame-6");
+    expect(endgame6?.problemIds).toEqual(expect.arrayContaining(["END-011", "END-012"]));
+    const cc9 = getLevelById("connect-cut-9");
+    expect(cc9?.problemIds).toEqual(["CC-018"]);
   });
 });
