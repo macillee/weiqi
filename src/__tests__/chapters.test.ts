@@ -73,7 +73,7 @@ describe("v0.21.0b — Pack B wiring", () => {
     const mixed = getChapterById("mixed");
     expect(mixed).toBeDefined();
     expect(mixed?.title).toBe("综合擂台");
-    expect(mixed?.levels.length).toBe(4);
+    expect(mixed?.levels.length).toBe(5);
 
     const mixedProblemIds = getAllProblemIdsInChapter("mixed");
     for (const id of ["MIX-001", "MIX-002", "MIX-003", "MIX-004", "MIX-005", "MIX-006", "MIX-007", "MIX-008"]) {
@@ -207,9 +207,9 @@ describe("v0.22.0b — Wire remaining 4 unwired v0.7.0b problems", () => {
 });
 
 describe("v0.23.0b — Wire remaining 7 unwired v0.7.0b problems", () => {
-  it("getAllProblemIds count moves from 103 to 110 (full library coverage)", () => {
+  it("getAllProblemIds count is 122 (110 + 12 v0.24.0b problems)", () => {
     const allIds = getAllProblemIds();
-    expect(allIds.length).toBe(110);
+    expect(allIds.length).toBe(122);
   });
 
   it("CAP-021 is wired in the capture chapter", () => {
@@ -295,5 +295,75 @@ describe("v0.23.0b — Wire remaining 7 unwired v0.7.0b problems", () => {
     expect(endgame6?.problemIds).toEqual(expect.arrayContaining(["END-011", "END-012"]));
     const cc9 = getLevelById("connect-cut-9");
     expect(cc9?.problemIds).toEqual(["CC-018"]);
+  });
+});
+
+describe("v0.24.0b — Wire 12 intermediate problems into 4 new levels", () => {
+  it("getAllProblemIds count moves from 110 to 122 (full library coverage)", () => {
+    const allIds = getAllProblemIds();
+    expect(allIds.length).toBe(122);
+  });
+
+  it("4 new level nodes exist (opening-7, mixed-5, life-death-8, escape-10)", () => {
+    expect(getLevelById("opening-7")).toBeDefined();
+    expect(getLevelById("mixed-5")).toBeDefined();
+    expect(getLevelById("life-death-8")).toBeDefined();
+    expect(getLevelById("escape-10")).toBeDefined();
+  });
+
+  it("opening-7 level exists and contains OP-013..OP-016", () => {
+    const level = getLevelById("opening-7");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(expect.arrayContaining(["OP-013", "OP-014", "OP-015", "OP-016"]));
+  });
+
+  it("mixed-5 level exists and contains MIX-009..MIX-012", () => {
+    const level = getLevelById("mixed-5");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(expect.arrayContaining(["MIX-009", "MIX-010", "MIX-011", "MIX-012"]));
+  });
+
+  it("life-death-8 level exists and contains LD-014, LD-015", () => {
+    const level = getLevelById("life-death-8");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(expect.arrayContaining(["LD-014", "LD-015"]));
+  });
+
+  it("escape-10 level exists and contains ESC-015, ESC-016", () => {
+    const level = getLevelById("escape-10");
+    expect(level).toBeDefined();
+    expect(level?.problemIds).toEqual(expect.arrayContaining(["ESC-015", "ESC-016"]));
+  });
+
+  it("each of the 12 v0.24.0b IDs appears exactly once across all chapters", () => {
+    const targetIds = [
+      "OP-013", "OP-014", "OP-015", "OP-016",
+      "MIX-009", "MIX-010", "MIX-011", "MIX-012",
+      "LD-014", "LD-015",
+      "ESC-015", "ESC-016",
+    ];
+    const allProblemIds = getAllProblemIds();
+    for (const id of targetIds) {
+      const count = allProblemIds.filter((pid) => pid === id).length;
+      expect(count, `${id} appears ${count} times, expected exactly 1`).toBe(1);
+    }
+  });
+
+  it("no duplicated problemId exists globally across all chapters", () => {
+    const allProblemIds = getAllProblemIds();
+    const seen = new Map<string, number>();
+    for (const id of allProblemIds) {
+      seen.set(id, (seen.get(id) ?? 0) + 1);
+    }
+    const duplicates = [...seen.entries()].filter(([, count]) => count > 1);
+    expect(duplicates, `duplicated problemIds found: ${duplicates.map(([id, count]) => `${id}(${count}x)`).join(", ")}`).toHaveLength(0);
+  });
+
+  it("existing v0.23.0b wiring remains unchanged", () => {
+    expect(getLevelById("capture-14")?.problemIds).toEqual(["CAP-021"]);
+    expect(getLevelById("escape-9")?.problemIds).toEqual(expect.arrayContaining(["ESC-013", "ESC-014"]));
+    expect(getLevelById("connect-cut-10")?.problemIds).toEqual(["CC-017"]);
+    expect(getLevelById("opening-6")?.problemIds).toEqual(expect.arrayContaining(["OP-011", "OP-012"]));
+    expect(getLevelById("life-death-7")?.problemIds).toEqual(["LD-013"]);
   });
 });

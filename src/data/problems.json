@@ -7343,4 +7343,775 @@
     "failureMessage": "想一想白棋下一步想做什么。",
     "title": "防还是占"
   }
+,
+{
+  "id": "OP-013",
+  "boardSize": 9,
+  "category": "opening",
+  "level": 3,
+  "tags": [
+    "opening",
+    "corner",
+    "big-point"
+  ],
+  "toPlay": "black",
+  "title": "占最后一个角",
+  "description": "三个角都被占了，黑棋应该占哪个角？",
+  "initialStones": [
+    {
+      "x": 0,
+      "y": 0,
+      "color": "white"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "color": "white"
+    },
+    {
+      "x": 0,
+      "y": 8,
+      "color": "white"
+    }
+  ],
+  "answers": [
+    {
+      "x": 8,
+      "y": 8
+    }
+  ],
+  "hints": [
+    "先看看还有哪个角是空的。",
+    "角上的价值最大。",
+    "黑棋下在 (8,8) 占住最后一个角。"
+  ],
+  "explanation": "黑棋占住最后一个空角，开局先占角最稳妥。",
+  "successMessage": "真棒！开局先占角。",
+  "failureMessage": "再看看，还有哪个角是空的？"
+},
+{
+  "id": "OP-014",
+  "boardSize": 9,
+  "category": "opening",
+  "level": 3,
+  "tags": [
+    "opening",
+    "connect",
+    "edge"
+  ],
+  "toPlay": "black",
+  "title": "补上断点",
+  "description": "黑棋边上两块子中间断开，应该补哪里？",
+  "initialStones": [
+    {
+      "x": 3,
+      "y": 0,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "color": "black"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "color": "white"
+    }
+  ],
+  "answers": [
+    {
+      "x": 4,
+      "y": 0
+    }
+  ],
+  "hints": [
+    "两块黑棋中间有个空点。",
+    "把中间的空点补上就连起来了。",
+    "黑棋下在 (4,0) 连成一片。"
+  ],
+  "explanation": "黑棋补在 (4,0)，把断开的两块棋连成一块，更结实。",
+  "successMessage": "连起来啦！",
+  "failureMessage": "看看两块黑棋中间缺了哪一点？"
+},
+{
+  "id": "OP-015",
+  "boardSize": 9,
+  "category": "opening",
+  "level": 4,
+  "tags": [
+    "opening",
+    "corner",
+    "big-point"
+  ],
+  "toPlay": "black",
+  "title": "选大场",
+  "description": "黑棋该选哪个角发展更好？",
+  "initialStones": [
+    {
+      "x": 0,
+      "y": 0,
+      "color": "black"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "color": "white"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "color": "white"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "color": "white"
+    }
+  ],
+  "answers": [
+    {
+      "x": 0,
+      "y": 8
+    }
+  ],
+  "hints": [
+    "一个角旁边有白棋挡着。",
+    "另一个角周围很空。",
+    "黑棋下在 (0,8) 更开阔。"
+  ],
+  "explanation": "黑棋选择周围开阔的 (0,8) 角，发展空间更大。",
+  "successMessage": "眼光不错！",
+  "failureMessage": "比比两个角，哪个更空？"
+},
+{
+  "id": "OP-016",
+  "boardSize": 9,
+  "category": "opening",
+  "level": 4,
+  "tags": [
+    "opening",
+    "edge",
+    "big-point"
+  ],
+  "toPlay": "black",
+  "title": "占边上的大场",
+  "description": "黑棋从角向边发展，下在哪里好？",
+  "initialStones": [
+    {
+      "x": 0,
+      "y": 0,
+      "color": "black"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "color": "white"
+    }
+  ],
+  "answers": [
+    {
+      "x": 4,
+      "y": 0
+    }
+  ],
+  "hints": [
+    "边上的中间常是大场。",
+    "从角出发往边上拆开。",
+    "黑棋下在 (4,0) 占住边上要点。"
+  ],
+  "explanation": "黑棋在 (4,0) 拆开，既守住角又发展到边。",
+  "successMessage": "布局有样子了！",
+  "failureMessage": "从角往边上走，中间的要点是哪里？"
+},
+{
+  "id": "MIX-009",
+  "boardSize": 9,
+  "category": "mixed",
+  "level": 3,
+  "tags": [
+    "mixed",
+    "capture",
+    "connect"
+  ],
+  "toPlay": "black",
+  "title": "一子两用",
+  "description": "黑棋一步既能吃白棋，又能把两块黑棋连起来，下哪里？",
+  "initialStones": [
+    {
+      "x": 3,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "color": "white"
+    }
+  ],
+  "answers": [
+    {
+      "x": 4,
+      "y": 3
+    }
+  ],
+  "hints": [
+    "白棋 (4,4) 只剩一口气。",
+    "那口气也是两块黑棋之间的空点。",
+    "黑棋下在 (4,3) 吃子又连线。"
+  ],
+  "explanation": "黑棋在 (4,3) 落子，吃掉白棋 (4,4)，同时把左右两块黑棋连成一片。",
+  "successMessage": "一子两用，真聪明！",
+  "failureMessage": "白棋哪口气，正好卡在两块黑棋中间？"
+},
+{
+  "id": "MIX-010",
+  "boardSize": 9,
+  "category": "mixed",
+  "level": 4,
+  "tags": [
+    "mixed",
+    "escape",
+    "capture"
+  ],
+  "toPlay": "black",
+  "title": "又逃又吃",
+  "description": "黑棋快被吃了，但一步就能逃出去，还能反吃白棋，下哪里？",
+  "initialStones": [
+    {
+      "x": 3,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "color": "white"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "color": "white"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "color": "white"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "color": "white"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "color": "black"
+    }
+  ],
+  "answers": [
+    {
+      "x": 3,
+      "y": 4
+    }
+  ],
+  "hints": [
+    "黑棋和白棋都只剩一口气。",
+    "那口气是同一个空点。",
+    "黑棋下在 (3,4) 逃出并吃掉白棋。"
+  ],
+  "explanation": "黑棋在 (3,4) 落子，自己逃出包围，同时让白棋 (3,5) 没气被吃。",
+  "successMessage": "反败为胜！",
+  "failureMessage": "黑棋和白棋都盯着哪个空点？"
+},
+{
+  "id": "MIX-011",
+  "boardSize": 9,
+  "category": "mixed",
+  "level": 5,
+  "tags": [
+    "mixed",
+    "capture",
+    "reading"
+  ],
+  "toPlay": "black",
+  "title": "一子双吃",
+  "description": "白棋两颗子都只剩同一口气，黑棋一步就能一起吃掉，下哪里？",
+  "initialStones": [
+    {
+      "x": 4,
+      "y": 2,
+      "color": "black"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "color": "white"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "color": "white"
+    }
+  ],
+  "answers": [
+    {
+      "x": 4,
+      "y": 4
+    }
+  ],
+  "hints": [
+    "两颗白棋都只剩最后一口气。",
+    "它们的最后一口气是同一个点。",
+    "黑棋下在 (4,4) 同时吃掉两颗白棋。"
+  ],
+  "explanation": "黑棋在 (4,4) 落子，白棋 (4,3) 和 (4,5) 同时没气，被一锅端。",
+  "successMessage": "一石二鸟！",
+  "failureMessage": "两颗白棋共同的最后一口气在哪里？"
+},
+{
+  "id": "MIX-012",
+  "boardSize": 9,
+  "category": "mixed",
+  "level": 5,
+  "tags": [
+    "mixed",
+    "cut",
+    "capture"
+  ],
+  "toPlay": "black",
+  "title": "切断并吃掉",
+  "description": "白棋三颗子连成一排，黑棋一步既能切断它们，又能吃掉中间那颗，下哪里？",
+  "initialStones": [
+    {
+      "x": 4,
+      "y": 3,
+      "color": "white"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "color": "white"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "color": "white"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "color": "black"
+    }
+  ],
+  "answers": [
+    {
+      "x": 3,
+      "y": 4
+    }
+  ],
+  "hints": [
+    "中间的白棋只剩一口气。",
+    "它还是上下白棋的连接点。",
+    "黑棋下在 (3,4) 切断并吃掉中间白棋。"
+  ],
+  "explanation": "黑棋在 (3,4) 落子，吃掉中间的白棋 (4,4)，把上下白棋切成两段。",
+  "successMessage": "切得漂亮！",
+  "failureMessage": "中间那颗白棋最后一口气在哪儿？"
+},
+{
+  "id": "LD-014",
+  "boardSize": 9,
+  "category": "life_death",
+  "level": 3,
+  "tags": [
+    "life_death",
+    "shape",
+    "eye"
+  ],
+  "toPlay": "black",
+  "title": "做出一只眼",
+  "description": "黑棋围成一圈，中间还差一点就能做出一只眼活棋，下哪里？",
+  "initialStones": [
+    {
+      "x": 3,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "color": "black"
+    }
+  ],
+  "answers": [
+    {
+      "x": 4,
+      "y": 4
+    }
+  ],
+  "hints": [
+    "黑棋已经围成一个方框。",
+    "方框正中间是空的。",
+    "黑棋下在 (4,4) 做出一只眼。"
+  ],
+  "explanation": "黑棋在 (4,4) 落子，做出一只眼，有了眼就能活棋。",
+  "successMessage": "有眼就活！",
+  "failureMessage": "方框正中间那个空点是哪里？"
+},
+{
+  "id": "LD-015",
+  "boardSize": 9,
+  "category": "life_death",
+  "level": 5,
+  "tags": [
+    "life_death",
+    "kill",
+    "eye"
+  ],
+  "toPlay": "black",
+  "title": "破眼杀棋",
+  "description": "白棋被团团围住，只差中间一只眼就能活，黑棋怎么抢走这只眼？",
+  "initialStones": [
+    {
+      "x": 3,
+      "y": 3,
+      "color": "white"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "color": "white"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "color": "white"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "color": "white"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "color": "white"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "color": "white"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "color": "white"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "color": "white"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "color": "black"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "color": "black"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "color": "black"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "color": "black"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "color": "black"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "color": "black"
+    }
+  ],
+  "answers": [
+    {
+      "x": 4,
+      "y": 4
+    }
+  ],
+  "hints": [
+    "白棋的眼在方框正中间。",
+    "白棋只剩这一只眼了。",
+    "黑棋下在 (4,4) 占住白棋的眼。"
+  ],
+  "explanation": "黑棋在 (4,4) 落子，占掉白棋唯一的眼，白棋做不出眼就被吃掉了。",
+  "successMessage": "一击破眼！",
+  "failureMessage": "白棋唯一的眼在哪个空点？"
+},
+{
+  "id": "ESC-015",
+  "boardSize": 9,
+  "category": "escape",
+  "level": 3,
+  "tags": [
+    "escape",
+    "atari",
+    "extend"
+  ],
+  "toPlay": "black",
+  "title": "快逃出去",
+  "description": "黑棋被白棋三面围住，只剩一口气，怎么逃？",
+  "initialStones": [
+    {
+      "x": 4,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "color": "white"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "color": "white"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "color": "white"
+    }
+  ],
+  "answers": [
+    {
+      "x": 4,
+      "y": 5
+    }
+  ],
+  "hints": [
+    "黑棋现在只剩一口气。",
+    "气在白棋没围的那一面。",
+    "黑棋下在 (4,5) 逃出去。"
+  ],
+  "explanation": "黑棋在 (4,5) 落子，走出包围，气变多了。",
+  "successMessage": "逃出来啦！",
+  "failureMessage": "白棋没围住的那一面是哪里？"
+},
+{
+  "id": "ESC-016",
+  "boardSize": 9,
+  "category": "escape",
+  "level": 4,
+  "tags": [
+    "escape",
+    "under-pressure",
+    "choose"
+  ],
+  "toPlay": "black",
+  "title": "选对逃路",
+  "description": "黑棋两条路可走，一条是死路，哪条能真正逃出去？",
+  "initialStones": [
+    {
+      "x": 4,
+      "y": 4,
+      "color": "black"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "color": "black"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "color": "white"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "color": "white"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "color": "white"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "color": "white"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "color": "white"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "color": "white"
+    }
+  ],
+  "answers": [
+    {
+      "x": 4,
+      "y": 6
+    }
+  ],
+  "hints": [
+    "一个逃点四面都被堵住。",
+    "另一个逃点通向开阔处。",
+    "黑棋下在 (4,6) 安全逃脱。"
+  ],
+  "explanation": "黑棋在 (4,6) 落子，走到开阔处，气变多；另一个点四面被堵不能下。",
+  "successMessage": "选对啦！",
+  "failureMessage": "哪条逃路四面是空的？"
+}
 ]
