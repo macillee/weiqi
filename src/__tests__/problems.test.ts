@@ -160,8 +160,8 @@ describe("validateAllProblems", () => {
 describe("problem data quality", () => {
   const problems = loadProblems();
 
-  it("total problem count is 110 (after v0.20.0d Pack B pilot)", () => {
-    expect(problems).toHaveLength(110);
+  it("total problem count is 122 (110 + 12 v0.24.0b intermediate pack)", () => {
+    expect(problems).toHaveLength(122);
   });
 
   it("v0.20.0d added Pack B problem IDs exist", () => {
@@ -916,20 +916,18 @@ describe("problem data quality", () => {
     ];
     const packProblems = problems.filter((p) => packAIds.includes(p.id));
 
-    it("total library count is 110 (101 + 9 v0.20.0d Pack B)", () => {
-      expect(problems.length).toBe(110);
+    it("total library count is 122 (110 v0.23 baseline + 12 v0.24.0b intermediate pack)", () => {
+      expect(problems.length).toBe(122);
     });
 
-    it("total L3-5 count is 67 (58 pre-Pack-B + 9 Pack B all at L3-5)", () => {
-      // Pre-Pack-B baseline: 26 L3 + 19 L4 + 13 L5 = 58 L3-5 problems.
-      // Pack B adds 9 problems, all level 3-5:
-      //   L3: END-013, MIX-004
-      //   L4: END-014, END-015, MIX-005, MIX-006
-      //   L5: END-016, MIX-007, MIX-008
-      //   = 2 L3 + 4 L4 + 3 L5 = 9 problems
-      // Post-Pack-B: 28 L3 + 23 L4 + 16 L5 = 67 L3-5.
+    it("total L3-5 count is 79 (67 v0.23 baseline + 12 v0.24.0b all at L3-5)", () => {
+      // v0.23 baseline: 28 L3 + 23 L4 + 16 L5 = 67 L3-5 problems.
+      // v0.24.0b adds 12 problems, all level 3-5:
+      //   opening L3:2 L4:2, mixed L3:1 L4:1 L5:2, life_death L3:1 L5:1, escape L3:1 L4:1
+      //   = 5 L3 + 4 L4 + 3 L5 = 12 problems
+      // Post-v0.24.0b: 33 L3 + 27 L4 + 19 L5 = 79 L3-5.
       const l35 = problems.filter((p) => p.level >= 3 && p.level <= 5);
-      expect(l35.length).toBe(67);
+      expect(l35.length).toBe(79);
     });
 
     it("exact Pack A category/level matrix matches target", () => {
@@ -1009,6 +1007,139 @@ describe("problem data quality", () => {
       const mixedPack = packProblems.filter((p) => p.category === "mixed");
       for (const p of mixedPack) {
         expect(p.tags).toContain("mixed");
+      }
+    });
+  });
+
+  describe("v0.24.0b intermediate content pack validation", () => {
+    const newIds = [
+      "OP-013", "OP-014", "OP-015", "OP-016",
+      "MIX-009", "MIX-010", "MIX-011", "MIX-012",
+      "LD-014", "LD-015",
+      "ESC-015", "ESC-016",
+    ];
+    const packProblems = problems.filter((p) => newIds.includes(p.id));
+
+    it("all 12 v0.24.0b problem IDs exist", () => {
+      const ids = problems.map((p) => p.id);
+      for (const id of newIds) {
+        expect(ids).toContain(id);
+      }
+    });
+
+    it("v0.24.0b IDs are beyond previous ranges (no accidental reuse)", () => {
+      const oldMax: Record<string, number> = {
+        OP: 12, MIX: 8, LD: 13, ESC: 14,
+      };
+      for (const id of newIds) {
+        const match = id.match(/^([A-Z]+)-0*(\d+)$/);
+        if (!match) continue;
+        const prefix = match[1];
+        const num = parseInt(match[2], 10);
+        if (oldMax[prefix] !== undefined) {
+          expect(num).toBeGreaterThan(oldMax[prefix]);
+        }
+      }
+    });
+
+    it("exactly 4 opening, 4 mixed, 2 life_death, 2 escape problems", () => {
+      expect(packProblems.filter((p) => p.category === "opening").length).toBe(4);
+      expect(packProblems.filter((p) => p.category === "mixed").length).toBe(4);
+      expect(packProblems.filter((p) => p.category === "life_death").length).toBe(2);
+      expect(packProblems.filter((p) => p.category === "escape").length).toBe(2);
+    });
+
+    it("exact v0.24.0b category/level matrix matches target", () => {
+      const matrix: Record<string, number[]> = {};
+      for (const p of packProblems) {
+        if (!matrix[p.category]) matrix[p.category] = [0, 0, 0, 0, 0, 0];
+        matrix[p.category][p.level]++;
+      }
+      expect(matrix.opening[3]).toBe(2);
+      expect(matrix.opening[4]).toBe(2);
+      expect(matrix.mixed[3]).toBe(1);
+      expect(matrix.mixed[4]).toBe(1);
+      expect(matrix.mixed[5]).toBe(2);
+      expect(matrix.life_death[3]).toBe(1);
+      expect(matrix.life_death[5]).toBe(1);
+      expect(matrix.escape[3]).toBe(1);
+      expect(matrix.escape[4]).toBe(1);
+    });
+
+    it("total L3-5 count is 79 (67 + 12 v0.24.0b all at L3-5)", () => {
+      const l35 = problems.filter((p) => p.level >= 3 && p.level <= 5);
+      expect(l35.length).toBe(79);
+    });
+
+    it("no level 1-2 problems in v0.24.0b", () => {
+      for (const p of packProblems) {
+        expect(p.level).toBeGreaterThanOrEqual(3);
+      }
+    });
+
+    it("all v0.24.0b problems are 9x9 single-step (one answer point)", () => {
+      for (const p of packProblems) {
+        expect(p.boardSize).toBe(9);
+        expect(p.steps === undefined || p.totalSteps === undefined || p.totalSteps <= 1).toBe(true);
+        expect(p.answers.length).toBe(1);
+      }
+    });
+
+    it("all v0.24.0b answer points are empty in initial board", () => {
+      for (const p of packProblems) {
+        for (const ans of p.answers) {
+          const occupied = p.initialStones.some((s) => s.x === ans.x && s.y === ans.y);
+          expect(occupied).toBe(false);
+        }
+      }
+    });
+
+    it("all v0.24.0b initial stones have no coordinate duplicates", () => {
+      for (const p of packProblems) {
+        const coords = new Set(p.initialStones.map((s) => `${s.x},${s.y}`));
+        expect(coords.size).toBe(p.initialStones.length);
+      }
+    });
+
+    it("all v0.24.0b problems have at least 2 hints", () => {
+      for (const p of packProblems) {
+        expect(p.hints.length).toBeGreaterThanOrEqual(2);
+      }
+    });
+
+    it("all v0.24.0b failure messages are child-friendly (no harsh wording)", () => {
+      const harshPatterns = [
+        /错[误了]/,
+        /笨/,
+        /傻/,
+        /太差/,
+        /不行/,
+        /不对/,
+        /错了/,
+      ];
+      for (const p of packProblems) {
+        for (const pattern of harshPatterns) {
+          expect(p.failureMessage).not.toMatch(pattern);
+        }
+      }
+    });
+
+    it("all v0.24.0b descriptions are within reasonable length (<= 60)", () => {
+      for (const p of packProblems) {
+        expect(p.description.length).toBeLessThanOrEqual(60);
+      }
+    });
+
+    it("all v0.24.0b titles are within reasonable length (<= 12)", () => {
+      for (const p of packProblems) {
+        expect(p.title.length).toBeLessThanOrEqual(12);
+      }
+    });
+
+    it("all v0.24.0b problems pass validateAllProblems", () => {
+      for (const p of packProblems) {
+        const result = validateProblem(p);
+        expect(result.valid, `${p.id}: ${result.errors.join("; ")}`).toBe(true);
       }
     });
   });

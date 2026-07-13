@@ -55,6 +55,8 @@ export const chapters: Chapter[] = [
       { id: "escape-8", title: "第 8 关", problemIds: ["MULTI-009"] },
       // v0.23.0b: wire deferred v0.7.0b escape problems
       { id: "escape-9", title: "第 9 关", problemIds: ["ESC-013", "ESC-014"] },
+      // v0.24.0b: wire new intermediate escape problems
+      { id: "escape-10", title: "第 10 关", problemIds: ["ESC-015", "ESC-016"] },
     ],
   },
   {
@@ -90,6 +92,8 @@ export const chapters: Chapter[] = [
       { id: "opening-5", title: "第 5 关", problemIds: ["OP-010"] },
       // v0.23.0b: wire deferred v0.7.0b opening problems
       { id: "opening-6", title: "第 6 关", problemIds: ["OP-011", "OP-012"] },
+      // v0.24.0b: wire new intermediate opening problems
+      { id: "opening-7", title: "第 7 关", problemIds: ["OP-013", "OP-014", "OP-015", "OP-016"] },
     ],
   },
   {
@@ -106,6 +110,8 @@ export const chapters: Chapter[] = [
       { id: "life-death-6", title: "第 6 关", problemIds: ["MULTI-002", "MULTI-006", "MULTI-007"] },
       // v0.23.0b: wire deferred v0.7.0b life_death problem
       { id: "life-death-7", title: "第 7 关", problemIds: ["LD-013"] },
+      // v0.24.0b: wire new intermediate life_death problems
+      { id: "life-death-8", title: "第 8 关", problemIds: ["LD-014", "LD-015"] },
     ],
   },
   {
@@ -146,6 +152,8 @@ export const chapters: Chapter[] = [
       { id: "mixed-2", title: "第 2 关", problemIds: ["MIX-003", "MIX-004"] },
       { id: "mixed-3", title: "第 3 关", problemIds: ["MIX-005", "MIX-006"] },
       { id: "mixed-4", title: "第 4 关", problemIds: ["MIX-007", "MIX-008"] },
+      // v0.24.0b: wire new intermediate mixed problems
+      { id: "mixed-5", title: "第 5 关", problemIds: ["MIX-009", "MIX-010", "MIX-011", "MIX-012"] },
     ],
   },
 ];

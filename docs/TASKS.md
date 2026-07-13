@@ -63,6 +63,8 @@ v0.23.0c v0.23 Stabilization / Release Notes delivered — `docs/RELEASE_NOTES_v
 
 v0.24.0a Next-Phase Plan delivered — `docs/NEXT_PHASE_PLAN_v0.24.md` re-anchors v0.23 baseline (110 problems, 110 wired IDs, 0 unwired, 7 chapters, 705 tests / 32 files, default-off flags), evaluates 5 candidate directions (intermediate content expansion, feature flag enablement/QA, infrastructure hardening, documentation refresh, parent review surface re-open), recommends Intermediate Content Expansion as the primary v0.24 path. v0.1 boundary respected; planning-only slice, no code change. Next: v0.24.0b — Intermediate content expansion (content-only).
 
+v0.24.0b Intermediate Content Expansion delivered — `src/data/problems.json` extended with 12 new level 3–5 problems (OP-013..016 opening 4, MIX-009..012 mixed 4, LD-014..015 life_death 2, ESC-015..016 escape 2); library 110 → 122. `src/lib/chapters.ts` extended with 4 new level nodes: `opening-7` (OP-013..016), `mixed-5` (MIX-009..012), `life-death-8` (LD-014..015), `escape-10` (ESC-015..016). `getAllProblemIds()` now covers 122 problem IDs (full library coverage). **+23 tests** (problems.test.ts: v0.24.0b pack block 13 + 2 stale count assertions updated; chapters.test.ts: v0.24.0b block 10 + 1 stale mixed-levels assertion updated) **728 total across 32 files**. `docs/CONTENT_REVIEW_v0.24.md` records per-problem board/answer reasoning. Level matrix L3:5 / L4:4 / L5:3; category deltas opening +4, mixed +4, life_death +2, escape +2 (capture/endgame unchanged). No problem-data reinterpretation, no algorithm/UI/route/persistence/engine/privacy change; v0.1 boundary preserved. Next: v0.24.0c — v0.24 release notes / QA checklist / stabilization.
+
 Current strategy:
 
 ```text
