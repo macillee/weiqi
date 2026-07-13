@@ -202,7 +202,7 @@ New level nodes appended at the end of each affected chapter (existing level ids
 ### 6.5 Test extensions
 
 - `src/__tests__/problems.test.ts`: library count assertion 110 → 122; level 3–5 + category constraint per new ID; no duplicate coordinates; answers on empty intersections; copy length; warm-copy banned-phrase regression.
-- `src/__tests__/chapters.test.ts`: 5 new level nodes exist; each new ID resolves; `getAllProblemIds()` = 122; exact-once duplicate protection; global no-duplicate regression; daily-pool scope assertion (122 total).
+- `src/__tests__/chapters.test.ts`: 4 new level nodes exist (`opening-7`, `mixed-5`, `life-death-8`, `escape-10`); each new ID resolves; `getAllProblemIds()` = 122; exact-once duplicate protection; global no-duplicate regression; daily-pool scope assertion (122 total).
 
 ### 6.6 Hard limits (out-of-scope if exceeded)
 
